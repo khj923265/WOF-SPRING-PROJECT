@@ -5,22 +5,34 @@
         <div class="header-body text-right ">
           <div class="row py-4">
             <div class="col-lg-6 col-7">
-	          <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
+	          <form action="/project/recommend_list" class="navbar-search navbar-search-light form-inline mr-sm-3" id="searchForm">
             <div class="form-group mb-0">
-              <div class="input-group input-group-alternative input-group-merge mr-2">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-search"></i></span>
-                </div>
-                <input class="form-control" placeholder="Search" type="text">
-              </div>
-               <button type="button" class="btn btn-secondary">Search</button>
-            </div>
-          </form>      
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+				<div class='row'>
+							<select name='type'>
+								<option value=""
+									<c:out value="${pageMaker.cri.type == null?'selected':''}"/>>--</option>
+								<option value="T"
+									<c:out value="${pageMaker.cri.type eq 'T'?'selected':''}"/>>Title</option>
+								<option value="L"
+									<c:out value="${pageMaker.cri.type eq 'L'?'selected':''}"/>>Contents</option>
+								<option value="S"
+									<c:out value="${pageMaker.cri.type eq 'S'?'selected':''}"/>>Location</option>
+							</select> 
+							<input class="form-control is-valid" type='text' name='keyword' placeholder="Search"
+								value='<c:out value="${pageMaker.cri.keyword}"/>' /> <input
+								type='hidden' name='pageNum'
+								value='<c:out value="${pageMaker.cri.pageNum}"/>' /> <input
+								type='hidden' name='amount'
+								value='<c:out value="${pageMaker.cri.amount}"/>' />
+							<button class='btn btn-secondary'>Search</button>
+							</div>
+							</div>
+						</form>
+					</div>
+					</div>
+					</div>
+				</div>
+				</div>
 	
     <!-- ì¶ì² íë¡ì í¸ -->
     
@@ -91,16 +103,16 @@
     </div>
     <p class="mt-3 mb-0 text-sm">
     <i class="ni ni-check-bold mr-3"></i><span class="text-success mr-2">${project.proj_career}</span>
-   <i class="ni ni-key-25 mr-3"></i><span class="text-success mr-2">${project.proj_walfare} ì</span>
+   <i class="ni ni-key-25 mr-3"></i><span class="text-success mr-2">${project.proj_estimate}won</span>
 	</p>
 	
 	<p class="mt-3 mb-0 text-sm">
-    <i class="ni ni-single-02 mr-3"></i><span class="text-success mr-2">${project.proj_reqr_person}ëª</span>
+    <i class="ni ni-single-02 mr-3"></i><span class="text-success mr-2">${project.proj_reqr_person}</span>
    <i class="ni ni-time-alarm mr-3"></i><span class="text-success mr-2">${project.proj_work_time}</span>
    <i class="ni ni-compass-04 mr-3"></i><span class="text-success mr-2">${project.proj_work_place}</span>
 	</p>
 
-    <div class="mt-3 mr-3 text-sm">
+    <div class="mt-3 mr-3 text-sm d-flex">
     <span class="text-nowrap">${project.proj_detail}</span>
 	</div>
 	
@@ -110,7 +122,6 @@
 </div>
  </c:forEach>
   </div>
-   
        				<div class='pull-right'>
 					<ul class="pagination">
    					
@@ -136,11 +147,10 @@
 				<form id='actionForm' action="/project/recommend_list" method='get'>
 				<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
 				<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
-
 				<input type='hidden' name='type'
-					value='<c:out value="${ pageMaker.cri.type }"/>'> <input
+					value='<c:out value="${ pageMaker.cri.type}"/>'> <input
 					type='hidden' name='keyword'
-					value='<c:out value="${ pageMaker.cri.keyword }"/>'>
+					value='<c:out value="${ pageMaker.cri.keyword}"/>'>
 				</form>
 </div>
    </div>

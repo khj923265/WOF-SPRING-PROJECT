@@ -5,14 +5,38 @@
 <mapper namespace="org.wof.mapper.ProjectMapper2">
 
 
+	<!-- 추천 프로젝트를 하기 위한 페이징과 목록 불러오기 -->
 	<select id="ProjectList" resultType="org.wof.domain.ProjectVO">
 	 <![CDATA[
-		select proj_title, proj_apply_deadline, proj_work_place from 
+		select proj_title, proj_work_place, proj_reqr_skill, proj_detail
+		from 
 		(
 			select 
-			rownum rn, proj_title, proj_apply_deadline, proj_work_place
+			rownum rn, proj_title, proj_work_place, proj_reqr_skill, proj_detail
 			from project
-			where rownum <= #{pageNum} * #{amount}
+			where 
+		]]>	
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							proj_title like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'C'.toString()">
+							proj_work_place like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'W'.toString()">
+							proj_reqr_skill like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+		
+		
+		 <![CDATA[
+			rownum <= #{pageNum} * #{amount}
 		)
 		where rn > (#{pageNum} -1 ) * #{amount}
 	  ]]>
@@ -22,6 +46,8 @@
 		select * from project where proj_id = #{proj_id}
 	</select>
 	
+	
+	
 	<select id="totalProject" resultType="java.lang.Integer">
 		select count(*) from project
 	</select>
@@ -29,12 +55,13 @@
 	
 	
 	<select id="FollowProjectList" resultType="org.wof.domain.ProjectVO" >
-      select p.*
+    select p.*
 	from follow_project fp, project p, mem_partner m 
 	where p.proj_id = fp.related_proj and m.mem_id = fp.related_mem 
 	and fp.related_mem = "member0009"
    </select>
    
+   <!-- 관심 프로젝트 -->
    <insert id="addFollowProject" parameterType="org.wof.domain.FollowProjectVO">
    <![CDATA[
       INSERT INTO followproject VALUES (#{followproject_no}, #{related_project}, #{related_member}, sysdate)

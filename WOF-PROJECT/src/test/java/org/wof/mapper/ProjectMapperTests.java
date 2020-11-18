@@ -49,7 +49,11 @@ public class ProjectMapperTests {
 	
 	@Test
 	public void testPageMapper(){
-		log.info(projectMapper2.totalProject());
+		//검색과 페이징처리 한번에하기
+		Criteria cri = new Criteria();
+		cri.setKeyword("노원");
+		cri.setType("TC");
+		log.info(projectMapper2.ProjectList(cri));
 	}
 
 }
