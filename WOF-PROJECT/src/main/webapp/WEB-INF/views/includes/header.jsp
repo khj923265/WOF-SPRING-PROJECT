@@ -48,10 +48,10 @@
 				<!-- Navbar links -->
 				<ul class="navbar-nav align-items-center  ml-md-auto">
 					<li class="nav-item mr-0 mr-md-2"><a class="nav-link"
-						href="${pageContext.request.contextPath }/Project/insertProjectForm.do"><span
+						href="${pageContext.request.contextPath }/project/create"><span
 							class="nav-link-text">프로젝트 등록</span></a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="${pageContext.request.contextPath }/Project/listProject.do"><span
+						href="${pageContext.request.contextPath }/project/list"><span
 							class="nav-link-text">프로젝트 찾기</span></a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="${pageContext.request.contextPath }/Client/partnersListAction.do"><span
