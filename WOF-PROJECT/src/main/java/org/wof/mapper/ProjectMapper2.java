@@ -11,7 +11,7 @@ public interface ProjectMapper2 {
 	public List<ProjectVO> ProjectList();
 	public List<ProjectVO> FollowProjectList();
 	public int addFollowProject(FollowProjectVO followProjectVO);
-	public int deleteFollowProject(String related_proj);
+	public int deleteFollowProject(String related_project);
 	public int addMeeting(MeetVO meetVO);
 
 }

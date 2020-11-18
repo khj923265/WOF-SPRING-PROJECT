@@ -22,12 +22,12 @@
    
    <insert id="addFollowProject" parameterType="org.wof.domain.FollowProjectVO">
    <![CDATA[
-      INSERT INTO follow_project VALUES (#{follow_proj_id}, #{related_proj}, #{related_mem})
+      INSERT INTO followproject VALUES (#{followproject_no}, #{related_project}, #{related_member}, sysdate)
       ]]>
    </insert>
    
    <delete id="deleteFollowProject" parameterType="java.lang.String">
-   		delete from follow_project where related_mem= 'member0009' and related_proj=#{related_proj}
+   		delete from followproject where related_member = 'member28' and related_project = #{related_member}
    </delete> 
 
 </mapper>

@@ -22,7 +22,7 @@
       </div>
     </div>
 	
-    <!-- 추천 프로젝트 -->
+    <!-- ì¶ì² íë¡ì í¸ -->
     
     <div class="container">
     <div class="row justify-content-center">
@@ -110,16 +110,13 @@
     each HTML template in the pack.</span>
 	</div>
 	<p class="mt-3 mb-0 text-sm">
-   <i class="ni ni-chart-bar-32 mr-3"></i><span class="text-success mr-2">3명지원</span>
+   <i class="ni ni-chart-bar-32 mr-3"></i><span class="text-success mr-2">3ëªì§ì</span>
 	</p>
 </div>
 	
     <!-- Card body -->
 	<c:forEach var="project" items="${projects}">
-    <div class="ml-3 mt-3 mb-3 card-body">
-    <!-- 수정하 
-      <form action="FollowProjectInsertAction.do" method="post">-->
-
+    <div class="ml-3 mt-3 mb-3 card-body">		
 	<div class="row">
     <div class="col-12 row text-center ">
         <h2 class="card-title text-uppercase text-muted mb-0 mr-2"><a href="#">${project.proj_title}</a></h2>
@@ -134,11 +131,11 @@
     </div>
     <p class="mt-3 mb-0 text-sm">
     <i class="ni ni-check-bold mr-3"></i><span class="text-success mr-2">${project.proj_career}</span>
-   <i class="ni ni-key-25 mr-3"></i><span class="text-success mr-2">${project.proj_walfare} 원</span>
+   <i class="ni ni-key-25 mr-3"></i><span class="text-success mr-2">${project.proj_walfare} ì</span>
 	</p>
 	
 	<p class="mt-3 mb-0 text-sm">
-    <i class="ni ni-single-02 mr-3"></i><span class="text-success mr-2">${project.proj_reqr_person}명</span>
+    <i class="ni ni-single-02 mr-3"></i><span class="text-success mr-2">${project.proj_reqr_person}ëª</span>
    <i class="ni ni-time-alarm mr-3"></i><span class="text-success mr-2">${project.proj_work_time}</span>
    <i class="ni ni-compass-04 mr-3"></i><span class="text-success mr-2">${project.proj_work_place}</span>
 	</p>
@@ -151,6 +148,7 @@
    <i class="ni ni-chart-bar-32 mr-3"></i><span class="text-success mr-2">0 apply </span>
 	</p>
 </div>
+
  </c:forEach>
     </div>
 
@@ -176,18 +174,15 @@
 	<script type="text/javascript">
 	
  	$(function() {
-		
+ 		
 		$(".ni-favourite-28").click(function() {
 			$(this).toggleClass("red");
 			var related_project = $(this).find("input").val();
-			if ($('#related_project').hasClass("red") === true) { 
-				alert("/follwProject/"+related_project);
+			if ($(this).hasClass("red")) { 
+				alert("add"+related_project );
 				$.ajax({
-					url : "/follwProject/"+related_project,
+					url : "follwProject/"+related_project,
 					type : "POST",
-					data : {
-						"related_project" : related_project
-					},
 					success : function(result) {
 						alert(result);
 					},
@@ -197,13 +192,10 @@
 				})
 			}
 			else {
-				alert("/follwProject/"+related_project);
+				alert("delete"+ related_project);
 				$.ajax({
-					url : "/follwProject/"+related_project,
+					url : "follwProject/"+related_project,
 					type : "DELETE",
-					data : {
-						"related_project" : related_project
-					},
 					success : function(result) {
 						alert(result);
 					},
@@ -214,43 +206,5 @@
 				}
 			
 		})
-		
-	}); 
-	
-/* 	function followProject() {
-		$('#related_proj').toggleClass("red");
-		var related_proj = $(this).attr("name");
-		if ($('#related_proj').hasClass("red") === true) {
-			alert("follwProject/"+related_proj);
-			$.ajax({
-				url : "/follwProject",//+related_proj
-				type : "POST",
-				data : {
-					"related_proj" : related_proj
-				},
-				success : function(result) {
-					alert(result);
-				},
-				error : function(error) {
-					alert(error);
-				}
-			})
-		}
-		else {
-			alert("nono");
-			$.ajax({
-				url : "/follwProject", // 뒤에 + related_proj
-				type : "DELETE",
-				data : {
-					"related_proj" : related_proj
-				},
-				success : function(result) {
-					alert(result);
-				},
-				error : function(error) {
-					alert(error);
-				}
-				})
-			}
-} */
-	</script>
+}); 
+</script>

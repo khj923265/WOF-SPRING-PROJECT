@@ -10,6 +10,7 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.wof.domain.FollowProjectVO;
 import org.wof.domain.ProjectVO;
 import org.wof.mapper.ProjectMapper2;
 
@@ -17,14 +18,28 @@ import org.wof.mapper.ProjectMapper2;
 public class ProjectServiceImpl2 implements ProjectService2 {
 	
 	@Autowired
-	private ProjectMapper2 projectMapper;
+	private ProjectMapper2 projectMapper2;
 	
 	@Autowired
 	private JavaMailSender mailSender;
 	
 	@Override
 	public List<ProjectVO> projectList() {
-		return projectMapper.ProjectList();
+		return projectMapper2.ProjectList();
+	}
+	
+	@Override
+	public int addFollowProject(String related_project) {
+		FollowProjectVO vo = new FollowProjectVO();
+		vo.setFollowproject_no("followproject1");
+		vo.setRelated_project(related_project);
+		vo.setRelated_member("member29");
+		return projectMapper2.addFollowProject(vo);
+	}
+	
+	@Override
+	public int deleteFollowProject(String related_project) {
+		return projectMapper2.deleteFollowProject(related_project);
 	}
 	
 	@Override
