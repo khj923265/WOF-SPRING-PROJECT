@@ -18,11 +18,11 @@ import lombok.extern.log4j.Log4j;
 public class ProjectMapperTests {
 
 	@Setter(onMethod_=@Autowired)
-	private ProjectMapper project;
+	private ProjectMapper2 projectMapper2;
 	
 	@Test
 	public void test() {
-		log.info(project);
+		log.info(projectMapper2.ProjectList());
 	}
 
 }

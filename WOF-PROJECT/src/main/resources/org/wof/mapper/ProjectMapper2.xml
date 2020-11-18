@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.wof.mapper.ProjectMapper2">
+
+
+	<select id="ProjectList" resultType="org.wof.domain.ProjectVO">
+		select * from project
+	</select>
+	
+	<select id="ProjectList2" parameterType="String" resultType="org.wof.domain.ProjectVO">
+		select * from project where proj_id = #{proj_id}
+	</select>
+	
+	<select id="FollowProjectList" resultType="org.wof.domain.ProjectVO" >
+      select p.*
+	from follow_project fp, project p, mem_partner m 
+	where p.proj_id = fp.related_proj and m.mem_id = fp.related_mem 
+	and fp.related_mem = "member0009"
+   </select>
+   
+   <insert id="addFollowProject" parameterType="org.wof.domain.FollowProjectVO">
+   <![CDATA[
+      INSERT INTO follow_project VALUES (#{follow_proj_id}, #{related_proj}, #{related_mem})
+      ]]>
+   </insert>
+   
+   <delete id="deleteFollowProject" parameterType="java.lang.String">
+   		delete from follow_project where related_mem= 'member0009' and related_proj=#{related_proj}
+   </delete> 
+
+</mapper>
