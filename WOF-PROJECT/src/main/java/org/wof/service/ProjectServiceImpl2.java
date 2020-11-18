@@ -66,6 +66,4 @@ public class ProjectServiceImpl2 implements ProjectService2 {
 	       mailSender.send(message);	
 	}
 	
-
-
 }

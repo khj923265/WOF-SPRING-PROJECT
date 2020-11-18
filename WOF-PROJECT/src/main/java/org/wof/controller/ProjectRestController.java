@@ -21,14 +21,14 @@ public class ProjectRestController {
 	@Autowired
 	private ProjectService2 projectService2;
 	
-	@PostMapping("/project/follwProject/{related_project}")
+	@PostMapping("follwProject/{related_project}")
 	public ResponseEntity<Integer> addFollowProject(@PathVariable String related_project){
 		log.info("rest controller add" + related_project);
 		projectService2.addFollowProject(related_project);
 		return new ResponseEntity<Integer>(1, HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/project/follwProject/{related_project}")
+	@DeleteMapping("follwProject/{related_project}")
 	public ResponseEntity<Integer> removeFollowProject(@PathVariable String related_project){
 		log.info("rest controller delete" + related_project);
 		projectService2.deleteFollowProject(related_project);

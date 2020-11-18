@@ -45,15 +45,20 @@ public class ProjectMapperTests {
 		cri.setAmount(10);
 		List<ProjectVO> list = projectMapper2.ProjectList(cri);
 		list.forEach(project -> log.info(project.getProj_id()));
-	}*/
+	}*
 	
-	@Test
+/*	@Test
 	public void testPageMapper(){
 		//검색과 페이징처리 한번에하기
 		Criteria cri = new Criteria();
 		cri.setKeyword("노원");
 		cri.setType("TC");
 		log.info(projectMapper2.ProjectList(cri));
+	}*/
+	
+	@Test
+	public void testFollowProjectList(){
+		log.info(projectMapper2.followProjectList());
 	}
 
 }

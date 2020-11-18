@@ -121,6 +121,9 @@
 	</p>
 </div>
  </c:forEach>
+
+  </div>
+
   </div>
        				<div class='pull-right'>
 					<ul class="pagination">
@@ -158,9 +161,6 @@
 </div>
   </div>
   </div>
-  </div>
-
-
 <%@ include file="../includes/footer.jsp" %>
 
 	<style type="text/css">
@@ -171,14 +171,6 @@
 	<script src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
 	<script type="text/javascript">	
  	$(function() {
-		var actionForm = $("#actionForm");
-		$(".paginate_button a").on("click", function(e) {
-					e.preventDefault();
-					console.log('click');
-					actionForm.find("input[name='pageNum']").val($(this).attr("href"));
-					actionForm.submit();
-				});
- 		
  		//관심 프로젝트 ajax 
  		$(".ni-favourite-28").click(function() {
 			$(this).toggleClass("red");
@@ -186,7 +178,7 @@
 			if ($(this).hasClass("red")) { 
 				alert("add"+related_project );
 				$.ajax({
-					url : "follwProject/"+related_project,
+					url : "/follwProject/"+related_project,
 					type : "POST",
 					success : function(result) {
 						alert(result);
@@ -199,7 +191,7 @@
 			else {
 				alert("delete"+ related_project);
 				$.ajax({
-					url : "follwProject/"+related_project,
+					url : "/follwProject/"+related_project,
 					type : "DELETE",
 					success : function(result) {
 						alert(result);
@@ -210,6 +202,16 @@
 					})
 				}
 			
-		})
+		});
+ 		
+		var actionForm = $("#actionForm");
+		$(".paginate_button a").on("click", function(e) {
+					e.preventDefault();
+					console.log('click');
+					actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+					actionForm.submit();
+				});
+		
+		
 }); 
 </script>

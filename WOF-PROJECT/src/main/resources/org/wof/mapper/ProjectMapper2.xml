@@ -8,11 +8,11 @@
 	<!-- 추천 프로젝트를 하기 위한 페이징과 목록 불러오기 -->
 	<select id="ProjectList" resultType="org.wof.domain.ProjectVO">
 	 <![CDATA[
-		select proj_title, proj_work_place, proj_reqr_skill, proj_detail
+		select *
 		from 
 		(
 			select 
-			rownum rn, proj_title, proj_work_place, proj_reqr_skill, proj_detail
+			rownum rn, proj_title, proj_work_place, proj_reqr_skill, proj_detail, proj_id
 			from project
 			where 
 		]]>	
@@ -23,10 +23,10 @@
 						<when test="type == 'T'.toString()">
 							proj_title like '%'||#{keyword}||'%'
 						</when>
-						<when test="type == 'C'.toString()">
+						<when test="type == 'L'.toString()">
 							proj_work_place like '%'||#{keyword}||'%'
 						</when>
-						<when test="type == 'W'.toString()">
+						<when test="type == 'S'.toString()">
 							proj_reqr_skill like '%'||#{keyword}||'%'
 						</when>
 					</choose>
@@ -42,24 +42,20 @@
 	  ]]>
 	</select>
 	
-		<select id="ProjectList2" parameterType="String" resultType="org.wof.domain.ProjectVO">
-		select * from project where proj_id = #{proj_id}
-	</select>
-	
-	
+		<select id="ProjectList2" resultType="org.wof.domain.ProjectVO">
+			select * from project
+		</select>
 	
 	<select id="totalProject" resultType="java.lang.Integer">
 		select count(*) from project
 	</select>
 	
-	
-	
-	<select id="FollowProjectList" resultType="org.wof.domain.ProjectVO" >
+<!-- 	<select id="FollowProjectList" resultType="org.wof.domain.ProjectVO" >
     select p.*
 	from follow_project fp, project p, mem_partner m 
 	where p.proj_id = fp.related_proj and m.mem_id = fp.related_mem 
 	and fp.related_mem = "member0009"
-   </select>
+   </select> -->
    
    <!-- 관심 프로젝트 -->
    <insert id="addFollowProject" parameterType="org.wof.domain.FollowProjectVO">
@@ -71,5 +67,9 @@
    <delete id="deleteFollowProject" parameterType="java.lang.String">
    		delete from followproject where related_member = 'member28' and related_project = #{related_member}
    </delete> 
+   
+   <select id="followProjectList" resultType="org.wof.domain.FollowProjectVO">
+   	select fp.* from followproject fp, project p where fp.related_project = p.proj_id
+   </select>
 
 </mapper>
