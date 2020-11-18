@@ -6,12 +6,27 @@
 
 
 	<select id="ProjectList" resultType="org.wof.domain.ProjectVO">
-		select * from project
+	 <![CDATA[
+		select proj_title, proj_apply_deadline, proj_work_place from 
+		(
+			select 
+			rownum rn, proj_title, proj_apply_deadline, proj_work_place
+			from project
+			where rownum <= #{pageNum} * #{amount}
+		)
+		where rn > (#{pageNum} -1 ) * #{amount}
+	  ]]>
 	</select>
 	
-	<select id="ProjectList2" parameterType="String" resultType="org.wof.domain.ProjectVO">
+		<select id="ProjectList2" parameterType="String" resultType="org.wof.domain.ProjectVO">
 		select * from project where proj_id = #{proj_id}
 	</select>
+	
+	<select id="totalProject" resultType="java.lang.Integer">
+		select count(*) from project
+	</select>
+	
+	
 	
 	<select id="FollowProjectList" resultType="org.wof.domain.ProjectVO" >
       select p.*
@@ -23,7 +38,7 @@
    <insert id="addFollowProject" parameterType="org.wof.domain.FollowProjectVO">
    <![CDATA[
       INSERT INTO followproject VALUES (#{followproject_no}, #{related_project}, #{related_member}, sysdate)
-      ]]>
+    ]]>
    </insert>
    
    <delete id="deleteFollowProject" parameterType="java.lang.String">

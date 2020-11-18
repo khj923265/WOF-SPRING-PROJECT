@@ -2,12 +2,17 @@ package org.wof.mapper;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.wof.domain.Criteria;
 import org.wof.domain.FollowProjectVO;
+import org.wof.domain.ProjectVO;
+
 import lombok.extern.log4j.Log4j;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -27,12 +32,24 @@ public class ProjectMapperTests {
 		log.info(projectMapper2.addFollowProject(vo));
 	}*/
 	
-	@Test
+/*	@Test
 	public void testdeleteFollowProjectMapper() {
 		//로그인된 파트너 회원의 팔로우 프로젝트를 지울 수 있다.
 		log.info(projectMapper2.deleteFollowProject("project1"));
+	}*/
+	
+/*	@Test
+	public void testpageFollowProjectList(){
+		Criteria cri = new Criteria();
+		cri.setPageNum(3);
+		cri.setAmount(10);
+		List<ProjectVO> list = projectMapper2.ProjectList(cri);
+		list.forEach(project -> log.info(project.getProj_id()));
+	}*/
+	
+	@Test
+	public void testPageMapper(){
+		log.info(projectMapper2.totalProject());
 	}
 
 }
-
-

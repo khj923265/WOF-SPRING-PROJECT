@@ -76,45 +76,7 @@
             </div>
             <!-- card body -->
             <div class="card card-stats">
-    <!-- Card body -->
-    <div class="ml-3 mt-3 mb-3 card-body">
-        
-<div class="row">
-    <div class="col-12 row text-center ">
-        <h2 class="card-title text-uppercase text-muted mb-0 mr-2"><a href="#">Android App Mobile Service</a></h2>
-        <form>
-     	<input type="hidden" value="project1" name="related_proj" id="related_proj" >
-     	<!-- value="${project.getProj_id()}" -->
-     	<button id="followButton" type="button" onclick="followProject()">like</button>
-        </form>
-        
-    </div>
-    </div>
-   	   
-    <p class="mt-3 mb-0 text-sm"> 
-    <i class="ni ni-check-bold mr-3"></i><span class="text-success mr-2">developer</span>
-   <i class="ni ni-key-25 mr-3"></i><span class="text-success mr-2">3,000,000 won</span>
-	</p>
-	
-	<p class="mt-3 mb-0 text-sm">
-    <i class="ni ni-single-02 mr-3"></i><span class="text-success mr-2">3 people</span>
-   <i class="ni ni-time-alarm mr-3"></i><span class="text-success mr-2">5MONTHS</span>
-   <i class="ni ni-compass-04 mr-3"></i><span class="text-success mr-2">NEWYORK</span>
-	</p>
 
-    <div class="mt-3 mr-3 text-sm">
-    <span class="text-nowrap">Argon perfectly combines reusable HTML and modular <br>
-    CSS with a modern styling and beautiful markup<br>
-     throughout each HTML template in the pack. Argon perfectly combines reusable HTML<br>
-     and modular CSS with a modern styling and beautiful markup throughout <br>
-    each HTML template in the pack.</span>
-	</div>
-	<p class="mt-3 mb-0 text-sm">
-   <i class="ni ni-chart-bar-32 mr-3"></i><span class="text-success mr-2">3ëªì§ì</span>
-	</p>
-</div>
-	
-    <!-- Card body -->
 	<c:forEach var="project" items="${projects}">
     <div class="ml-3 mt-3 mb-3 card-body">		
 	<div class="row">
@@ -126,8 +88,6 @@
         </i>
         </span>
     </div>
-    
-    <!-- 								 -->
     </div>
     <p class="mt-3 mb-0 text-sm">
     <i class="ni ni-check-bold mr-3"></i><span class="text-success mr-2">${project.proj_career}</span>
@@ -148,19 +108,47 @@
    <i class="ni ni-chart-bar-32 mr-3"></i><span class="text-success mr-2">0 apply </span>
 	</p>
 </div>
-
  </c:forEach>
-    </div>
+  </div>
+   
+       				<div class='pull-right'>
+					<ul class="pagination">
+   					
+						<c:if test="${pageMaker.prev}">
+							<li class="paginate_button previous"><a
+								href="/project/recommend_list?pageNum=${pageMaker.startPage -1}">Previous</a></li>
+						</c:if>
 
+						<c:forEach var="num" begin="${pageMaker.startPage}"
+							end="${pageMaker.endPage}">
+							<li class="paginate_button  ${pageMaker.cri.pageNum == num ? "active":""} ">
+								<a href="/project/recommend_list?pageNum=${num}">${num}</a>
+							</li>
+						</c:forEach>
+
+						<c:if test="${pageMaker.next}">
+							<li class="paginate_button next"><a
+								href="/project/recommend_list?pageNum=${pageMaker.endPage +1 }">Next</a></li>
+						</c:if>
+					</ul>
+				</div>
+				<!--  end Pagination -->
+				<form id='actionForm' action="/project/recommend_list" method='get'>
+				<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
+				<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
+
+				<input type='hidden' name='type'
+					value='<c:out value="${ pageMaker.cri.type }"/>'> <input
+					type='hidden' name='keyword'
+					value='<c:out value="${ pageMaker.cri.keyword }"/>'>
+				</form>
 </div>
-
    </div>
 
+</div>
   </div>
   </div>
-
   </div>
-      </div>  
 
 
 <%@ include file="../includes/footer.jsp" %>
@@ -171,11 +159,18 @@
 	 }
 	</style>
 	<script src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
-	<script type="text/javascript">
-	
+	<script type="text/javascript">	
  	$(function() {
+		var actionForm = $("#actionForm");
+		$(".paginate_button a").on("click", function(e) {
+					e.preventDefault();
+					console.log('click');
+					actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+					actionForm.submit();
+				});
  		
-		$(".ni-favourite-28").click(function() {
+ 		//관심 프로젝트 ajax 
+ 		$(".ni-favourite-28").click(function() {
 			$(this).toggleClass("red");
 			var related_project = $(this).find("input").val();
 			if ($(this).hasClass("red")) { 
