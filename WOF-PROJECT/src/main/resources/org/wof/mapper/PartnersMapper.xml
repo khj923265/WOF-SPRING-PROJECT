@@ -7,13 +7,24 @@
 	<!-- 파트너스 찾기클릭시(파트너스 전체 리스트 불러오기) -->
 	<select id="partnersList" resultType="org.wof.domain.PartnersVO">
 		<![CDATA[
-		select m.MEMBER_NO, m.REAL_NAME, p.BIRTHDAY, p.PREFERED_AREA, 
+		select MEMBER_NO, REAL_NAME, BIRTHDAY, PREFERED_AREA, 
+		CAREER, SKILL, HASHTAG, AVAILABLE_DATE, PROFILE, target_member
+		
+		from (
+		select /*+INDEX_DESC(MEMBER SYS_C004099)*/ 
+		rownum rn, m.MEMBER_NO, m.REAL_NAME, p.BIRTHDAY, p.PREFERED_AREA, 
 		p.CAREER, p.SKILL, p.HASHTAG, p.AVAILABLE_DATE, p.PROFILE, f.target_member
-		from member m
+		from
+		member m
         JOIN partners p
         on m.MEMBER_NO = p.MEMBER_NO
         left outer join followpartners f
         on p.member_no = f.target_member
+        where rownum <= #{pageNum} * #{amount}
+        )
+        
+        where rn > (#{pageNum} -1) * #{amount}
+        
 		]]>
 	</select>
 	

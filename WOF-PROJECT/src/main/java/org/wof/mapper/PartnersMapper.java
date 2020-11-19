@@ -5,10 +5,11 @@ import java.util.List;
 import org.apache.ibatis.annotations.Select;
 import org.wof.domain.FollowPartnersVO;
 import org.wof.domain.PartnersVO;
+import org.wof.domain.Standard;
 
 public interface PartnersMapper {
 	
-	public List<PartnersVO> partnersList();
+	public List<PartnersVO> partnersList(Standard std);
 	
 	public List<PartnersVO> recommend();//지역, 보유기술 받아야함.
 	

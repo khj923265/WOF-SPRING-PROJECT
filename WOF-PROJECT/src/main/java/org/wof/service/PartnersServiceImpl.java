@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.wof.domain.FollowPartnersVO;
 import org.wof.domain.PartnersVO;
+import org.wof.domain.Standard;
 import org.wof.mapper.PartnersMapper;
 
 import lombok.AllArgsConstructor;
@@ -19,8 +20,11 @@ public class PartnersServiceImpl implements PartnersService{
 	private PartnersMapper partnersMapper;
 	
 	@Override
-	public List<PartnersVO> partnersList() {
-		return partnersMapper.partnersList();
+	public List<PartnersVO> partnersList(Standard std) {
+		
+		log.info("get List with standard: "+std);
+		
+		return partnersMapper.partnersList(std);
 	}
 	
 	@Override

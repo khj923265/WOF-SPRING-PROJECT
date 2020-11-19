@@ -1,11 +1,15 @@
 package org.wof.mapper;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.wof.domain.FollowPartnersVO;
+import org.wof.domain.PartnersVO;
+import org.wof.domain.Standard;
 
 import lombok.AllArgsConstructor;
 import lombok.Setter;
@@ -24,12 +28,25 @@ public class PartnersMapperTests {
 //		mapper.partnersList().forEach(mem_id -> log.info(mem_id));
 //	}
 	
+//	@Test
+//	public void testFollowDelete(){
+//		FollowPartnersVO followPartnersVO = new FollowPartnersVO();
+//		followPartnersVO.setSource_member("member7");
+//		followPartnersVO.setTarget_member("member26");
+//		mapper.followNo(followPartnersVO);
+//	}
+	
+	//페이징 테스트
 	@Test
-	public void testFollowDelete(){
-		FollowPartnersVO followPartnersVO = new FollowPartnersVO();
-		followPartnersVO.setSource_member("member7");
-		followPartnersVO.setTarget_member("member26");
-		mapper.followNo(followPartnersVO);
+	public void testPaging(){
+		Standard std = new Standard();
+		//10 개씩 3페이지
+		std.setPageNum(2);
+		std.setAmount(10);
+		
+		List<PartnersVO> list = mapper.partnersList(std);
+		
+		list.forEach(board -> log.info(board.getMember_no()));
 	}
 
 }

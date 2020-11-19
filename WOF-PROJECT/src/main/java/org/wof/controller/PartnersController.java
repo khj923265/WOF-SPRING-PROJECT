@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.wof.domain.FollowPartnersVO;
+import org.wof.domain.PageDTO;
 import org.wof.domain.PartnersVO;
+import org.wof.domain.Standard;
 import org.wof.service.PartnersService;
 
 import lombok.AllArgsConstructor;
@@ -27,8 +29,11 @@ public class PartnersController {
 	private PartnersService partnersService;
 	
 	@RequestMapping("/list")
-	public void partnersList(Model model){
-		model.addAttribute("partnersList", partnersService.partnersList());
+	public void partnersList(Model model, Standard std){
+		
+		log.info("list: "+std);
+		model.addAttribute("partnersList", partnersService.partnersList(std));
+		model.addAttribute("pageMaker", new PageDTO(std, 123));
 	}
 	
 	@RequestMapping("/followlist")

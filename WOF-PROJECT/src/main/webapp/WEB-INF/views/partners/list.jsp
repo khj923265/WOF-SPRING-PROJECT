@@ -186,6 +186,35 @@
 
 						</div>
 					</c:forEach>
+					
+					<!-- 페이징 -->
+					<nav aria-label="Page navigation example">
+					  <ul class="pagination justify-content-center">
+					  <c:if test="${pageMaker.prev }">
+					    <li class="page-item disabled">
+					      <a class="page-link" href="${pageMaker.startPage -1 }">
+					        <i class="fa fa-angle-left"></i>
+					        <span class="sr-only">Previous</span>
+					      </a>
+					    </li>
+					  </c:if>
+					  
+					  <c:forEach var="num" begin="${pageMaker.startPage }"
+					  end="${pageMaker.endPage }">
+					    <li class="page-item ${pageMaker.std.pageNum == num ? "active":"" }" >
+					    <a class="page-link" href="${num }">${num }</a></li>
+					  </c:forEach>
+					  
+					  <c:if test="${pageMaker.next }">
+					    <li class="page-item">
+					      <a class="page-link" href="${pageMaker.endPage +1 }">
+					        <i class="fa fa-angle-right"></i>
+					        <span class="sr-only">Next</span>
+					      </a>
+					    </li>
+					   </c:if>
+					  </ul>
+					</nav>
 
 				</div>
 			</div>
