@@ -14,5 +14,6 @@ public class PartnersVO {
 	private String hashtag;
 	private String available_date;
 	private String profile;
+	private String target_member;
 
 }
