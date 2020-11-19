@@ -55,10 +55,11 @@
 	<mybatis-spring:scan base-package="org.wof.mapper"/>
 	
 	
-	<!-- 트랜잭션 -->
+	
 	<tx:annotation-driven/>
 	<context:component-scan base-package="org.wof.service"/>
 	<context:component-scan base-package="org.wof.task"/>
+	
 	<task:annotation-driven/>
 
 </beans>

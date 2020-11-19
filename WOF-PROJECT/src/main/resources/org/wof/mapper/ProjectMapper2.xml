@@ -42,7 +42,7 @@
 	  ]]>
 	</select>
 	
-		<select id="ProjectList2" resultType="org.wof.domain.ProjectVO">
+	<select id="ProjectList2" resultType="org.wof.domain.ProjectVO">
 			select * from project
 		</select>
 	
@@ -72,8 +72,14 @@
    	select fp.* from followproject fp, project p where fp.related_project = p.proj_id
    </select>
    
-   <select id="projectStatusUpdate" resultType="org.wof.domain.ProjectVO">
-   		select proj_status, proj_start_date, proj_reg_date from project
+   <update id="projectStatusUpdate">
+    <![CDATA[
+   update project set proj_status = 2 where proj_start_date <= sysdate
+    ]]>
+   </update>
+   
+   <select id="locationProject" resultType="org.wof.domain.ProjectVO">
+   	select proj_work_place from project
    </select>
 
 </mapper>

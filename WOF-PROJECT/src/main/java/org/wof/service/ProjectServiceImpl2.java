@@ -49,7 +49,7 @@ public class ProjectServiceImpl2 implements ProjectService2 {
 	}
 	
 	@Override
-	public void RecommendSendMail(ProjectVO projectVO) {
+	public void RecommendSendMail() {
 	       MimeMessage message = mailSender.createMimeMessage();
 	       MimeMessageHelper messageHelper;
 	      try {

@@ -61,9 +61,15 @@ public class ProjectMapperTests {
 		log.info(projectMapper2.followProjectList());
 	}*/
 	
-	@Test
+/*	@Test
 	public void testProjectStatusUpdate(){
 		log.info(projectMapper2.projectStatusUpdate());
+	}*/
+	
+	@Test
+	public void testLocation() {
+		log.info(projectMapper2.locationProject());
+		
 	}
 
 }
