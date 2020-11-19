@@ -5,7 +5,7 @@
 <mapper namespace="org.wof.mapper.ProjectMapper2">
 
 
-	<!-- 추천 프로젝트를 하기 위한 페이징과 목록 불러오기 -->
+	<!-- 추천 프로젝트를 하기 위한 페이징과 검색 불러오기 -->
 	<select id="ProjectList" resultType="org.wof.domain.ProjectVO">
 	 <![CDATA[
 		select *
@@ -70,6 +70,10 @@
    
    <select id="followProjectList" resultType="org.wof.domain.FollowProjectVO">
    	select fp.* from followproject fp, project p where fp.related_project = p.proj_id
+   </select>
+   
+   <select id="projectStatusUpdate" resultType="org.wof.domain.ProjectVO">
+   		select proj_status, proj_start_date, proj_reg_date from project
    </select>
 
 </mapper>
