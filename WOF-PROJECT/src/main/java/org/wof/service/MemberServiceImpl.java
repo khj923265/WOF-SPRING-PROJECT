@@ -5,6 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.wof.domain.AuthVO;
+import org.wof.domain.ClientVO;
 import org.wof.domain.MemberVO;
 import org.wof.domain.PartnersVO;
 import org.wof.mapper.MemberMapper;
@@ -36,7 +37,7 @@ public class MemberServiceImpl implements MemberService{
         if (memberVO.getAuth().equals("ROLE_PARTNERS")){
             mapper.signUpPartners(memberVO);
         }else if (memberVO.getAuth().equals("ROLE_CLIENT")){
-
+            mapper.signUpClient(memberVO);
         }
 
     }
@@ -45,5 +46,11 @@ public class MemberServiceImpl implements MemberService{
     public PartnersVO partnersInfo(String userid) {
         String member_no = mapper.memberNo(userid);
         return mapper.partnersInfo(member_no);
+    }
+
+    @Override
+    public ClientVO clientInfo(String userid) {
+        String member_no = mapper.memberNo(userid);
+        return mapper.clientInfo(member_no);
     }
 }

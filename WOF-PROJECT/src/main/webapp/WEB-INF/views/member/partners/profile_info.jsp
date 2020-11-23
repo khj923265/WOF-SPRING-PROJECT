@@ -37,7 +37,9 @@
 	<!-- Header & Menu -->
 	<jsp:include page="../../includes/header.jsp" />
 	<%--로그인 유저 정보 객체--%>
-	<sec:authentication property="principal.member" var="member"/>
+	<sec:authorize access="isAuthenticated()">
+		<sec:authentication property="principal.member" var="member"/>
+	</sec:authorize>
 	<!-- Main content -->
 	<div class="main-content" id="panel">
 		<!-- Page content -->

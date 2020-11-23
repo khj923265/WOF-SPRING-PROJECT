@@ -1,14 +1,7 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
+<%@ include file="../../views/includes/header.jsp"%>
 
-<html>
-<head>
-    <meta http-equiv="content-type" content="text/html"; charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<jsp:include page="../includes/header.jsp" />
 <h1>partners</h1>
 
 <p>principal : <sec:authentication property="principal"/></p>
@@ -21,6 +14,4 @@ ${member.userid}
 
 <a href="/customLogout">Logout</a>
 
-<jsp:include page="../includes/footer.jsp"></jsp:include>
-</body>
-</html>
+<%@ include file="../../views/includes/footer.jsp"%>
