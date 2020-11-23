@@ -26,13 +26,13 @@ public class ScheduledTask {
 		log.warn(projectMapper2.projectStatusUpdate());
 	}
 	
-	//留ㅼ씪 �삤�썑 2�떆�뿉 �봽濡쒖젥�듃 愿��젴 硫붿씪�쓣 �궇�젮二쇰뒗 �뒪耳�以꾨윭
-	/*@Scheduled(cron = "* * 14 * * ?")
-	public void SendingMail() {
-		log.warn("start sending mail....");
-		log.warn("====================");
-		projectService2.RecommendSendMail();
-	}*/
+	//매일 오후 2시에 프로젝트 관련 메일을 날려주는 스케줄러
+//	@Scheduled(cron = "* * 14 * * ?")
+//	public void SendingMail() {
+//		log.warn("start sending mail....");
+//		log.warn("====================");
+//		projectService2.RecommendSendMail();
+//	}
 	
 	
 
