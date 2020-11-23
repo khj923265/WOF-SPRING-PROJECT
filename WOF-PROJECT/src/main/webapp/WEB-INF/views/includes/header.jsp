@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE html>
 <html>
@@ -62,19 +63,17 @@
 					</a></li>
 					<li class="nav-item"><a class="nav-link" href="#"><span
 							class="nav-link-text">공지사항</span></a></li>
-					<li class="nav-item"><c:if
-							test="${loginuser.mem_userid != null }">
-							<span>${loginuser.mem_name }님</span>
-							<a class="btn btn-primary"
-								href="${pageContext.request.contextPath }/Member/memberloginformAction.do">
-								<span>로그아웃</span>
-							</a>
-						</c:if> <c:if test="${loginuser.mem_userid == null }">
-							<a class="btn btn-primary"
-								href="${pageContext.request.contextPath }/Member/memberloginformAction.do">
-								<span>로그인</span>
-							</a>
-						</c:if></li>
+					<li class="nav-item">
+						<sec:authorize access="isAuthenticated()">
+							<sec:authentication property="principal.member" var="member"/>
+							<a class="dropdown-item"
+							   href="/customlogout"><i class="ni ni-user-run"></i> <span>로그아웃</span> </a>
+						</sec:authorize>
+						<sec:authorize access="isAnonymous()">
+							<a class="dropdown-item"
+							   href="/member/customlogin"><i class="ni ni-user-run"></i> <span>로그인</span> </a>
+						</sec:authorize>
+					</li>
 
 					<li class="nav-item d-xl-none">
 						<!-- Sidenav toggler -->
@@ -265,7 +264,7 @@
 									src="/resources/template/assets/img/theme/team-4.jpg">
 								</span>
 								<div class="media-body  ml-2  d-none d-lg-block">
-									<span class="mb-0 text-sm  font-weight-bold">${loginuser.mem_name }</span>
+									<span class="mb-0 text-sm  font-weight-bold">${member.real_name }</span>
 								</div>
 							</div>
 					</a>
@@ -273,14 +272,14 @@
 							<div class="dropdown-header noti-title">
 								<h6 class="text-overflow m-0">Welcome!</h6>
 							</div>
-							<c:if test="${loginuser.mem_type == 2 }">
+							<c:if test="${member.auth == 'ROLE_CLIENT' }">
 								<a
 									href="${pageContext.request.contextPath }/client/dashboard_client.jsp"
 									class="dropdown-item"> <i class="ni ni-single-02"></i> <span>My
 										dashboard</span>
 								</a>
 							</c:if>
-							<c:if test="${loginuser.mem_type == 3 }">
+							<c:if test="${member.auth == 'ROLE_PARTNERS' }">
 								<a
 									href="${pageContext.request.contextPath }/partners/dashboard_partners.jsp"
 									class="dropdown-item"> <i class="ni ni-single-02"></i> <span>My
@@ -295,16 +294,14 @@
 								class="ni ni-support-16"></i> <span>Support</span>
 							</a>
 							<div class="dropdown-divider"></div>
-							<c:if test="${loginuser.mem_userid != null }">
+							<sec:authorize access="isAuthenticated()">
 								<a class="dropdown-item"
-									href="${pageContext.request.contextPath }/Member/memberloginformAction.do"><i
-									class="ni ni-user-run"></i> <span>로그아웃</span> </a>
-							</c:if>
-							<c:if test="${loginuser.mem_userid == null }">
+								   href="/customlogout"><i class="ni ni-user-run"></i> <span>로그아웃</span> </a>
+							</sec:authorize>
+							<sec:authorize access="isAnonymous()">
 								<a class="dropdown-item"
-									href="${pageContext.request.contextPath }/Member/memberloginformAction.do"><i
-									class="ni ni-user-run"></i> <span>로그인</span> </a>
-							</c:if>
+								   href="/member/customlogin"><i class="ni ni-user-run"></i> <span>로그인</span> </a>
+							</sec:authorize>
 						</div>
 						<!-- .dropdown-menu dropdown-menu-right --></li>
 				</ul>
@@ -313,4 +310,5 @@
 		</div>
 		<!-- .container-fluid -->
 	</nav>
-	<!-- .navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom -->
+</div>
+</body>

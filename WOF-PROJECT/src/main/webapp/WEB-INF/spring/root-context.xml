@@ -3,13 +3,17 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
 	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
-		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
+		">
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
+	<context:component-scan base-package="org.wof.service" />
 
 	<!-- JDBC -->
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
@@ -18,25 +22,43 @@
 		<property name="username" value="project" />
 		<property name="password" value="kosta202" />
 	</bean>
+	
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource"
 		destroy-method="close">
 		<constructor-arg ref="hikariConfig" />
 	</bean>
+	
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	
+	<!-- Mail Service Bean -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+    <property name="host" value="smtp.gmail.com" />
+    <property name="port" value="587" />
+    <property name="username" value="jaeeunlim0329@gmail.com" />
+    <property name="password" value="ehrgkrp75~!" />
+    <property name="javaMailProperties">
+        <props>
+            <prop key="mail.transport.protocol">smtp</prop>
+            <prop key="mail.smtp.auth">true</prop>
+            <prop key="mail.smtp.starttls.enable">true</prop>
+            <prop key="mail.debug">true</prop>
+        </props>
+    </property>
+	</bean>
 	
 	<!-- MyBatis -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-	
 	<mybatis-spring:scan base-package="org.wof.mapper"/>
-	
-	<context:component-scan base-package="org.wof.service"></context:component-scan>
-	<!-- 트랜잭션 -->
+	<context:component-scan base-package="org.wof.service"/>
+
 	<tx:annotation-driven/>
+	<context:component-scan base-package="org.wof.task"/>
+	
+	<task:annotation-driven/>
 
 </beans>

@@ -8,8 +8,8 @@ import lombok.Data;
 @Data
 public class FollowProjectVO implements Serializable {
 	
-	private String follow_proj_id;
-	private String related_proj;
-	private String related_mem;
+	private String followproject_no;
+	private String related_project;
+	private String related_member;
 	
 }
