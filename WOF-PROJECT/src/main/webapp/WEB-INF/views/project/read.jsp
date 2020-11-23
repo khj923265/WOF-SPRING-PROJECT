@@ -52,6 +52,12 @@
 </head>
 
 <body>
+
+<sec:authorize access="isAuthenticated()">
+      <sec:authentication property="principal.member" var="member"/>   
+</sec:authorize>
+   
+   
 	<!-- Header & Menu -->
 	<jsp:include page="../includes/header.jsp"></jsp:include>
 
@@ -59,7 +65,7 @@
 	<!-- Main Content -->
 	<div class="main-content" id="panel">
 	<div class="row">
-		<div class="col-xl-8 col-lg-6">
+		<div class="col-xl-7 col-lg-5" style="margin-left: 80px; margin-top: 50px;">
 			<!-- project card -->
 			<div class="card d-block">
 				<div class="card-body">
@@ -70,7 +76,7 @@
 						</a>
 						<div class="dropdown-menu dropdown-menu-right">
 							<!-- item-->
-							<a href="updateProjectForm.do?proj_id=${project.getProj_id()}"
+							<a href="/project/update?proj_id=${project.getProj_id()}"
 								class="dropdown-item"><i class="mdi mdi-pencil mr-1"></i>Edit</a>
 							<!-- item-->
 							<a class="dropdown-item" data-toggle="modal" href="#myModal"><i
@@ -190,8 +196,8 @@
 		</div>
 		<!-- end col -->
 
-		<div class="col-lg-6 col-xl-4">
-			<div class="card">
+		<div class="col-lg-5 col-xl-3" style="margin-left: 80px; margin-top: 50px;">
+			<div class="card" >
 				<div class="card-body">
 					<h5 class="card-title mb-3">Profile</h5>
 					<div class="mt-3 chartjs-chart" style="height: 320px;">
@@ -201,13 +207,14 @@
 									<div class="row">
 										<div class="col">
 											<div class="text-left">
-												<h5 class="h3">임재은</h5>
+												<h5 class="h3">${member.realname}</h5>
 												<div class="h5 mt-4">
-													<i class="ni business_briefcase-24 mr-2"></i>jaeeunxo1@naver.com
+													<i class="ni business_briefcase-24 mr-2"></i>
+													${member.getUserid()}
 												</div>
 												<div>
-													<i class="ni education_hat mr-2"></i>University of Computer
-													Science
+													<i class="ni education_hat mr-2"></i>
+													${member.getUserphone()}
 												</div>
 												<div>
 													<i class="ni education_hat mr-2"></i>★★★☆☆
@@ -235,29 +242,43 @@
 						</div>
 						<!-- end card-->
 
-						<div class="card">
+						<div class="card" style="height:300px; margin-top: 20px; ">
 							<div class="card-body">
 								<h5 class="card-title mb-3">Files</h5>
 								<!-- 산출물 -->
-								<div class="card mb-1 shadow-none border">
+								<div class="card mb-1 shadow-none border" >
 									<form action="insertFileAction.do" method="post"
 										enctype="multipart/form-data">
 										파일번호 : <input type="text" name="file_id"><br>
 										프로젝트번호 : <input type="text" name="apply_id"><br>
 										회원번호 : <input type="text" name="mem_id"><br>
-										파일선택하기<br> <input type="file" name="fname"> <input
-											type="submit" value="파일업로드">
+										파일선택하기<br> <input type="file" name="fname">
+										
 									</form>
 								</div>
-
 								<div class="card mb-1 shadow-none border"></div>
-							</div>
-						</div>
+								
+								<div class="" align="center">
+									<input " id="fileUpload"  type="button" value="파일업로드">
+								</div>
+							</div><!-- card body -->
+						</div><!-- card -->
+								
+								
+								<div class="" align="center">
+									<input class="btn btn-default" id="chatConnect"  type="button" value="채팅하기">
+									<input class="btn btn-default" id="applyButton" type="button" value="지원하기">
+								</div>
+	
+					
 					</div>
 				</div>
 			</div>
 		</div>
 	
+	
+	
+								
 	
 	<!-- Footer -->
 	<jsp:include page="../includes/footer.jsp"></jsp:include>

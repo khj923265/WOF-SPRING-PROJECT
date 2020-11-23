@@ -8,7 +8,7 @@ import org.wof.service.ProjectService2;
 
 import lombok.extern.log4j.Log4j;
 
-@Log4j
+/*@Log4j
 @Component
 public class ScheduledTask {
 	
@@ -36,4 +36,4 @@ public class ScheduledTask {
 	
 	
 
-}
+}*/

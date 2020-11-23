@@ -1,9 +1,13 @@
 package org.wof.controller;
 
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -41,9 +45,9 @@ public class ProjectController {
 		return "redirect:/project/create_comp";
 	}
 	
-	@GetMapping("/{proj_id}")
+	@GetMapping({"/read", "/update"})
 	public void read(@RequestParam("proj_id") String proj_id, Model model1){
-		log.info("/read");
+		log.info("/read, /get");
 		model1.addAttribute("project", ps1.read(proj_id));
 	}
 	

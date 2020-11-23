@@ -20,7 +20,7 @@ values('project'|| seq_project.nextval, #{proj_title}, sysdate ,'member6', TO_DA
 </insert>
 
 
-<select id="read" resultType="org.wof.domain.ProjectVO">
+<select id="readProject" resultType="org.wof.domain.ProjectVO">
 select * from project where proj_id = #{proj_id}
 </select>
 

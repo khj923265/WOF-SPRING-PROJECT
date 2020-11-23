@@ -22,19 +22,20 @@ import lombok.extern.log4j.Log4j;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
-@AllArgsConstructor
 public class ProjectMapperTests {
 
+	@Setter(onMethod_ = @Autowired)
 	private ProjectMapper2 projectMapper2;
-
-	@Setter(onMethod_=@Autowired)
+	
+	@Setter(onMethod_ = @Autowired)
 	private ProjectMapper pm1;
 
+	
 
-	@Test
+	/*@Test
 	public void testLocation() {
 		log.info(projectMapper2.locationProject());
-	}
+	}*/
 	
 /*	@Test
 	public void testaddFollowProjectMapper() {
@@ -150,13 +151,13 @@ public class ProjectMapperTests {
 		
 		int count = pm1.updateProject(p1);
 		log.info("UPDATE COUNT: " +count);
-<<<<<<< HEAD
+
 		
 	}*/
 	
-=======
 
-	}
+
+	
 
 
 
@@ -204,5 +205,5 @@ public class ProjectMapperTests {
 	}*/
 
 
->>>>>>> 1d17d828f1c48a9ba3e8259b3ff2ad99c393f7ba
+
 }
