@@ -85,15 +85,17 @@ public class PointServiceImpl implements PointService {
 	}
 	
 	@Override
+	public List<PointVO> GetService(PointSearch search) {
+		return null;
+	}
+	
+	@Override
 	public int PaymentService(PointVO point){
 		return 1;
 	}
 
 
-	@Override
-	public List<PointVO> GetService(PointSearch search) {
-		return null;
-	}
+	
 
 
 

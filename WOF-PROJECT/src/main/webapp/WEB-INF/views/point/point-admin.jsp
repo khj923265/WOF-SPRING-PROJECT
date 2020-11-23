@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ include file = "../includes/header.jsp"%>
 
 	<!-- 로그인한 상태에 보여줄 태그 -->
 	<sec:authorize access="isAuthenticated()">
@@ -11,8 +12,6 @@
 	<sec:authorize access="isAuthenticated()">
 		<sec:authentication property="principal.member" var="member"/>	
 	</sec:authorize>
-
-	<jsp:include page="../includes/header.jsp"></jsp:include>
 	
 	<title>포인트 관리</title>
 	<!--
