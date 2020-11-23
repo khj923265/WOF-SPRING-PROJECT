@@ -4,6 +4,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import lombok.Data;
 import lombok.ToString;
+import lombok.Data;
 
 /*
  * pagination을 위한 기준

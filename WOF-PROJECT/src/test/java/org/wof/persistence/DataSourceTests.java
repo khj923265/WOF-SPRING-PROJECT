@@ -3,7 +3,6 @@ package org.wof.persistence;
 import static org.junit.Assert.*;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 
 import javax.sql.DataSource;
 
@@ -23,21 +22,21 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class DataSourceTests {
 	
-	@Setter(onMethod_=@Autowired)
+	@Setter(onMethod_={@Autowired})
 	private DataSource dataSource;
 
-	@Setter(onMethod_=@Autowired)
+	@Setter(onMethod_={@Autowired})
 	private SqlSessionFactory sqlSessionFactory;
 	
 	@Test
-	public void test() {
-		try {
-			SqlSession session = sqlSessionFactory.openSession();
+	public void testMyBatis() {
+		try (SqlSession session = sqlSessionFactory.openSession();
 			Connection conn = session.getConnection();
-			
+			){
+			log.info(session);
 			log.info(conn);
 		} catch(Exception e) {
-			log.error(e.getMessage());
+			fail(e.getMessage());
 		}
 	}
 
