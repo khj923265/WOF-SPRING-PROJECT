@@ -13,7 +13,8 @@
 
 	<div class="header pb-8 pt-5 md-8">
 		<div class="container">
-			<div class="header-body"></div>
+			<div class="header-body"><h1>파트너스들만의 비밀 공간</h1>
+			<h3>- 게시글을 이용하여 서로 소통해보세요.</h3></div>
 		</div>
 	</div>
 
