@@ -26,6 +26,9 @@ public class ProjectController {
 		log.info("list");
 		model1.addAttribute("list", ps1.getlist());
 	}
+	@GetMapping("/create")
+	public void create(){
+	}
 	
 	@PostMapping("/create")
 	public String create(ProjectVO p1, RedirectAttributes rttr1){
