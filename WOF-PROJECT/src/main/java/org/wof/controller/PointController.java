@@ -56,9 +56,9 @@ public class PointController {
     @PostMapping("/withdraw")
     public String withdraw(PointVO point, RedirectAttributes rttr){
     		
-    	/*if(service.WithdrawService(point) == 1){
+    	if(service.WithdrawService(point) == 1){
     		rttr.addFlashAttribute("result", "success");
-    	}*/
+    	}
     	
     		return "point/point-admin";
     }

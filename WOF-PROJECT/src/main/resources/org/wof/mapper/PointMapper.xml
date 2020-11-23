@@ -6,7 +6,7 @@
 
 	<insert id="ChargingList" parameterType="org.wof.domain.PointVO">
 		insert into POINT(point_id, point_amount, point_contents, point_chg_date)  
-		values ('point'||point_seq.nextval, #{point_amount}, #{point_contents}, sysdate)<!-- , point_total = #{point_total} -->
+		values ('point'||point_seq.nextval, #{point_amount}, #{point_contents}, sysdate)<!-- point_total = #{point_total} -->
 	</insert>
 	
 	<update id="Charging" parameterType="org.wof.domain.MemberVO">
@@ -15,16 +15,16 @@
 		where member_no = #{member_no}
 	</update>
 	
-	<!-- <insert id="WithdrawList" parameterType="org.wof.domain.PointVO">
+	<insert id="WithdrawList" parameterType="org.wof.domain.PointVO">
 		insert into POINT(point_id, point_amount, point_contents, point_chg_date)  
-		values ('point'||point_seq.nextval, #{point_amount}, #{point_contents}, sysdate), point_total = #{point_total}
+		values ('point'||point_seq.nextval, -1*#{point_amount}, #{point_contents}, sysdate) <!-- point_total = #{point_total} -->
 	</insert>
 	
 	<update id="Withdraw" parameterType="org.wof.domain.MemberVO">
 		update MEMBER 
-		set total_point = total_point || #{total_point}
+		set total_point = total_point - #{total_point}
 		where member_no = #{member_no}
-	</update> -->
+	</update>
 	
 	<!-- <update id="Payment" parameterType="org.wof.domain.PointVO">
 		update POINT 

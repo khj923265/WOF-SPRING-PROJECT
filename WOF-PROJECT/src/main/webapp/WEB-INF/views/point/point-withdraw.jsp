@@ -14,7 +14,7 @@
 						<b>포인트 인출</b>
 					</div>
 
-					<form action="charging" method="post">
+					<form action="withdraw" method="post">
 						<div class="form-group col-11 center">
 							<label for="example-text-input" class="form-control-label">인출
 								금액</label> <input class="form-control" type="text" id="point-amount"
