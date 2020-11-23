@@ -4,10 +4,6 @@ import java.util.List;
 
 import lombok.Data;
 
-/*
- * [2020-11-17 김태완]
- */
-
 @Data
 public class ProjectVO {
 	
@@ -38,8 +34,5 @@ public class ProjectVO {
 	private int proj_replyCnt;				// 댓글 개수
 	
 	//private List<ProjectAttachVO> proj_attachList;
-	
-	
-	
 	
 }

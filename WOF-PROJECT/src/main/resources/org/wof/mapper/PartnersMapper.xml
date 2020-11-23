@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.wof.mapper.PartnersMapper">
+
+<select id="applyProject" resultType="org.wof.domain.ProjectVO">
+	<![CDATA[
+		select p.proj_title, p.proj_start_date, p.proj_reqr_skill, 
+			p.proj_estimate, p.proj_reqr_person, p.proj_work_place
+		from project p, apply a
+		where p.proj_id = a.proj_id
+	]]>
+</select>
+
+<select id="partnersSupport" resultType="org.wof.domain.ProjectVO">
+	<![CDATA[
+		select p.proj_title, p.proj_reqr_skill, p.proj_career,
+			p.proj_start_date, p.proj_end_date, 
+			count(p.proj_reqr_person) as proj_reqr_person
+		from project p, apply a
+		where p.proj_id = a.proj_id 
+		group by p.proj_title, p.proj_reqr_skill, p.proj_career, p.proj_start_date, p.proj_end_date
+	]]>
+</select>
+
+<select id="dashboardpartnersApplyProject" resultType="org.wof.domain.ProjectVO">
+	<![CDATA[
+		select p.proj_title, p.proj_work_place, p.proj_reqr_skill, p.proj_start_date
+	from project p, apply a
+	where p.proj_id = a.proj_id
+		
+	]]>
+</select>
+
+
+</mapper>
