@@ -32,9 +32,6 @@
 </head>
 
 <body>
-<sec:authorize access="isAuthenticated()">
-	<sec:authentication property="principal.member" var="member"/>
-</sec:authorize>
 
 <!-- Main content -->
 <div class="main-content" id="panel">
@@ -52,10 +49,10 @@
 				<!-- Navbar links -->
 				<ul class="navbar-nav align-items-center  ml-md-auto">
 					<li class="nav-item mr-0 mr-md-2"><a class="nav-link"
-						href="${pageContext.request.contextPath }/Project/insertProjectForm.do"><span
+						href="${pageContext.request.contextPath }/project/create"><span
 							class="nav-link-text">프로젝트 등록</span></a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="${pageContext.request.contextPath }/Project/listProject.do"><span
+						href="${pageContext.request.contextPath }/project/list"><span
 							class="nav-link-text">프로젝트 찾기</span></a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="${pageContext.request.contextPath }/Client/partnersListAction.do"><span
@@ -267,7 +264,7 @@
 									src="/resources/template/assets/img/theme/team-4.jpg">
 								</span>
 								<div class="media-body  ml-2  d-none d-lg-block">
-									<span class="mb-0 text-sm  font-weight-bold">${loginuser.mem_name }</span>
+									<span class="mb-0 text-sm  font-weight-bold">${member.real_name }</span>
 								</div>
 							</div>
 					</a>
@@ -298,7 +295,6 @@
 							</a>
 							<div class="dropdown-divider"></div>
 							<sec:authorize access="isAuthenticated()">
-								<sec:authentication property="principal.member" var="member"/>
 								<a class="dropdown-item"
 								   href="/customlogout"><i class="ni ni-user-run"></i> <span>로그아웃</span> </a>
 							</sec:authorize>
@@ -314,4 +310,5 @@
 		</div>
 		<!-- .container-fluid -->
 	</nav>
-	<!-- .navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom -->
+</div>
+</body>
