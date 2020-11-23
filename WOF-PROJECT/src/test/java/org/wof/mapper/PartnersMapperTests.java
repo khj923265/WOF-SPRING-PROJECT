@@ -37,16 +37,35 @@ public class PartnersMapperTests {
 //	}
 	
 	//페이징 테스트
-	@Test
-	public void testPaging(){
-		Standard std = new Standard();
-		//10 개씩 3페이지
-		std.setPageNum(2);
-		std.setAmount(10);
+//	@Test
+//	public void testPaging(){
+//		Standard std = new Standard();
+//		//10 개씩 3페이지
+//		std.setPageNum(2);
+//		std.setAmount(10);
+//		
+//		List<PartnersVO> list = mapper.partnersList(std);
+//		
+//		list.forEach(board -> log.info(board.getMember_no()));
+//	}
+	
+//	@Test
+//	public void testFollowList(){
+//		Standard standard = new Standard();
+//		
+//		//member7
+//		List<PartnersVO> follows = mapper.followList("member7", standard);
+//		
+//		follows.forEach(follow -> log.info(follow));
+//	}
+	
+	public void testFollowList2(){
+		Standard standard = new Standard(1, 10);
 		
-		List<PartnersVO> list = mapper.partnersList(std);
+		//member7
+		List<PartnersVO> follows = mapper.followList("member7", standard);
 		
-		list.forEach(board -> log.info(board.getMember_no()));
+		follows.forEach(follow -> log.info(follow));
 	}
 
 }

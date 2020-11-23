@@ -192,22 +192,22 @@
 					  <ul class="pagination justify-content-center">
 					  <c:if test="${pageMaker.prev }">
 					    <li class="page-item disabled">
-					      <a class="page-link" href="${pageMaker.startPage -1 }">
+					      <a class="page-link" href="${pageMaker.startPage-1}">
 					        <i class="fa fa-angle-left"></i>
 					        <span class="sr-only">Previous</span>
 					      </a>
 					    </li>
 					  </c:if>
 					  
-					  <c:forEach var="num" begin="${pageMaker.startPage }"
-					  end="${pageMaker.endPage }">
-					    <li class="page-item ${pageMaker.std.pageNum == num ? "active":"" }" >
-					    <a class="page-link" href="${num }">${num }</a></li>
+					  <c:forEach var="num" begin="${pageMaker.startPage}"
+					  end="${pageMaker.endPage}">
+					    <li class="page-item ${pageMaker.standard.pageNum == num ? "active":""}" >
+					    <a class="page-link" href="${num}">${num}</a></li>
 					  </c:forEach>
 					  
-					  <c:if test="${pageMaker.next }">
+					  <c:if test="${pageMaker.next}">
 					    <li class="page-item">
-					      <a class="page-link" href="${pageMaker.endPage +1 }">
+					      <a class="page-link" href="${pageMaker.endPage +1}">
 					        <i class="fa fa-angle-right"></i>
 					        <span class="sr-only">Next</span>
 					      </a>
@@ -215,6 +215,11 @@
 					   </c:if>
 					  </ul>
 					</nav>
+					
+					<form id='actionForm' action="/partners/list" method="get">
+						<input type="hidden" name='pageNum' value = '${pageMaker.standard.pageNum}'>
+						<input type="hidden" name='amount' value = '${pageMaker.standard.amount}'>
+					</form>
 
 				</div>
 			</div>
@@ -232,11 +237,23 @@
 		<script type="text/javascript">
 			$(function() {
 				
+				var actionForm = $("#actionForm");
+				
+				$(".page-item a").on("click", function(e) {
+					e.preventDefault();
+					
+					console.log('click');
+					
+					actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+					actionForm.submit();
+				});
+				
 				$(".ni-favourite-28").click(function() {
 					var target_member = $(this).find("input").val();
 					var source_member = $("#source_member").val();
 					var clickThis = $(this);
 					
+					//var state = false;//완료상태 확인
 					// 아이디 중복체크
 					$.ajax({
 						url : "/partners/followCheck",
@@ -248,6 +265,9 @@
 						contentType : "application/json; charset=utf-8",						
 						success : function(data){
 							
+							//stats = true;//직전 작업 완료여부 확인
+							//if(state){//직전 작업 완료여부 확인
+								
 							parseInt(data);//integer 로 들어온 data String으로 캐스팅(파싱)
 							console.log(data);
 							
@@ -294,9 +314,18 @@
 								})//end ajax
 								
 							}//end else
-								
-						}//end success
+							
+							//state = false;
+						/* }else{
+							toastr.error("관심파트너스에 대한 중복체크가 완료되지 않았습니다.");
+							state = false;
+						}//end if state */
 						
+						}//end success
+						,
+						error : function(error) {
+							toastr.error("관심 파트너스의 중복체크중 오류가 발생하였습니다.");
+						}
 					})//end check ajax
 		
 				})//end click

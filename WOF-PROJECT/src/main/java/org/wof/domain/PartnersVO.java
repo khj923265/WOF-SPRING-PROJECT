@@ -15,5 +15,6 @@ public class PartnersVO {
 	private String available_date;
 	private String profile;
 	private String target_member;
+	private Standard standard;
 
 }

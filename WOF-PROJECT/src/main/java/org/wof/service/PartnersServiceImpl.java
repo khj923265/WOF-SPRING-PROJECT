@@ -20,11 +20,18 @@ public class PartnersServiceImpl implements PartnersService{
 	private PartnersMapper partnersMapper;
 	
 	@Override
-	public List<PartnersVO> partnersList(Standard std) {
+	public List<PartnersVO> partnersList(Standard standard) {
 		
-		log.info("get List with standard: "+std);
+		log.info("get List with standard: "+standard);
 		
-		return partnersMapper.partnersList(std);
+		return partnersMapper.partnersList(standard);
+	}
+	
+	//페이징처리 총 갯수
+	@Override
+	public int getTotal(Standard standard) {
+		log.info("get total count");
+		return partnersMapper.getTotalCount(standard);
 	}
 	
 	@Override
@@ -34,8 +41,8 @@ public class PartnersServiceImpl implements PartnersService{
 	}
 	
 	@Override
-	public List<PartnersVO> followList(String member_no) {
-		return partnersMapper.followList(member_no);
+	public List<PartnersVO> followList(String member_no, Standard standard) {
+		return partnersMapper.followList(member_no, standard);
 	}
 	
 	@Override

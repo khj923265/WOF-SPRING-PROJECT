@@ -29,18 +29,23 @@ public class PartnersController {
 	private PartnersService partnersService;
 	
 	@RequestMapping("/list")
-	public void partnersList(Model model, Standard std){
+	public void partnersList(Model model, Standard standard){
 		
-		log.info("list: "+std);
-		model.addAttribute("partnersList", partnersService.partnersList(std));
-		model.addAttribute("pageMaker", new PageDTO(std, 123));
+		log.info("list: "+standard);
+		model.addAttribute("partnersList", partnersService.partnersList(standard));
+		
+		int total = partnersService.getTotal(standard);
+		
+		log.info("total: "+total);		
+		
+		model.addAttribute("pageMaker", new PageDTO(standard, total));
 	}
 	
 	@RequestMapping("/followlist")
 	public void followList(
-			@RequestParam("member_no") String member_no, Model model){
+			@RequestParam("member_no") String member_no, Model model, Standard standard){
 		
-		model.addAttribute("followList", partnersService.followList(member_no));
+		model.addAttribute("followList", partnersService.followList(member_no, standard));
 	}
 	
 	@RequestMapping("/followCheck")

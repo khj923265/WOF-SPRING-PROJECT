@@ -4,14 +4,14 @@
 
 <mapper namespace="org.wof.mapper.PartnersMapper">
 
-	<!-- 파트너스 찾기클릭시(파트너스 전체 리스트 불러오기) -->
+	<!-- 파트너스 찾기클릭시(파트너스 전체 리스트 불러오기) /*+INDEX_DESC(MEMBER SYS_C004099)*/ -->
 	<select id="partnersList" resultType="org.wof.domain.PartnersVO">
 		<![CDATA[
 		select MEMBER_NO, REAL_NAME, BIRTHDAY, PREFERED_AREA, 
 		CAREER, SKILL, HASHTAG, AVAILABLE_DATE, PROFILE, target_member
 		
 		from (
-		select /*+INDEX_DESC(MEMBER SYS_C004099)*/ 
+		select 
 		rownum rn, m.MEMBER_NO, m.REAL_NAME, p.BIRTHDAY, p.PREFERED_AREA, 
 		p.CAREER, p.SKILL, p.HASHTAG, p.AVAILABLE_DATE, p.PROFILE, f.target_member
 		from
@@ -21,11 +21,19 @@
         left outer join followpartners f
         on p.member_no = f.target_member
         where rownum <= #{pageNum} * #{amount}
+        order by m.LOGIN_DATE desc
         )
         
         where rn > (#{pageNum} -1) * #{amount}
         
 		]]>
+	</select>
+	
+	<select id="getTotalCount" resultType="int">
+		select count(*)
+		from member m
+        JOIN partners p
+        on m.MEMBER_NO = p.MEMBER_NO
 	</select>
 	
 	<!-- 관심 파트너스 체크 -->
@@ -44,12 +52,22 @@
 		delete from FOLLOWPARTNERS where SOURCE_MEMBER=#{source_member} and TARGET_MEMBER=#{target_member}
 	</delete>
 	
-	<!-- 관심파트너스 리스트 -->
-	<select id="followList" parameterType="org.wof.domain.PartnersVO" resultType="org.wof.domain.PartnersVO">
-		select p.MEMBER_NO, p.BIRTHDAY, p.PREFERED_AREA, p.CAREER, p.SKILL, p.HASHTAG
-		from FOLLOWPARTNERS f, PARTNERS p
+	<!-- 관심파트너스 리스트 lpad 사용해보기 parameterType="org.wof.domain.PartnersVO" -->
+	<select id="followList" resultType="org.wof.domain.PartnersVO">
+		<![CDATA[
+		select MEMBER_NO, BIRTHDAY, PREFERED_AREA, CAREER, SKILL, HASHTAG
+		from(
+		select 
+		rownum rn, p.MEMBER_NO, p.BIRTHDAY, p.PREFERED_AREA, p.CAREER, p.SKILL, p.HASHTAG
+		from FOLLOWPARTNERS f, PARTNERS p, member m
 		where f.TARGET_MEMBER = p.MEMBER_NO
+        and p.member_no = m.member_no
 		and f.SOURCE_MEMBER = #{member_no}
+		and rownum <= #{standard.pageNum} * #{standard.amount}
+        order by m.LOGIN_DATE desc
+		)
+		where rn > (#{standard.pageNum} -1) * #{standard.amount}
+		]]>
 	</select>
 	
 	
