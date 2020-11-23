@@ -38,7 +38,7 @@ public class ProjectController {
 		return "redirect:/project/create_comp";
 	}
 	
-	@GetMapping("/read")
+	@GetMapping("/{proj_id}")
 	public void read(@RequestParam("proj_id") String proj_id, Model model1){
 		log.info("/read");
 		model1.addAttribute("project", ps1.read(proj_id));

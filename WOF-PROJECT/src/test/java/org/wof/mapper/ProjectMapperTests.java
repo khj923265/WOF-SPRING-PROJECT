@@ -27,7 +27,7 @@ public class ProjectMapperTests {
 	}
 */
 	
-	/*@Test
+	@Test
 	public void insertProject(){
 		ProjectVO p1 = new ProjectVO();
 		p1.setProj_title("quant 주식 투자 서비스 구축");
@@ -36,7 +36,7 @@ public class ProjectMapperTests {
 		p1.setProj_end_date("2021-02-02");
 		p1.setProj_estimate(20000000);
 		p1.setProj_reqr_person(5);
-		p1.setProj_reqr_skill("개발, 임베디드");
+		p1.setProj_reqr_skill("개발, #임베디드");
 		p1.setProj_type(0);
 		p1.setProj_career("기타 (지원자 필수요건에 따른 장단점 상담 필요),향후 유지보수, 고도화를 위한 아웃소싱 계획이 있습니다. ");
 		p1.setProj_pm(0);
@@ -70,7 +70,7 @@ public class ProjectMapperTests {
 		
 		pm1.insertProject(p1);
 		log.info(p1);
-	}*/
+	}
 	
 	/*@Test
 	public void projectRead(){
@@ -83,7 +83,7 @@ public class ProjectMapperTests {
 		log.info("DELETE COUNT: "+pm1.deleteProject("project8"));
 	}*/
 	
-	@Test
+	/*@Test
 	public void ProjectUpdate(){
 		ProjectVO p1 = new ProjectVO();
 		p1.setProj_id("project30");
@@ -93,6 +93,6 @@ public class ProjectMapperTests {
 		int count = pm1.updateProject(p1);
 		log.info("UPDATE COUNT: " +count);
 		
-	}
+	}*/
 	
 }

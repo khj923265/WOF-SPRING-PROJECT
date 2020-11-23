@@ -199,8 +199,8 @@
 											<div class="col-12 row text-center ">
 
 												<h2 class="card-title text-uppercase text-muted mb-0 mr-2">
-													${project.getProj_id()} <a
-														href="detailProject.do?proj_id=${project.getProj_id()}">${project.getProj_title()}</a>
+													${project.getProj_id()}
+													 <a	href='/project/<c:out value="${project.getProj_id()}"/>'>${project.getProj_title()}</a>
 												</h2>
 												<span class="justify-content-center">
 													<i id="related_proj" class="ni ni-favourite-28 mt-2" >

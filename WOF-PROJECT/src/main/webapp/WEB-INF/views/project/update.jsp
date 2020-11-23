@@ -7,7 +7,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>project_update.jsp</title>
+	<title>프로젝트 수정하기</title>
 	
 	<!-- Favicon -->
 	<link rel="icon" href="<%=request.getContextPath()%>/template/assets/img/brand/favicon.png" type="image/png">

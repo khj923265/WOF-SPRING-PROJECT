@@ -10,7 +10,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport"
 		content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>project_detail.jsp</title>
+	<title>프로젝트 상세보기</title>
 	
 	<!-- Favicon -->
 	<link rel="icon" href="${pageContext.request.contextPath}/template/assets/img/brand/favicon.png"
