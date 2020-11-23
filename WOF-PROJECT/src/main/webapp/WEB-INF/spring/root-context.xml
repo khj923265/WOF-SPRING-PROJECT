@@ -34,6 +34,8 @@
 	</bean>
 	<mybatis-spring:scan base-package="org.wof.mapper"/>
 	
+	<context:component-scan base-package="org.wof.service"/>
+	
 	
 	<!-- 트랜잭션 -->
 	<tx:annotation-driven/>

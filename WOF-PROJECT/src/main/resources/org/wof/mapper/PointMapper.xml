@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.wof.mapper.PointMapper">
+
+	<insert id="ChargingList" parameterType="org.wof.domain.PointVO">
+		insert into POINT(point_id, point_amount, point_contents, point_chg_date)  
+		values ('point'||point_seq.nextval, #{point_amount}, #{point_contents}, sysdate)<!-- , point_total = #{point_total} -->
+	</insert>
+	
+	<update id="Charging" parameterType="org.wof.domain.MemberVO">
+		update MEMBER 
+		set total_point = total_point + #{total_point}
+		where member_no = #{member_no}
+	</update>
+	
+	<!-- <insert id="WithdrawList" parameterType="org.wof.domain.PointVO">
+		insert into POINT(point_id, point_amount, point_contents, point_chg_date)  
+		values ('point'||point_seq.nextval, #{point_amount}, #{point_contents}, sysdate), point_total = #{point_total}
+	</insert>
+	
+	<update id="Withdraw" parameterType="org.wof.domain.MemberVO">
+		update MEMBER 
+		set total_point = total_point || #{total_point}
+		where member_no = #{member_no}
+	</update> -->
+	
+	<!-- <update id="Payment" parameterType="org.wof.domain.PointVO">
+		update POINT 
+		set point_id = 'point'||point_seq.nextval, point_amount = #{point_amount}, point_contents = #{point_contents}, 
+			point_chg_date = sysdate, point_total = #{point_total}
+		where POINT_OWNER 
+	</update> -->
+	
+	<!-- 
+	<select id="getList" resultType="org.wof.domain.PointVO">
+	<![CDATA[
+		select * from tbl_board where
+		bno > 0 and rownum <= 100
+		]]>
+	</select>
+	
+	<sql id="PointSearch">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							title like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'C'.toString()">
+							content like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'W'.toString()">
+							writer like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	
+	<select id="getListPaging" resultType="org.wof.domain.PointVO">
+  	<![CDATA[
+  	select 
+    	point_type, point_amount, point_contents, point_chg_date, point_total
+  	from 
+      	(
+      	select /*+INDEX_DESC(POINT SYS_C004143) */
+        	rownum rn, point_type, point_amount, point_contents, point_chg_date, point_total
+      	from 
+        	POINT
+      	where 
+  	]]>
+
+  	<include refid="PointSearch"></include> 
+      
+  	<![CDATA[    
+      	rownum <= #{pageNum} * #{amount}
+      	)
+  	where rn > (#{pageNum} -1) * #{amount}   
+  	]]>
+  	</select> -->
+	
+</mapper>
+
+

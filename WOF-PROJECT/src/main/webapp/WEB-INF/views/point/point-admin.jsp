@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-	<%-- <jsp:include page="../header.jsp"></jsp:include> --%>
+	<jsp:include page="../includes/header.jsp"></jsp:include>
 	
 	<title>포인트 관리</title>
 	<!--
@@ -14,74 +14,8 @@
 	<********************>
 	-->
 
-	<!-- Side nav -->
-	<nav
-		class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white"
-		id="sidenav-main">
+	<!-- Side nav [나중에 이어붙이기]-->
 
-		<div class="scrollbar-inner">
-			<!-- Brand -->
-			<div class="sidenav-header  align-items-center">
-				<a href="${pageContext.request.contextPath }/Project/movemain.do"><img alt=""
-					src="${pageContext.request.contextPath }/template/assets/img/brand/logo_transparent.png"
-					style="height: 50px; width: 100px; margin-left: 10px;">
-				</a>
-			</div>
-			<div class="navbar-inner">
-				<!-- Collapse -->
-				<div class="collapse navbar-collapse" id="sidenav-collapse-main">
-					<!-- Nav items -->
-					<h3 class="nav-item">
-						<a class="nav-" href="dashboard_client.jsp"> <i
-							class="ni ni-tv-2 text-primary"></i> <span class="nav-link-text">마이페이지</span>
-						</a>
-					</h3>
-					<br>
-					<ul class="navbar-nav">
-						<li class="nav-item"><a class="nav-link" href="icons.html">
-								<i class="ni ni-planet text-orange"></i> <span
-								class="nav-link-text">제안 지원</span>
-						</a></li>
-						<li class="nav-item"><a class="nav-link"
-							href="project_apply_detail.jsp"> <i
-								class="ni ni-bullet-list-67 text-default"></i> <span
-								class="nav-link-text">공지사항</span>
-						</a></li>
-						<li class="nav-item"><a class="nav-link"
-							href="project_apply_detail.jsp"> <i
-								class="ni ni-bullet-list-67 text-default"></i> <span
-								class="nav-link-text">문의하기</span>
-						</a></li>
-						<li class="nav-item"><a class="nav-link"
-							href="project_apply_detail.jsp"> <i
-								class="ni ni-bullet-list-67 text-default"></i> <span
-								class="nav-link-text">기본 정보 변경</span>
-						</a></li>
-					</ul>
-					<!-- Divider -->
-					<hr class="my-3">
-					<!-- Navigation -->
-					<ul class="navbar-nav mb-md-3">
-						<li class="nav-item"><a class="nav-link"
-							href="https://demos.creative-tim.com/argon-dashboard/docs/getting-started/overview.html"
-							> <i class="ni ni-spaceship"></i> <span
-								class="nav-link-text">파트너스 관리</span>
-						</a></li>
-						<li class="nav-item"><a class="nav-link"
-							href="https://demos.creative-tim.com/argon-dashboard/docs/foundation/colors.html"
-							> <i class="ni ni-palette"></i> <span
-								class="nav-link-text">포인트관리</span>
-						</a></li>
-						<li class="nav-item"><a class="nav-link"
-							href="${pageContext.request.contextPath}/Penalty/listPenaltyClient.do"
-							> <i class="ni ni-palette"></i> <span
-								class="nav-link-text">페널티 관리</span>
-						</a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</nav> 
     
  <!-- breadcrumb [포인트 관리] -->
 	 <div class="header bg-primary pb-6">
@@ -120,12 +54,13 @@
 				 </tr>
  <!-- ②포인트 충전/송금 -->  	
  				  <tr> 
- 				  <td><d id="remaining-point" method="get" name="remaining-point">4,980,000,000</b>&nbsp;P</td>	
+ 				  <td><d id="remaining-point" method="get" name="remaining-point">${point_total }</b>&nbsp;P</td>	
             	  <td>              		
             	  	<a type="button" class="btn btn-primary ml-2" name="charge" value="충전"
             	  		href = "javascript:popup()" target = "_self">충전</a>
             	    	<!-- href = "javascript:popup()" target = "_self" -->	
-  			  		<button type="button" class="btn btn-secondary ml-2" name="withdraw" value="charge">인출</button>
+  			  		<a type="button" class="btn btn-secondary ml-2" name="withdraw" value="인출"
+  			  			href = "javascript:popup2()" target = "_self">인출</a>
   			  	  </td>
   			  	  </tr>
             	</table>
@@ -294,11 +229,19 @@
     
 	<script>
         function popup(){
-            var url = "point-charging.jsp";
+            var url = "/point/charging";
             var name = "popup test";
             var option = "width = 500, height = 500, top = 100, left = 200, location = no"
             window.open(url, name, option);
         }
     </script>
+	<script>
+        function popup2(){
+            var url = "/point/withdraw";
+            var name = "popup test2";
+            var option = "width = 500, height = 500, top = 100, left = 200, location = no"
+            window.open(url, name, option);
+        }
+    </script>    
   
-	<%-- <jsp:include page="../footer.jsp"></jsp:include> --%>
+	<jsp:include page="../includes/footer.jsp"></jsp:include>
