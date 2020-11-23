@@ -1,39 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport"
-		content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>Profile_info_update.jsp</title>
-	
-	<!-- Favicon -->
-	<link rel="icon" href="${pageContext.request.contextPath}/template/assets/img/brand/favicon.png"
-		type="image/png">
-	<!-- Fonts -->
-	<link rel="stylesheet"
-		href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
-	<!-- Icons -->
-	<link rel="stylesheet"
-		href="${pageContext.request.contextPath}/template/assets/vendor/nucleo/css/nucleo.css" type="text/css">
-	<link rel="stylesheet"
-		href="${pageContext.request.contextPath}/template/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css"
-		type="text/css">
-	<!-- Argon CSS -->
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/template/assets/css/argon.css?v=1.2.0"
-		type="text/css">
-	<link rel="stylesheet" type="text/css"
-		href="${pageContext.request.contextPath}/template/assets/css/argon.css"
-		media="all" />
-</head>
-
-<body>
+		 pageEncoding="UTF-8"%>
 	<!-- Header & Menu -->
-	<jsp:include page="../../includes/header.jsp"></jsp:include>
-
-
+	<%@include file="../../includes/header.jsp"%>
 	<!-- Main content -->
 	<div class="main-content" id="panel">
 		<!-- Page content -->
@@ -53,6 +21,7 @@
 						</div>
 						<div class="card-body">
 							<h6 class="heading-small text-muted mb-4">추가정보</h6>
+							<form action="" method="post">
 							<div class="col-md-12 form-inline">
 								<div class="card card-profile col-md-4">
 									<img src="../template/assets/img/theme/img-1-1000x600.jpg"
@@ -93,52 +62,48 @@
 								<div class="col-md-8">
 									<div class="row">
 										<div class="col-12">
-											<h1>김형준</h1>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-12">
-											<span>남,</span><span>29세</span>
+											<h1>${memeber.real_name}</h1>
 										</div>
 									</div>
 									<div class="row my-3 pt-6">
 										<div class="col-6 col-md-2 pr-0 text-right">이메일 :</div>
-										<div class="col-6 col-md-4 text-left">khj923265@naver.com</div>
+										<div class="col-6 col-md-4 text-left">${member.userid}</div>
 										<div class="col-6 col-md-2 pr-0 text-right">경력 :</div>
 										<div class="col-6 col-md-4 text-left">${partners.career}</div>
 									</div>
 									<div class="row my-3 pt-5">
 										<div class="col-6 col-md-2 pr-0 text-right">전화번호 :</div>
-										<input type="text"
+										<input type="text" name="userphone"
 											class="form-control form-control-muted col-6 col-md-4 "
-											placeholder="010-8869-5100"></input>
+											placeholder="${member.userphone}"/>
 										<div class="col-6 col-md-2 pr-0 text-right">보유기술 :</div>
-										<input type="text"
+										<input type="text" name="skill"
 											class="form-control form-control-muted col-6 col-md-4 "
-											placeholder="010-8869-5100"></input>
+											placeholder="ex)JAVA"/>
 									</div>
 									<div class="row my-3 pt-5">
 										<div class="col-6 col-md-2 pr-0 text-right">선호지역 :</div>
-										<input type="text"
+										<input type="text" name="prefered_area"
 											class="form-control form-control-muted col-6 col-md-4 "
-											placeholder="010-8869-5100"></input>
+											placeholder="선호지역"/>
 										<div class="col-6 col-md-2 pr-0 text-right">해시태그 :</div>
-										<input type="text"
+										<input type="text" name="hashtag"
 											class="form-control form-control-muted col-6 col-md-4 "
-											placeholder="010-8869-5100"></input>
+											placeholder="ex)#JAVA"/>
 									</div>
 									<div class="row my-3 pt-5">
 										<div class="col-6 col-md-2 pr-0 text-right">비밀번호 변경 :</div>
-										<input type="text"
+										<input type="text" name="userpw"
 											class="form-control form-control-muted col-6 col-md-4 "
-											placeholder="010-8869-5100"></input>
+											placeholder="ex)${member.userphone}"/>
 										<div class="col-6 col-md-2 pr-0 text-right">비밀번호 확인 :</div>
-										<input type="text"
+										<input type="text" name="userpwch"
 											class="form-control form-control-muted col-6 col-md-4 "
-											placeholder="010-8869-5100"></input>
+											placeholder="ex)${member.userphone}"/>
 									</div>
 								</div>
 							</div>
+							</form>
 							<hr class="my-4" />
 							<!-- Address -->
 							<h6 class="heading-small text-muted mb-4">이력서 관리</h6>
@@ -248,10 +213,5 @@
 			</div>
 		</div>
 	</div>
-	
-	
 	<!-- footer -->
-	<jsp:include page="../../includes/footer.jsp"></jsp:include>
-</body>
-
-</html>
+	<%@include file="../../includes/footer.jsp"%>

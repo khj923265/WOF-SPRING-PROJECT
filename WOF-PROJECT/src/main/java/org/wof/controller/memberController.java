@@ -53,11 +53,11 @@ public class memberController {
 
         session.setAttribute("partners", partnersVO);
 
-        return "member/partners/profile_info";
+        return "redirect:/member/partners/profile_info";
     }
     @GetMapping("partners/profile_info_update")
-    public void partnersInfoUpdate(){
-
+    public String partnersInfoUpdate(){
+        return "member/partners/profile_info_update";
     }
 
     @GetMapping("partners/profile_info")
@@ -84,7 +84,7 @@ public class memberController {
 
         session.setAttribute("client",clientVO);
 
-        return "member/client";
+        return "redirect:member/client";
     }
 
     //------------------------------------------------------------------------

@@ -313,4 +313,3 @@
 		<!-- .container-fluid -->
 	</nav>
 </div>
-</body>
