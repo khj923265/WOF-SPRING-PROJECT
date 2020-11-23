@@ -55,7 +55,7 @@
 						href="${pageContext.request.contextPath }/project/list"><span
 							class="nav-link-text">프로젝트 찾기</span></a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="${pageContext.request.contextPath }/Client/partnersListAction.do"><span
+						href="${pageContext.request.contextPath }/partners/list"><span
 							class="nav-link-text">파트너스 찾기</span></a></li>
 					<li class="nav-item"><a class="nav-link active"
 						href="${pageContext.request.contextPath }/project/project_map_manage.jsp">

@@ -118,7 +118,8 @@
 					  </ul>
 					</nav>
 					
-					<form id='actionForm' action="/partners/followlist?member_no='${member_no }'" method="get">
+					<form id='actionForm' action="/partners/followlist" method="get">
+					<input type="hidden" name='member_no' value='member7'> <!-- 테스트 후 EL테크로 변경 -->
 						<input type="hidden" name='pageNum' value = '${pageMaker.standard.pageNum}'>
 						<input type="hidden" name='amount' value = '${pageMaker.standard.amount}'>
 					</form>

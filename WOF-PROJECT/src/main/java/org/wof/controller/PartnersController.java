@@ -2,6 +2,8 @@ package org.wof.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -49,8 +51,10 @@ public class PartnersController {
 		model.addAttribute("followList", partnersService.followList(member_no, standard));
 		
 		int followTotal = partnersService.followCount(member_no, standard);
-		
 		log.info("total: "+followTotal);
+		
+		model.addAttribute("member_no", member_no);
+		log.info("member_no: "+member_no);
 		
 		model.addAttribute("pageMaker", new PageDTO(standard, followTotal));
 	}

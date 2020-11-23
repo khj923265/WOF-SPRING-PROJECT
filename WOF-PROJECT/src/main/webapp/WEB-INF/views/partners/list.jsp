@@ -115,7 +115,7 @@
 				<!-- 파트너스리스트 -->
 				<div class="col-sm-9">
 				
-				<input type="hidden" value="member7" id="source_member"><!-- 테스트 후 변수로 변경 -->
+				<input type="hidden" value="${member.member_no }" id="source_member"><!-- 테스트 후 변수로 변경 -->
 				
 					<c:forEach var="partnersList" items="${partnersList }">
 						<div class="row bg-white mb-3">
