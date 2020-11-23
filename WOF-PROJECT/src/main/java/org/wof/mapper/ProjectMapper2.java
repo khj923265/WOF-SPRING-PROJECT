@@ -17,5 +17,5 @@ public interface ProjectMapper2 {
 	public List<FollowProjectVO> followProjectList();
 	public int projectStatusUpdate();
 	public List<ProjectVO> locationProject();
-
+	public ProjectVO projectList2(String proj_id);
 }

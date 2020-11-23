@@ -12,11 +12,11 @@
 								<option value=""
 									<c:out value="${pageMaker.cri.type == null?'selected':''}"/>>--</option>
 								<option value="T"
-									<c:out value="${pageMaker.cri.type eq 'T'?'selected':''}"/>>Title</option>
+									<c:out value="${pageMaker.cri.type eq 'S'?'selected':''}"/>>서울</option>
 								<option value="L"
-									<c:out value="${pageMaker.cri.type eq 'L'?'selected':''}"/>>Contents</option>
+									<c:out value="${pageMaker.cri.type eq 'K'?'selected':''}"/>>경기</option>
 								<option value="S"
-									<c:out value="${pageMaker.cri.type eq 'S'?'selected':''}"/>>Location</option>
+									<c:out value="${pageMaker.cri.type eq 'B'?'selected':''}"/>>부산</option>
 							</select> 
 							<input class="form-control is-valid" type='text' name='keyword' placeholder="Search"
 								value='<c:out value="${pageMaker.cri.keyword}"/>' /> <input
@@ -94,11 +94,14 @@
 	<div class="row">
     <div class="col-12 row text-center ">
         <h2 class="card-title text-uppercase text-muted mb-0 mr-2"><a href="#">${project.proj_title}</a></h2>
+        <form>
         <span class="justify-content-center"> 
-        <i class="ni ni-favourite-28 mt-2"> 
+        <i class="ni ni-favourite-28 mt-2">      
         <input type="hidden" value="${project.proj_id}">
+        <input tpye="hideen" value="${partner.userId}" id="related_member">      
         </i>
         </span>
+         </form>
     </div>
     </div>
     <p class="mt-3 mb-0 text-sm">
@@ -174,12 +177,17 @@
  		//관심 프로젝트 ajax 
  		$(".ni-favourite-28").click(function() {
 			$(this).toggleClass("red");
+			var vo = {
+					related_project = $(this).find("input").val();
+					
+			}
 			var related_project = $(this).find("input").val();
 			if ($(this).hasClass("red")) { 
 				alert("add"+related_project );
 				$.ajax({
 					url : "/follwProject/"+related_project,
 					type : "POST",
+					data : 
 					success : function(result) {
 						alert(result);
 					},

@@ -23,7 +23,7 @@ public class ScheduledTask {
 	public void ProjectStatusUpdate(){
 		log.warn("start project status update.....");
 		log.warn("====================");
-		log.warn(projectMapper2.projectStatusUpdate());
+		projectMapper2.projectStatusUpdate();
 	}
 	
 	//매일 오후 2시에 프로젝트 관련 메일을 날려주는 스케줄러

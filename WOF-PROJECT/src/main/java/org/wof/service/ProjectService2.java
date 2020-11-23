@@ -10,6 +10,7 @@ import org.wof.domain.ProjectVO;
 public interface ProjectService2 {
 	
 	public List<ProjectVO> projectList(Criteria cri);
+	public ProjectVO projectList2(String proj_id);
 	public int totalProject();
 	public void RecommendSendMail();
 	public int addFollowProject(String related_project);

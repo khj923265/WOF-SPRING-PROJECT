@@ -42,8 +42,8 @@
 	  ]]>
 	</select>
 	
-	<select id="ProjectList2" resultType="org.wof.domain.ProjectVO">
-			select * from project
+		<select id="projectList2" parameterType="java.lang.String" resultType="org.wof.domain.ProjectVO">
+			select * from project where proj_id = #{proj_id}
 		</select>
 	
 	<select id="totalProject" resultType="java.lang.Integer">
@@ -65,11 +65,12 @@
    </insert>
    
    <delete id="deleteFollowProject" parameterType="java.lang.String">
-   		delete from followproject where related_member = 'member28' and related_project = #{related_member}
+   		delete from followproject where related_member = #{related_member} and related_project = #{related_project}
    </delete> 
    
    <select id="followProjectList" resultType="org.wof.domain.FollowProjectVO">
-   	select fp.* from followproject fp, project p where fp.related_project = p.proj_id
+   	select fp.* from followproject fp, project p where fp.related_project = p.proj_id and fp.related_project = #{related_member}
+   	and fp.related_member = #{related_member}
    </select>
    
    <update id="projectStatusUpdate">
@@ -77,9 +78,5 @@
    update project set proj_status = 2 where proj_start_date <= sysdate
     ]]>
    </update>
-   
-   <select id="locationProject" resultType="org.wof.domain.ProjectVO">
-   	select proj_work_place from project
-   </select>
 
 </mapper>

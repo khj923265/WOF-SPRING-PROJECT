@@ -3,6 +3,7 @@ package org.wof.mapper;
 import static org.junit.Assert.*;
 
 import java.util.List;
+import java.util.Random;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -68,7 +69,13 @@ public class ProjectMapperTests {
 	
 	@Test
 	public void testLocation() {
-		log.info(projectMapper2.locationProject());
+		Random rm = new Random();
+		int total = projectMapper2.totalProject();
+		String project_id = "project" + (rm.nextInt(total)+1);
+		log.info(project_id);
+		ProjectVO vo = projectMapper2.projectList2(project_id);
+		log.info(vo.getProj_start_date());
+
 		
 	}
 
