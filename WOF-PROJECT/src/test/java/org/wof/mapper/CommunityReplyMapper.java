@@ -27,12 +27,12 @@ public class CommunityReplyMapper {
 	public void testMapper() {
 		log.info(mapper);
 	}
-
+/*
 	@Test
 	public void testList2() {
 		Standard st = new Standard(2, 10);
 		
 		List<CommunityReplyVO> replies = mapper.get
 		
-	}
+	}*/
 }
