@@ -1,6 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
 	
+	<!-- 로그인한 상태에 보여줄 태그 -->
+	<sec:authorize access="isAuthenticated()">
+  		<a href="">로그아웃</a>
+	</sec:authorize>
+	
+	<sec:authorize access="isAuthenticated()">
+		<sec:authentication property="principal.member" var="member"/>	
+	</sec:authorize>	
+	
 	<jsp:include page="../includes/header-point-detail.jsp"></jsp:include>
 
 	<title>포인트 인출</title>

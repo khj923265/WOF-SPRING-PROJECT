@@ -16,10 +16,9 @@ public interface PointMapper {
 	
 	public int Withdraw(MemberVO member);
 	
-	public int Payment(PointVO point);
-	
 	public List<PointVO> getList();
 	
 	public List<PointVO> getListPaging(PointSearch search);
 	
+	//public int Payment(PointVO point);
 }

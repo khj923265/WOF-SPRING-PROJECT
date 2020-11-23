@@ -3,6 +3,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+	<!-- 로그인한 상태에 보여줄 태그 -->
+	<sec:authorize access="isAuthenticated()">
+ 	 	<a href="">로그아웃</a>
+	</sec:authorize>
+
+	<sec:authorize access="isAuthenticated()">
+		<sec:authentication property="principal.member" var="member"/>	
+	</sec:authorize>
+
 	<jsp:include page="../includes/header.jsp"></jsp:include>
 	
 	<title>포인트 관리</title>
@@ -103,7 +112,7 @@
             <thead class="thead-light">
                   <tr>
                     <th scope="col" class="sort" data-sort="status">일자</th>
-                    <th scope="col" class="sort" data-sort="name">예금주명</th>
+                    <!-- <th scope="col" class="sort" data-sort="name">예금주명</th> -->
                     <th scope="col" class="sort" data-sort="name">내용</th>
                     <th scope="col" class="sort" data-sort="point">증감</th>
                     <th scope="col" class="sort" data-sort="point">잔여포인트</th>
@@ -111,31 +120,32 @@
                   </tr>
             </thead>
             <tbody class="list">
+             	<c:forEach items="${point }" var="point">
                   <tr>
                     <th scope="row">
                       <div class="media align-items-center">
                         <div class="media-body">
-                          <span class="name mb-0 text-sm">2020.10.14  09:17</span>
+                          <span class="name mb-0 text-sm"><fmt:formatDate value="${point_chg_date }" pattern="yyyy-MM-dd"/></span>
                         </div>
                       </div>
                     </th>
-                    <td class="name1">
-                    	<!--  -->
+                   <!--  <td class="name1">
+                    	
                     	클라이언트(신한)
-                    </td>
+                    </td> -->
                     <td>
                       <span class="badge badge-dot mr-4">
-                        <span class="status text-primary">보험사 모바일 시스템 유지관리 기획/디자인/개발</span>
+                        <span class="status text-primary"><c:out value="${point_contents }"/></span>
                       </span>
                     </td>
                     <td>
                       <div class="d-flex align-items-center">
-                        <span class="입출금  mr-2 text-info">+10,000,000,000 P</span>
+                        <span class="입출금  mr-2 text-info"><c:out value="${point_amount }"/></span>
                       </div>
                     </td>
                     <td>
                       <div class="d-flex align-items-center">
-                        <span class="remaining mr-2"><b>10,000,000,000 P</b></span>
+                        <span class="remaining mr-2"><b><c:out value="${member.total_point }"/></b></span>
                       </div>
                     </td>
                     <td class="text-right">
@@ -149,43 +159,7 @@
                       </div>
                     </td>
                   </tr>
-                  <tr>
-                    <th scope="row">
-                      <div class="media align-items-center">
-                        <div class="media-body">
-                          <span class="name mb-0 text-sm">2020.10.15  11:38</span>
-                        </div>
-                      </div>
-                    </th>
-                    <td class="name1">
-                      	워프
-                    </td>
-                    <td>
-                      <span class="badge badge-dot mr-4">
-                        <span class="status text-primary">보험사 모바일 시스템 유지관리 기획/디자인/개발</span>
-                      </span>
-                    </td>
-                    <td>
-                      <div class="d-flex align-items-center">
-                        <span class="입출금  mr-2 text-danger">-5,000,000,000 P</span>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="d-flex align-items-center">
-                        <span class="remaining mr-2"> 5,000,000,000 P</span>
-                      </div>
-                    </td>
-					<td class="text-right">
-                      <div class="dropdown">
-                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="fas fa-ellipsis-v"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                          <a class="dropdown-item" href="#">자주쓰는계좌 등록</a>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
+          		</c:forEach>        
             </tbody>
           </table>
         </div>

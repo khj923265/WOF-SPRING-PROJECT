@@ -26,20 +26,23 @@
 		where member_no = #{member_no}
 	</update>
 	
+	<select id="getList" resultType="org.wof.domain.PointVO">
+	<![CDATA[
+		SELECT point_chg_date "일자", point_contents "내용", point_amount "증감", total_point"잔여포인트" 
+		FROM POINT p, MEMBER m
+		WHERE p.point_owner = m.member_no
+		order by point_id desc ;
+		]]>
+	</select>
+	<!-- bno > 0 and rownum <= 100 -->
+	
+	
 	<!-- <update id="Payment" parameterType="org.wof.domain.PointVO">
 		update POINT 
 		set point_id = 'point'||point_seq.nextval, point_amount = #{point_amount}, point_contents = #{point_contents}, 
 			point_chg_date = sysdate, point_balance = #{point_balance}
 		where POINT_OWNER 
 	</update> -->
-	
-	
-	<select id="getList" resultType="org.wof.domain.PointVO">
-	<![CDATA[
-		select * from tbl_board where
-		bno > 0 and rownum <= 100
-		]]>
-	</select>
 	
 	<!-- <sql id="PointSearch">
 		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
