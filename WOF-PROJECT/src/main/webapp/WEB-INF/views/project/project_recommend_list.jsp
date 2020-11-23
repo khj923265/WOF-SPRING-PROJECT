@@ -1,5 +1,7 @@
 <%@ include file="../includes/header.jsp" %>
-    
+<sec:authorize access="isAuthenticated()">
+	<sec:authentication property="principal.member" var="member"/>	
+</sec:authorize>
 	<div class="header pb-6 container">
       <div class="container-fluid">
         <div class="header-body text-right ">
@@ -9,21 +11,8 @@
             <div class="form-group mb-0">
 				<div class='row'>
 							<select name='type'>
-								<option value=""
-									<c:out value="${pageMaker.cri.type == null?'selected':''}"/>>--</option>
-								<option value="T"
-									<c:out value="${pageMaker.cri.type eq 'S'?'selected':''}"/>>서울</option>
-								<option value="L"
-									<c:out value="${pageMaker.cri.type eq 'K'?'selected':''}"/>>경기</option>
-								<option value="S"
-									<c:out value="${pageMaker.cri.type eq 'B'?'selected':''}"/>>부산</option>
+								<option value=""></option>
 							</select> 
-							<input class="form-control is-valid" type='text' name='keyword' placeholder="Search"
-								value='<c:out value="${pageMaker.cri.keyword}"/>' /> <input
-								type='hidden' name='pageNum'
-								value='<c:out value="${pageMaker.cri.pageNum}"/>' /> <input
-								type='hidden' name='amount'
-								value='<c:out value="${pageMaker.cri.amount}"/>' />
 							<button class='btn btn-secondary'>Search</button>
 							</div>
 							</div>
@@ -33,9 +22,7 @@
 					</div>
 				</div>
 				</div>
-	
-    <!-- ì¶ì² íë¡ì í¸ -->
-    
+	    
     <div class="container">
     <div class="row justify-content-center">
     <div class="col-4">
@@ -61,13 +48,13 @@
               </div>
               <div class="text-center">
                 <h5 class="h3">
-               	 JAEEUN 
+               	 ${member.real_name} 
                 </h5>
                 <div class="h5 mt-4">
-                  <i class="ni business_briefcase-24 mr-2"></i>jaeeunxo1@naver.com
+                  <i class="ni business_briefcase-24 mr-2"></i> ${member.userid} 
                 </div>
                 <div>
-                  <i class="ni education_hat mr-2"></i>University of Computer Science
+                  <i class="ni education_hat mr-2"></i>${member.userphone}
                 </div>
               </div>
               </div>
@@ -88,20 +75,18 @@
             </div>
             <!-- card body -->
             <div class="card card-stats">
-
+	
 	<c:forEach var="project" items="${projects}">
     <div class="ml-3 mt-3 mb-3 card-body">		
 	<div class="row">
     <div class="col-12 row text-center ">
         <h2 class="card-title text-uppercase text-muted mb-0 mr-2"><a href="#">${project.proj_title}</a></h2>
-        <form>
         <span class="justify-content-center"> 
         <i class="ni ni-favourite-28 mt-2">      
-        <input type="hidden" value="${project.proj_id}">
-        <input tpye="hideen" value="${partner.userId}" id="related_member">      
+        <input type="hidden" id ="projectId" value="${project.proj_id}">
+        <input type="hidden" id="memberId" value="${member.member_no}">    
         </i>
         </span>
-         </form>
     </div>
     </div>
     <p class="mt-3 mb-0 text-sm">
@@ -120,7 +105,7 @@
 	</div>
 	
 	<p class="mt-3 mb-0 text-sm">
-   <i class="ni ni-chart-bar-32 mr-3"></i><span class="text-success mr-2">0 apply </span>
+   <i class="ni ni-chart-bar-32 mr-3"></i><span class="text-success mr-2">${project.apply_mem} people </span>
 	</p>
 </div>
  </c:forEach>
@@ -128,36 +113,6 @@
   </div>
 
   </div>
-       				<div class='pull-right'>
-					<ul class="pagination">
-   					
-						<c:if test="${pageMaker.prev}">
-							<li class="paginate_button previous"><a
-								href="/project/recommend_list?pageNum=${pageMaker.startPage -1}">Previous</a></li>
-						</c:if>
-
-						<c:forEach var="num" begin="${pageMaker.startPage}"
-							end="${pageMaker.endPage}">
-							<li class="paginate_button  ${pageMaker.cri.pageNum == num ? "active":""} ">
-								<a href="/project/recommend_list?pageNum=${num}">${num}</a>
-							</li>
-						</c:forEach>
-
-						<c:if test="${pageMaker.next}">
-							<li class="paginate_button next"><a
-								href="/project/recommend_list?pageNum=${pageMaker.endPage +1 }">Next</a></li>
-						</c:if>
-					</ul>
-				</div>
-				<!--  end Pagination -->
-				<form id='actionForm' action="/project/recommend_list" method='get'>
-				<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
-				<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
-				<input type='hidden' name='type'
-					value='<c:out value="${ pageMaker.cri.type}"/>'> <input
-					type='hidden' name='keyword'
-					value='<c:out value="${ pageMaker.cri.keyword}"/>'>
-				</form>
 </div>
    </div>
 
@@ -177,17 +132,14 @@
  		//관심 프로젝트 ajax 
  		$(".ni-favourite-28").click(function() {
 			$(this).toggleClass("red");
-			var vo = {
-					related_project = $(this).find("input").val();
-					
-			}
-			var related_project = $(this).find("input").val();
+			var related_project = $(this).find('#projectId').val();
+			var related_member = $(this).find('#memberId').val();
 			if ($(this).hasClass("red")) { 
-				alert("add"+related_project );
+				alert("add"+related_project+related_member );
 				$.ajax({
 					url : "/follwProject/"+related_project,
 					type : "POST",
-					data : 
+					data : related_member,
 					success : function(result) {
 						alert(result);
 					},
@@ -210,16 +162,6 @@
 					})
 				}
 			
-		});
- 		
-		var actionForm = $("#actionForm");
-		$(".paginate_button a").on("click", function(e) {
-					e.preventDefault();
-					console.log('click');
-					actionForm.find("input[name='pageNum']").val($(this).attr("href"));
-					actionForm.submit();
-				});
-		
-		
+		});		
 }); 
 </script>

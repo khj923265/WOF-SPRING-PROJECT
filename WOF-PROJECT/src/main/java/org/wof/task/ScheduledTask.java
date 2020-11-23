@@ -27,12 +27,12 @@ public class ScheduledTask {
 	}
 	
 	//매일 오후 2시에 프로젝트 관련 메일을 날려주는 스케줄러
-	@Scheduled(cron = "* * 14 * * ?")
+/*	@Scheduled(cron = "* * 14 * * ?")
 	public void SendingMail() {
 		log.warn("start sending mail....");
 		log.warn("====================");
 		projectService2.RecommendSendMail();
-	}
+	}*/
 	
 	
 

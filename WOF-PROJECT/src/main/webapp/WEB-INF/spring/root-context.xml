@@ -16,6 +16,7 @@
 		">
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
+	<context:component-scan base-package="org.wof.service" />
 
 	<!-- JDBC -->
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
@@ -56,11 +57,9 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	<mybatis-spring:scan base-package="org.wof.mapper"/>
-	
-	
-	
-	<tx:annotation-driven/>
 	<context:component-scan base-package="org.wof.service"/>
+
+	<tx:annotation-driven/>
 	<context:component-scan base-package="org.wof.task"/>
 	
 	<task:annotation-driven/>

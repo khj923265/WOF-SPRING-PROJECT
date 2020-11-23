@@ -6,7 +6,7 @@
 
 
 	<!-- 추천 프로젝트를 하기 위한 페이징과 검색 불러오기 -->
-	<select id="ProjectList" resultType="org.wof.domain.ProjectVO">
+<!-- 	<select id="ProjectList" resultType="org.wof.domain.ProjectVO">
 	 <![CDATA[
 		select *
 		from 
@@ -40,7 +40,11 @@
 		)
 		where rn > (#{pageNum} -1 ) * #{amount}
 	  ]]>
-	</select>
+	</select> -->
+	
+		<select id="ProjectList" resultType="org.wof.domain.ProjectVO">
+			select * from project
+		</select>
 	
 		<select id="projectList2" parameterType="java.lang.String" resultType="org.wof.domain.ProjectVO">
 			select * from project where proj_id = #{proj_id}
@@ -50,13 +54,11 @@
 		select count(*) from project
 	</select>
 	
-<!-- 	<select id="FollowProjectList" resultType="org.wof.domain.ProjectVO" >
-    select p.*
-	from follow_project fp, project p, mem_partner m 
-	where p.proj_id = fp.related_proj and m.mem_id = fp.related_mem 
-	and fp.related_mem = "member0009"
-   </select> -->
-   
+	<select id="recommendProjectList" parameterType="org.wof.domain.ProjectVO">
+		where pj.proj_work_place like ('%서울%') and pj.proj_reqr_skill LIKE '%디자인%' AND pj.proj_work_place LIKE '서울%'
+		AND pn.member_no = 'member29'
+	</select>
+	   
    <!-- 관심 프로젝트 -->
    <insert id="addFollowProject" parameterType="org.wof.domain.FollowProjectVO">
    <![CDATA[
@@ -68,11 +70,11 @@
    		delete from followproject where related_member = #{related_member} and related_project = #{related_project}
    </delete> 
    
-   <select id="followProjectList" resultType="org.wof.domain.FollowProjectVO">
-   	select fp.* from followproject fp, project p where fp.related_project = p.proj_id and fp.related_project = #{related_member}
-   	and fp.related_member = #{related_member}
+   <select id="followProjectList"  resultType="org.wof.domain.ProjectVO">
+   	select p.* from followproject fp, project p where fp.related_member = 'member2' and p.proj_id = fp.related_project
    </select>
    
+   <!-- project status -->
    <update id="projectStatusUpdate">
     <![CDATA[
    update project set proj_status = 2 where proj_start_date <= sysdate

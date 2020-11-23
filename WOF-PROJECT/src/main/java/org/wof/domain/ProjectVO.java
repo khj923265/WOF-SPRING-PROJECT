@@ -18,7 +18,6 @@ public class ProjectVO {
 	private String proj_apply_deadline;		// 지원 마감일
 	private String proj_start_date;			// 예상 시작일
 	private String proj_end_date;			// 예상 종료일
-	private int proj_total_date;			// 총 일수
 	private int proj_estimate;				// 예산
 	private int proj_reqr_person;			// 필요 인원
 	private String proj_reqr_skill;			// 필요 기술
@@ -36,7 +35,7 @@ public class ProjectVO {
 	private int proj_status;				// 현재 상태(0 : 모집중, 1 : 진행중, 2 : 완료)
 	private String proj_update_date;		// 변경일
 	private int proj_replyCnt;				// 댓글 개수
-	
+	private int proj_total_date;			// 총 일수
 	//private List<ProjectAttachVO> proj_attachList;
 	
 	

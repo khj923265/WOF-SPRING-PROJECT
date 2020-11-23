@@ -2,19 +2,18 @@ package org.wof.service;
 
 import java.util.List;
 
-import org.wof.domain.Criteria;
-import org.wof.domain.FollowProjectVO;
-import org.wof.domain.MeetVO;
-import org.wof.domain.ProjectVO;
+import org.wof.domain.*;
 
 public interface ProjectService2 {
 	
-	public List<ProjectVO> projectList(Criteria cri);
+
+	public List<ProjectVO> projectList();
 	public ProjectVO projectList2(String proj_id);
 	public int totalProject();
 	public void RecommendSendMail();
-	public int addFollowProject(String related_project);
+	public int addFollowProject(FollowProjectVO vo);
 	public int deleteFollowProject(String related_project);
+	public List<ProjectVO> followProjectList();
 	//public int addMeeting(MeetVO meetVO);
 
 }
