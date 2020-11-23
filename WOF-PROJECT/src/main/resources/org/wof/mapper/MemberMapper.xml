@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.wof.mapper.MemberMapper">
+
+    <resultMap id="memberMap" type="org.wof.domain.MemberVO">
+        <id property="userid" column="userid"/>
+        <result property="member_no" column="member_no"/>
+        <result property="userid" column="userid"/>
+        <result property="userpw" column="userpw"/>
+        <result property="real_name" column="real_name"/>
+        <result property="userphone" column="userphone"/>
+        <result property="auth" column="auth"/>
+        <result property="total_point" column="total_point"/>
+        <collection property="authList" resultMap="authMap">
+        </collection>
+    </resultMap>
+
+    <resultMap id="authMap" type="org.wof.domain.AuthVO">
+        <result property="userid" column="userid"/>
+        <result property="auth" column="auth"/>
+    </resultMap>
+
+    <select id="read" resultMap="memberMap">
+        select mem.member_no, mem.userid, userpw, real_name, userphone, auth.auth, total_point from member mem left outer join auth auth
+               on mem.userid = auth.userid where mem.userid = #{username}
+    </select>
+
+    <insert id="signUp" parameterType="org.wof.domain.MemberVO">
+        <selectKey keyProperty="member_no" resultType="String" order="BEFORE">
+            select 'member'||member_seq.nextval FROM DUAL
+        </selectKey>
+        insert into member (member_no, userid, userpw, real_name, userphone, auth)
+        values (#{member_no}, #{userid}, #{userpw}, #{real_name}, #{userphone}, #{auth})
+    </insert>
+
+    <insert id="insertAuth" parameterType="org.wof.domain.AuthVO">
+        insert into auth (userid, auth)
+        values (#{userid}, #{auth})
+    </insert>
+
+    <select id="checkId" parameterType="String" resultType="String">
+        select count(*) from member where userid = #{userid}
+    </select>
+
+    <select id="memberNo" parameterType="String" resultType="String">
+        select member_no from member where userid = #{userid}
+    </select>
+
+    <select id="partnersInfo" parameterType="String" resultType="org.wof.domain.PartnersVO">
+        select * from partners where member_no = #{member_no}
+    </select>
+
+    <insert id="signUpPartners" parameterType="org.wof.domain.MemberVO">
+        insert into partners (member_no) values (#{member_no})
+    </insert>
+
+</mapper>
