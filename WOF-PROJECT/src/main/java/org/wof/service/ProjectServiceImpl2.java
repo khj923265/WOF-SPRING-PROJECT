@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.wof.domain.Criteria;
 import org.wof.domain.FollowProjectVO;
 import org.wof.domain.ProjectVO;
+import org.wof.domain.Standard;
 import org.wof.mapper.ProjectMapper2;
 
 @Service
@@ -25,8 +26,8 @@ public class ProjectServiceImpl2 implements ProjectService2 {
 	private JavaMailSender mailSender;
 	
 	@Override
-	public List<ProjectVO> projectList(Criteria cri) {
-		return projectMapper2.ProjectList(cri);
+	public List<ProjectVO> projectList(Standard standard) {
+		return projectMapper2.ProjectList(standard);
 	}
 	
 	@Override

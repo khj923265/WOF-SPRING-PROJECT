@@ -13,6 +13,7 @@
 		">
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
+	<context:component-scan base-package="org.wof.service" />
 
 	<!-- JDBC -->
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
