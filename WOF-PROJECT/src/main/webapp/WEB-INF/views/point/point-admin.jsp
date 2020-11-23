@@ -54,7 +54,7 @@
 				 </tr>
  <!-- ②포인트 충전/송금 -->  	
  				  <tr> 
- 				  <td><d id="remaining-point" method="get" name="remaining-point">${point_total }</b>&nbsp;P</td>	
+ 				  <td><d id="remaining-point" method="get" name="remaining-point">${member.point_total }</b>&nbsp;P</td>	
             	  <td>              		
             	  	<a type="button" class="btn btn-primary ml-2" name="charge" value="충전"
             	  		href = "javascript:popup()" target = "_self">충전</a>

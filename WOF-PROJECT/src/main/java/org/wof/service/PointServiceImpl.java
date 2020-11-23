@@ -4,19 +4,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import javax.naming.InsufficientResourcesException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.wof.domain.MemberVO;
 import org.wof.domain.PointSearch;
 import org.wof.domain.PointVO;
 import org.wof.mapper.PointMapper;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
@@ -59,7 +54,7 @@ public class PointServiceImpl implements PointService {
 	}
 	
 	@Override
-	public int WithdrawService(PointVO point){
+	public int WithdrawService(PointVO point) {
 		
 		log.info("포인트 인출" + point);
 		
@@ -71,15 +66,10 @@ public class PointServiceImpl implements PointService {
 		log.info("member"+member);
 		
 		/*if(member.getTotal_point() < point.getPoint_amount()){
-			int temp = point.getPoint_amount() - member.getTotal_point();
-			throw new InsufficientResourcesException(String.valueOf(temp));
-		}else*/
-		
-		/*try {
-			pointMapper.Withdraw(member);
-		} catch (InsufficientResourcesException e) {
-			
+			throw new BalanceInsufficientException("잔고 부족 :"+(point.getPoint_amount()-member.getTotal_point())+"이 모자랍니다.");
 		}*/
+		
+		pointMapper.Withdraw(member);
 		
 		//실제 충전 (DB에 들어감)
 		
