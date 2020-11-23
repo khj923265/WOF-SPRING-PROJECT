@@ -45,7 +45,14 @@ public class PartnersController {
 	public void followList(
 			@RequestParam("member_no") String member_no, Model model, Standard standard){
 		
+		log.info("followlist: "+standard);	
 		model.addAttribute("followList", partnersService.followList(member_no, standard));
+		
+		int followTotal = partnersService.followCount(member_no, standard);
+		
+		log.info("total: "+followTotal);
+		
+		model.addAttribute("pageMaker", new PageDTO(standard, followTotal));
 	}
 	
 	@RequestMapping("/followCheck")

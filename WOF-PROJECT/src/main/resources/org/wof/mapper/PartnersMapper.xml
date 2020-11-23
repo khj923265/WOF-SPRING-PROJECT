@@ -70,5 +70,16 @@
 		]]>
 	</select>
 	
+	<select id="followCount" resultType="int">
+		<![CDATA[
+			select 
+			count(*)
+			from FOLLOWPARTNERS f, PARTNERS p, member m
+			where f.TARGET_MEMBER = p.MEMBER_NO
+	        and p.member_no = m.member_no
+			and f.SOURCE_MEMBER = #{member_no}
+		]]>
+	</select>
+	
 	
 </mapper>

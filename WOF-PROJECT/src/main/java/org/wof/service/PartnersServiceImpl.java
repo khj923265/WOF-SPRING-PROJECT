@@ -46,6 +46,12 @@ public class PartnersServiceImpl implements PartnersService{
 	}
 	
 	@Override
+	public int followCount(String member_no, Standard standard) {
+		log.info("get follow total count");
+		return partnersMapper.followCount(member_no, standard);
+	}
+	
+	@Override
 	public String followCheck(FollowPartnersVO followPartnersVO) {
 		return partnersMapper.followCheck(followPartnersVO);
 	}

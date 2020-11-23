@@ -118,7 +118,7 @@
 					  </ul>
 					</nav>
 					
-					<form id='actionForm' action="/partners/list" method="get">
+					<form id='actionForm' action="/partners/followlist?member_no='${member_no }'" method="get">
 						<input type="hidden" name='pageNum' value = '${pageMaker.standard.pageNum}'>
 						<input type="hidden" name='amount' value = '${pageMaker.standard.amount}'>
 					</form>

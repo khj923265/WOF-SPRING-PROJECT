@@ -12,7 +12,9 @@ public interface PartnersService {
 	
 	public List<PartnersVO> recommend();//지역, 보유기술 받아야함.
 	
-	public List<PartnersVO>	followList(String member_no, Standard standard);//membar_no String으로 안돼면 객채로..
+	public List<PartnersVO>	followList(String member_no, Standard standard);
+	
+	public int followCount(String member_no, Standard standard);//관심파트너스 카운트(페이징처리)
 	
 	public String followCheck(FollowPartnersVO followPartnersVO);
 	
