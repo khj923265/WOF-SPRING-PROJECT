@@ -76,15 +76,16 @@
             <div class="card card-stats">
 	
 	
-	<c:forEach var="project" items="${projects}">
+	
+	<c:forEach var="project" items="${follows}">
     <div class="ml-3 mt-3 mb-3 card-body">		
 	<div class="row">
     <div class="col-12 row text-center ">
     
         <h2 class="card-title text-uppercase text-muted mb-0 mr-2"><a href="#">${project.proj_title}</a></h2>
-    	<c:forEach var="follow" items="${follows}">
+    	
 		
-		<c:if test="${not empty follow.proj_id && follow.proj_id eq project.proj_id}">   
+		<c:if test="${not empty project.proj_id}">   
         <span class="justify-content-center">           
         <i class="ni ni-favourite-28 mt-2 red" >    
         <input type="hidden" id ="projectId" value="${project.proj_id}" >
@@ -92,20 +93,7 @@
         </i>   
         </span>    
     	</c:if>
-    	</c:forEach>
-    	
-    	<c:if test="${empty follow.proj_id && follow.proj_id ne project.proj_id}"> 
-    	<span class="justify-content-center">           
-        <i class="ni ni-favourite-28 mt-2" >    
-        <input type="hidden" id ="projectId" value="${project.proj_id}" >
-        <input type="hidden" id="memberId" value="${member.member_no}" >     
-        </i>   
-        </span> 
-		</c:if>
-    	
-		
-
-       
+	
     </div>
     </div>
     <p class="mt-3 mb-0 text-sm">
@@ -132,8 +120,8 @@ ${fn:substring(TextValue,0,60)}<br>${fn:substring(TextValue,61,120)}
 	</p>
 </div>
 
-</c:forEach>
- 
+
+</c:forEach> 
   
   </div>
 

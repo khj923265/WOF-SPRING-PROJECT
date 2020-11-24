@@ -5,15 +5,13 @@ import java.util.Random;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailSender;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.wof.domain.FollowProjectVO;
 import org.wof.domain.ProjectVO;
-import org.wof.domain.Standard;
+
 import org.wof.mapper.ProjectMapper2;
 
 @Service
@@ -34,12 +32,7 @@ public class ProjectServiceImpl2 implements ProjectService2 {
 	public ProjectVO projectList2(String proj_id) {
 		return projectMapper2.projectList2(proj_id);
 	}
-	
-	@Override
-	public int totalProject() {
-		return projectMapper2.totalProject();
-	}
-	
+		
 	@Override
 	public int addFollowProject(FollowProjectVO vo) {
 		return projectMapper2.addFollowProject(vo);
@@ -51,13 +44,13 @@ public class ProjectServiceImpl2 implements ProjectService2 {
 	}
 	
 	@Override
-	public List<ProjectVO> followProjectList(String related_member) {
-		return projectMapper2.followProjectList(related_member);
+	public List<ProjectVO> listFollowProject(String related_member) {
+		return projectMapper2.listFollowProject(related_member);
 	}
 	
 	@Override
-	public FollowProjectVO followProjectDetail(FollowProjectVO vo) {
-		return projectMapper2.followProjectDetail(vo);
+	public FollowProjectVO detailFollowProject(FollowProjectVO vo) {
+		return projectMapper2.detailFollowProject(vo);
 	}
 	
 	@Override
@@ -83,7 +76,7 @@ public class ProjectServiceImpl2 implements ProjectService2 {
 	          messageHelper.setFrom("jaeeun@naver.com"); // 보내는사람 생략하거나 하면 정상작동을 안함
 	          messageHelper.setTo("jaeeunlim0329@gmail.com"); // 받는사람 이메일
 	          messageHelper.setSubject("[WOF] 고객님에게 알맞은 프로젝트를 추천해드립니다."); // 메일제목은 생략이 가능하다
-	          messageHelper.setText(contents); // 메일 내용
+	          messageHelper.setText(contents, "text/html; charset=euc-kr"); // 메일 내용
 	          
 	      } catch (MessagingException e) {
 	         // TODO Auto-generated catch block

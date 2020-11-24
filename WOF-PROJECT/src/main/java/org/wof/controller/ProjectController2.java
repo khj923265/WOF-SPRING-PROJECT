@@ -20,13 +20,32 @@ public class ProjectController2 {
 	private ProjectService2 projectService2;
 	private MemberMapper memberMapper;
 
+/*	@GetMapping("recommend_list")
+	public String projectRecommendList(Principal principal, Standard standard, Model model){
+		log.info("recommend List 실행");
+		String related_member = memberMapper.memberNo(principal.getName());
+		model.addAttribute("projects", projectService2.projectList());
+		model.addAttribute("follows", projectService2.listFollowProject(related_member));
+		return "project/project_recommend_list";
+	}*/
+	
 	@GetMapping("recommend_list")
 	public String projectRecommendList(Principal principal, Standard standard, Model model){
 		log.info("recommend List 실행");
 		String related_member = memberMapper.memberNo(principal.getName());
 		model.addAttribute("projects", projectService2.projectList());
-		model.addAttribute("follows", projectService2.followProjectList(related_member));
+		model.addAttribute("follows", projectService2.listFollowProject(related_member));
 		return "project/project_recommend_list";
 	}
+	
+	@GetMapping("follow_list")
+	public String projectFollowList(Principal principal, Standard standard, Model model){
+		log.info("follow List 실행");
+		String related_member = memberMapper.memberNo(principal.getName());
+		model.addAttribute("follows", projectService2.listFollowProject(related_member));
+		return "project/project_follow";
+	}
+	
+	
 
 }
