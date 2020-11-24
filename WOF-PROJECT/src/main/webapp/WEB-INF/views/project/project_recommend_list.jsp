@@ -22,15 +22,19 @@
 					</div>
 				</div>
 				</div>
-	    
+
     <div class="container">
     <div class="row justify-content-center">
     <div class="col-4">
+    
         <div class="container-fluid mt--6">
       <div class="row">
-       
+      <sec:authorize access="isAnonymous()">
+  		<a href="/member/customlogin">Login</a>
+		</sec:authorize>
+       <sec:authorize access="isAuthenticated()">
           <div class="card card-profile">
-
+			
             <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
               <div class="d-flex justify-content-between">
               </div>
@@ -40,8 +44,7 @@
               <div class="row col justify-content-center">
 	              <div class="col-lg-3 order-lg-2">
               </div>
-            </div>	
-            
+            </div>	           
               <div class="row">
                 <div class="col">
                 </div>
@@ -55,14 +58,16 @@
                 </div>
                 <div>
                   <i class="ni education_hat mr-2"></i>${member.userphone}
-                </div>
+                </div>             
               </div>
-              </div>
-            </div>
+              </div>    
+            </div>           
           </div>
+          </sec:authorize>          
         </div>
-        </div>
-        </div>
+              
+        </div>        
+        </div>      
     
 	<!-- list -->
     <div class="col-8 container-fluid mt--6">
@@ -77,16 +82,30 @@
             <div class="card card-stats">
 	
 	<c:forEach var="project" items="${projects}">
+	<c:forEach var="follows" items="${follows}">
     <div class="ml-3 mt-3 mb-3 card-body">		
 	<div class="row">
     <div class="col-12 row text-center ">
         <h2 class="card-title text-uppercase text-muted mb-0 mr-2"><a href="#">${project.proj_title}</a></h2>
-        <span class="justify-content-center"> 
-        <i class="ni ni-favourite-28 mt-2">      
-        <input type="hidden" id ="projectId" value="${project.proj_id}">
-        <input type="hidden" id="memberId" value="${member.member_no}">    
-        </i>
+		<c:choose>
+		<c:when test="${follows.proj_id eq project.proj_id}">   
+        <span class="justify-content-center">           
+        <i class="ni ni-favourite-28 mt-2 red" >    
+        <input type="hidden" id ="projectId" value="${project.proj_id}" >
+        <input type="hidden" id="memberId" value="${member.member_no}" >     
+        </i>   
+        </span>    
+    	</c:when> 
+   		<c:otherwise>
+   		<span class="justify-content-center">        
+        <i class="ni ni-favourite-28 mt-2" >   
+        <input type="hidden" id ="projectId" value="${project.proj_id}" >
+        <input type="hidden" id="memberId" value="${member.member_no}" >     
+        </i>   
         </span>
+        </c:otherwise>
+		</c:choose> 
+       
     </div>
     </div>
     <p class="mt-3 mb-0 text-sm">
@@ -108,8 +127,9 @@
    <i class="ni ni-chart-bar-32 mr-3"></i><span class="text-success mr-2">${project.apply_mem} people </span>
 	</p>
 </div>
- </c:forEach>
-
+</c:forEach>
+</c:forEach>  
+  
   </div>
 
   </div>
@@ -119,6 +139,8 @@
 </div>
   </div>
   </div>
+  
+   
 <%@ include file="../includes/footer.jsp" %>
 
 	<style type="text/css">
@@ -134,12 +156,16 @@
 			$(this).toggleClass("red");
 			var related_project = $(this).find('#projectId').val();
 			var related_member = $(this).find('#memberId').val();
+			var data = $()
 			if ($(this).hasClass("red")) { 
 				alert("add"+related_project+related_member );
 				$.ajax({
 					url : "/follwProject/"+related_project,
 					type : "POST",
-					data : related_member,
+					data :{
+						"related_member" : related_member
+					},
+					dataType : "json",
 					success : function(result) {
 						alert(result);
 					},
@@ -151,7 +177,7 @@
 			else {
 				alert("delete"+ related_project);
 				$.ajax({
-					url : "/follwProject/"+related_project,
+					url : "/follwProject/"+related_project+"/"+related_member,
 					type : "DELETE",
 					success : function(result) {
 						alert(result);

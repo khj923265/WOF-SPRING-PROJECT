@@ -12,8 +12,9 @@ public interface ProjectService2 {
 	public int totalProject();
 	public void RecommendSendMail();
 	public int addFollowProject(FollowProjectVO vo);
-	public int deleteFollowProject(String related_project);
-	public List<ProjectVO> followProjectList();
+	public int deleteFollowProject(String followproject_no);
+	public List<ProjectVO> followProjectList(String related_member);
+	public FollowProjectVO followProjectDetail(FollowProjectVO vo);
 	//public int addMeeting(MeetVO meetVO);
 
 }

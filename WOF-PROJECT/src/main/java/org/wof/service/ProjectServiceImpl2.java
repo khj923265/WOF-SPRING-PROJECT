@@ -27,7 +27,7 @@ public class ProjectServiceImpl2 implements ProjectService2 {
 	
 	@Override
 	public List<ProjectVO> projectList() {
-		return projectMapper2.ProjectList();
+		return projectMapper2.projectList();
 	}
 	
 	@Override
@@ -46,13 +46,18 @@ public class ProjectServiceImpl2 implements ProjectService2 {
 	}
 	
 	@Override
-	public int deleteFollowProject(String related_project) {
-		return projectMapper2.deleteFollowProject(related_project);
+	public int deleteFollowProject(String followproject_no) {
+		return projectMapper2.deleteFollowProject(followproject_no);
 	}
 	
 	@Override
-	public List<ProjectVO> followProjectList() {
-		return projectMapper2.followProjectList();
+	public List<ProjectVO> followProjectList(String related_member) {
+		return projectMapper2.followProjectList(related_member);
+	}
+	
+	@Override
+	public FollowProjectVO followProjectDetail(FollowProjectVO vo) {
+		return projectMapper2.followProjectDetail(vo);
 	}
 	
 	@Override

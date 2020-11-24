@@ -195,10 +195,10 @@ public class ProjectMapperTests {
 		log.info(projectMapper2.followProjectList());
 	}*/
 
-	@Test
-	public void testProjectStatusUpdate(){
-		log.info(projectMapper2.followProjectList());
-	}
+//	@Test
+//	public void testProjectStatusUpdate(){
+//		log.info(projectMapper2.followProjectList());
+//	}
 
 
 }

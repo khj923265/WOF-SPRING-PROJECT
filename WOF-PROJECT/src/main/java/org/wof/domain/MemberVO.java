@@ -16,7 +16,7 @@ public class MemberVO {
     private String login_date;
     private String dorment_date;
     private String signout_date;
-    private String total_point;
+    private int total_point;
     private String total_evaluate;
 
     private List<AuthVO> authList;

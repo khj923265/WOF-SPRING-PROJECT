@@ -42,7 +42,7 @@
 	  ]]>
 	</select> -->
 	
-		<select id="ProjectList" resultType="org.wof.domain.ProjectVO">
+		<select id="projectList" resultType="org.wof.domain.ProjectVO">
 			select * from project
 		</select>
 	
@@ -62,16 +62,21 @@
    <!-- 관심 프로젝트 -->
    <insert id="addFollowProject" parameterType="org.wof.domain.FollowProjectVO">
    <![CDATA[
-      INSERT INTO followproject VALUES (#{followproject_no}, #{related_project}, #{related_member}, sysdate)
+      INSERT INTO followproject VALUES ('followproject'|| followproject_seq.nextval, #{related_project}, #{related_member}, sysdate)
     ]]>
    </insert>
    
+   <!-- 관심프로젝트 -->
    <delete id="deleteFollowProject" parameterType="java.lang.String">
-   		delete from followproject where related_member = #{related_member} and related_project = #{related_project}
+   		delete from followproject where followproject_no = #{followproject_no}
    </delete> 
    
-   <select id="followProjectList"  resultType="org.wof.domain.ProjectVO">
-   	select p.* from followproject fp, project p where fp.related_member = 'member2' and p.proj_id = fp.related_project
+   <select id="followProjectList" parameterType="java.lang.String"  resultType="org.wof.domain.ProjectVO">
+   	select p.* from followproject fp, project p where fp.related_member = #{related_member} and p.proj_id = fp.related_project
+   </select>
+   
+   <select id="followProjectDetail" parameterType="org.wof.domain.FollowProjectVO" resultType="org.wof.domain.FollowProjectVO">
+   	select followproject_no from followproject where related_member = #{related_member} and related_project = #{related_project}
    </select>
    
    <!-- project status -->

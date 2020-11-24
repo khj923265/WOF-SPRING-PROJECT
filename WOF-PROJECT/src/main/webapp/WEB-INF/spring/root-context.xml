@@ -15,20 +15,22 @@
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd 
 		">
 
-	<!-- Root Context: defines shared resources visible to all other web components -->
-	<context:component-scan base-package="org.wof.service" />
+	<!-- HikariCP configuration -->
+  	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+  		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
+  		<property name="jdbcUrl" value="jdbc:oracle:thin:@//kosta-wof-project-db.cjsmm2q2xupk.ap-northeast-1.rds.amazonaws.com/orcl" />
+  		<property name="username" value="project" />
+  		<property name="password" value="kosta202" />
+  	</bean>
+  	
+  	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource"
+  		destroy-method="close">
+  		<constructor-arg ref="hikariConfig" />
+  	</bean>
 
-	<!-- JDBC -->
-	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
-		<property name="jdbcUrl" value="jdbc:oracle:thin:@//kosta-wof-project-db.cjsmm2q2xupk.ap-northeast-1.rds.amazonaws.com/orcl" />
-		<property name="username" value="project" />
-		<property name="password" value="kosta202" />
-	</bean>
-	
-	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource"
-		destroy-method="close">
-		<constructor-arg ref="hikariConfig" />
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
 	</bean>
 	
 	<bean id="transactionManager"
@@ -51,11 +53,7 @@
         </props>
     </property>
 	</bean>
-	
-	<!-- MyBatis -->
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-	</bean>
+
 	<mybatis-spring:scan base-package="org.wof.mapper"/>
 	<context:component-scan base-package="org.wof.service"/>
 
