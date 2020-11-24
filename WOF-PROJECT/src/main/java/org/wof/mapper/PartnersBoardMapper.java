@@ -27,4 +27,6 @@ public interface PartnersBoardMapper {
 	
 	public void updateReplyCnt(@Param("bno") Long bno, @Param("amount") int amount);
 	
+	//public boolean plusCnt(Long bno);
+	
 }

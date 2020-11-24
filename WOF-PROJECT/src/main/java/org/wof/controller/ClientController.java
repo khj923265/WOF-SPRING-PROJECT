@@ -1,5 +1,6 @@
 package org.wof.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,7 @@ public class ClientController {
 	public void dashboardclientProject(Model model) {
 		log.info("클라이언트 대쉬보드 프로젝트 리스트");
 		model.addAttribute("dashboardclientProject", clientservice.dashboardclientProject());
+		model.addAttribute("dashboardFallowPartners", clientservice.dashboardFallowPartners());
 	}
-	 
+	
 }

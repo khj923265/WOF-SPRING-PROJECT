@@ -16,6 +16,7 @@ public class PartnersBoardVO {
 	private Date updateDate;
 	
 	private int replyCnt;
+	private Long viewscnt;
 	
 	private List<CommunityAttachVO> attachList;
 	

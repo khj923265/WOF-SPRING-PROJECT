@@ -186,7 +186,7 @@
 								</div>
 								<div class="col-md-1 column ui-sortable"></div>
 								<div class="col-md-5 column ui-sortable">
-									<b>관심 파트너스</b>
+									<b>관심 파트너스</b>${member.member_no} 
 									<div class="card bg-light text-dark">
 										<div class="card-body">
 											<table class="table align-items-center table-flush">
@@ -195,20 +195,24 @@
 														<th scope="col">
 														<i class="ni ni-chart-bar-32 mr-3"></i> 아이디
 														</th>
-														<th scope="col"><i class="ni ni-map-big ml-1"></i>
+														<th scope="col"><i class="ni ni-chart-pie-35 ml-1"></i>
 															경력</th>
-														<th scope="col"><i class="ni ni-map-big ml-1"></i>
+														<th scope="col"><i class="ni ni-badge ml-1"></i>
 															보유기술</th>
 													</tr>
 												</thead>
 												<tbody>
-													<c:forEach var="PartnerVO" items="${followList}">
+												<sec:authorize access="isAuthenticated()">
+												<c:if test="${member.member_no eq client.member_no }">
+													<c:forEach var="dashboardFallowPartners" items="${dashboardFallowPartners}">
 														<tr>
-															<td>${PartnerVO.mem_id }</td>
-															<td>${PartnerVO.partner_career }</td>
-															<td>${PartnerVO.partner_skill }</td>
+															<td>${dashboardFallowPartners.member_no }</td>
+															<td>${dashboardFallowPartners.career }</td>
+															<td>${dashboardFallowPartners.skill }</td>
 														</tr>
 													</c:forEach>
+													</c:if>
+													</sec:authorize>
 												</tbody>
 											</table>
 										</div>

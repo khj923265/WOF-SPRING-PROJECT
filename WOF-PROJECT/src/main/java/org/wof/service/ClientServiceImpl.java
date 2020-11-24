@@ -3,6 +3,8 @@ package org.wof.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.wof.domain.FollowPartnersVO;
+import org.wof.domain.PartnersVO;
 import org.wof.domain.ProjectVO;
 import org.wof.mapper.ClientMapper;
 
@@ -20,6 +22,14 @@ public class ClientServiceImpl implements ClientService {
 	public List<ProjectVO> dashboardclientProject() {
 		log.info("대쉬보드 클라이언트 프로젝트 리스트");
 		return clientMapper.dashboardclientProject();
+	}
+
+	@Override
+	public List<PartnersVO> dashboardFallowPartners() {
+		
+		log.info("클라이언트 대시보드에 관심 파트너스 리스트 출력하기");
+		
+		return clientMapper.dashboardFallowPartners();
 	}
 
 }

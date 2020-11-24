@@ -26,8 +26,11 @@
 					<div class="card-header border-0">
 						<h3 class="mb-0">파트너스 커뮤니티 게시판</h3>
 						<div align="right">
-							<button id="regBtn" type="button" class="btn btn-default">새
+						<sec:authorize access="isAuthenticated()">
+						<button id="regBtn" type="button" class="btn btn-default">새
 								글 등록하기</button>
+						</sec:authorize>
+							
 						</div>
 
 					</div>
@@ -41,6 +44,7 @@
 									<th scope="col"><i class="ni ni-circle-08"></i> 작성자</th>
 									<th scope="col"><i class="ni ni-air-baloon ml-1"></i> 작성일</th>
 									<th scope="col"><i class="ni ni-air-baloon ml-1"></i> 수정일</th>
+									<!-- <th scope="col"><i class="ni ni-air-baloon ml-1"></i> 조회수</th> -->
 								</tr>
 							</thead>
 							<tbody>
@@ -58,6 +62,7 @@
 										<td><fmt:parseDate var="dt" value="${pboard.updateDate }"
 												pattern="yyyy-MM-dd" /> <fmt:formatDate value="${dt }"
 												pattern="yyyy/MM/dd" /></td>
+												<%-- <td><c:out value="${pboard.viewscnt }" /></td> --%>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -198,6 +203,14 @@
 								.on(
 										"click",
 										function() {
+											var au = "${member.auth}";
+											
+											console.log("auth: " + au);
+											
+									 		if(au != "ROLE_PARTNERS") {
+												alert("죄송하지만, 파트너스만 작성이 가능한 게시판입니다.");
+												return;
+											} 
 											self.location = "/community/partners_community_register";
 										});
 						var actionForm = $("#actionForm");
@@ -218,8 +231,22 @@
 								.on(
 										"click",
 										function(e) {
+											
+											
 
 											e.preventDefault();
+											
+											
+											var au = "${member.auth}";
+											
+											console.log("auth: " + au);
+											
+									 		if(au != "ROLE_PARTNERS") {
+												alert("죄송하지만, 파트너스만 확인할 수 있습니다.");
+												return;
+											} 
+
+									 		
 											actionForm
 													.append("<input type='hidden' name='bno' value='"
 															+ $(this).attr(

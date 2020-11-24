@@ -57,7 +57,7 @@
 	</bean>
 	<mybatis-spring:scan base-package="org.wof.mapper" />
 
-	<context:component-scan base-package="org.wof.service"></context:component-scan>
+	<context:component-scan base-package="org.wof.service"/>
 	<context:annotation-config></context:annotation-config>
 
 	<!-- 트랜잭션 -->
@@ -72,6 +72,6 @@
 	<tx:annotation-driven/>
 	<context:component-scan base-package="org.wof.task"/>
 	
-	<task:annotation-driven/>
+	<!-- <task:annotation-driven/> -->
 
 </beans>

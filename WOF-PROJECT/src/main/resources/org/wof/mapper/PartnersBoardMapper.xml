@@ -97,4 +97,8 @@
 	update partners_community set replycnt = replycnt + #{amount} where bno = #{bno}
 </update>
 
+<update id="plusCnt" parameterType="long">
+	update partners_community set viewscnt = viewscnt + 1 where bno = #{bno}
+</update>
+
 </mapper>

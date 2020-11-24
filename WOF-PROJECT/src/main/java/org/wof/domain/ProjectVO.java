@@ -34,4 +34,5 @@ public class ProjectVO {
 	private int proj_total_date;			// 총 일수
 	//private List<ProjectAttachVO> proj_attachList;
 	
+	
 }

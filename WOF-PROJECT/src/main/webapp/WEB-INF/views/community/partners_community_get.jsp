@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
 <!-- Header & Menu -->
@@ -57,8 +55,14 @@
 												readonly="readonly"><c:out
 													value="${pboard.content }" /></textarea>
 										</div>
-										<button data-oper="modify" class="btn btn-default">글
+										<sec:authentication property="principal" var="pinfo"/>
+										<sec:authorize access="isAuthenticated()">
+										<c:if test="${pinfo.username eq pboard.writer }">
+											<button data-oper="modify" class="btn btn-default">글
 											수정</button>
+										</c:if>	
+										</sec:authorize>
+
 										<button data-oper="list" class="btn btn-info">글 목록</button>
 
 										<form id='operForm'
@@ -90,7 +94,7 @@
 
 
 
-		<style>
+<style>
 .uploadResult {
 	width: 100%;
 	background-color: #288cff;
@@ -181,7 +185,10 @@
 				<div class="card-header border-0">
 					<i class="ni ni-tie-bow"></i> 댓글
 					<div align="right">
+					<sec:authorize access="isAuthenticated()">
 						<button id='addReplyBtn' class='btn btn-primary'>댓글 달기</button>
+					</sec:authorize>
+						
 					</div>
 				</div>
 				<div class="card-body">
@@ -221,7 +228,7 @@
 				</div>
 				<div class="form-group">
 					<label>작성일</label> <input class="form-control" name='replyDate'
-						value='1995-04-22 00:13'>
+						value='1995-04-22 00:00:13'>
 				</div>
 
 			</div>
@@ -381,8 +388,19 @@
 						var modalRemoveBtn = $("#modalRemoveBtn");
 						var modalRegisterBtn = $("#modalRegisterBtn");
 
+						
+						var replyer = null;
+						
+						<sec:authorize access="isAuthenticated()">
+						
+						replyer = '<sec:authentication property = "principal.username"/>';
+						
+						</sec:authorize>
+						
+						
 						$("#addReplyBtn").on("click", function(e) {
 							modal.find("input").val("");
+							modal.find("input[name='replyer']").val(replyer);
 							modalInputReplyDate.closest("div").hide();
 							modal.find("button[id != 'modalCloseBtn']").hide();
 
@@ -391,6 +409,7 @@
 							$(".modal").modal("show");
 
 						});
+
 
 						modalRegisterBtn.on("click", function(e) {
 							var reply = {
@@ -456,11 +475,31 @@
 										});
 
 						modalModBtn.on("click", function(e) {
+							
+							var originalReplyer = modalInputReplyer.val();
+							
 							var reply = {
 								rno : modal.data("rno"),
-								reply : modalInputReply.val()
+								reply : modalInputReply.val(),
+								replyer : originalReplyer
 							};
 
+							
+							if(!replyer) {
+								alert("로그인 후에 수정이 가능합니다.");
+								modal.modal("hide");
+								return;
+							}
+							
+							console.log("original replyer : " + originalReplyer);
+							
+							if(replyer != originalReplyer) {
+								alert("자신의 댓글만 수정이 가능합니다.");
+								modal.modal("hide");
+								return;
+							}
+							
+							
 							replyService.update(reply, function(result) {
 								alert(result);
 								modal.modal("hide");
@@ -470,8 +509,27 @@
 
 						modalRemoveBtn.on("click", function(e) {
 							var rno = modal.data("rno");
+							
+							console.log("RNO : " + rno);
+							console.log("Replyer : " + replyer);
+							
+							if(!replyer) {
+								alert("로그인 후에 삭제가 가능합니다.");
+								modal.modal("hide");
+								return;
+							}
+							
+							var originalReplyer = modalInputReplyer.val();
+							
+							console.log("Original Replyer : " + originalReplyer);
+							
+							if(replyer != originalReplyer) {
+								alert("자신의 댓글만 삭제가 가능합니다.");
+								modal.modal("hide");
+								return;
+							}
 
-							replyService.remove(rno, function(result) {
+							replyService.remove(rno, originalReplyer, function(result) {
 								alert(result);
 								modal.modal("hide");
 								showList(pageNum);

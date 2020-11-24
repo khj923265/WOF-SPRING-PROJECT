@@ -8,6 +8,8 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,19 +47,21 @@ public class PartnersBoardController {
 		log.info("list : " + standard);
 		model.addAttribute("list", service.getList(standard));
 		//model.addAttribute("pageMaker", new PageDTO(st, 123));
-		
 		int total = service.getTotal(standard);
 		
 		log.info("total : " + total);
 		
 		model.addAttribute("pageMaker", new PageDTO(standard, total));
+
 	}
 	
 	@GetMapping("/partners_community_register")
+	@Secured({"ROLE_PARTNERS"})
 	public void register() {
 		
 	}
 	
+	@PreAuthorize("hasRole('ROLE_PARTNERS')")
 	@PostMapping("/partners_community_register")
 	public String register(PartnersBoardVO pboard, RedirectAttributes rttr) {
 		
@@ -84,9 +88,13 @@ public class PartnersBoardController {
 	public void get(@RequestParam("bno") Long bno, @ModelAttribute("standard") Standard standard, Model model) {
 		
 		log.info("/partners_community_get or modify");
+		
+		//service.plusCnt(bno);
 		model.addAttribute("pboard", service.get(bno));
 	}
+
 	
+	@PreAuthorize("principal.username == #pboard.writer")
 	@PostMapping("/partners_community_modify")
 	public String modify(PartnersBoardVO pboard, @ModelAttribute("standard") Standard standard, RedirectAttributes rttr) {
 		log.info("modify: " + pboard);
@@ -95,17 +103,14 @@ public class PartnersBoardController {
 			rttr.addFlashAttribute("result", "success");
 			//rttr.addAttribute("result", "success");
 		}
+
 		
-		rttr.addAttribute("pageNum", standard.getPageNum());
-		rttr.addAttribute("amount", standard.getAmount());
-		rttr.addAttribute("keyword", standard.getKeyword());
-		rttr.addAttribute("type", standard.getType());
-		
-		return "redirect:/community/partners_community_list";
+		return "redirect:/community/partners_community_list" + standard.getListLink();
 	}
 	
+	@PreAuthorize("principal.username == #writer")
 	@PostMapping("/partners_community_remove")
-	public String remove(@RequestParam("bno") Long bno, Standard standard, RedirectAttributes rttr) {
+	public String remove(@RequestParam("bno") Long bno, Standard standard, RedirectAttributes rttr, String writer) {
 		log.info("remove" + bno);
 		
 		List<CommunityAttachVO> attachList = service.getAttachList(bno);
@@ -117,7 +122,7 @@ public class PartnersBoardController {
 			rttr.addFlashAttribute("result", "success");
 		}
 		
-		return "redirect:/community/partners_community_list";
+		return "redirect:/community/partners_community_list" + standard.getListLink();
 	}
 	
 	@GetMapping(value="/getAttachList", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -155,4 +160,5 @@ public class PartnersBoardController {
 			}
 		});
 	}
+	
 }

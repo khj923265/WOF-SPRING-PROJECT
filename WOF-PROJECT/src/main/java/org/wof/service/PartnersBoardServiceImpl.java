@@ -98,7 +98,13 @@ public class PartnersBoardServiceImpl implements PartnersBoardService {
 		
 		return attachmapper.findByBno(bno);
 	}
-
+/*
+	@Override
+	public boolean plusCnt(Long bno) {
+		
+		return mapper.plusCnt(bno);
+	}
+*/
 /*	@Override
 	public List<PartnersBoardVO> getList() {
 		log.info("getList.....");

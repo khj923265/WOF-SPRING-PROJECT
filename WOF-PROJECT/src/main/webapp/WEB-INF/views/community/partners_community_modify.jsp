@@ -36,6 +36,7 @@
 									<div class="panel-body">
 										<form role="form"
 											action="/community/partners_community_modify" method="post">
+											<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
 											
 											<input type='hidden' name='pageNum' value='<c:out value="${standard.pageNum }"/>'>
 											<input type='hidden' name='amount' value='<c:out value="${standard.amount }"/>'>
@@ -76,11 +77,17 @@
 													<%-- value='<fmt:formatDate pattern="yyyy/MM/dd"  value="${pboard.updateDate}" />'  --%>readonly="readonly">
 											</div>
 
-
+											<sec:authentication property="principal" var="pinfo"/>
+											<sec:authorize access="isAuthenticated()">
+											<c:if test="${pinfo.username eq pboard.writer }">
 											<button type="submit" data-oper='modify'
 												class="btn btn-default">글 수정</button>
 											<button type="submit" data-oper='remove'
 												class="btn btn-danger">글 삭제</button>
+											</c:if>
+
+											</sec:authorize>
+
 											<button type="submit" data-oper='list' class="btn btn-info">글
 												목록</button>
 										</form>
@@ -198,6 +205,8 @@
 								.on(
 										"click",
 										function(e) {
+
+											
 											e.preventDefault();
 
 											var operation = $(this)
@@ -394,11 +403,11 @@ $(document).ready(function() {
 	    console.log(operation);
 	    
 	    if(operation === 'remove'){
-	      formObj.attr("action", "/board/remove");
+	      formObj.attr("action", "/community/partners_community_remove");
 	      
 	    }else if(operation === 'list'){
 	      //move to list
-	      formObj.attr("action", "/board/list").attr("method","get");
+	      formObj.attr("action", "/community/partners_community_list").attr("method","get");
 	      
 	      var pageNumTag = $("input[name='pageNum']").clone();
 	      var amountTag = $("input[name='amount']").clone();

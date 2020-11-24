@@ -23,4 +23,6 @@ public interface PartnersBoardService {
 	
 	public List<CommunityAttachVO> getAttachList(Long bno);
 	
+	//public boolean plusCnt(Long bno);
+
 }
