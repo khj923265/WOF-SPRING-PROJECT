@@ -15,5 +15,10 @@ public interface MemberMapper {
     ClientVO clientInfo(String member_no);
     int signUpPartners(MemberVO memberVO);
     int signUpClient(MemberVO memberVO);
+    String checkPw(String userpw);
+    int Withdrawal(MemberVO memberVO);
+    void partnersUpdate(MemberVO memberVO);
+    void partnersUpdate2(PartnersVO partnersVO);
+    void partnersUpdate3(MemberVO memberVO);
 
 }
