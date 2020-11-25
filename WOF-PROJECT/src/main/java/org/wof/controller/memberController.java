@@ -3,6 +3,7 @@ package org.wof.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.wof.domain.ClientVO;
 import org.wof.domain.MemberVO;
 import org.wof.domain.PartnersVO;
 import org.wof.service.MemberService;
@@ -52,7 +53,11 @@ public class memberController {
 
         session.setAttribute("partners", partnersVO);
 
-        return "member/partners";
+        return "member/partners/profile_info";
+    }
+    @GetMapping("partners/profile_info_update")
+    public void partnersInfoUpdate(){
+
     }
 
     @GetMapping("partners/profile_info")
@@ -72,7 +77,12 @@ public class memberController {
     }
     //클라이언트 로그인시 클라이언트정보 세션저장컨트롤러(시큐리티 success 핸들러에서만 접근)
     @GetMapping("success/client")
-    public String clientInfoInsert(){
+    public String clientInfoInsert(Principal principal,HttpServletRequest request){
+        HttpSession session = request.getSession();
+
+        ClientVO clientVO = service.clientInfo(principal.getName());
+
+        session.setAttribute("client",clientVO);
 
         return "member/client";
     }

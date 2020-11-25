@@ -12,10 +12,7 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
-	<!-- Root Context: defines shared resources visible to all other web components -->
-	<context:component-scan base-package="org.wof.service" />
-
-	<!-- JDBC -->
+	<!-- HikariCP configuration -->
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
 		<property name="jdbcUrl"
@@ -23,10 +20,13 @@
 		<property name="username" value="project" />
 		<property name="password" value="kosta202" />
 	</bean>
-	
-	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource"
-		destroy-method="close">
-		<constructor-arg ref="hikariConfig" />
+
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<constructor-arg ref="hikariConfig"/>
+	</bean>
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
 	</bean>
 	
 	<bean id="transactionManager"
@@ -36,7 +36,7 @@
 
 
 	<!-- Mail Service Bean -->
-	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+<!-- 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
     <property name="host" value="smtp.gmail.com" />
     <property name="port" value="587" />
     <property name="username" value="jaeeunlim0329@gmail.com" />
@@ -49,12 +49,9 @@
             <prop key="mail.debug">true</prop>
         </props>
     </property>
-	</bean>
+	</bean> -->
 	
 	<!-- MyBatis -->
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-	</bean>
 	<mybatis-spring:scan base-package="org.wof.mapper" />
 
 	<context:component-scan base-package="org.wof.service"/>
@@ -66,6 +63,7 @@
  	<context:component-scan base-package="org.wof.aop"></context:component-scan>
 
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+
 	<mybatis-spring:scan base-package="org.wof.mapper"/>
 	<context:component-scan base-package="org.wof.service"/>
 

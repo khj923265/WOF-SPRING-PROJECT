@@ -55,5 +55,12 @@
     <insert id="signUpPartners" parameterType="org.wof.domain.MemberVO">
         insert into partners (member_no) values (#{member_no})
     </insert>
+    <select id="clientInfo" parameterType="String" resultType="org.wof.domain.ClientVO">
+        select * from client where member_no = #{member_no}
+    </select>
+    <insert id="signUpClient" parameterType="org.wof.domain.MemberVO">
+        insert into client (member_no) values (#{member_no})
+    </insert>
+
 
 </mapper>
