@@ -6,42 +6,52 @@
 
 	<insert id="ChargingList" parameterType="org.wof.domain.PointVO">
 		insert into POINT(point_id, point_amount, point_contents, point_chg_date)  
-		values ('point'||point_seq.nextval, #{point_amount}, #{point_contents}, sysdate)<!-- , point_total = #{point_total} -->
+		values ('point'||point_seq.nextval, #{point_amount}, #{point_contents}, sysdate)<!-- point_total = #{point_total} -->
 	</insert>
 	
-	<update id="Charging" parameterType="org.wof.domain.MemberVO">
+	<update id="Charging" parameterType="org.wof.domain.PointVO">
 		update MEMBER 
-		set total_point = total_point + #{total_point}
-		where member_no = #{member_no}
+		set total_point = total_point + #{point_amount}
+		where member_no = #{point_owner}
 	</update>
 	
-	<!-- <insert id="WithdrawList" parameterType="org.wof.domain.PointVO">
+	<insert id="WithdrawList" parameterType="org.wof.domain.PointVO">
 		insert into POINT(point_id, point_amount, point_contents, point_chg_date)  
-		values ('point'||point_seq.nextval, #{point_amount}, #{point_contents}, sysdate), point_total = #{point_total}
+		values ('point'||point_seq.nextval, -1*#{point_amount}, #{point_contents}, sysdate) <!-- point_balance = #{point_balance} -->
 	</insert>
 	
-	<update id="Withdraw" parameterType="org.wof.domain.MemberVO">
+	<update id="Withdraw" parameterType="org.wof.domain.PointVO">
 		update MEMBER 
-		set total_point = total_point || #{total_point}
-		where member_no = #{member_no}
-	</update> -->
+		set total_point = total_point - #{point_amount}
+		where member_no = #{point_owner}
+	</update>
+	
+	<select id="getPointTotal" resultType="org.wof.domain.MemberVO">
+		SELECT total_point
+		FROM MEMBER 
+		WHERE member_no = #{member_no}
+	</select>
+	
+	<select id="getList" resultType="org.wof.domain.PointVO">
+	<![CDATA[
+		SELECT p.point_chg_date, m.real_name, p.point_contents, p.point_amount, p.point_balance
+		FROM POINT p, MEMBER m
+		WHERE p.point_owner = m.member_no
+		and p.point_owner = #{member_no}
+		]]>
+	</select>
+	<!-- order by point_id desc -->
+	<!-- bno > 0 and rownum <= 100 -->
+	
 	
 	<!-- <update id="Payment" parameterType="org.wof.domain.PointVO">
 		update POINT 
 		set point_id = 'point'||point_seq.nextval, point_amount = #{point_amount}, point_contents = #{point_contents}, 
-			point_chg_date = sysdate, point_total = #{point_total}
+			point_chg_date = sysdate, point_balance = #{point_balance}
 		where POINT_OWNER 
 	</update> -->
 	
-	<!-- 
-	<select id="getList" resultType="org.wof.domain.PointVO">
-	<![CDATA[
-		select * from tbl_board where
-		bno > 0 and rownum <= 100
-		]]>
-	</select>
-	
-	<sql id="PointSearch">
+	<!-- <sql id="PointSearch">
 		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
 			<foreach item='type' collection="typeArr">
 				<trim prefix="OR">
@@ -59,29 +69,35 @@
 				</trim>
 			</foreach>
 		</trim>
-	</sql>
+	</sql> -->
 	
 	<select id="getListPaging" resultType="org.wof.domain.PointVO">
   	<![CDATA[
   	select 
-    	point_type, point_amount, point_contents, point_chg_date, point_total
+    	point_id, point_balance, point_type, point_amount, point_contents, point_chg_date, point_owner
   	from 
       	(
-      	select /*+INDEX_DESC(POINT SYS_C004143) */
-        	rownum rn, point_type, point_amount, point_contents, point_chg_date, point_total
+      	select /*+INDEX_DESC(POINT SYS_C004144) */
+        	rownum rn, point_id, point_balance, point_type, point_amount, point_contents, point_chg_date, point_owner
       	from 
-        	POINT
-      	where 
+     	POINT
+      	where rownum <= #{pageNum} * #{amount}
+      	)
+      	where rn > (#{pageNum} -1) * #{amount}
   	]]>
-
-  	<include refid="PointSearch"></include> 
+  	</select> 
+	
+		<!-- <include refid="PointSearch"></include> 
       
   	<![CDATA[    
       	rownum <= #{pageNum} * #{amount}
       	)
-  	where rn > (#{pageNum} -1) * #{amount}   
-  	]]>
-  	</select> -->
+  	where rn > (#{pageNum} -1) * #{amount} 
+  	]]>  -->  
+  	
+  	<select id="getTotalCount" resultType="int">
+  		select count(*) from POINT where point_no > 0
+  	</select>
 	
 </mapper>
 
