@@ -1,57 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<!DOCTYPE html>
-<html>
-
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport"
-		content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>create_user.jsp</title>
-
-	<!-- Favicon -->
-	<link rel="icon" href="${pageContext.request.contextPath}/template/assets/img/brand/favicon.png"
-		type="image/png">
-	<!-- Fonts -->
-	<link rel="stylesheet"
-		href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
-	<!-- Icons -->
-	<link rel="stylesheet"
-		href="${pageContext.request.contextPath}/template/assets/vendor/nucleo/css/nucleo.css" type="text/css">
-	<link rel="stylesheet"
-		href="${pageContext.request.contextPath}/template/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css"
-		type="text/css">
-	<!-- Argon CSS -->
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/template/assets/css/argon.css?v=1.2.0"
-		type="text/css">
-	<link rel="stylesheet" type="text/css"
-		href="${pageContext.request.contextPath}/template/assets/css/argon.css"
-		media="all" />
-
-<script type="text/javascript">
-	function check() {
-		if(!document.user.userid.value){
-			alert("비밀번호를 입력하세요.")
-			return false;
-		}else if(document.user.userpw.value !== document.user.userpwck.value){
-			alert("비밀번호를 다시 입력하세요.")
-			return false;
-		}else if(!document.user.real_name.value){
-			alert("이름을 입력하세요.")
-			return false;
-		}else if(!document.user.userphone.value){
-			alert("번호를 입력하세요.")
-			return false;
-		}else if (!ischeckId){
-			alert("아이디 중복확인을 하세요.")
-			return false;
-		}
-	}
-</script>
-</head>
-
-<body>
 	<!-- Header & Menu -->
 	<%@ include file="../includes/header.jsp" %>
 
@@ -125,11 +74,28 @@
         </div>
       </div>
     </div>
+<!-- Footer -->
+<%@ include file="../includes/footer.jsp" %>
 
-
-	<!-- Footer -->
-	<%@ include file="../includes/footer.jsp" %>
 	<script>
+	function check() {
+		if(!document.user.userid.value){
+			alert("비밀번호를 입력하세요.")
+			return false;
+		}else if(document.user.userpw.value !== document.user.userpwck.value){
+			alert("비밀번호를 다시 입력하세요.")
+			return false;
+		}else if(!document.user.real_name.value){
+			alert("이름을 입력하세요.")
+			return false;
+		}else if(!document.user.userphone.value){
+			alert("번호를 입력하세요.")
+			return false;
+		}else if (!ischeckId){
+			alert("아이디 중복확인을 하세요.")
+			return false;
+		}
+	}
 	var ischeckId = false;
 	var expId = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 		$('#userid').blur(function(){
@@ -157,7 +123,6 @@
 
 			})
 		});
-
 	var autoHypenPhone = function(str){
 		str = str.replace(/[^0-9]/g, '');
 		var tmp = '';
@@ -194,5 +159,3 @@
 	}
 
 	</script>
-</body>
-</html>

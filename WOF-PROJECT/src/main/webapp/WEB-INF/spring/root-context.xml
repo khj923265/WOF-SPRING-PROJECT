@@ -3,16 +3,14 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
 	xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:task="http://www.springframework.org/schema/task"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
-		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
 		">
 
-	<!--  JDBC  -->
+	<!-- HikariCP configuration -->
   	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
   		<!-- <property name="driverClassName" value="oracle.jdbc.OracleDriver" />
   		<property name="jdbcUrl" value="jdbc:oracle:thin:@//kosta-wof-project-db.cjsmm2q2xupk.ap-northeast-1.rds.amazonaws.com/orcl" />
@@ -23,11 +21,10 @@
   		<property name="username" value="Nani" />
   		<property name="password" value="1234" />  		
   	</bean>
-  	
-  	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource"
-  		destroy-method="close">
-  		<constructor-arg ref="hikariConfig" />
-  	</bean>
+
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<constructor-arg ref="hikariConfig"/>
+	</bean>
 
   	<!--  MyBatis --> 
   	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -61,6 +58,6 @@
 	<tx:annotation-driven/>
 	<context:component-scan base-package="org.wof.task"/>
 	
-	<task:annotation-driven/>
+	<!-- <task:annotation-driven/> -->
 
 </beans>

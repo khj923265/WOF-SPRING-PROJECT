@@ -1,6 +1,7 @@
 package org.wof.controller;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.wof.domain.ClientVO;
@@ -16,6 +17,7 @@ import java.security.Principal;
 @Controller
 @RequestMapping("/member/*")
 @AllArgsConstructor
+@Log4j
 public class memberController {
 
     private MemberService service;
@@ -53,11 +55,17 @@ public class memberController {
 
         session.setAttribute("partners", partnersVO);
 
-        return "member/partners/profile_info";
+        return "redirect:/member/partners/profile_info";
+    }
+    //회원정보수정 비밀번호 확인
+    @RequestMapping(value = "/member/pwcheck", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+    @ResponseBody
+    public String method(@RequestBody MemberVO memberVO){
+        return service.checkPw(memberVO);
     }
     @GetMapping("partners/profile_info_update")
-    public void partnersInfoUpdate(){
-
+    public String partnersInfoUpdate(){
+        return "member/partners/profile_info_update";
     }
 
     @GetMapping("partners/profile_info")
@@ -68,6 +76,12 @@ public class memberController {
     @GetMapping("partners/profile_info_insert")
     public String partnersInfoInsert() {
         return "profile_info_insert";
+    }
+    //파트너스 개인정보 수정
+    @PostMapping("partnersinfoupdate")
+    public String infoUpdate(MemberVO memberVO,PartnersVO partnersVO){
+            service.partnersUpdate(memberVO,partnersVO);
+            return "member/partners/profile_info";
     }
     //------------------------------------------------------------------------
     //클라이언트 관련 메서드-------------------------------------------------------
@@ -84,13 +98,20 @@ public class memberController {
 
         session.setAttribute("client",clientVO);
 
-        return "member/client";
+        return "redirect:/member/client/dashboard_client";
     }
 
     //------------------------------------------------------------------------
     @GetMapping("admin")
     public String admin() {
         return "member/admin";
+    }
+    //회원탈퇴
+    @PostMapping("withdrawal")
+    public String Withdrawal(MemberVO memberVO){
+        memberVO.setStatus("탈퇴");
+        service.Withdrawal(memberVO);
+        return "redirect:/customlogout";
     }
 
 
