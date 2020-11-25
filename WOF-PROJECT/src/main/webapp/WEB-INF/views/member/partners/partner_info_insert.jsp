@@ -1,40 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-
-<!DOCTYPE html>
-<html>
-
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport"
-		content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>partner_info_insert.jsp</title>
-	
-	<!-- Favicon -->
-	<link rel="icon" href="${pageContext.request.contextPath}/template/assets/img/brand/favicon.png"
-		type="image/png">
-	<!-- Fonts -->
-	<link rel="stylesheet"
-		href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
-	<!-- Icons -->
-	<link rel="stylesheet"
-		href="${pageContext.request.contextPath}/template/assets/vendor/nucleo/css/nucleo.css" type="text/css">
-	<link rel="stylesheet"
-		href="${pageContext.request.contextPath}/template/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css"
-		type="text/css">
-	<!-- Argon CSS -->
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/template/assets/css/argon.css?v=1.2.0"
-		type="text/css">
-	<link rel="stylesheet" type="text/css"
-		href="${pageContext.request.contextPath}/template/assets/css/argon.css"
-		media="all" />
-</head>
-
-<body>
+		 pageEncoding="UTF-8"%>
 	<!-- Header & Menu -->
-	<jsp:include page="../../includes/header.jsp"></jsp:include>
-
-
+	<%@include file="../../includes/header.jsp"%>
 	<!-- Main content -->
 	<div class="main-content" id="panel">
 	<div class="container">
@@ -167,9 +134,7 @@
 			</div>
 		</div>
 	</div>
-
+	</div>
 
 	<!-- footer -->
-	<jsp:include page="../../includes/footer.jsp"></jsp:include>
-</body>
-</html>
+	<%@ include file="../../includes/footer.jsp"%>

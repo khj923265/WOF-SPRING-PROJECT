@@ -1,38 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<!DOCTYPE html>
-<html>
 
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport"
-		content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>project_add_comp.jsp</title>
-	
-	<!-- Favicon -->
-	<link rel="icon" href="${pageContext.request.contextPath}/template/assets/img/brand/favicon.png"
-		type="image/png">
-	<!-- Fonts -->
-	<link rel="stylesheet"
-		href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
-	<!-- Icons -->
-	<link rel="stylesheet"
-		href="${pageContext.request.contextPath}/template/assets/vendor/nucleo/css/nucleo.css" type="text/css">
-	<link rel="stylesheet"
-		href="${pageContext.request.contextPath}/template/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css"
-		type="text/css">
-	<!-- Argon CSS -->
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/template/assets/css/argon.css?v=1.2.0"
-		type="text/css">
-	<link rel="stylesheet" type="text/css"
-		href="${pageContext.request.contextPath}/template/assets/css/argon.css"
-		media="all" />
-</head>
 
-<body>
 	<!-- Header & Menu -->
-	<jsp:include page="../includes/header.jsp"></jsp:include>
+	<%@ include file="../includes/header.jsp" %>
 
 
 	<!-- Main content -->
@@ -53,10 +25,10 @@
 							필요시 워프 매니저가 유선 및 이메일 연락을 할 수 있습니다.
 						</p>
 						<div class="mb48">
-							<a class="btn btn-gray btn-11-24" href="listProject.do" style="margin-right: 16px;">
+							<a class="btn btn-gray btn-11-24" href="${pageContext.request.contextPath }/project/list" style="margin-right: 16px;">
 								마이페이지로 가기
 							</a>
-							<a class="btn btn-client btn-11-24" href="insertProjectForm.do">
+							<a class="btn btn-client btn-11-24" href="${pageContext.request.contextPath }/project/create">
 								다른 	프로젝트 등록하기
 							</a>
 						</div>
@@ -91,7 +63,6 @@
 
 
 	<!-- Footer -->
-	<jsp:include page="../includes/footer.jsp"></jsp:include>
+	<%@ include file="../includes/footer.jsp" %>
 
-</body>
-</html>
+
