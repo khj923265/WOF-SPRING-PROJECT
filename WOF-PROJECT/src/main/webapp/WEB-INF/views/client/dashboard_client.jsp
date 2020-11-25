@@ -187,6 +187,7 @@
 								<div class="col-md-1 column ui-sortable"></div>
 								<div class="col-md-5 column ui-sortable">
 									<b>관심 파트너스</b>${member.member_no} 
+									${client.member_no }
 									<div class="card bg-light text-dark">
 										<div class="card-body">
 											<table class="table align-items-center table-flush">
@@ -202,7 +203,6 @@
 													</tr>
 												</thead>
 												<tbody>
-												<sec:authorize access="isAuthenticated()">
 												<c:if test="${member.member_no eq client.member_no }">
 													<c:forEach var="dashboardFallowPartners" items="${dashboardFallowPartners}">
 														<tr>
@@ -212,7 +212,6 @@
 														</tr>
 													</c:forEach>
 													</c:if>
-													</sec:authorize>
 												</tbody>
 											</table>
 										</div>

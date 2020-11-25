@@ -32,9 +32,9 @@ public class PartnersController {
 	private PartnersService partnersService;
 	
 	@GetMapping("/project_apply_detail")
-	public void project_apply_detail(Model model) {
+	public void project_apply_detail(Model model, Standard standard, @RequestParam("member_no") String member_no) {
 		log.info("지원한 프로젝트 list");
-		model.addAttribute("project_apply_detail", partnersService.applyProject());
+		model.addAttribute("project_apply_detail", partnersService.applyProject(member_no, standard));
 	}
 	
 	@GetMapping("/partners_support")
@@ -44,9 +44,9 @@ public class PartnersController {
 	}
 	
 	@GetMapping("/dashboard_partners")
-	public void dashboardpartnersApplyProject(Model model) {
+	public void dashboardpartnersApplyProject(Model model, @RequestParam("member_no") String member_no) {
 		log.info("파트너스 대쉬보드 지원 리스트");
-		model.addAttribute("dashboardpartnersApplyProject", partnersService.dashboardpartnersApplyProject());
+		model.addAttribute("dashboardpartnersApplyProject", partnersService.dashboardpartnersApplyProject(member_no));
 	}
 	
 	@RequestMapping("/list")

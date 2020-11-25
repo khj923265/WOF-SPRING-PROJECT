@@ -10,5 +10,5 @@ public interface ClientService {
 
 	public List<ProjectVO> dashboardclientProject();
 	
-	public List<PartnersVO> dashboardFallowPartners();
+	public List<PartnersVO> dashboardFallowPartners(String member_no);
 }

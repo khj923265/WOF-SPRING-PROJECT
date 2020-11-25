@@ -10,11 +10,11 @@ import org.wof.domain.Standard;
 
 public interface PartnersService {
 	
-	public List<ProjectVO> applyProject();
+	public List<ProjectVO> applyProject(String member_no, Standard standard);
 	
 	public List<ProjectVO> partnersSupport();
 	
-	public List<ProjectVO> dashboardpartnersApplyProject();
+	public List<ProjectVO> dashboardpartnersApplyProject(String member_no);
 	
 	public List<PartnersVO> partnersList(Standard standard);
 	

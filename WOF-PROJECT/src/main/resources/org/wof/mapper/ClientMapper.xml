@@ -18,7 +18,7 @@
 <![CDATA[
 	select p.member_no, p.career, p.skill
 	from partners p, followpartners f
-	where p.member_no = f.target_member and rownum <= 5
+	where p.member_no = f.target_member and f.source_member = #{member_no} and rownum <= 5
 	order by f.FOLLOWING_DATE desc
 ]]>
 </select>

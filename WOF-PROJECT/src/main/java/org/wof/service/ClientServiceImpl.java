@@ -25,11 +25,11 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	@Override
-	public List<PartnersVO> dashboardFallowPartners() {
+	public List<PartnersVO> dashboardFallowPartners(String member_no) {
 		
 		log.info("클라이언트 대시보드에 관심 파트너스 리스트 출력하기");
 		
-		return clientMapper.dashboardFallowPartners();
+		return clientMapper.dashboardFallowPartners(member_no);
 	}
 
 }

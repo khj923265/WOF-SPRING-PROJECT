@@ -18,18 +18,19 @@ import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
+@ContextConfiguration({"file:src/main/webapp/WEB-INF/spring/root-context.xml", 
+	"file:src/main/webapp/WEB-INF/spring/appServlet/security-context.xml"})
 @Log4j
 public class PartnersMapperTests {
 
 	@Setter(onMethod_ = @Autowired)
 	private PartnersMapper partnersmapper;
 	
-	@Test
+/*	@Test
 	public void testapplyProject() {
-		partnersmapper.applyProject().forEach(project -> log.info(project));
+		partnersmapper.applyProject("member26").forEach(project -> log.info(project));
 	}
-
+*/
 	@Test
 	public void testpartnersSupport() {
 		partnersmapper.partnersSupport().forEach(project -> log.info(project));

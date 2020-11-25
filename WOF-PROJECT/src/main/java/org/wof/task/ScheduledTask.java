@@ -34,14 +34,12 @@ public class ScheduledTask {
 		log.warn("====================");
 		projectService2.RecommendSendMail();
 	}*/
-=======
 //	@Scheduled(cron = "* * 14 * * ?")
 //	public void SendingMail() {
 //		log.warn("start sending mail....");
 //		log.warn("====================");
 //		projectService2.RecommendSendMail();
 //	}
->>>>>>> 0fff00c7185d12dc8a17246ce5f6f44c583a43b6
 	
 	
 
