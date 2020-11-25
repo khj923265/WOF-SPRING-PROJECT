@@ -1,5 +1,6 @@
 package org.wof.task;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -10,15 +11,15 @@ import lombok.extern.log4j.Log4j;
 
 @Log4j
 @Component
+@AllArgsConstructor
 public class ScheduledTask {
 	
-	@Autowired
+
 	private ProjectMapper2 projectMapper2;
 	
-	@Autowired
 	private ProjectService2 projectService2;
 
-	// 매일 새벽 3시에 프로젝트 상태 업데이트 시키는 스케줄러
+	// 留ㅼ씪 �깉踰� 3�떆�뿉 �봽濡쒖젥�듃 �긽�깭 �뾽�뜲�씠�듃 �떆�궎�뒗 �뒪耳�以꾨윭
 	@Scheduled(cron = "* * 3 * * ?")
 	public void ProjectStatusUpdate(){
 		log.warn("start project status update.....");

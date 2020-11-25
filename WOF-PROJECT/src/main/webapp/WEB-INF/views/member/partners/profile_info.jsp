@@ -1,45 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<!DOCTYPE html>
-<html>
-
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport"
-		content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>파트너스 프로필 정보</title>
-	
-	<!-- Favicon -->
-	<link rel="icon" href="${pageContext.request.contextPath}/template/assets/img/brand/favicon.png"
-		type="image/png">
-	<!-- Fonts -->
-	<link rel="stylesheet"
-		href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
-	<!-- Icons -->
-	<link rel="stylesheet"
-		href="${pageContext.request.contextPath}/template/assets/vendor/nucleo/css/nucleo.css" type="text/css">
-	<link rel="stylesheet"
-		href="${pageContext.request.contextPath}/template/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css"
-		type="text/css">
-	<!-- Argon CSS -->
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/template/assets/css/argon.css?v=1.2.0"
-		type="text/css">
-	<link rel="stylesheet" type="text/css"
-		href="${pageContext.request.contextPath}/template/assets/css/argon.css"
-		media="all" />
-</head>
-
-<body>
-	<!-- Header & Menu -->
-	<jsp:include page="../../includes/header.jsp" />
-	<%--로그인 유저 정보 객체--%>
-	<sec:authorize access="isAuthenticated()">
-		<sec:authentication property="principal.member" var="member"/>
-	</sec:authorize>
+		 pageEncoding="UTF-8"%>
+<!-- Header & Menu -->
+	<%@include file="../../includes/header.jsp"%>
 	<!-- Main content -->
 	<div class="main-content" id="panel">
 		<!-- Page content -->
@@ -53,7 +15,8 @@
 									<h1 class="mb-0">프로필 관리</h1>
 								</div>
 								<div class="col-4 text-right">
-									<button type="button" class="btn btn-success">수정하기</button>
+									<a class="btn btn-success"
+									   href="/member/partners/profile_info_update">수정하기</a>
 								</div>
 							</div>
 						</div>
@@ -102,17 +65,6 @@
 											<h1>${member.real_name }</h1>
 										</div>
 									</div>
-									<div class="row">
-										<div class="col-12">
-											<c:if test="${partneruser.partner_sex ==1}">
-												<span>남,</span>
-											</c:if>
-											<c:if test="${partneruser.partner_sex ==2}">
-												<span>여,</span>
-											</c:if>
-											<span>29세</span>
-										</div>
-									</div>
 									<div class="row my-3 pt-6">
 										<div class="col-6 col-md-2 pr-0 text-right">이메일 :</div>
 										<div class="col-6 col-md-4 text-left">${member.userid}</div>
@@ -127,9 +79,9 @@
 									</div>
 									<div class="row my-3 pt-5">
 										<div class="col-6 col-md-2 pr-0 text-right">선호지역 :</div>
-										<div class="col-6 col-md-4 text-left">${partneruser.partner_loca }</div>
+										<div class="col-6 col-md-4 text-left">${partners.prefered_area }</div>
 										<div class="col-6 col-md-2 pr-0 text-right">해시태그 :</div>
-										<div class="col-6 col-md-4 text-left">${partneruser.partner_hashtag }</div>
+										<div class="col-6 col-md-4 text-left">${partners.hashtag }</div>
 									</div>
 								</div>
 							</div>
@@ -245,7 +197,4 @@
 	
 	
 	<!-- footer -->
-	<jsp:include page="../../includes/footer.jsp"></jsp:include>
-</body>
-
-</html>
+	<%@ include file="../../includes/footer.jsp"%>

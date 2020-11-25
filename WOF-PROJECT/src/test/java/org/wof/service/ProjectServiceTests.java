@@ -35,22 +35,22 @@ public class ProjectServiceTests {
 
 	@Autowired
 	private ProjectService2 service2;
-	
-	
+
+
 /*	@Test
 	public void addFollowService(){
 		FollowProjectVO vo = new FollowProjectVO();
 		vo.setFollowproject_no("followproject2");
 		vo.setRelated_member("member28");
 		vo.setRelated_project("project2");
-		
+
 		log.info(service2.addFollowProject(vo));
 	}*/
-	
+
 	@Test
-	public void deleteFollowProject(){	
+	public void deleteFollowProject(){
 	}
-	
+
 
 
 	/*@Test
@@ -58,18 +58,18 @@ public class ProjectServiceTests {
 		log.info(ps1);
 		assertNotNull(ps1);
 	}*/
-	
+
 	/*@Test
 	public void ProjectRegister(){
 		ProjectVO p1 = new ProjectVO();
 		p1.setProj_title("웹사이트 만들기");
 		p1.setMember_no("member6");
 		p1.setProj_detail("웹사이트 구현해줄 개발자, 퍼블리셔 구합니다.");
-		
+
 		ps1.create(p1);
 		log.info("생성된 게시무의 번호: " + p1.getProj_id());
 	}*/
-	
+
 /*	@Test
 	public void GetList(){
 		ps1.getlist().forEach(project -> log.info(project));
@@ -79,16 +79,16 @@ public class ProjectServiceTests {
 	public void ProjectRead(){
 		log.info(ps1.read("project30"));
 	}
-	
+
 	@Test
 	public void ProjectDelete(){
 		log.info("REMOVE RESULT: "+ps1.delete("project30"));
 	}
-	
+
 	@Test
 	public void ProjectUpdate(){
 		ProjectVO p1 = ps1.read("project30");
-		
+
 		if(p1 == null){
 			return;
 		}
