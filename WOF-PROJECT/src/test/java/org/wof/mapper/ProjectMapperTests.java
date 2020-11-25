@@ -21,12 +21,21 @@ import lombok.extern.log4j.Log4j;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
-
 public class ProjectMapperTests {
 
+	@Setter(onMethod_ = @Autowired)
 	private ProjectMapper2 projectMapper2;
 
+	@Setter(onMethod_ = @Autowired)
+	private ProjectMapper pm1;
+
 	
+
+	/*@Test
+	public void testLocation() {
+		log.info(projectMapper2.locationProject());
+	}*/
+
 /*	@Test
 	public void testaddFollowProjectMapper() {
 		FollowProjectVO vo = new FollowProjectVO();
@@ -76,16 +85,16 @@ public class ProjectMapperTests {
 	}
 */
 	
-	/*@Test
+	@Test
 	public void insertProject(){
 		ProjectVO p1 = new ProjectVO();
-		p1.setProj_title("quant 주식 투자 서비스 구축");
+		p1.setProj_title("몽글사랑 홈페이지 만들기");
 		p1.setProj_apply_deadline("2020-12-01");
 		p1.setProj_start_date("2020-12-02");
 		p1.setProj_end_date("2021-02-02");
 		p1.setProj_estimate(20000000);
 		p1.setProj_reqr_person(5);
-		p1.setProj_reqr_skill("개발, 임베디드");
+		p1.setProj_reqr_skill("개발, #임베디드");
 		p1.setProj_type(0);
 		p1.setProj_career("기타 (지원자 필수요건에 따른 장단점 상담 필요),향후 유지보수, 고도화를 위한 아웃소싱 계획이 있습니다. ");
 		p1.setProj_pm(0);
@@ -119,7 +128,7 @@ public class ProjectMapperTests {
 		
 		pm1.insertProject(p1);
 		log.info(p1);
-	}*/
+	}
 	
 	/*@Test
 	public void projectRead(){
@@ -133,7 +142,6 @@ public class ProjectMapperTests {
 	}*/
 	
 /*	@Test
-<<<<<<< HEAD
 	public void testLocation() {
 		Random rm = new Random();
 		int total = projectMapper2.totalProject();
@@ -142,20 +150,17 @@ public class ProjectMapperTests {
 		ProjectVO vo = projectMapper2.projectList2(project_id);
 		log.info(vo.getProj_start_date());
 
-=======
+	/*@Test
 	public void ProjectUpdate(){
 		ProjectVO p1 = new ProjectVO();
 		p1.setProj_id("project30");
 		p1.setProj_title("quant 주식 투자 서비스 프로젝트");
 		p1.setProj_detail("프로젝트 개요 :- quant 주식 투자 서비스 프로젝트 우선순위 :- 프로젝트 기간 준수가 가장 중요하며, 가능하다면 기간이 단축되어야 합니다.");
->>>>>>> 3955b4b4c67e321d6b9653ce48780fe651f937d8
-		
+
 		int count = pm1.updateProject(p1);
 		log.info("UPDATE COUNT: " +count);
 
 	}*/
-
-
 
 /*	@Test
 	public void testaddFollowProjectMapper() {
@@ -199,6 +204,7 @@ public class ProjectMapperTests {
 //	public void testProjectStatusUpdate(){
 //		log.info(projectMapper2.followProjectList());
 //	}
+
 
 
 }

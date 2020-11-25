@@ -1,8 +1,14 @@
 package org.wof.controller;
+
+import org.apache.ibatis.annotations.Update;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -22,7 +28,7 @@ import lombok.extern.log4j.Log4j;
 public class ProjectController {
 
 	private ProjectService ps1;
-	
+
 	@GetMapping("/list")
 	public void list(Model model1){
 		log.info("list");
@@ -30,10 +36,17 @@ public class ProjectController {
 	}
 	
 	@GetMapping("/create")
+	//@PreAuthorize("isAuthenticated()")
 	public void create(){
 	}
 	
+	@GetMapping("/create_comp")
+	public void create_comp(){
+	}
+	
+	
 	@PostMapping("/create")
+	//@PreAuthorize("isAuthenticated()")
 	public String create(ProjectVO p1, RedirectAttributes rttr1){
 		log.info("create: "+ p1);
 		ps1.create(p1);
@@ -41,9 +54,9 @@ public class ProjectController {
 		return "redirect:/project/create_comp";
 	}
 	
-	@GetMapping("/read")
+	@GetMapping({"/read", "/update"})
 	public void read(@RequestParam("proj_id") String proj_id, Model model1){
-		log.info("/read");
+		log.info("/read, /get");
 		model1.addAttribute("project", ps1.read(proj_id));
 	}
 	
@@ -56,7 +69,7 @@ public class ProjectController {
 		}
 		return "redirect:/project/list";
 	}
-	@PostMapping("/delete")
+	@GetMapping("/delete")
 	public String delete(@RequestParam("proj_id") String proj_id, RedirectAttributes rttr1){
 		log.info("delete...." + proj_id);
 		if(ps1.delete(proj_id)){
