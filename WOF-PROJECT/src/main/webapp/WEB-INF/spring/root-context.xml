@@ -22,11 +22,10 @@
   		<property name="username" value="project" />
   		<property name="password" value="kosta202" />
   	</bean>
-  	
-  	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource"
-  		destroy-method="close">
-  		<constructor-arg ref="hikariConfig" />
-  	</bean>
+
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<constructor-arg ref="hikariConfig"/>
+	</bean>
 
   	<!--  MyBatis --> 
   	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -60,6 +59,6 @@
 	<tx:annotation-driven/>
 	<context:component-scan base-package="org.wof.task"/>
 	
-	<task:annotation-driven/>
+	<!-- <task:annotation-driven/> -->
 
 </beans>
