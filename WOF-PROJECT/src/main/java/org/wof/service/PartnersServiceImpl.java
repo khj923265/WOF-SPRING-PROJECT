@@ -1,11 +1,14 @@
 package org.wof.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.wof.domain.FollowPartnersVO;
 import org.wof.domain.PartnersVO;
+import org.wof.domain.ProjectVO;
 import org.wof.domain.Standard;
 import org.wof.mapper.PartnersMapper;
 
@@ -20,11 +23,11 @@ public class PartnersServiceImpl implements PartnersService{
 	private PartnersMapper partnersMapper;
 	
 	@Override
-	public List<PartnersVO> partnersList(Standard standard) {
+	public List<PartnersVO> partnersList(String member_no, Standard standard) {
 		
 		log.info("get List with standard: "+standard);
 		
-		return partnersMapper.partnersList(standard);
+		return partnersMapper.partnersList(member_no, standard);
 	}
 	
 	//페이징처리 총 갯수
@@ -35,9 +38,34 @@ public class PartnersServiceImpl implements PartnersService{
 	}
 	
 	@Override
-	public List<PartnersVO> recommend() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<PartnersVO> recommend(String member_no) {
+		log.info("get recommend with standard: "+member_no);
+		String clientAddress = partnersMapper.clientAddress(member_no);
+		
+		List<String> projectSkillList = partnersMapper.projectSkill(member_no);
+		
+		List<String> skillList = new ArrayList<>();
+		String []skill;
+		for(String data : projectSkillList){
+			skill = data.split(", ");			
+			for(String data2 : skill){
+				data2.trim();
+				if(!skillList.contains(data2)){
+					skillList.add(data2);
+			
+				}//end if
+			}//end for
+		}//end for		
+		
+		if(clientAddress == null || clientAddress == "" || skillList == null){
+			return null;
+		}else{
+			
+			String address = clientAddress.substring(0, 2);			
+			
+			return partnersMapper.recommend(address, skillList);
+		}
+		
 	}
 	
 	@Override

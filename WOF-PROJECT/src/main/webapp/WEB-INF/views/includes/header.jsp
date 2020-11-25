@@ -34,6 +34,9 @@
 </head>
 
 <body>
+<sec:authorize access="isAuthenticated()">
+	<sec:authentication property="principal.member" var="member"/>
+</sec:authorize>
 
 <!-- Main content -->
 <div class="main-content" id="panel">
@@ -57,7 +60,7 @@
 						href="${pageContext.request.contextPath }/project/list"><span
 							class="nav-link-text">프로젝트 찾기</span></a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="${pageContext.request.contextPath }/partners/list"><span
+						href="${pageContext.request.contextPath }/partners/list?member_no=${member.member_no}"><span
 							class="nav-link-text">파트너스 찾기</span></a></li>
 					<li class="nav-item"><a class="nav-link active"
 						href="${pageContext.request.contextPath }/project/project_map_manage.jsp">
@@ -67,7 +70,6 @@
 							class="nav-link-text">공지사항</span></a></li>
 					<li class="nav-item">
 						<sec:authorize access="isAuthenticated()">
-							<sec:authentication property="principal.member" var="member"/>
 							<a class="dropdown-item"
 							   href="/customlogout"><i class="ni ni-user-run"></i> <span>로그아웃</span> </a>
 						</sec:authorize>

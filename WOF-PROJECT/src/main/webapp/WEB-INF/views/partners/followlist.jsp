@@ -68,12 +68,20 @@
 									<th scope="col"></th>
 								</tr>
 							</thead>
-							<input type="hidden" value="member7" id="source_member"><!-- 테스트 후 변수로 변경 -->
+							<input type="hidden" value="${member.member_no}" id="source_member"><!-- 테스트 후 변수로 변경 -->
 							<tbody>
 								<c:forEach var="followList" items="${followList }">
 									<tr>
 										<th scope="row">${followList.member_no }</th>
-										<td>${followList.birthday }</td>
+										<c:choose>
+										  <c:when test="${followList.birthday == null }">
+											<td></td>
+										  </c:when>
+										  
+										  <c:when test="${followList.birthday != null }">
+											<td>${followList.birthday }년생</td>
+										  </c:when>
+										</c:choose>
 										<td>${followList.prefered_area }</td>
 										<td>${followList.career }</td>
 										<td>${followList.skill }</td>
@@ -119,7 +127,7 @@
 					</nav>
 					
 					<form id='actionForm' action="/partners/followlist" method="get">
-					<input type="hidden" name='member_no' value='member7'> <!-- 테스트 후 EL테크로 변경 -->
+						<input type="hidden" name='member_no' value='${member.member_no}'>
 						<input type="hidden" name='pageNum' value = '${pageMaker.standard.pageNum}'>
 						<input type="hidden" name='amount' value = '${pageMaker.standard.amount}'>
 					</form>

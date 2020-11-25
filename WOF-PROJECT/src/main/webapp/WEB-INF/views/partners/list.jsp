@@ -1,8 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 	<!-- hakgeun style-->
 	<style type="text/css">
@@ -15,7 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
 
 	<!-- Header & Menu -->
-	<jsp:include page="../includes/header.jsp" />
+	<%@ include file="../includes/header.jsp"%>
 
 
 	<!-- Main Content -->
@@ -27,8 +24,11 @@
 			<div class="container">
 				<div class="row pt-3 pb-3">
 					<a class="nav-link"
-						href="${pageContext.request.contextPath }/Client/partnersListAction.do">
-						<span class="nav-link-text">파트너스 찾기</span>
+						href="${pageContext.request.contextPath }/partners/followlist?member_no=${member.member_no }">
+						<span class="nav-link-text">관심 파트너스 관리</span>
+					</a> <a class="nav-link"
+						href="${pageContext.request.contextPath }/partners/recommend?member_no=${member.member_no }">
+						<span class="nav-link-text">추천 파트너스</span>
 					</a> <a class="nav-link"
 						href="${pageContext.request.contextPath }/Client/registerProjectListAction.do">
 						<span class="nav-link-text">제안 및 지원자 현황</span>
@@ -119,7 +119,7 @@
 				
 					<c:forEach var="partnersList" items="${partnersList }">
 						<div class="row bg-white mb-3">
-							<div class="col-sm-5">
+							<div class="col-sm-7">
 								<div class="row align-items-center">
 
 									<span
@@ -129,9 +129,14 @@
 									</span> <span class="justify-content-center">
 										<p class="mt-3 mb-0 text-sm">
 											<span class="text-nowrap"> <i class="ni ni-circle-08"></i>
-												${partnersList.real_name } <i class="ni ni-air-baloon ml-1"></i>
-												${partnersList.birthday } <i
-												class="ni ni-map-big ml-1"></i> ${partnersList.prefered_area }
+												${partnersList.real_name } 
+												<i class="ni ni-air-baloon ml-1"></i>
+																								
+												<c:if test="${partnersList.birthday != null }">
+												${partnersList.birthday }년생 
+												</c:if>												
+												
+												<i class="ni ni-map-big ml-1"></i> ${partnersList.prefered_area }
 											</span>
 										</p>
 										<p class="mt-3 mb-0 text-sm">
@@ -166,7 +171,7 @@
 								</span>
 							</div>
 
-							<div class="col-sm-6">
+							<div class="col-sm-4">
 								<div class="progress-wrapper mt-4">
 									<div class="progress-info">
 										<div class="progress-label">
@@ -217,6 +222,7 @@
 					</nav>
 					
 					<form id='actionForm' action="/partners/list" method="get">
+						<input type="hidden" name='member_no' value='${member.member_no}'>
 						<input type="hidden" name='pageNum' value = '${pageMaker.standard.pageNum}'>
 						<input type="hidden" name='amount' value = '${pageMaker.standard.amount}'>
 					</form>
@@ -227,7 +233,7 @@
 
 
 	<!-- Footer -->
-	<jsp:include page="../includes/footer.jsp"></jsp:include>
+	<%@ include file="../includes/footer.jsp"%>
 
 		<!-- toastr js 라이브러리 -->
 		<script type="text/javascript"

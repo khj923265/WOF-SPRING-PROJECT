@@ -31,10 +31,11 @@ public class PartnersController {
 	private PartnersService partnersService;
 	
 	@RequestMapping("/list")
-	public void partnersList(Model model, Standard standard){
+	public void partnersList(
+			@RequestParam("member_no") String member_no, Model model, Standard standard){
 		
 		log.info("list: "+standard);
-		model.addAttribute("partnersList", partnersService.partnersList(standard));
+		model.addAttribute("partnersList", partnersService.partnersList(member_no, standard));
 		
 		int total = partnersService.getTotal(standard);
 		
@@ -93,6 +94,13 @@ public class PartnersController {
 		return deleteCount == 1
 				? new ResponseEntity<>("success", HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	@RequestMapping("/recommend")
+	public void recommend(
+			@RequestParam("member_no") String member_no, Model model){
+		log.info("controller recommendList: " + partnersService.recommend(member_no));
+		model.addAttribute("recommendList", partnersService.recommend(member_no));
 	}
 	
 	
