@@ -98,7 +98,7 @@ public class memberController {
 
         session.setAttribute("client",clientVO);
 
-        return "redirect:/member/client";
+        return "redirect:/member/client/dashboard_client";
     }
 
     //------------------------------------------------------------------------
