@@ -3,22 +3,22 @@ package org.wof.domain;
 import lombok.Data;
 
 /*
- * pagination을 위한 기준
+ * pagination�쓣 �쐞�븳 湲곗�
  * 
- * [2020-11-18 김태완]
+ * [2020-11-18 源��깭�셿]
  */
 
 @Data
 public class Standard {
 
-	private int pageNum;	// 페이지 번호
-	private int amount;		// 페이지 당 보여줄 데이터 개수
+	private int pageNum;	// �럹�씠吏� 踰덊샇
+	private int amount;		// �럹�씠吏� �떦 蹂댁뿬以� �뜲�씠�꽣 媛쒖닔
 
 	/*
 	 * constructor
 	 */
 	public Standard() {
-		this(1, 10);	// 기본값 : 1 페이지 당 10개 표시
+		this(1, 10);	// 湲곕낯媛� : 1 �럹�씠吏� �떦 10媛� �몴�떆
 	}
 	
 	public Standard(int pageNum, int amount) {

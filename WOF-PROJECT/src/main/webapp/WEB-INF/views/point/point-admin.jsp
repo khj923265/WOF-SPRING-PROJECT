@@ -174,7 +174,6 @@
             <div class="card-footer py-4">
               <nav aria-label="...">
                 <ul class="pagination justify-content-end mb-0">
-                
                  <c:if test="${pageMaker.prev }">
                   <li class="page-item "> <!-- disabled -->
                     <a class="page-link" href="${pageMaker.startPage -1 }" tabindex="-1">

@@ -40,6 +40,8 @@ public class PointController {
     	model.addAttribute("getList", service.ListService(standard));
     	
     	int total = service.getTotalService(standard);
+    	log.info(standard);
+    	log.info(total);
     	model.addAttribute("pageMaker", new PageDTO(standard, total));
     	
     	
