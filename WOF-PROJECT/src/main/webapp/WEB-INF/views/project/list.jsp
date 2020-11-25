@@ -178,7 +178,7 @@
 												</h2>
 												<span class="justify-content-center">
 													<i id="related_proj" class="ni ni-favourite-28 mt-2" >
-													<input type="hidden" value="${project.getProj_id()}" name="related_proj" id="related">
+													<input type="hidden" value="${project.getProj_id()}" name="proj_id" id="related">
 													</i>
 												</span>
 												

@@ -19,7 +19,7 @@ insert into project(proj_id, proj_title, proj_reg_date, member_no, proj_apply_de
 proj_estimate, proj_reqr_person, proj_reqr_skill, proj_type, proj_career, proj_pm, proj_work_type, proj_work_place,
 proj_work_time, proj_work_equip, proj_walfare, proj_detail, proj_status,  proj_total_date) 
 values('project'|| seq_project.nextval, #{proj_title}, sysdate ,#{member_no}, TO_DATE(#{proj_apply_deadline}, 'yyyy-MM-dd'), TO_DATE(#{proj_start_date}, 'yyyy-MM-dd'), TO_DATE(#{proj_end_date}, 'yyyy-MM-dd'),
-#{proj_estimate}, #{proj_reqr_person}, #{proj_reqr_skill}, #{proj_type}, #{proj_career}, #{proj_pm}, #{proj_work_type}, #{proj_work_place}||#{proj_work_place1} , 
+#{proj_estimate}, #{proj_reqr_person}, #{proj_reqr_skill}, #{proj_type}, #{proj_career}, #{proj_pm}, #{proj_work_type}, #{proj_work_place}|| ' ' || #{proj_work_place1} , 
 #{proj_work_time}, #{proj_work_equip}, #{proj_walfare}, #{proj_detail}, 0, #{cal_date})
 </insert>
 
