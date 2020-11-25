@@ -1,6 +1,7 @@
 package org.wof.security;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.wof.service.MemberService;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
+@NoArgsConstructor
 public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 
     MemberService service;
