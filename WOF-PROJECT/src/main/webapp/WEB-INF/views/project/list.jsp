@@ -6,35 +6,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<!DOCTYPE html>
-<html>
 
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport"
-		content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>프로젝트 목록보기</title>
-	
-	<!-- Favicon -->
-	<link rel="icon" href="${pageContext.request.contextPath }/template/assets/img/brand/favicon.png" type="image/png">
-	<!-- Fonts -->
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
-	<!-- Icons -->
-	<link rel="stylesheet" href="${pageContext.request.contextPath }/template/assets/vendor/nucleo/css/nucleo.css" type="text/css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath }/template/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
-	<!-- Argon CSS -->
-	<link rel="stylesheet" href="${pageContext.request.contextPath }/template/assets/css/argon.css?v=1.2.0" type="text/css">
-	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/template/assets/css/argon.css" media="all" />
-	<style type="text/css">
-		.red {
-			color: red;
-		}
-	</style>
-</head>
-
-<body>
 	<!-- Header & Menu -->
-	<jsp:include page="../includes/header.jsp" />
+	<%@ include file="../includes/header.jsp" %>
 
 
 	<!-- Main Content -->
@@ -207,7 +181,8 @@
 													<input type="hidden" value="${project.getProj_id()}" name="related_proj" id="related">
 													</i>
 												</span>
-												<%-- <button>${project.getProj_status()}</button> --%>
+												
+												 <button>${project.getProj_apply_deadline()}</button> 
 
 											</div>
 										</div>
@@ -218,6 +193,13 @@
 											<i class="ni ni-key-25 mr-3"></i><span
 												class="text-success mr-2">${project.getProj_estimate()}
 												원</span>
+										</p>
+										
+										<p class="mt-3 mb-0 text-sm">
+											<i class="ni ni-single-02 mr-3"></i><span
+												class="text-success mr-2">${project.getProj_start_date}</span>
+											<i class="ni ni-single-02 mr-3"></i><span
+												class="text-success mr-2">${project.getProj_end_date}</span>
 										</p>
 
 										<p class="mt-3 mb-0 text-sm">
@@ -265,7 +247,7 @@
 	<!-- list end -->
 
 	<!-- Footer -->
-	<jsp:include page="../includes/footer.jsp"></jsp:include>
+	<%@ include file="../includes/footer.jsp" %>
 	
 	
 	<script src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
@@ -351,6 +333,4 @@
 
 	}
 	</script>
-</body>
 
-</html>

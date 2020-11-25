@@ -89,7 +89,7 @@ public class ProjectMapperTests {
 	@Test
 	public void insertProject(){
 		ProjectVO p1 = new ProjectVO();
-		p1.setProj_title("quant 주식 투자 서비스 구축");
+		p1.setProj_title("몽글사랑 홈페이지 만들기");
 		p1.setProj_apply_deadline("2020-12-01");
 		p1.setProj_start_date("2020-12-02");
 		p1.setProj_end_date("2021-02-02");

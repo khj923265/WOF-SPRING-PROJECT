@@ -1,41 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<!DOCTYPE html>
-<html>
-
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>프로젝트 수정하기</title>
 	
-	<!-- Favicon -->
-	<link rel="icon" href="<%=request.getContextPath()%>/template/assets/img/brand/favicon.png" type="image/png">
-	<!-- Fonts -->
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
-	<!-- Icons -->
-	<link rel="stylesheet" href="<%=request.getContextPath()%>/template/assets/vendor/nucleo/css/nucleo.css" type="text/css">
-	<link rel="stylesheet" href="<%=request.getContextPath()%>/template/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
-	<!-- Argon CSS -->
-	<link rel="stylesheet" href="<%=request.getContextPath()%>/template/assets/css/argon.css?v=1.2.0" type="text/css">
 	
-	<script type="text/javascript">
-		function check() {
-			alert("정상적으로 수정되었습니다.")
-		}
-	</script>
 
-</head>
 
-<body>
 	<!-- Header & Menu -->
-	<jsp:include page="../includes/header.jsp" />
+	<%@ include file="../includes/header.jsp" %>
 	
 
 	<!-- Main content -->
 	<div class="main-content" id="panel">
-		<form action="updateProject.do" name="updateForm" onSubmit="check()"
-			method="post">
+		<form action="/project/update" name="updateForm" onSubmit="check()" method="post">
 			<input type="hidden" name="proj_id" value="${project.getProj_id()}">
 			<div class="row">
 				<div class="col-12">
@@ -341,9 +317,13 @@
 			</div>
 		</form>
 	
-	<!-- footer -->
-	<jsp:include page="../includes/footer.jsp"></jsp:include>
+	<!-- Footer -->
+	<%@ include file="../includes/footer.jsp" %>
 
-</body>
 
-</html>
+	<script type="text/javascript">
+		function check() {
+			alert("정상적으로 수정되었습니다.")
+		}
+	</script>
+

@@ -1,6 +1,7 @@
 package org.wof.controller;
 
 import org.apache.ibatis.annotations.Update;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,17 +28,24 @@ import org.wof.service.ProjectService2;
 public class ProjectController {
 
 	private ProjectService ps1;
-	
+
 	@GetMapping("/list")
 	public void list(Model model1){
 		log.info("list");
 		model1.addAttribute("list", ps1.getlist());
 	}
 	@GetMapping("/create")
+	//@PreAuthorize("isAuthenticated()")
 	public void create(){
 	}
 	
+	@GetMapping("/create_comp")
+	public void create_comp(){
+	}
+	
+	
 	@PostMapping("/create")
+	//@PreAuthorize("isAuthenticated()")
 	public String create(ProjectVO p1, RedirectAttributes rttr1){
 		log.info("create: "+ p1);
 		ps1.create(p1);
@@ -60,7 +68,7 @@ public class ProjectController {
 		}
 		return "redirect:/project/list";
 	}
-	@PostMapping("/delete")
+	@GetMapping("/delete")
 	public String delete(@RequestParam("proj_id") String proj_id, RedirectAttributes rttr1){
 		log.info("delete...." + proj_id);
 		if(ps1.delete(proj_id)){

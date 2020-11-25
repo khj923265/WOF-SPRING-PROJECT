@@ -16,6 +16,6 @@
 <p>사용자 아이디 : <sec:authentication property="principal.member.userid"/></p>
 <p>사용자 권한 리스트 : <sec:authentication property="principal.member.authList"/></p>
 
-<a href="/customLogout">Logout</a>
+<a href="/customlogout">Logout</a>
 </body>
 </html>

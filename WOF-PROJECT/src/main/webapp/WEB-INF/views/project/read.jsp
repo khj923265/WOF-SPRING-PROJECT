@@ -1,66 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
-<!DOCTYPE html>
-<html>
-
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport"
-		content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>프로젝트 상세보기</title>
 	
-	<!-- Favicon -->
-	<link rel="icon" href="${pageContext.request.contextPath}/template/assets/img/brand/favicon.png"
-		type="image/png">
-	<!-- Fonts -->
-	<link rel="stylesheet"
-		href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
-	<!-- Icons -->
-	<link rel="stylesheet"
-		href="${pageContext.request.contextPath}/template/assets/vendor/nucleo/css/nucleo.css" type="text/css">
-	<link rel="stylesheet"
-		href="${pageContext.request.contextPath}/template/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css"
-		type="text/css">
-	<!-- Argon CSS -->
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/template/assets/css/argon.css?v=1.2.0"
-		type="text/css">
-	<link rel="stylesheet" type="text/css"
-		href="${pageContext.request.contextPath}/template/assets/css/argon.css"
-		media="all" />
-	
-	<script type="text/javascript">
-		/* $(function(){
-			 $("#myButtons1").click(function(){
-			    $('div.modal').modal({
-			    	remote : 'project.delete.jsp'
-			    });
-			
-			  })
-		}) */
-	
-		/* function clickDel(formName) {
-			formName.action = "/board/contentDelAsk";
-			formName.method = "post";
-			formName.submit();
-		} */
-	
-		//$('#myModal').modal('show');
-	</script>
-</head>
-
-<body>
+	<!-- Header & Menu -->
+	<%@ include file="../includes/header.jsp" %>
 
 <sec:authorize access="isAuthenticated()">
       <sec:authentication property="principal.member" var="member"/>   
 </sec:authorize>
-   
-   
-	<!-- Header & Menu -->
-	<jsp:include page="../includes/header.jsp"></jsp:include>
-
 
 	<!-- Main Content -->
 	<div class="main-content" id="panel">
@@ -76,27 +22,27 @@
 						</a>
 						<div class="dropdown-menu dropdown-menu-right">
 							<!-- item-->
-							<a href="/project/update?proj_id=${project.getProj_id()}"
-								class="dropdown-item"><i class="mdi mdi-pencil mr-1"></i>Edit</a>
-							<!-- item-->
-							<a class="dropdown-item" data-toggle="modal" href="#myModal"><i
-								class="mdi mdi-delete mr-1"></i>Delete</a>
+							
+							
+							<a href="/project/update?proj_id=${project.getProj_id()}" class="dropdown-item">
+								<i class="mdi mdi-pencil mr-1"></i>Edit</a>
+									<!-- item-->
+							<a class="dropdown-item" data-toggle="modal" href="#myModal">
+							 <i class="mdi mdi-delete mr-1"></i>Delete</a>
+									<!-- item-->
+									<a href="javascript:void(0);" class="dropdown-item"><i
+										class="mdi mdi-email-outline mr-1"></i>Invite</a>
+									<!-- item-->
+									<a href="javascript:void(0);" class="dropdown-item"><i
+										class="mdi mdi-exit-to-app mr-1"></i>Leave</a>
 
-							<!-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="background: white; color: black; border:0; outline:0;">Delete</button> -->
 
-							<!-- item-->
-							<a href="javascript:void(0);" class="dropdown-item"><i
-								class="mdi mdi-email-outline mr-1"></i>Invite</a>
-							<!-- item-->
-							<a href="javascript:void(0);" class="dropdown-item"><i
-								class="mdi mdi-exit-to-app mr-1"></i>Leave</a>
+							
 						</div>
 					</div>
 					<!-- project title-->
 
-					<%-- <input type="hidden" name="proj_id" value="${project.getProj_id}"> --%>
-
-					<%-- ${project.getProj_id()} --%>
+						
 					<h3 class="mt-0">${project.getProj_title()}</h3>
 					<div class="badge badge-secondary mb-3">Ongoing</div>
 					<div class="badge badge-secondary mb-3">마감임박</div>
@@ -207,7 +153,7 @@
 									<div class="row">
 										<div class="col">
 											<div class="text-left">
-												<h5 class="h3">${member.realname}</h5>
+												<h5 class="h3">${member.getRealname()}</h5>
 												<div class="h5 mt-4">
 													<i class="ni business_briefcase-24 mr-2"></i>
 													${member.getUserid()}
@@ -280,12 +226,15 @@
 	
 								
 	
-	<!-- Footer -->
-	<jsp:include page="../includes/footer.jsp"></jsp:include>
+	
 	</div>
 	</div>
 
-</body>
+
+	<!-- Footer -->
+	<%@ include file="../includes/footer.jsp" %>
+
+
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
 	<div class="modal-dialog" role="document">
@@ -302,7 +251,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-				<a href="deleteProject.do?proj_id=${project.getProj_id()}"><button
+				<a href="/project/delete?proj_id=${project.getProj_id()}"><button
 						type="button" class="btn btn-primary">삭제</button></a>
 			</div>
 		</div>
@@ -311,4 +260,3 @@
 	<!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
-</html>

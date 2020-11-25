@@ -1,40 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<!DOCTYPE html>
-<html>
 
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport"
-		content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>프로젝트 등록하기</title>
-	
-	<!-- Favicon -->
-	<link rel="icon"
-		href="${pageContext.request.contextPath}/template/assets/img/brand/favicon.png"
-		type="image/png">
-	<!-- Fonts -->
-	<link rel="stylesheet"
-		href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
-	<!-- Icons -->
-	<link rel="stylesheet"
-		href="${pageContext.request.contextPath}/template/assets/vendor/nucleo/css/nucleo.css"
-		type="text/css">
-	<link rel="stylesheet"
-		href="${pageContext.request.contextPath}/template/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css"
-		type="text/css">
-	<!-- Argon CSS -->
-	<link rel="stylesheet"
-		href="${pageContext.request.contextPath}/template/assets/css/argon.css?v=1.2.0"
-		type="text/css">
-		
-</head>
-
-<body>
 	 
 	<!-- Header -->
-	<jsp:include page="../includes/header.jsp"></jsp:include>
+	<%@ include file="../includes/header.jsp" %>
 
 
 	<!-- Main content -->
@@ -45,13 +15,16 @@
 				<div class="card">
 					<div class="card-body">
 						<div class="row">
-							<div class="col-xl-5" style="margin-left: 130px;">
+							<div class="col-xl-5" style="margin-left: 100px;">
+
+
 
 								<div class="form-group">
 									<label for="projectname" style="font-weight: bold;">프로젝트명 <span class="required" style="color: #CE3861;">*</span></label>
-									<input type="text" name="proj_title" class="form-control"
+									<input type="text" name="proj_title" class="form-control" id="proj_title"
 										placeholder="Enter project name" required>
 								</div>
+
 
 								<div class="form-group">
 									<label style="font-weight: bold;">프로젝트 모집기간 <span class="required" style="color: #CE3861;">*</span></label>
@@ -156,7 +129,7 @@
 					
 					<div class="col-xl-2">		
 					<div class="select-card client-input">
-					<input id="category_develop" name="proj_reqr_skill" type="checkbox"  value="develop">
+					<input id="category_develop" name="proj_reqr_skill" type="checkbox"  value="개발">
 					<label class="input-replacer" for="category_develop"></label>
 					<div class="select-card-content">
 					<img class="select-card-img inherit-select-card-img" src="/resources/template/assets/img/icons/develop.png" style="height:100px; width:100px;">
@@ -168,7 +141,7 @@
 					
 					<div class="col-xl-2" style="margin-left: 80px;">	
 					<div class="select-card client-input ">
-					<input id="category_design" name="proj_reqr_skill" type="checkbox" value="design">
+					<input id="category_design" name="proj_reqr_skill" type="checkbox" value="디자인">
 					<label class="input-replacer" for="category_design"></label>
 					<div class="select-card-content">
 					<img class="select-card-img inherit-select-card-img"  src="/resources/template/assets/img/icons/design.png" style="height:100px; width:100px;">
@@ -180,7 +153,7 @@
 					
 					<div class="col-xl-2"  style="margin-left: 80px;">
 					<div class="select-card client-input">
-					<input id="category_plan" name="proj_reqr_skill" type="checkbox" value="plan">
+					<input id="category_plan" name="proj_reqr_skill" type="checkbox" value="기획">
 					<label class="input-replacer" for="category_plan"></label>
 					<div class="select-card-content">
 					<img class="select-card-img inherit-select-card-img" src="/resources/template/assets/img/icons/plan.png" style="height:100px; width:100px;">
@@ -205,71 +178,70 @@
 												<span><label class="chip-choice-client"
 													style="display: none;"> <input
 														class="theme-client wishket-chip" name="proj_reqr_skill"
-														type="checkbox" value="web">
+														type="checkbox" value="웹">
 														 <span>#웹</span></label></span> <span><label
 													class="chip-choice-client" style="display: inline-block;">
 														<input class="theme-client wishket-chip"
-														name="proj_reqr_skill" type="checkbox" value="application">
+														name="proj_reqr_skill" type="checkbox" value="애플리케이션">
 														<span>#애플리케이션</span>
 												</label></span> <span><label class="chip-choice-client"
 													style="display: inline-block;"> <input
 														class="theme-client wishket-chip" name="proj_reqr_skill"
-														type="checkbox" value="commerce"> <span>#커머스,
+														type="checkbox" value="커머스,쇼핑몰"> <span>#커머스,
 															쇼핑몰</span></label></span> <span><label class="chip-choice-client"
 													style="display: inline-block;"> <input
 														class="theme-client wishket-chip" name="proj_reqr_skill"
-														type="checkbox" value="software"> <span>#일반
+														type="checkbox" value="일반 소프트웨어"> <span>#일반
 															소프트웨어</span></label></span> <span><label class="chip-choice-client"
 													style="display: inline-block;"> <input
 														class="theme-client wishket-chip" name="proj_reqr_skill"
-														type="checkbox" value="publishing"> <span>#퍼블리싱</span></label></span>
+														type="checkbox" value="퍼블리싱"> <span>#퍼블리싱</span></label></span>
 												<span><label class="chip-choice-client"
 													style="display: inline-block;"> <input
 														class="theme-client wishket-chip" name="proj_reqr_skill"
-														type="checkbox" value="wordpress"> <span>#워드프레스</span></label></span>
+														type="checkbox" value="워드프레스"> <span>#워드프레스</span></label></span>
 												<span><label class="chip-choice-client"
 													style="display: inline-block;"> <input
 														class="theme-client wishket-chip" name="proj_reqr_skill"
-														type="checkbox" value="embeded"> <span>#임베디드</span></label></span>
+														type="checkbox" value="임베디드"> <span>#임베디드</span></label></span>
 												<span><label class="chip-choice-client"
 													style="display: inline-block;"> <input
 														class="theme-client wishket-chip" name="proj_reqr_skill"
-														type="checkbox" value="product"> <span>#제품</span></label></span>
+														type="checkbox" value="제품"> <span>#제품</span></label></span>
 												<span><label class="chip-choice-client"
 													style="display: none;"> <input
 														class="theme-client wishket-chip" name="proj_reqr_skill"
-														type="checkbox" value="presentation"> <span>#프레젠테이션</span></label></span>
+														type="checkbox" value="프레젠테이션"> <span>#프레젠테이션</span></label></span>
 												<span><label class="chip-choice-client"
 													style="display: none;"> <input
 														class="theme-client wishket-chip" name="proj_reqr_skill"
-														type="checkbox" value="graphic"> <span>#그래픽</span></label></span>
+														type="checkbox" value="그래픽"> <span>#그래픽</span></label></span>
 												<span><label class="chip-choice-client"
 													style="display: none;"> <input
 														class="theme-client wishket-chip" name="proj_reqr_skill"
-														type="checkbox" value="print"> <span>#인쇄물</span></label></span> <span><label
+														type="checkbox" value="인쇄물"> <span>#인쇄물</span></label></span> <span><label
 													class="chip-choice-client" style="display: none;">
 														<input class="theme-client wishket-chip"
-														name="proj_reqr_skill" type="checkbox" value="logo"> <span>#로고</span>
+														name="proj_reqr_skill" type="checkbox" value="로고"> <span>#로고</span>
 												</label></span> <span><label class="chip-choice-client"
 													style="display: none;"> <input
 														class="theme-client wishket-chip" name="proj_reqr_skill"
-														type="checkbox" value="video"> <span>#영상</span></label></span> <span><label
+														type="checkbox" value="영상"> <span>#영상</span></label></span> <span><label
 													class="chip-choice-client" style="display: inline-block;">
 														<input class="theme-client wishket-chip"
-														name="proj_reqr_skill" type="checkbox" value="game"> <span>#게임</span>
+														name="proj_reqr_skill" type="checkbox" value="게임"> <span>#게임</span>
 												</label></span> <span><label class="chip-choice-client"
 													style="display: inline-block;"> <input
 														class="theme-client wishket-chip" name="proj_reqr_skill"
-														type="checkbox" value="etc"> <span>#기타</span></label></span>
+														type="checkbox" value="기타"> <span>#기타</span></label></span>
 											</div>
 										</div>
 
 									</div><!-- col-xl-5 -->
-				
+					</div>
 
-								</div><!-- col-xl-5 -->
 
-							<div class="col-xl-5">
+							<div class="col-xl-5" style="margin-left: 100px;">
 								<div class="form-group">
 									<label for="exampleFormControlSelect1" style="font-weight: bold;">프로젝트 진행상태 
 									<span	class="required" style="color: #CE3861;">*</span></label>
@@ -323,22 +295,22 @@
 										<!-- name="h_area1" -->
 									  <select class="form-control" name="proj_work_place" onChange="cat1_change(this.value,proj_work_place1)" >
 										   <option>-선택-</option>
-										<option value='1'>서울</option>
-										<option value='2'>부산</option>
-										<option value='3'>대구</option>
-										<option value='4'>인천</option>
-										<option value='5'>광주</option>
-										<option value='6'>대전</option>
-										<option value='7'>울산</option>
-										<option value='8'>강원</option>
-										<option value='9'>경기</option>
-										<option value='10'>경남</option>
-										<option value='11'>경북</option>
-										<option value='12'>전남</option>
-										<option value='13'>전북</option>
-										<option value='14'>제주</option>
-										<option value='15'>충남</option>
-										<option value='16'>충북</option>
+										<option value="서울">서울</option>
+										<option value="부산">부산</option>
+										<option value="대구">대구</option>
+										<option value="인천">인천</option>
+										<option value="광주">광주</option>
+										<option value="대전">대전</option>
+										<option value="울산">울산</option>
+										<option value="강원">강원</option>
+										<option value="경기">경기</option>
+										<option value="경남">경남</option>
+										<option value="경북">경북</option>
+										<option value="전남">전남</option>
+										<option value="전북">전북</option>
+										<option value="제주">제주</option>
+										<option value="충남">충남</option>
+										<option value="충북">충북</option>
 										  </select>
 										</div>
 										
@@ -369,7 +341,7 @@
 
 
 </div>
-<div class="col-xl-10" style="margin-left: 130px;">
+<div class="col-xl-10" style="margin-left: 100px;">
 
 								<div class="form-group mt-3 mt-xl-0">
 									<label for="project_now" class="mb-0" style="font-weight: bold;">프로젝트 진행상황</label>
@@ -421,13 +393,29 @@
 예시) 필요기능, 동작환경, 현재상황, 산출물
                                 </textarea>
 								</div>
-							
+								
+								
+					 			
+								
+								
+								<div class="form-group">
+									<label>member_no</label>
+									<input class="form-control" name="member_no" id="member_no"
+						value='${member.member_no }' readonly="readonly">
+								</div>
 
 
 								<div class="form-group" align="center">
+								
+								<c:if test="${not empty member.member_no}">
 									<input class="btn btn-default" type="reset" value="취소">
 									<input class="btn btn-default" type="submit" value="등록">
+								</c:if>
+									
 								</div>
+								
+								
+							
 							</div>
 							<!-- end col-->
 						</div>
@@ -445,7 +433,7 @@
 </div>	
 
 <!-- Footer -->
-	<jsp:include page="../includes/footer.jsp"></jsp:include>
+	<%@ include file="../includes/footer.jsp" %>
 
 	
  <script src="https://code.jquery.com/jquery-3.1.0.js"></script>	
@@ -454,8 +442,8 @@
 
 <script type="text/javascript">
 
-$(function(){
-	
+
+$(function(){	
 	$("#proj_end_date").change(function(){
 		
 		if($("#proj_start_date").val() === "" || $("#proj_end_date").val() === ""){
@@ -464,10 +452,14 @@ $(function(){
 			 var projStartDate = moment($("#proj_start_date").val());
 	         var projEndDate = moment($("#proj_end_date").val());
 	         var diff = projEndDate.diff(projStartDate, "days");
-	         $("#cal_date").text("총"+diff+"일"); 
-	         
+	         $("#cal_date").text("총"+diff+"일"); 	         
 		}
 	
+	});
+	
+	$("#proj_title").change(function(){
+		if($("#member_no").val() == "")
+			alert("로그인을 먼저 해주세요.");
 	});
  
 }); 
@@ -503,7 +495,7 @@ $(function(){
 		                        
 		} */
 
-	 var cat1_num = new Array(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16);
+	 var cat1_num = new Array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
 	 var cat1_name = new Array('서울','부산','대구','인천','광주','대전','울산','강원','경기','경남','경북','전남','전북','제주','충남','충북');
 
 	 var cat2_num = new Array();
@@ -707,5 +699,3 @@ $(function(){
   </script>
   
   
-	</body>
- </html>
