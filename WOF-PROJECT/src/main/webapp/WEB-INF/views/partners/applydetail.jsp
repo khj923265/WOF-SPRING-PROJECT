@@ -12,105 +12,74 @@
 	<!-- top start-->
 	<div class="main-content" id="panel">
 
-		<!-- 하위메뉴 -->
-		<nav class="navbar-expand-sm navbar-light bg-white">
-			<div class="container">
-				<div class="row pt-3 pb-3">
-					<a class="nav-link"
-						href="${pageContext.request.contextPath }/partners/followlist?member_no=${member.member_no }">
-						<span class="nav-link-text">관심 파트너스 관리</span>
-					</a> <a class="nav-link"
-						href="${pageContext.request.contextPath }/partners/recommend?member_no=${member.member_no }">
-						<span class="nav-link-text">추천 파트너스</span>
-					</a> <a class="nav-link"
-						href="${pageContext.request.contextPath}/partners/applystate?member_no=${member.member_no }">
-						<span class="nav-link-text">제안 및 지원자 현황</span>
-					</a> <a class="nav-link" href="#"> <span class="nav-link-text">프로젝트
-							관리</span>
-					</a>
+	<div class="header pb-8 pt-5 md-8">
+		<div class="container">
+			<div class="header-body">
+				<!-- Card stats -->
+				<div class="row">
+					<div class="col">
+						<a class="btn btn-secondary"
+							href="${pageContext.request.contextPath }/partners/followlist?member_no=${member.member_no }">관심 파트너스 관리</a> 
+							<a class="btn btn-secondary"
+							href="${pageContext.request.contextPath }/partners/recommend?member_no=${member.member_no }">추천 파트너스</a>
+							 <a class="btn btn-secondary"
+							href="${pageContext.request.contextPath}/partners/applystate?member_no=${member.member_no }">파트너스 지원현황</a>
+							<a class="btn btn-secondary"
+							href="${pageContext.request.contextPath}/Partners/selectpartnerslistAction.do">파트너스
+							선택</a>
+						<button type="button" class="btn btn-secondary">계약현황</button>
+						<button type="button" class="btn btn-secondary">계약완료</button>
+					</div>
 				</div>
 			</div>
-		</nav>
+		</div>
+	</div>
 
 		<!--제목 및 내용 -->
 		<div class="container">
 			<!-- 제목 -->
 			<div class="row mt-3">
-				<h3>파트너스 찾기</h3>
-			</div>
-			<div class="row mb-3">
-				<div class="col-lg-3 col-3"></div>
-				<div class="col-lg-6 col-7">
-					<form class="navbar-search navbar-search-light form-inline mr-sm-3"
-						id="navbar-search-main">
-						<div class="form-group mb-0">
-							<div
-								class="input-group input-group-alternative input-group-merge mr-2">
-								<div class="input-group-prepend">
-									<span class="input-group-text"><i class="fas fa-search"></i></span>
-								</div>
-								<input class="form-control" placeholder="Search" type="text">
-							</div>
-							<button type="button" class="btn btn-secondary">Search</button>
-						</div>
-					</form>
-				</div>
+				<h3>파트너스 선택</h3>
 			</div>
 
-			<!-- 체크박스 및 파트너스 리스트 -->
+			<!-- 프로젝트내용 및 지원 파트너스 리스트 -->
 			<div class="row">
-				<!-- 체크박스 -->
-				<div class="col-sm-3">
-					<div class="row mr-2 bg-white">
-						<div class="col-sm-12">
-							<h3 class="mt-3 p-1">전문분야</h3>
-							<div class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input"
-									id="customCheck1"> <label class="custom-control-label"
-									for="customCheck1">프론트 엔드</label>
-							</div>
-							<div class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input"
-									id="customCheck2"> <label class="custom-control-label"
-									for="customCheck2">백 엔드</label>
-							</div>
-							<div class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input"
-									id="customCheck3"> <label class="custom-control-label"
-									for="customCheck3">PL</label>
-							</div>
-							<div class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input"
-									id="customCheck4"> <label class="custom-control-label"
-									for="customCheck4">PM</label>
-							</div>
-							<h3 class="mt-3 p-1">경력</h3>
-							<div class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input"
-									id="customCheck5"> <label class="custom-control-label"
-									for="customCheck5">1~3년차</label>
-							</div>
-							<div class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input"
-									id="customCheck6"> <label class="custom-control-label"
-									for="customCheck6">4~6년차</label>
-							</div>
-							<div class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input"
-									id="customCheck7"> <label class="custom-control-label"
-									for="customCheck7">6년차 이상</label>
-							</div>
-							`
-						</div>
-					</div>
-				</div>
+			<div class="col-sm-12">
+			
+			<!-- 프로젝트 내용 -->
+			<div class="row">
+			<div class="col-sm-12">
+			
+				proj_title ${Project.proj_title }
+				
+				member_no
+				
+				proj_reg_date
+				proj_apply_deadline
+				proj_start_date
+				proj_end_date
+				
+				proj_estimate
+				proj_reqr_person
+				
+				proj_reqr_skill
+				proj_career
+				
+				proj_work_type
+				proj_work_place
+				proj_work_time
+				proj_work_equip
+			
+			</div>
+			</div>
+			
 
 				<!-- 파트너스리스트 -->
-				<div class="col-sm-9">
+				<div class="row">
+				<div class="col-sm-12">
 				
-				<input type="hidden" value="${member.member_no }" id="source_member"><!-- 테스트 후 변수로 변경 -->
 				
-					<c:forEach var="partnersList" items="${partnersList }">
+					<c:forEach var="Partners" items="${Partners }">
 						<div class="row bg-white mb-3">
 							<div class="col-sm-7">
 								<div class="row align-items-center">
@@ -122,47 +91,47 @@
 									</span> <span class="justify-content-center">
 										<p class="mt-3 mb-0 text-sm">
 											<span class="text-nowrap"> <i class="ni ni-circle-08"></i>
-												${partnersList.real_name } 
+												${Partners.userid } 
 												<i class="ni ni-air-baloon ml-1"></i>
 																								
-												<c:if test="${partnersList.birthday != null }">
-												${partnersList.birthday }년생 
+												<c:if test="${Partners.birthday != null }">
+												${Partners.birthday }년생 
 												</c:if>												
 												
-												<i class="ni ni-map-big ml-1"></i> ${partnersList.prefered_area }
+												<i class="ni ni-map-big ml-1"></i> ${Partners.prefered_area }
 											</span>
 										</p>
 										<p class="mt-3 mb-0 text-sm">
 											<span class="text-nowrap"> <i class="ni ni-badge ml-1"></i>
-												${partnersList.career } <i
+												${Partners.career } <i
 												class="ni ni-chart-pie-35 ml-1"></i>
-												${partnersList.skill }
+												${Partners.skill }
 											</span>
 										</p>
 										<p class="mt-3 mb-3 text-sm">
 											<span class="text-nowrap"> <i class="ni ni-tag ml-1"></i>
-												<span class="badge badge-primary">${partnersList.hashtag }</span>
+												<span class="badge badge-primary">${Partners.hashtag }</span>
 											</span>
 										</p>
 									</span>
 								</div>
 							</div>
 
-							<div class="col-sm-1 text-center">
+<%-- 							<div class="col-sm-1 text-center">
 								<span class="justify-content-center">
 								<c:choose>
-								<c:when test="${partnersList.target_member == null }">								 
+								<c:when test="${Partners.target_member == null }">								 
 								  <i class="ni ni-favourite-28 mt-2">
 								 </c:when>
-								 <c:when test="${partnersList.target_member != null }">
+								 <c:when test="${Partners.target_member != null }">
 								  <i class="ni ni-favourite-28 mt-2 color">
 								 </c:when>								
 								</c:choose>								   
-								    <input type="hidden" value="${partnersList.member_no }">
+								    <input type="hidden" value="${Partners.member_no }">
 								  </i>
 								<!-- fa fa-heart-o -->
 								</span>
-							</div>
+							</div> --%>
 
 							<div class="col-sm-4">
 								<div class="progress-wrapper mt-4">
@@ -214,12 +183,15 @@
 					  </ul>
 					</nav>
 					
-					<form id='actionForm' action="/partners/list" method="get">
-						<input type="hidden" name='member_no' value='${member.member_no}'>
+					<form id='actionForm' action="/partners/applydetail" method="get">
+						<input type="hidden" name='proj_id' value='${Project.proj_id}'>
+						<input type="hidden" name='member_no' value='${Project.member_no}'>
 						<input type="hidden" name='pageNum' value = '${pageMaker.standard.pageNum}'>
 						<input type="hidden" name='amount' value = '${pageMaker.standard.amount}'>
 					</form>
 
+				</div>
+				</div>
 				</div>
 			</div>
 		</div>

@@ -2,6 +2,7 @@ package org.wof.service;
 
 import java.util.List;
 
+import org.wof.domain.ApplyVO;
 import org.wof.domain.FollowPartnersVO;
 import org.wof.domain.PartnersVO;
 import org.wof.domain.ProjectVO;
@@ -26,5 +27,11 @@ public interface PartnersService {
 	public int getTotal(Standard standard);//페이징처리
 	
 	public List<ProjectVO> applyState(String member_no, Standard standard);
+	
+	public ProjectVO applyDetailProject(String proj_id);
+	
+	public List<PartnersVO> applyDetailPartners(String proj_id, Standard standard);
+	
+	public int applyPartnersTotal(String proj_id);
 
 }

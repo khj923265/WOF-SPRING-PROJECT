@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import org.wof.domain.ApplyVO;
 import org.wof.domain.FollowPartnersVO;
 import org.wof.domain.PartnersVO;
 import org.wof.domain.ProjectVO;
@@ -99,6 +100,25 @@ public class PartnersServiceImpl implements PartnersService{
 		
 		return partnersMapper.applyState(member_no, standard);
 	}
+
+	@Override
+	public ProjectVO applyDetailProject(String proj_id) {
+		
+		return partnersMapper.applyDetailProject(proj_id);
+	}
+
+	@Override
+	public List<PartnersVO> applyDetailPartners(String proj_id, Standard standard) {
+		
+		return partnersMapper.applyDetailPartners(proj_id, standard);
+	}
+
+	@Override
+	public int applyPartnersTotal(String proj_id) {
+		
+		return partnersMapper.applyPartnersTotal(proj_id);
+	}
+
 	
 
 }

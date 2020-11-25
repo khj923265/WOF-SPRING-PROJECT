@@ -46,5 +46,12 @@ public interface PartnersMapper {
 	public List<ProjectVO> applyState(
 			@Param("member_no") String member_no,
 			@Param("standard") Standard standard);
+	
+	public ProjectVO applyDetailProject(String proj_id);
 
+	public List<PartnersVO> applyDetailPartners(
+			@Param("proj_id") String proj_id,
+			@Param("standard") Standard standard);
+	
+	public int applyPartnersTotal(@Param("proj_id") String proj_id); // 파트너스 선택 페이징 처리
 }

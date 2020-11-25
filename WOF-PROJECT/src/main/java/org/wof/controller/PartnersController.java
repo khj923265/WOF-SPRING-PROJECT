@@ -111,6 +111,19 @@ public class PartnersController {
 	}
 	
 	
-	
-
+	@RequestMapping("/applydetail")
+	public void applyDetail(
+			@RequestParam("member_no") String member_no, 
+			@RequestParam("proj_id") String proj_id, 
+			Model model, Standard standard) {
+		
+		log.info("Controller applyDetail : " + member_no + proj_id);
+		
+		model.addAttribute("Project", partnersService.applyDetailProject(proj_id));
+		
+		model.addAttribute("Partners", partnersService.applyDetailPartners(proj_id, standard));
+		int total = partnersService.applyPartnersTotal(proj_id);
+		
+		model.addAttribute("pageMaker", new PageDTO(standard, total));
+	}
 }

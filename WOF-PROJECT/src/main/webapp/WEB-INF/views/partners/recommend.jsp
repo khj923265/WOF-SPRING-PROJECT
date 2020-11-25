@@ -14,15 +14,12 @@
 				<div class="row">
 					<div class="col">
 						<a class="btn btn-secondary"
-							href="${pageContext.request.contextPath}/partners/recommend?member_no=${member.member_no}">추천된
-							파트너스</a>
-						 <a class="btn btn-secondary"
-							href="${pageContext.request.contextPath}/partners/followlist?member_no=${member.member_no}">관심
-							파트너스</a>
-						 <a class="btn btn-secondary"
-							href="${pageContext.request.contextPath}/Client/registerProjectListAction.do">지원한
-							파트너스</a>
-						 <a class="btn btn-secondary"
+							href="${pageContext.request.contextPath }/partners/followlist?member_no=${member.member_no }">관심 파트너스 관리</a> 
+							<a class="btn btn-secondary"
+							href="${pageContext.request.contextPath }/partners/recommend?member_no=${member.member_no }">추천 파트너스</a>
+							 <a class="btn btn-secondary"
+							href="${pageContext.request.contextPath}/partners/applystate?member_no=${member.member_no }">파트너스 지원현황</a>
+							<a class="btn btn-secondary"
 							href="${pageContext.request.contextPath}/Partners/selectpartnerslistAction.do">파트너스
 							선택</a>
 						<button type="button" class="btn btn-secondary">계약현황</button>
@@ -71,7 +68,7 @@
 										<td>${recommendList.hashtag }</td>
 										<!-- 자세히보기  -->
 										<td class="text-right"><a class=""
-											href="partners_select.jsp">자세히보기</a></td>
+											href="${pageContext.request.contextPath}/partners/applydetail?member_no=${member.member_no}">자세히보기</a></td>
 									</tr>
 								</c:forEach>
 

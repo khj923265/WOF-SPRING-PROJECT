@@ -47,7 +47,7 @@
 						class="nav-link">프로젝트 찾기</a></li>
 					<li class="nav-item"><a	href="/kosta202-project/project/project_map_manage.jsp"
 						class="nav-link">프로젝트 맵</a></li>
-					<li class="nav-item"><a href="Client/partnersListAction.do"
+					<li class="nav-item"><a href="${pageContext.request.contextPath }/partners/list?member_no=${member.member_no}"
 						class="nav-link">파트너스 찾기</a></li>
 					<li class="nav-item"><a href="Client/partnersListAction.do"
 						class="nav-link">프로젝트 맵</a></li>
