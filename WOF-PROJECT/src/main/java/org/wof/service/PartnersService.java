@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.wof.domain.FollowPartnersVO;
 import org.wof.domain.PartnersVO;
+import org.wof.domain.ProjectVO;
 import org.wof.domain.Standard;
 
 public interface PartnersService {
@@ -23,5 +24,7 @@ public interface PartnersService {
 	public int followNo(FollowPartnersVO followPartnersVO);
 	
 	public int getTotal(Standard standard);//페이징처리
+	
+	public List<ProjectVO> applyState(String member_no, Standard standard);
 
 }

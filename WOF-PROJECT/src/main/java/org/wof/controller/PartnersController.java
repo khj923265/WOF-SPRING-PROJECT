@@ -103,6 +103,13 @@ public class PartnersController {
 		model.addAttribute("recommendList", partnersService.recommend(member_no));
 	}
 	
+	@RequestMapping("/applystate")
+	public void applyState(
+			@RequestParam("member_no") String member_no, Model model, Standard standard) {
+		log.info("Controller applyState : " + member_no);
+		model.addAttribute("applyState", partnersService.applyState(member_no,standard));
+	}
+	
 	
 	
 

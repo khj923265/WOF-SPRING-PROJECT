@@ -93,6 +93,12 @@ public class PartnersServiceImpl implements PartnersService{
 	public int followNo(FollowPartnersVO followPartnersVO) {
 		return partnersMapper.followNo(followPartnersVO);
 	}
+
+	@Override
+	public List<ProjectVO> applyState(String member_no, Standard standard) {
+		
+		return partnersMapper.applyState(member_no, standard);
+	}
 	
 
 }

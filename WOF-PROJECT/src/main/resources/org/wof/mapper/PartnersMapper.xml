@@ -119,4 +119,17 @@
 		
 	</select>
 	
+	<select id="applyState" resultType="org.wof.domain.ProjectVO">
+		<![CDATA[
+        select proj_title, member_no, proj_apply_deadline, proj_reqr_person,
+		apply_mem, proj_start_date
+		from
+		(select rownum rn, proj_title,
+		member_no, proj_apply_deadline, proj_reqr_person,
+		apply_mem, proj_start_date
+		from project 
+		where member_no = #{member_no})
+		where rownum <= #{standard.pageNum} * #{standard.amount}
+		]]>
+	</select>
 </mapper>

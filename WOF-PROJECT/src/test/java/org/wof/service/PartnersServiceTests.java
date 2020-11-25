@@ -20,10 +20,10 @@ public class PartnersServiceTests {
 	private PartnersService service;
 		
 	//페이징 테스트
-	@Test
-	public void testListPaging() throws Exception{
-		
-		service.partnersList(new Standard(2, 10)).forEach(board -> log.info(board));
-	}
+//	@Test
+//	public void testListPaging() throws Exception{
+//		
+//		service.partnersList(new Standard(2, 10)).forEach(board -> log.info(board));
+//	}
 
 }

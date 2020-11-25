@@ -1,12 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
-	<!-- hakgeun style-->
-	<style type="text/css">
-		.color {
-			color: red;
-		}
-	</style>
 	
 	<!-- toastr css 라이브러리 -->
 	<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />

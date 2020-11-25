@@ -43,6 +43,8 @@ public interface PartnersMapper {
 	@Select("select sysdate from dual")//jUnit test
 	public String getTime();
 	
-	
+	public List<ProjectVO> applyState(
+			@Param("member_no") String member_no,
+			@Param("standard") Standard standard);
 
 }
