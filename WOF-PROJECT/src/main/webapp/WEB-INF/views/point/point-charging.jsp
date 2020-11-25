@@ -1,18 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ include file = "../includes/header-point-detail.jsp"%>	
 	
-	 <!-- ·Î±×ÀÎÇÑ »óÅÂ¿¡ º¸¿©ÁÙ ÅÂ±× -->
-	<sec:authorize access="isAuthenticated()">
-  		<a href="">·Î±×¾Æ¿ô</a>
-	</sec:authorize>
+	 <!-- ë¡œê·¸ì¸í•œ ìƒíƒœì— ë³´ì—¬ì¤„ íƒœê·¸ -->
+	<%-- <sec:authorize access="isAuthenticated()">
+  		<a href="">ë¡œê·¸ì•„ì›ƒ</a>
+	</sec:authorize> --%>
 	
 	<sec:authorize access="isAuthenticated()">
 		<sec:authentication property="principal.member" var="member"/>	
 	</sec:authorize>
-	
-	<jsp:include page="../includes/header-point-detail.jsp"></jsp:include>
 
-	<title>Æ÷ÀÎÆ® ÃæÀü</title>
+	<title>í¬ì¸íŠ¸ ì¶©ì „</title>
 	
 	<!-- Main content -->
 	<div class="container">
@@ -20,29 +19,35 @@
 			<div class="col">
 				<div class="card bg-secondary border-0 mb-0">
 					<div class="text-primary text-center mt-2 mb-3">
-						<b>Æ÷ÀÎÆ® ÃæÀü</b>
+						<b>í¬ì¸íŠ¸ ì¶©ì „</b>
 					</div>
 
 					<form action="charging" method="post">
-						<div class="form-group col-11 center">
-							<label for="example-text-input" class="form-control-label">ÃæÀü
-								±İ¾×</label> <input class="form-control" type="text" id="point-amount"
-								name="point_amount" placeholder="±İ¾×À» ÀÔ·ÂÇØÁÖ¼¼¿ä">
-							<!-- onkeyup="inputNumberAutoComma(this)" -->
+						<div >
+							<input type="hidden" name="point_owner" value=${member.member_no }/> 
 						</div>
 						<div class="form-group col-11 center">
-							<label for="example-search-input" class="form-control-label">¸Ş¸ğ
-								ÀÔ·Â</label> <input class="form-control" type="search" value="ÃæÀü"
-								id="example-search-input" name="point_contents">
+							<label for="example-text-input" class="form-control-label">ì¶©ì „ ê¸ˆì•¡</label> 
+								<input class="form-control" type="text" id="point-amount"
+										name="point_amount" placeholder="ê¸ˆì•¡ì„ ì…ë ¥í•´ì£¼ì„¸ìš”">
+										<!-- onkeyup="inputNumberAutoComma(this)" -->
 						</div>
 						<div class="form-group col-11 center">
-							<label for="example-password-input" class="form-control-label">ºñ¹Ğ¹øÈ£ È®ÀÎ
-								</label> <input class="form-control" type="password"
-								id="example-password-input">
+							<label for="example-search-input" class="form-control-label">ë©”ëª¨ ì…ë ¥</label> 
+							<input class="form-control" type="search" value="ì¶©ì „"
+									id="example-search-input" name="point_contents">
 						</div>
-
+						<div class="form-group col-11 center" onkeyup="passwordMatch(this)">
+							<label for="example-password-input" class="form-control-label">ë¹„ë°€ë²ˆí˜¸ í™•ì¸</label> 
+								<input type="hidden" id="pwd1" name="userpw" value=${member.userpw } required/>
+								<input class="form-control" type="password"
+										id="pwd2" name="userpw" required/>
+						</div>
+						<div class="alert alert-success" id="alert-success">ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•©ë‹ˆë‹¤.</div> 
+						<div class="alert alert-danger" id="alert-danger">ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.</div>						
+						
 						<div class="text-center">
-							<button type="submit" class="btn btn-primary my-4">ÃæÀüÇÏ±â</button>
+							<button type="submit" class="btn btn-primary my-4" id="submit">ì¶©ì „í•˜ê¸°</button>
 						</div>
 					</form>
 				</div>
@@ -52,36 +57,64 @@
 	
 	<!-- 
 		<script type="text/javascript">
-			//ÆË¾÷Ã¢ ´İÀ» ¶§, ºÎ¸ğÃ¢ »õ·Î°íÄ§
+			//íŒì—…ì°½ ë‹«ì„ ë•Œ, ë¶€ëª¨ì°½ ìƒˆë¡œê³ ì¹¨
 			opener.document.location.reload();
 			self.close();
 		</script>
 	 -->
 
 	<script type="text/javascript">
-		//<ÃæÀü ±İ¾×>ÀÔ·Â => ¼ıÀÚ¸¸ °¡´É, Ãµ´ÜÀ§ ÄŞ¸¶
+		//<ì¶©ì „ ê¸ˆì•¡>ì…ë ¥ => ìˆ«ìë§Œ ê°€ëŠ¥, ì²œë‹¨ìœ„ ì½¤ë§ˆ
 		function inputNumberAutoComma(obj) {
-			// ÄŞ¸¶( , )ÀÇ °æ¿ìµµ ¹®ÀÚ·Î ÀÎ½ÄµÇ±â¶§¹®¿¡ ÄŞ¸¶¸¦ µû·Î Á¦°ÅÇÑ´Ù.
+			// ì½¤ë§ˆ( , )ì˜ ê²½ìš°ë„ ë¬¸ìë¡œ ì¸ì‹ë˜ê¸°ë•Œë¬¸ì— ì½¤ë§ˆë¥¼ ë”°ë¡œ ì œê±°í•œë‹¤.
 			var deleteComma = obj.value.replace(/\,/g, "");
-			// ÄŞ¸¶( , )¸¦ Á¦¿ÜÇÏ°í ¹®ÀÚ°¡ ÀÔ·ÂµÇ¾ú´ÂÁö¸¦ È®ÀÎÇÑ´Ù.
+			// ì½¤ë§ˆ( , )ë¥¼ ì œì™¸í•˜ê³  ë¬¸ìê°€ ì…ë ¥ë˜ì—ˆëŠ”ì§€ë¥¼ í™•ì¸í•œë‹¤.
 			if (isFinite(deleteComma) == false) {
-				alert("¹®ÀÚ´Â ÀÔ·ÂÇÏ½Ç ¼ö ¾ø½À´Ï´Ù.");
+				alert("ë¬¸ìëŠ” ì…ë ¥í•˜ì‹¤ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
 				obj.value = "";
 				return false;
 			}
-			// ±âÁ¸¿¡ µé¾î°¡ÀÖ´ø ÄŞ¸¶( , )¸¦ Á¦°ÅÇÑ ÀÌ ÈÄÀÇ ÀÔ·Â°ª¿¡ ´Ù½Ã ÄŞ¸¶( , )¸¦ »ğÀÔÇÑ´Ù.
+			// ê¸°ì¡´ì— ë“¤ì–´ê°€ìˆë˜ ì½¤ë§ˆ( , )ë¥¼ ì œê±°í•œ ì´ í›„ì˜ ì…ë ¥ê°’ì— ë‹¤ì‹œ ì½¤ë§ˆ( , )ë¥¼ ì‚½ì…í•œë‹¤.
 			obj.value = inputNumberWithComma(inputNumberRemoveComma(obj.value));
 		}
-		// Ãµ´ÜÀ§ ÀÌ»óÀÇ ¼ıÀÚ¿¡ ÄŞ¸¶( , )¸¦ »ğÀÔÇÏ´Â ÇÔ¼ö
+		// ì²œë‹¨ìœ„ ì´ìƒì˜ ìˆ«ìì— ì½¤ë§ˆ( , )ë¥¼ ì‚½ì…í•˜ëŠ” í•¨ìˆ˜
 		function inputNumberWithComma(str) {
 			str = String(str);
 			return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
 		}
-		// ÄŞ¸¶( , )°¡ µé¾î°£ °ª¿¡ ÄŞ¸¶¸¦ Á¦°ÅÇÏ´Â ÇÔ¼ö
+		// ì½¤ë§ˆ( , )ê°€ ë“¤ì–´ê°„ ê°’ì— ì½¤ë§ˆë¥¼ ì œê±°í•˜ëŠ” í•¨ìˆ˜
 		function inputNumberRemoveComma(str) {
 			str = String(str);
 			return str.replace(/[^\d]+/g, "");
 		}
 	</script>
 	
-	<jsp:include page="../includes/footer.jsp"></jsp:include>	
+	<script type="text/javascript">
+		$(function passwordMatch() {
+			$("#alert-success").hide();
+			$("#alert-danger").hide();
+			$("input").keyup(function() {
+				var pwd1 = $("#pwd1").val();
+				var pwd2 = $("#pwd2").val();
+				
+				if(pwd1 !="" || pwd2 !=""){
+					if(pwd1 == pwd2){
+						$("#alert-success").show();
+						$("#alert-danger").hide();
+						$("#submit").removeAttr("disabled");
+					}else{
+						$("#alert-success").hide();
+						$("#alert-danger").show();
+						$("#submit").attr("disabled","disabled");						
+					}
+				}
+			});
+			
+		});
+	</script>
+	
+	
+	
+	
+	
+<%@ include file = "../includes/footer.jsp"%>		

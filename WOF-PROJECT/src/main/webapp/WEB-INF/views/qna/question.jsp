@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	
+<%@ include file = "../includes/header.jsp"%>	
+
 	<!-- 로그인한 상태에 보여줄 태그 -->
 	<sec:authorize access="isAuthenticated()">
   		<a href="">로그아웃</a>
@@ -16,8 +17,6 @@
 2. #525F7F-> #6C7581
 <********************>
 -->
-
-	<jsp:include page="../includes/header.jsp"></jsp:include>
 
 	<!-- Q&A -->
 	<div class="header bg-primary pb-6">
@@ -112,11 +111,7 @@
 		</div>
 
 
-		<!-- Footer -->
-		<jsp:include page="../includes/footer.jsp"></jsp:include>
-
 	</div>
 	</div>
-</body>
-
-</html>
+	
+<%@ include file = "../includes/footer.jsp"%>
