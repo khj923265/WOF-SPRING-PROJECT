@@ -45,6 +45,7 @@ public class ProjectRestController {
 		vo.setRelated_project(related_project);
 		vo.setRelated_member(related_member);
 		vo = projectService2.detailFollowProject(vo);
+		model.addAttribute("follows", projectService2.listFollowProject(related_member));
 		return new ResponseEntity<Integer>(1, HttpStatus.OK);
 	}
 	

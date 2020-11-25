@@ -70,13 +70,14 @@ public class ProjectServiceImpl2 implements ProjectService2 {
 	       contents += "<b>"+vo.getProj_title()+"</b><br>";
 	       contents += "<b>"+ vo.getProj_detail()+ "</b><br>";
 	       contents += "<p>WOF</p></body></html>";
+	       
 	      try {
 	    	  
 	         messageHelper = new MimeMessageHelper(message, true, "UTF-8");
 	          messageHelper.setFrom("jaeeun@naver.com"); // 보내는사람 생략하거나 하면 정상작동을 안함
 	          messageHelper.setTo("jaeeunlim0329@gmail.com"); // 받는사람 이메일
 	          messageHelper.setSubject("[WOF] 고객님에게 알맞은 프로젝트를 추천해드립니다."); // 메일제목은 생략이 가능하다
-	          messageHelper.setText(contents, "text/html; charset=euc-kr"); // 메일 내용
+	          messageHelper.setText(contents,"true"); // 메일 내용
 	          
 	      } catch (MessagingException e) {
 	         // TODO Auto-generated catch block

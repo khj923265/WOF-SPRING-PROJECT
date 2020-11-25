@@ -54,7 +54,7 @@
 		select count(*) from project
 	</select>
 	
-	<select id="listRecommendProject" parameterType="org.wof.domain.ProjectVO">
+	<select id="listRecommendProject" parameterType="org.wof.domain.ProjectVO" resultType="org.wof.domain.ProjectVO">
 		
 	</select>
 	   
