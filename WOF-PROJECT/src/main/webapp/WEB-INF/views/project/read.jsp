@@ -1,65 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
-<!DOCTYPE html>
-<html>
-
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport"
-		content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>project_detail.jsp</title>
 	
-	<!-- Favicon -->
-	<link rel="icon" href="${pageContext.request.contextPath}/template/assets/img/brand/favicon.png"
-		type="image/png">
-	<!-- Fonts -->
-	<link rel="stylesheet"
-		href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
-	<!-- Icons -->
-	<link rel="stylesheet"
-		href="${pageContext.request.contextPath}/template/assets/vendor/nucleo/css/nucleo.css" type="text/css">
-	<link rel="stylesheet"
-		href="${pageContext.request.contextPath}/template/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css"
-		type="text/css">
-	<!-- Argon CSS -->
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/template/assets/css/argon.css?v=1.2.0"
-		type="text/css">
-	<link rel="stylesheet" type="text/css"
-		href="${pageContext.request.contextPath}/template/assets/css/argon.css"
-		media="all" />
-	
-	<script type="text/javascript">
-		/* $(function(){
-			 $("#myButtons1").click(function(){
-			    $('div.modal').modal({
-			    	remote : 'project.delete.jsp'
-			    });
-			
-			  })
-		}) */
-	
-		/* function clickDel(formName) {
-			formName.action = "/board/contentDelAsk";
-			formName.method = "post";
-			formName.submit();
-		} */
-	
-		//$('#myModal').modal('show');
-	</script>
-</head>
-
-<body>
 	<!-- Header & Menu -->
-	<jsp:include page="../includes/header.jsp"></jsp:include>
+	<%@ include file="../includes/header.jsp" %>
 
+<sec:authorize access="isAuthenticated()">
+      <sec:authentication property="principal.member" var="member"/>   
+</sec:authorize>
 
 	<!-- Main Content -->
 	<div class="main-content" id="panel">
 	<div class="row">
-		<div class="col-xl-8 col-lg-6">
+		<div class="col-xl-7 col-lg-5" style="margin-left: 80px; margin-top: 50px;">
 			<!-- project card -->
 			<div class="card d-block">
 				<div class="card-body">
@@ -70,27 +22,27 @@
 						</a>
 						<div class="dropdown-menu dropdown-menu-right">
 							<!-- item-->
-							<a href="updateProjectForm.do?proj_id=${project.getProj_id()}"
-								class="dropdown-item"><i class="mdi mdi-pencil mr-1"></i>Edit</a>
-							<!-- item-->
-							<a class="dropdown-item" data-toggle="modal" href="#myModal"><i
-								class="mdi mdi-delete mr-1"></i>Delete</a>
+							
+							
+							<a href="/project/update?proj_id=${project.getProj_id()}" class="dropdown-item">
+								<i class="mdi mdi-pencil mr-1"></i>Edit</a>
+									<!-- item-->
+							<a class="dropdown-item" data-toggle="modal" href="#myModal">
+							 <i class="mdi mdi-delete mr-1"></i>Delete</a>
+									<!-- item-->
+									<a href="javascript:void(0);" class="dropdown-item"><i
+										class="mdi mdi-email-outline mr-1"></i>Invite</a>
+									<!-- item-->
+									<a href="javascript:void(0);" class="dropdown-item"><i
+										class="mdi mdi-exit-to-app mr-1"></i>Leave</a>
 
-							<!-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="background: white; color: black; border:0; outline:0;">Delete</button> -->
 
-							<!-- item-->
-							<a href="javascript:void(0);" class="dropdown-item"><i
-								class="mdi mdi-email-outline mr-1"></i>Invite</a>
-							<!-- item-->
-							<a href="javascript:void(0);" class="dropdown-item"><i
-								class="mdi mdi-exit-to-app mr-1"></i>Leave</a>
+							
 						</div>
 					</div>
 					<!-- project title-->
 
-					<%-- <input type="hidden" name="proj_id" value="${project.getProj_id}"> --%>
-
-					<%-- ${project.getProj_id()} --%>
+						
 					<h3 class="mt-0">${project.getProj_title()}</h3>
 					<div class="badge badge-secondary mb-3">Ongoing</div>
 					<div class="badge badge-secondary mb-3">마감임박</div>
@@ -190,8 +142,8 @@
 		</div>
 		<!-- end col -->
 
-		<div class="col-lg-6 col-xl-4">
-			<div class="card">
+		<div class="col-lg-5 col-xl-3" style="margin-left: 80px; margin-top: 50px;">
+			<div class="card" >
 				<div class="card-body">
 					<h5 class="card-title mb-3">Profile</h5>
 					<div class="mt-3 chartjs-chart" style="height: 320px;">
@@ -201,13 +153,14 @@
 									<div class="row">
 										<div class="col">
 											<div class="text-left">
-												<h5 class="h3">임재은</h5>
+												<h5 class="h3">${member.getRealname()}</h5>
 												<div class="h5 mt-4">
-													<i class="ni business_briefcase-24 mr-2"></i>jaeeunxo1@naver.com
+													<i class="ni business_briefcase-24 mr-2"></i>
+													${member.getUserid()}
 												</div>
 												<div>
-													<i class="ni education_hat mr-2"></i>University of Computer
-													Science
+													<i class="ni education_hat mr-2"></i>
+													${member.getUserphone()}
 												</div>
 												<div>
 													<i class="ni education_hat mr-2"></i>★★★☆☆
@@ -235,36 +188,53 @@
 						</div>
 						<!-- end card-->
 
-						<div class="card">
+						<div class="card" style="height:300px; margin-top: 20px; ">
 							<div class="card-body">
 								<h5 class="card-title mb-3">Files</h5>
 								<!-- 산출물 -->
-								<div class="card mb-1 shadow-none border">
+								<div class="card mb-1 shadow-none border" >
 									<form action="insertFileAction.do" method="post"
 										enctype="multipart/form-data">
 										파일번호 : <input type="text" name="file_id"><br>
 										프로젝트번호 : <input type="text" name="apply_id"><br>
 										회원번호 : <input type="text" name="mem_id"><br>
-										파일선택하기<br> <input type="file" name="fname"> <input
-											type="submit" value="파일업로드">
+										파일선택하기<br> <input type="file" name="fname">
+										
 									</form>
 								</div>
-
 								<div class="card mb-1 shadow-none border"></div>
-							</div>
-						</div>
+								
+								<div class="" align="center">
+									<input " id="fileUpload"  type="button" value="파일업로드">
+								</div>
+							</div><!-- card body -->
+						</div><!-- card -->
+								
+								
+								<div class="" align="center">
+									<input class="btn btn-default" id="chatConnect"  type="button" value="채팅하기">
+									<input class="btn btn-default" id="applyButton" type="button" value="지원하기">
+								</div>
+	
+					
 					</div>
 				</div>
 			</div>
 		</div>
 	
 	
-	<!-- Footer -->
-	<jsp:include page="../includes/footer.jsp"></jsp:include>
+	
+								
+	
+	
 	</div>
 	</div>
 
-</body>
+
+	<!-- Footer -->
+	<%@ include file="../includes/footer.jsp" %>
+
+
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
 	<div class="modal-dialog" role="document">
@@ -281,7 +251,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-				<a href="deleteProject.do?proj_id=${project.getProj_id()}"><button
+				<a href="/project/delete?proj_id=${project.getProj_id()}"><button
 						type="button" class="btn btn-primary">삭제</button></a>
 			</div>
 		</div>
@@ -290,4 +260,3 @@
 	<!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
-</html>

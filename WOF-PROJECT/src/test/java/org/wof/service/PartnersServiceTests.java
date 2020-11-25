@@ -33,7 +33,7 @@ public class PartnersServiceTests {
 	@Test
 	public void testListPaging() throws Exception{
 		
-		service.partnersList(new Standard(2, 10)).forEach(board -> log.info(board));
+//		service.partnersList(new Standard(2, 10)).forEach(board -> log.info(board));
 	}
 
 

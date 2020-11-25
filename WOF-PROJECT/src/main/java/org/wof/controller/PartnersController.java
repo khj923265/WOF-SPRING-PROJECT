@@ -4,6 +4,8 @@ package org.wof.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -50,10 +52,11 @@ public class PartnersController {
 	}
 	
 	@RequestMapping("/list")
-	public void partnersList(Model model, Standard standard){
+	public void partnersList(
+			@RequestParam("member_no") String member_no, Model model, Standard standard){
 		
 		log.info("list: "+standard);
-		model.addAttribute("partnersList", partnersService.partnersList(standard));
+		model.addAttribute("partnersList", partnersService.partnersList(member_no, standard));
 		
 		int total = partnersService.getTotal(standard);
 		
@@ -66,7 +69,16 @@ public class PartnersController {
 	public void followList(
 			@RequestParam("member_no") String member_no, Model model, Standard standard){
 		
+		log.info("followlist: "+standard);	
 		model.addAttribute("followList", partnersService.followList(member_no, standard));
+		
+		int followTotal = partnersService.followCount(member_no, standard);
+		log.info("total: "+followTotal);
+		
+		model.addAttribute("member_no", member_no);
+		log.info("member_no: "+member_no);
+		
+		model.addAttribute("pageMaker", new PageDTO(standard, followTotal));
 	}
 	
 	
@@ -106,7 +118,17 @@ public class PartnersController {
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
+<<<<<<< HEAD
 
+=======
+	@RequestMapping("/recommend")
+	public void recommend(
+			@RequestParam("member_no") String member_no, Model model){
+		log.info("controller recommendList: " + partnersService.recommend(member_no));
+		model.addAttribute("recommendList", partnersService.recommend(member_no));
+	}
+	
+>>>>>>> fdac15a0971af09718703a4b504b1c3a9403a641
 	
 	
 

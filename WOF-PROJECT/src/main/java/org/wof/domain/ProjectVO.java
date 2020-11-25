@@ -22,6 +22,7 @@ public class ProjectVO {
 	private int proj_pm;					// pm유무(0 : 유, 1 : 무)
 	private int proj_work_type;				// 근무 형태(0 : 자택, 1 : 회사)
 	private String proj_work_place;			// 근무 장소
+	private String proj_work_place1;		//이거 jQuery로 가져올때 사용하는 거라 하나 만들어놓을게용...
 	private String proj_work_time;			// 근무 시간
 	private int proj_work_equip;			// 장비 제공(0 : 개인 장비, 1 : 장비 제공)
 	private int proj_walfare;				// 복지(0 : 음식 제공, 1 : 음식 미제공)
@@ -31,7 +32,7 @@ public class ProjectVO {
 	private int proj_status;				// 현재 상태(0 : 모집중, 1 : 진행중, 2 : 완료)
 	private String proj_update_date;		// 변경일
 	private int proj_replyCnt;				// 댓글 개수
-	private int proj_total_date;			// 총 일수
+	private int cal_date;			// 총 일수
 	//private List<ProjectAttachVO> proj_attachList;
 	
 	

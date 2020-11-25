@@ -1,9 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-	<jsp:include page="../includes/header.jsp"></jsp:include>
+<%@ include file = "../includes/header.jsp"%>	
+	<!-- 로그인한 상태에 보여줄 태그 -->
+	<%-- <sec:authorize access="isAuthenticated()">
+ 	 	<a href="">로그아웃</a>
+	</sec:authorize> --%>
+
+	<sec:authorize access="isAuthenticated()">
+		<sec:authentication property="principal.member" var="member"/>	
+	</sec:authorize>
 	
 	<title>포인트 관리</title>
 	<!--
@@ -53,8 +61,8 @@
 				  <th>포인트 충전/송금</th>
 				 </tr>
  <!-- ②포인트 충전/송금 -->  	
- 				  <tr> 
- 				  <td><d id="remaining-point" method="get" name="remaining-point">${point_total }</b>&nbsp;P</td>	
+ 				  <tr> 																<!-- ajax -->
+ 				  <td><form action="getPointTotal" method="get" name="getPointTotal"><b>${member.total_point }</b>&nbsp;P</form></td>	
             	  <td>              		
             	  	<a type="button" class="btn btn-primary ml-2" name="charge" value="충전"
             	  		href = "javascript:popup()" target = "_self">충전</a>
@@ -111,31 +119,36 @@
                   </tr>
             </thead>
             <tbody class="list">
+              <c:choose>
+               <c:when test="${empty getList }">
+               		<tr><td colspan="5" align="center">포인트 사용내역이 없습니다.</td></tr>
+               </c:when>
+               <c:when test="${!empty getList }">
+             	<c:forEach items="${getList }" var="point">
                   <tr>
                     <th scope="row">
                       <div class="media align-items-center">
                         <div class="media-body">
-                          <span class="name mb-0 text-sm">2020.10.14  09:17</span>
+                          <span class="name mb-0 text-sm"><fmt:formatDate value="${point.point_chg_date }" pattern="yyyy-MM-dd"/></span>
                         </div>
                       </div>
                     </th>
                     <td class="name1">
-                    	<!--  -->
-                    	클라이언트(신한)
+                    	<c:out value="${member.real_name }"/> 
                     </td>
                     <td>
                       <span class="badge badge-dot mr-4">
-                        <span class="status text-primary">보험사 모바일 시스템 유지관리 기획/디자인/개발</span>
+                        <span class="status text-primary"><c:out value="${point.point_contents }"/></span>
                       </span>
                     </td>
                     <td>
                       <div class="d-flex align-items-center">
-                        <span class="입출금  mr-2 text-info">+10,000,000,000 P</span>
+                        <span class="입출금  mr-2 text-info"><c:out value="${point.point_amount }"/></span>
                       </div>
                     </td>
                     <td>
                       <div class="d-flex align-items-center">
-                        <span class="remaining mr-2"><b>10,000,000,000 P</b></span>
+                        <span class="remaining mr-2"><b><c:out value="${point.point_balance }"/></b></span>
                       </div>
                     </td>
                     <td class="text-right">
@@ -149,43 +162,9 @@
                       </div>
                     </td>
                   </tr>
-                  <tr>
-                    <th scope="row">
-                      <div class="media align-items-center">
-                        <div class="media-body">
-                          <span class="name mb-0 text-sm">2020.10.15  11:38</span>
-                        </div>
-                      </div>
-                    </th>
-                    <td class="name1">
-                      	워프
-                    </td>
-                    <td>
-                      <span class="badge badge-dot mr-4">
-                        <span class="status text-primary">보험사 모바일 시스템 유지관리 기획/디자인/개발</span>
-                      </span>
-                    </td>
-                    <td>
-                      <div class="d-flex align-items-center">
-                        <span class="입출금  mr-2 text-danger">-5,000,000,000 P</span>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="d-flex align-items-center">
-                        <span class="remaining mr-2"> 5,000,000,000 P</span>
-                      </div>
-                    </td>
-					<td class="text-right">
-                      <div class="dropdown">
-                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="fas fa-ellipsis-v"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                          <a class="dropdown-item" href="#">자주쓰는계좌 등록</a>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
+          		</c:forEach>      
+          	   </c:when>
+          	 </c:choose>	  
             </tbody>
           </table>
         </div>
@@ -195,28 +174,40 @@
             <div class="card-footer py-4">
               <nav aria-label="...">
                 <ul class="pagination justify-content-end mb-0">
-                  <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1">
+                
+                 <c:if test="${pageMaker.prev }">
+                  <li class="page-item "> <!-- disabled -->
+                    <a class="page-link" href="${pageMaker.startPage -1 }" tabindex="-1">
                       <i class="fas fa-angle-left"></i>
                       <span class="sr-only">이전</span>
                     </a>
                   </li>
-                  <li class="page-item active">
-                    <a class="page-link" href="#">1</a>
+                 </c:if>
+                 
+                 <c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
+                  <li class="page-item ${pageMaker.standard.pageNum == num ? 'active' : '' }">
+                    <a class="page-link" href="${num }">${num }</a>
                   </li>
-                  <li class="page-item">
+                  <!-- <li class="page-item">
                     <a class="page-link" href="#">2 <span class="sr-only">(현재페이지)</span></a>
-                  </li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  </li> -->
+                </c:forEach>
+                
+                 <c:if test="${pageMaker.next }">
                   <li class="page-item">
-                    <a class="page-link" href="#">
+                    <a class="page-link" href="${pageMaker.endPage +1 }">
                       <i class="fas fa-angle-right"></i>
                       <span class="sr-only">다음</span>
                     </a>
                   </li>
+                  </c:if> 
                 </ul>
               </nav>
             </div>
+            <form action="/point/admin" id="actionForm" method="get">
+            	<input type="hidden" name="pageNum" value="${pageMaker.standard.pageNum }">
+            	<input type="hidden" name="amount" value="${pageMaker.standard.amount }">            	
+            </form>
    <!-- end of footer -->
             
           </div>
@@ -225,8 +216,27 @@
 	</div>
   </div>
   
-  
-    
+  	<script src="/resources/template/assets/vendor/jquery/dist/jquery.min.js"></script>
+  	<script type="text/javascript">
+  	
+  		var actionForm = $("#actionForm");
+  		
+  		$(document).ready(function() {
+			
+  			$(".page-item a").on("click", function(e){
+  				e.preventDefault();
+  				
+  	  			console.log('click');
+  	  			
+  	  			actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+  	  			
+  	  			actionForm.submit();
+  	  			
+  			});
+
+  		});
+  	</script>	
+  	
 	<script>
         function popup(){
             var url = "/point/charging";
@@ -244,4 +254,4 @@
         }
     </script>    
   
-	<jsp:include page="../includes/footer.jsp"></jsp:include>
+<%@ include file = "../includes/footer.jsp"%>

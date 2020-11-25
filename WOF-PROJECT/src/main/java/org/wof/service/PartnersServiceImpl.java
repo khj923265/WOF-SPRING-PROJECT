@@ -1,12 +1,15 @@
 package org.wof.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.wof.domain.ProjectVO;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.wof.domain.FollowPartnersVO;
 import org.wof.domain.PartnersVO;
+import org.wof.domain.ProjectVO;
 import org.wof.domain.Standard;
 import org.wof.mapper.PartnersMapper;
 
@@ -22,6 +25,7 @@ public class PartnersServiceImpl implements PartnersService{
 	private PartnersMapper partnersMapper;
 	
 	@Override
+<<<<<<< HEAD
 	public List<ProjectVO> applyProject(String member_no, Standard standard) {
 		log.info("get applyProject List...");
 		return partnersMapper.applyProject(member_no, standard);
@@ -39,10 +43,13 @@ public class PartnersServiceImpl implements PartnersService{
 		return partnersMapper.dashboardpartnersApplyProject(member_no);
 	}
 	public List<PartnersVO> partnersList(Standard standard) {
+=======
+	public List<PartnersVO> partnersList(String member_no, Standard standard) {
+>>>>>>> fdac15a0971af09718703a4b504b1c3a9403a641
 		
 		log.info("get List with standard: "+standard);
 		
-		return partnersMapper.partnersList(standard);
+		return partnersMapper.partnersList(member_no, standard);
 	}
 	
 	//페이징처리 총 갯수
@@ -53,14 +60,45 @@ public class PartnersServiceImpl implements PartnersService{
 	}
 	
 	@Override
-	public List<PartnersVO> recommend() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<PartnersVO> recommend(String member_no) {
+		log.info("get recommend with standard: "+member_no);
+		String clientAddress = partnersMapper.clientAddress(member_no);
+		
+		List<String> projectSkillList = partnersMapper.projectSkill(member_no);
+		
+		List<String> skillList = new ArrayList<>();
+		String []skill;
+		for(String data : projectSkillList){
+			skill = data.split(", ");			
+			for(String data2 : skill){
+				data2.trim();
+				if(!skillList.contains(data2)){
+					skillList.add(data2);
+			
+				}//end if
+			}//end for
+		}//end for		
+		
+		if(clientAddress == null || clientAddress == "" || skillList == null){
+			return null;
+		}else{
+			
+			String address = clientAddress.substring(0, 2);			
+			
+			return partnersMapper.recommend(address, skillList);
+		}
+		
 	}
 	
 	@Override
 	public List<PartnersVO> followList(String member_no, Standard standard) {
 		return partnersMapper.followList(member_no, standard);
+	}
+	
+	@Override
+	public int followCount(String member_no, Standard standard) {
+		log.info("get follow total count");
+		return partnersMapper.followCount(member_no, standard);
 	}
 	
 	@Override
