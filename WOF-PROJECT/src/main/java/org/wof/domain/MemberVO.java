@@ -12,12 +12,13 @@ public class MemberVO {
     private String real_name;
     private String userphone;
     private String auth;
+    private String status;
     private String register_date;
     private String login_date;
     private String dorment_date;
     private String signout_date;
     private int total_point;
-    private String total_evaluate;
+    private double total_evaluate;
 
     private List<AuthVO> authList;
 }

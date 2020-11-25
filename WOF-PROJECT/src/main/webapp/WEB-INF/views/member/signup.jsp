@@ -74,6 +74,8 @@
         </div>
       </div>
     </div>
+<!-- Footer -->
+<%@ include file="../includes/footer.jsp" %>
 
 	<script>
 	function check() {
@@ -121,7 +123,6 @@
 
 			})
 		});
-
 	var autoHypenPhone = function(str){
 		str = str.replace(/[^0-9]/g, '');
 		var tmp = '';
@@ -158,5 +159,3 @@
 	}
 
 	</script>
-<!-- Footer -->
-<%@ include file="../includes/footer.jsp" %>

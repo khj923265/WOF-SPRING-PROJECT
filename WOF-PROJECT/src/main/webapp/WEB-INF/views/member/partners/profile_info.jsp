@@ -65,17 +65,6 @@
 											<h1>${member.real_name }</h1>
 										</div>
 									</div>
-									<div class="row">
-										<div class="col-12">
-											<c:if test="${partneruser.partner_sex ==1}">
-												<span>남,</span>
-											</c:if>
-											<c:if test="${partneruser.partner_sex ==2}">
-												<span>여,</span>
-											</c:if>
-											<span>29세</span>
-										</div>
-									</div>
 									<div class="row my-3 pt-6">
 										<div class="col-6 col-md-2 pr-0 text-right">이메일 :</div>
 										<div class="col-6 col-md-4 text-left">${member.userid}</div>
@@ -90,9 +79,9 @@
 									</div>
 									<div class="row my-3 pt-5">
 										<div class="col-6 col-md-2 pr-0 text-right">선호지역 :</div>
-										<div class="col-6 col-md-4 text-left">${partneruser.partner_loca }</div>
+										<div class="col-6 col-md-4 text-left">${partners.prefered_area }</div>
 										<div class="col-6 col-md-2 pr-0 text-right">해시태그 :</div>
-										<div class="col-6 col-md-4 text-left">${partneruser.partner_hashtag }</div>
+										<div class="col-6 col-md-4 text-left">${partners.hashtag }</div>
 									</div>
 								</div>
 							</div>
