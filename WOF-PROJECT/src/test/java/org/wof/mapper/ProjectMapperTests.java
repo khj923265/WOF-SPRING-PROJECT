@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import java.util.List;
 import java.util.Random;
 
-import lombok.AllArgsConstructor;
+
 import lombok.Setter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,14 +14,14 @@ import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.wof.domain.FollowProjectVO;
 import org.wof.domain.ProjectVO;
-import org.wof.persistence.DataSourceTests;
+
 
 import lombok.extern.log4j.Log4j;
-
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
+@ContextConfiguration(locations ={"file:src/main/webapp/WEB-INF/spring/root-context.xml",
+		"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml",
+		"file:src/main/webapp/WEB-INF/spring/appServlet/security-context.xml"})
 @Log4j
 @WebAppConfiguration
 public class ProjectMapperTests {
@@ -88,7 +88,7 @@ public class ProjectMapperTests {
 	}
 */
 
-	@Test
+/*	@Test
 	public void insertProject(){
 		ProjectVO p1 = new ProjectVO();
 		p1.setProj_title("몽글사랑 홈페이지 만들기");
@@ -131,7 +131,7 @@ public class ProjectMapperTests {
 
 		pm1.insertProject(p1);
 		log.info(p1);
-	}
+	}*/
 
 	/*@Test
 	public void projectRead(){
@@ -203,11 +203,11 @@ public class ProjectMapperTests {
 		log.info(projectMapper2.followProjectList());
 	}*/
 
-	@Test
+/*	@Test
 	@WithUserDetails
 	public void testProjectStatusUpdate(){
-		log.info(projectMapper2.projectList());
-	}
+		log.info(projectMapper2.pageWithProject());
+	}*/
 
 
 

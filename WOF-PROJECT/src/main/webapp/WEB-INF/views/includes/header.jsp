@@ -23,6 +23,52 @@
 <!-- Argon CSS -->
 <link rel="stylesheet" href="/resources/template/assets/css/argon.css?v=1.2.0" type="text/css">
 <link rel="stylesheet" type="text/css" href="/resources/template/assets/css/argon.css" media="all" />
+	<link href='/resources/calendar/fullcalendar-5.4.0/lib/main.css' rel='stylesheet' />
+	<script src='/resources/calendar/fullcalendar-5.4.0/lib/main.js'></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type='text/javascript'>
+document.addEventListener('DOMContentLoaded', function() {
+	  var calendarEl = document.getElementById('calendar');
+	  var calendar = new FullCalendar.Calendar(calendarEl, {
+	    selectable: true,
+	    headerToolbar: {
+	      left: 'prev',
+	      center: 'title',
+	      right: 'next'
+	    },
+	    select: function(info) {
+	      alert('selected ' + info.startStr + ' to ' + info.endStr);
+	      var meet_contents = prompt('enter your schedule!');
+	      var meetVO = {
+	    		  'meet_contents' : meet_contents,
+	    		  'meet_datetime' : info.startStr
+	    	      };
+	      calendar.addEvent({
+	         title: meet_contents,
+	         start: info.startStr,
+	         allDay: true
+	      }); // add event
+		$.ajax({
+        		data: JSON.stringify(meetVO),
+    	        contentType:'application/json',
+    	        dataType:'json',
+    	        url:'/project/addSchedule',
+    	        type:'post',
+    	        success:function(resp){
+    	            alert(resp);
+    	        },
+    	        error:function(){
+    	            alert('what is error?');
+    	        }
+    	    });
+	      
+	    }    
+	  });
+	  calendar.render();
+
+});
+</script>
+
 
 </head>
 

@@ -1,5 +1,8 @@
 package org.wof.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.wof.domain.FollowProjectVO;
+import org.wof.domain.MeetVO;
 import org.wof.service.ProjectService2;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
@@ -48,6 +52,21 @@ public class ProjectRestController {
 		model.addAttribute("follows", projectService2.listFollowProject(related_member));
 		return new ResponseEntity<Integer>(1, HttpStatus.OK);
 	}
+	
+	@PostMapping("project/addSchedule")
+	public Map<Object, Object> addSchedule(@RequestBody MeetVO vo){
+		
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		vo.setMeet_id("meet3");
+		vo.setMeet_req_mem("member29");
+		vo.setMeet_type(0);
+		vo.setMeet_contents(vo.getMeet_contents());
+		vo.setMeet_datetime(vo.getMeet_datetime());
+		System.out.println(vo);
+		projectService2.addMeeting(vo);
+		return map;
+	}
+
 	
 
 }

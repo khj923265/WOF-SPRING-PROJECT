@@ -8,9 +8,11 @@ public interface ProjectMapper2 {
 
 	public List<ProjectVO> projectList();
 	public int totalProject();
-
+	public List<ProjectVO> listRecommendProject(PartnersVO vo);
+	public List<ProjectVO> pageWithProject(Standard standard);
 	
-	public int addMeeting(MeetVO meetVO);
+	public List<MeetVO> listMeeting(String meet_req_mem);
+	public int addMeeting(MeetVO vo);
 	
 	public int projectStatusUpdate();
 	public List<ProjectVO> locationProject();
