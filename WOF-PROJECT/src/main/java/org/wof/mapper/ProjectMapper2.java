@@ -22,3 +22,4 @@ public interface ProjectMapper2 {
 	public FollowProjectVO detailFollowProject(FollowProjectVO vo);
 	public List<ProjectVO> listFollowProject(String related_member);
 }
+

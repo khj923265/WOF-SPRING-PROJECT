@@ -32,9 +32,9 @@ public class ProjectController2 {
 	@GetMapping("recommend_list")
 	public String projectRecommendList(Principal principal, Standard standard, Model model){
 		log.info("recommend List 실행");
-		String related_member = memberMapper.memberNo(principal.getName());
+		/*String related_member = memberMapper.memberNo(principal.getName());*/
 		model.addAttribute("projects", projectService2.projectList());
-		model.addAttribute("follows", projectService2.listFollowProject(related_member));
+		model.addAttribute("follows", projectService2.listFollowProject("member29"));
 		return "project/project_recommend_list";
 	}
 	

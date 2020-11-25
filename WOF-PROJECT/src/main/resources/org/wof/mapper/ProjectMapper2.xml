@@ -54,8 +54,8 @@
 		select count(*) from project
 	</select>
 	
-	<select id="listRecommendProject" parameterType="org.wof.domain.ProjectVO" resultType="org.wof.domain.ProjectVO">
-		
+	<select id="listRecommendProject" parameterType="org.wof.domain.PartnersVO" resultType="org.wof.domain.ProjectVO">
+		select p.* from project p where p.proj_work_place like '%' || #{prefered_area} || '%' and p.proj_reqr_skill like '%' || #{skill} || '%'
 	</select>
 	   
    <!-- 관심 프로젝트 -->
