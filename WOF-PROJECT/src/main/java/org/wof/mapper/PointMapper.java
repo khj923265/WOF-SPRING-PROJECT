@@ -5,21 +5,25 @@ import java.util.List;
 import org.wof.domain.MemberVO;
 import org.wof.domain.PointSearch;
 import org.wof.domain.PointVO;
+import org.wof.domain.Standard;
 
 public interface PointMapper {
 
 	public int ChargingList(PointVO point);
 	
-	public int Charging(MemberVO member);
+	public int Charging(PointVO point);
 	
 	public int WithdrawList(PointVO point);
 	
-	public int Withdraw(MemberVO member);
+	public int Withdraw(PointVO point);
 	
-	public int Payment(PointVO point);
+	public int getPointTotal(MemberVO member);
 	
 	public List<PointVO> getList();
 	
-	public List<PointVO> getListPaging(PointSearch search);
+	public List<PointVO> getListPaging(Standard standard);
 	
+	public int getTotalCount(Standard standard);
+	
+	//public int Payment(PointVO point);
 }

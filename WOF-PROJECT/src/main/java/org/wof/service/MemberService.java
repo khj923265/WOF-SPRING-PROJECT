@@ -10,5 +10,7 @@ public interface MemberService {
     void sginUp(MemberVO memberVO);
     PartnersVO partnersInfo(String userid);
     ClientVO clientInfo(String userid);
-
+    String checkPw(MemberVO memberVO);
+    void Withdrawal(MemberVO memberVO);
+    void partnersUpdate(MemberVO memberVO,PartnersVO partnersVO);
 }

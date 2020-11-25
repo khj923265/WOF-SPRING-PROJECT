@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.wof.domain.PageDTO;
+
 import org.wof.domain.ProjectVO;
-import org.wof.domain.Standard;
+
 import org.wof.service.ProjectService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
-import org.wof.service.ProjectService2;
+
 
 @Controller
 @Log4j
@@ -34,6 +34,7 @@ public class ProjectController {
 		log.info("list");
 		model1.addAttribute("list", ps1.getlist());
 	}
+	
 	@GetMapping("/create")
 	//@PreAuthorize("isAuthenticated()")
 	public void create(){
@@ -75,16 +76,5 @@ public class ProjectController {
 			rttr1.addFlashAttribute("result", "success");
 		}
 		return "redirect:/project/list";
-	}
-
-	private ProjectService2 projectService2;
-
-	@GetMapping("recommend_list")
-	public String projectRecommendList(Standard standard, Model model){
-		int totalPage = projectService2.totalProject();
-		model.addAttribute("projects", projectService2.projectList(standard));
-		model.addAttribute("pageMaker", new PageDTO(standard, totalPage));
-		log.info("recommend List 실행");
-		return "project/project_recommend_list";
 	}
 }

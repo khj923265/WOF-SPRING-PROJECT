@@ -61,6 +61,21 @@
     <insert id="signUpClient" parameterType="org.wof.domain.MemberVO">
         insert into client (member_no) values (#{member_no})
     </insert>
+    <select id="checkPw" parameterType="String" resultType="String">
+        select userpw from member where member_no = #{member_no}
+    </select>
+    <update id="Withdrawal" parameterType="org.wof.domain.MemberVO">
+        update member set status=#{status} where member_no = #{member_no}
+    </update>
+    <update id="partnersUpdate" parameterType="org.wof.domain.MemberVO">
+        update member set userphone=#{userphone} where member_no = #{member_no}
+    </update>
+    <update id="partnersUpdate2" parameterType="org.wof.domain.PartnersVO">
+        update partners set skill=#{skill}, prefered_area=#{prefered_area}, hashtag=#{hashtag} where member_no = #{member_no}
+    </update>
+    <update id="partnersUpdate3" parameterType="org.wof.domain.MemberVO">
+        update member set userpw=#{userpw}, userphone=#{userphone} where member_no = #{member_no}
+    </update>
 
 
 </mapper>
