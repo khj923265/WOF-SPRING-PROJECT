@@ -73,6 +73,18 @@
 	
 	<select id="getListPaging" resultType="org.wof.domain.PointVO">
   	<![CDATA[
+  	select *
+		from
+		(select rownum rn, point_id, point_type, point_amount, point_contents, point_chg_date, point_balance
+			from
+  			(select * from point
+  				order by lpad(point_id, 10, '0') desc)       
+				where rownum <= 20)
+					where rn > 10
+      	]]>
+      	
+  	</select>
+  	<!-- 
   	select 
     	point_id, point_balance, point_type, point_amount, point_contents, point_chg_date, point_owner
   	from 
@@ -85,10 +97,10 @@
       	)
       	where rn > (#{pageNum} -1) * #{amount}
       	]]>
-      	
-  	</select> 
+     -->	 
 	
 		<!-- <include refid="PointSearch"></include> 
+      
       
   	<![CDATA[    
       	rownum <= #{pageNum} * #{amount}
