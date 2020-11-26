@@ -164,7 +164,7 @@
  	    	        url:'/schedule/'+meet_id,
  	    	        type:'DELETE',
  	    	        success:function(resp){
- 	    	            $(this).html();
+ 	    	            alert('삭제 완료되었습니다.');
  	    	        },
  	    	        error:function(){
  	    	            alert('what is error?');

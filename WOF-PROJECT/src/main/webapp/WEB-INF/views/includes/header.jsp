@@ -36,6 +36,27 @@ document.addEventListener('DOMContentLoaded', function() {
 	      center: 'title',
 	      right: 'next'
 	    },
+        eventSources: [{
+
+            events: function(start, end, timezone, callback) {
+
+                $.ajax({
+                    url: '/schedule/list',
+                    type: 'GET',
+                    dataType: "json",
+                    data: JSON.parse(vo),
+                    error: function() {
+                        alert('error!');
+                    },
+                    success: function(data) {
+                        callback(data);
+                    }
+
+                });
+
+            },
+
+        }],
 	    select: function(info) {
 	      alert('enter your schedule !');
 	      var meet_contents = prompt('enter your schedule!');
@@ -64,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
     	        }
     	    });
 	      
-	    }    
+	    }  
 	  });
 	  calendar.render();
 

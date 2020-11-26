@@ -67,7 +67,7 @@
    
    <select id="listMeeting" parameterType="java.lang.String" resultType="org.wof.domain.MeetVO">
    	<![CDATA[
-   		select * from meet
+   		select * from meet where meet_req_mem = #{meet_req_mem}
    ]]>
    </select>
    
