@@ -118,10 +118,10 @@
 				<!-- 파트너스리스트 -->
 				<div class="col-sm-9">
 				
-				<input type="hidden" value="${member.member_no }" id="source_member"><!-- 테스트 후 변수로 변경 -->
+				<input type="hidden" value="${member.member_no }" id="source_member">
 				
 					<c:forEach var="partnersList" items="${partnersList }">
-						<div class="row bg-white mb-3">
+						<div class="row shadow-sm p-1 bg-white rounded mb-3">
 							<div class="col-sm-7">
 								<div class="row align-items-center">
 
@@ -261,7 +261,8 @@
 					var target_member = $(this).find("input").val();
 					var source_member = $("#source_member").val();
 					var clickThis = $(this);
-					
+					//로그인 아이디 널 또는 공백체크					
+					if(source_member != null && source_member != ""){					
 					//var state = false;//완료상태 확인
 					// 아이디 중복체크
 					$.ajax({
@@ -336,9 +337,12 @@
 							toastr.error("관심 파트너스의 중복체크중 오류가 발생하였습니다.");
 						}
 					})//end check ajax
+				
+				}else{
+					toastr.info("관심파트너스를 추가하시려면 로그인 해주세요.");
+				}
 		
-				})//end click
-
+				})//end click				
 			})
 		</script>
 </body>

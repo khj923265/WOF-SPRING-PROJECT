@@ -1,5 +1,6 @@
 package org.wof.mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -54,4 +55,6 @@ public interface PartnersMapper {
 			@Param("standard") Standard standard);
 	
 	public int applyPartnersTotal(@Param("proj_id") String proj_id); // 파트너스 선택 페이징 처리
+	
+	public int applyRegister(@Param("member_no") String[] member_no, @Param("proj_id") String proj_id); // 체크박스 파트너스 선택
 }

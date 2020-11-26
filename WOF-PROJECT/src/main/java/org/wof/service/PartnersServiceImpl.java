@@ -119,6 +119,12 @@ public class PartnersServiceImpl implements PartnersService{
 		return partnersMapper.applyPartnersTotal(proj_id);
 	}
 
+	@Override
+	public int applyRegister(String[] member_no, String proj_id) {
+		
+		return partnersMapper.applyRegister(member_no, proj_id);
+	}
+
 	
 
 }

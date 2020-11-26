@@ -33,5 +33,7 @@ public interface PartnersService {
 	public List<PartnersVO> applyDetailPartners(String proj_id, Standard standard);
 	
 	public int applyPartnersTotal(String proj_id);
+	
+	public int applyRegister(String[] member_no, String proj_id);
 
 }

@@ -1,5 +1,6 @@
 package org.wof.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +34,7 @@ public class PartnersController {
 	@RequestMapping("/list")
 	public void partnersList(
 			@RequestParam("member_no") String member_no, Model model, Standard standard){
-		
+		//principal: "+principal.getName()
 		log.info("list: "+standard);
 		model.addAttribute("partnersList", partnersService.partnersList(member_no, standard));
 		
@@ -125,5 +126,15 @@ public class PartnersController {
 		int total = partnersService.applyPartnersTotal(proj_id);
 		
 		model.addAttribute("pageMaker", new PageDTO(standard, total));
+	}
+	
+	@RequestMapping("/applyRegister")
+	public String applyRegister(String[] member_no, String proj_id) {
+		
+		log.info("applyRegister Controller : " + member_no + proj_id);
+		
+		partnersService.applyRegister(member_no, proj_id);
+		
+		return "/partners/applyregisterlist";
 	}
 }

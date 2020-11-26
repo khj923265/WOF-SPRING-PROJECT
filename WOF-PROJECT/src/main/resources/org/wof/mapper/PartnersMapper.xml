@@ -121,10 +121,10 @@
 	
 	<select id="applyState" resultType="org.wof.domain.ProjectVO">
 		<![CDATA[
-        select proj_title, member_no, proj_apply_deadline, proj_reqr_person,
+        select proj_id, proj_title, member_no, proj_apply_deadline, proj_reqr_person,
 		apply_mem, proj_start_date
 		from
-		(select rownum rn, proj_title,
+		(select rownum rn, proj_id, proj_title,
 		member_no, proj_apply_deadline, proj_reqr_person,
 		apply_mem, proj_start_date
 		from project 
@@ -134,7 +134,7 @@
 	</select>
 	
 	<select id="applyDetailProject" resultType="org.wof.domain.ProjectVO">
-		select proj_title, member_no,
+		select proj_id, proj_title, member_no,
 				proj_reg_date, proj_apply_deadline, proj_start_date, proj_end_date,
 				proj_estimate, proj_reqr_person,
 				proj_reqr_skill, proj_career,
@@ -147,11 +147,11 @@
 	<select id="applyDetailPartners" resultType="org.wof.domain.PartnersVO">
 		<![CDATA[
 		
-		select userid, substr(BIRTHDAY,1,2) as BIRTHDAY,
+		select member_no, userid, substr(BIRTHDAY,1,2) as BIRTHDAY,
 		CAREER, SKILL, PREFERED_AREA
 		from
 		(
-		select rownum rn, m.userid, substr(p.BIRTHDAY,1,2) as BIRTHDAY,
+		select rownum rn, p.member_no, m.userid, substr(p.BIRTHDAY,1,2) as BIRTHDAY,
 			p.CAREER, p.SKILL, p.PREFERED_AREA
 		from member m, partners p, apply a
 		where m.member_no = p.member_no and p.member_no = a.member_no
@@ -172,4 +172,29 @@
 		
 		]]>
 	</select>
+	
+	<insert id="applyRegister" parameterType="map">
+		
+		<foreach collection="member_no" item="member_no" index="index"  open="INSERT ALL " separator=" " close="SELECT * FROM DUAL" > 
+         into applyregister (member_no, proj_id)
+        values
+            (#{member_no}, #{proj_id})
+        </foreach>
+	</insert>
+	
+	<delete id="applyDelete">
+		<foreach collection="member_no" item="member_no" index="index"  open="DELETE " separator=" " close="SELECT * FROM DUAL" > 
+         from applyregister
+        where member_no = #{member_no} and proj_id = #{proj_id}
+        </foreach>
+	</delete>
+	
+	<select id="appliedPartners" resultType="org.wof.domain.MemberVO">
+		<![CDATA[
+			select m.member_no, m.userid, m.real_name, m.userphone
+			from member m, applyregister a
+			where m.member_no = a.member_no
+		]]>
+	</select>
+	
 </mapper>

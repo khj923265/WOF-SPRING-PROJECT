@@ -86,11 +86,11 @@
 					<form id="checkForm" action="applyRegister" method="post">
 					<input type="submit" id="chkBtn">
 					<input type="hidden" name="proj_id" value="${Project.proj_id }">
-					<c:forEach var="Partners" items="${Partners }">
+					<c:forEach var="Partners" items="${Member }">
 						<div class="row shadow p-1 mb-3 bg-white rounded ">
 						<div class="col-sm-1 text-center">
 						<div class="custom-control custom-checkbox">
-							<input type="checkbox" name="member_no" value="${Partners.member_no }" style="width: 25px; height: 25px;">
+							<input type="checkbox" name="member_no" value="${Member.member_no }" style="width: 25px; height: 25px;">
 						</div>
 						</div>
 							<div class="col-sm-7">
@@ -103,7 +103,7 @@
 									</span> <span class="justify-content-center">
 										<p class="mt-3 mb-0 text-sm">
 											<span class="text-nowrap"> <i class="ni ni-circle-08"></i>
-												${Partners.userid } 
+												${Member.userid } 
 												<i class="ni ni-air-baloon ml-1"></i>
 																								
 												<c:if test="${Partners.birthday != null }">
@@ -237,13 +237,7 @@
 				var checkForm = $("#checkForm");
 				var checkArray = [];
 				
-				$("input[name='member_no']").click(function(){
-					var member_no = $(this).val();
-					var proj_id = $("input[name='proj_id']").val();
-					alert(member_no, proj_id);
-				})
-				
-				$("input[name='member_no']:checked").each(function() {
+				$("input[name='member_no']:checked").each(function() { 
 					
 					checkArray.push($(this).val());
 					

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE html>
 <html>
@@ -29,6 +30,9 @@
  
  
 <body>
+<sec:authorize access="isAuthenticated()">
+	<sec:authentication property="principal.member" var="member"/>
+</sec:authorize>
 		<!-- Top navbar -->
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 		<div class="container">
@@ -55,7 +59,6 @@
 					
 					<li class="nav-item">
 						<sec:authorize access="isAuthenticated()">
-							<sec:authentication property="principal.member" var="member"/>
 							<a class="dropdown-item"
 							   href="/customlogout"><i class="ni ni-user-run"></i> <span>로그아웃</span> </a>
 						</sec:authorize>
