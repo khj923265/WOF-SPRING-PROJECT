@@ -16,12 +16,12 @@ public interface PointService {
 	
 	public int WithdrawService(PointVO point);
 	
-	public int getPointTotalService(MemberVO member);
+	//public int getPointTotalService(MemberVO member);
 	
 	public List<PointVO> ListService(Standard standard);
 	
 	public int getTotalService(Standard standard);
 
-	
+	public int pwCheckService(String userpw);
 }
 

@@ -6,6 +6,7 @@ import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.stereotype.Service;
 import org.wof.domain.MemberVO;
 import org.wof.domain.PointSearch;
@@ -30,6 +31,8 @@ public class PointServiceImpl implements PointService {
 	@Override
 	public int ChargingService(PointVO point){
 		
+		MemberVO member = new MemberVO();
+		
 		log.info("포인트 충전" + point);
 		
 		//포인트 누적
@@ -37,6 +40,12 @@ public class PointServiceImpl implements PointService {
 		
 		//point_type => "0:충전", 1:인출, 2:결제
 		point.setPoint_type(0);
+		
+		//point_balance
+		int balance = member.getTotal_point();
+		balance += point.getPoint_amount();
+		
+		//log.info("point type:" + point.getPoint_type());
 		
 		//충전여부 확인 (충전 내역)
 		int chargingResult = pointMapper.ChargingList(point);
@@ -49,9 +58,7 @@ public class PointServiceImpl implements PointService {
 		
 		log.info("포인트 인출" + point);
 		
-		/*if(member.getTotal_point() < point.getPoint_amount()){
-			throw new BalanceInsufficientException("잔고 부족 :"+(point.getPoint_amount()-member.getTotal_point())+"이 모자랍니다.");
-		}*/
+		MemberVO member = new MemberVO();
 		
 		//포인트 누적
 		pointMapper.Withdraw(point);
@@ -59,17 +66,28 @@ public class PointServiceImpl implements PointService {
 		//point_type => 0:충전, "1:인출", 2:결제
 		point.setPoint_type(1);
 		
+		//point_balance
+		int balance = member.getTotal_point();
+		
+		if(member.getTotal_point() >= point.getPoint_amount()){
+			balance -= point.getPoint_amount();
+		}
+		/*if(member.getTotal_point() < point.getPoint_amount()){
+			throw new BalanceInsufficientException("잔고 부족 :"+(point.getPoint_amount()-member.getTotal_point())+"이 모자랍니다.");
+		}*/
+		point.setPoint_balance(balance);
+		
 		//인출여부 확인 (인출 내역)
 		int withdrawResult = pointMapper.WithdrawList(point);
 		
 		return withdrawResult;
 	}
 	
-	@Override
+	/*@Override
 	public int getPointTotalService(MemberVO member) {
 		
 		return pointMapper.getPointTotal(member);
-	}
+	}*/
 	
 	
 	@Override
@@ -87,6 +105,12 @@ public class PointServiceImpl implements PointService {
 	@Override
 	public int PaymentService(PointVO point){
 		return 1;
+	}
+
+	@Override
+	public int pwCheckService(String userpw) {
+
+		return pointMapper.pwCheck(userpw);
 	}
 
 

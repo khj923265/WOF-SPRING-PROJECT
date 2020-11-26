@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.wof.domain.MemberVO;
 import org.wof.domain.PageDTO;
@@ -35,7 +36,7 @@ public class PointController {
     	
     	log.info("포인트 관리 페이지(충전/인출/조회)");
     	
-    	model.addAttribute("admin", service.ListService(standard));
+    	//model.addAttribute("admin", service.ListService(standard));
     	
     	model.addAttribute("getList", service.ListService(standard));
     	
@@ -54,13 +55,11 @@ public class PointController {
     }
     
     @PostMapping("/charging")
-    public String charging(PointVO point, RedirectAttributes rttr){
-    		
+    public void charging(PointVO point, RedirectAttributes rttr){
+    		log.info(point);
     	if(service.ChargingService(point) == 1){
     		rttr.addFlashAttribute("result", "success");
     	}
-    	
-    		return "point/point-admin";
     }
     
     @GetMapping("/withdraw")
@@ -86,12 +85,19 @@ public class PointController {
     }*/
     
     
-    @GetMapping("/getPointTotal")
+    /*@GetMapping("/getPointTotal")
     public void getPointTotal(Model model){
     	
     	MemberVO member = new MemberVO();
     	
     	model.addAttribute("getPointTotal", service.getPointTotalService(member));
+    }*/
+    
+    @GetMapping("/pwCheck")
+    @ResponseBody
+    public int pwCheck(@RequestParam("userpw") String userpwr){
+    	
+    	return service.pwCheckService(userpwr);
     }
     
 }

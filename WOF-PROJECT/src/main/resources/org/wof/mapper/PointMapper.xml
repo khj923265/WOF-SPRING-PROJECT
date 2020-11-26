@@ -5,8 +5,8 @@
 <mapper namespace="org.wof.mapper.PointMapper">
 
 	<insert id="ChargingList" parameterType="org.wof.domain.PointVO">
-		insert into POINT(point_id, point_amount, point_contents, point_chg_date)  
-		values ('point'||point_seq.nextval, #{point_amount}, #{point_contents}, sysdate)<!-- point_total = #{point_total} -->
+		insert into POINT(point_id, point_no, point_type, point_owner, point_amount, point_contents, point_chg_date)  
+		values ('point'||point_id_seq.nextval, point_no_seq.nextval, #{point_type}, #{point_owner}, #{point_amount}, #{point_contents}, sysdate)<!-- point_total = #{point_total} -->
 	</insert>
 	
 	<update id="Charging" parameterType="org.wof.domain.PointVO">
@@ -16,8 +16,8 @@
 	</update>
 	
 	<insert id="WithdrawList" parameterType="org.wof.domain.PointVO">
-		insert into POINT(point_id, point_amount, point_contents, point_chg_date)  
-		values ('point'||point_seq.nextval, -1*#{point_amount}, #{point_contents}, sysdate) <!-- point_balance = #{point_balance} -->
+		insert into POINT(point_id, point_no, point_type, point_owner, point_amount, point_contents, point_chg_date)  
+		values ('point'||point_id_seq.nextval, point_id_seq.nextval, #{point_type}, #{point_owner}, -1*#{point_amount}, #{point_contents}, sysdate) <!-- point_balance = #{point_balance} -->
 	</insert>
 	
 	<update id="Withdraw" parameterType="org.wof.domain.PointVO">
@@ -26,18 +26,18 @@
 		where member_no = #{point_owner}
 	</update>
 	
-	<select id="getPointTotal" resultType="org.wof.domain.MemberVO">
-		SELECT total_point
-		FROM MEMBER 
+	<!-- <insert id="getPointTotal" parameterType="org.wof.domain.MemberVO">
+		INSERT into POINT
+		VALUES (${)
 		WHERE member_no = #{member_no}
-	</select>
+	</insert> -->
 	
 	<select id="getList" resultType="org.wof.domain.PointVO">
 	<![CDATA[
 		SELECT p.point_chg_date, m.real_name, p.point_contents, p.point_amount, p.point_balance
 		FROM POINT p, MEMBER m
 		WHERE p.point_owner = m.member_no
-		and p.point_owner = #{member_no}
+		and p.point_owner = #{point_onwer}
 		]]>
 	</select>
 	<!-- order by point_id desc -->
@@ -79,8 +79,8 @@
 			from
   			(select * from point
   				order by lpad(point_id, 10, '0') desc)       
-				where rownum <= 20)
-					where rn > 10
+				where rownum <= #{pageNum} * #{amount})
+					where rn > (#{pageNum} -1) * #{amount}
       	]]>
       	
   	</select>
@@ -112,6 +112,13 @@
   	<![CDATA[
   		select count(*) from POINT
   	]]>	
+  	</select>
+  	
+  	<select id="pwCheck" parameterType="String" resultType="String">
+   	<![CDATA[
+  		select userpw from MEMBER
+  		where member_no = ${member_no};
+  	]]>	 	
   	</select>
 	
 </mapper>
