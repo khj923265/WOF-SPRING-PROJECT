@@ -30,11 +30,11 @@
 							<input class="form-control" type="search" value="충전"
 									id="example-search-input" name="point_contents">
 						</div>
-						<div class="form-group col-11 center" onkeyup="passwordMatch(this)">
+						<div class="form-group col-11 center">
 							<label for="example-password-input" class="form-control-label">비밀번호 확인</label> 
 								<input class="form-control" type="password" id="userpw" name="userpw" 
 										placeholder="비밀번호 입력" required>
-								<div class="check_font" id="pwCheck"></div>		
+								<div class="check_font" id="pwCheck" name="pwCheck"></div>		
 						</div>
 						
 						
@@ -69,8 +69,8 @@
 		</div>
 	</div>
 	
+<%@ include file = "../includes/footer.jsp"%>		
 
-	
 	<!-- 
 		<script>
 			//팝업창 닫을 때, 부모창 새로고침
@@ -79,7 +79,7 @@
         	window.close();
 		</script>
 	 -->
-
+	<script src="/resources/template/assets/vendor/jquery/dist/jquery.min.js"></script>
 	<script>
 		//<충전 금액>입력 => 숫자만 가능, 천단위 콤마
 		function inputNumberAutoComma(obj) {
@@ -108,14 +108,34 @@
 	
 	<script>
 	// 유효성 검사(1 = 중복 / 0 != 중복)
-	$("#userpw").blur(function() {
+	$('#userpw').blur(function() {
 		// id = "id_reg" / name = "userId"
 		var userpw = $('#userpw').val();
 		$.ajax({
-			url : '${pageContext.request.contextPath}/point/pwCheck?userpw='+ userpw,
+			url : '/point/pwCheck?userpw='+ userpw,
 			type : 'get',
 			success : function(data) {
-				console.log("1 = 중복o / 0 = 중복x : "+ data);							
+		
+			parseInt(data);
+			console.log("1 = 중복o / 0 = 중복x : "+ data);	
+			if (data == 1){
+				$("#pwCheck").text("사용중인 아이디입니다.");
+			}else if (data == 0){
+				if (!expId.test(id)){
+					$("#pwCheck").text("이메일 형식이 아닙니다.");
+				}else {
+					$("#pwCheck").text("사용가능한 아이디입니다.");
+					ischeckId = true;
+				}
+			}
+		}
+		,error:function(request,status,error){
+		alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);}
+
+	})		
+				
+				
+				
 				
 				if (data == 1) {
 						// 1 : 아이디가 중복되는 문구
@@ -124,12 +144,12 @@
 						$("#reg_submit").attr("disabled", true);
 					} else {
 						
-						if(idJ.test(user_id)){
+						if(idJ.test(userpw)){
 							// 0 : 아이디 길이 / 문자열 검사
 							$("#pwCheck").text("");
 							$("#reg_submit").attr("disabled", false);
 				
-						} else if(user_id == ""){
+						} else if(userpw == ""){
 							
 							$('#pwCheck').text('아이디를 입력해주세요 :)');
 							$('#pwCheck').css('color', 'red');
@@ -137,7 +157,7 @@
 							
 						} else {
 							
-							$('#pwCheck').text("비밀번호는는 소문자, 숫자, 특수문자 포함 8자리 이상만 가능합니다 :)");
+							$('#pwCheck').text("비밀번호는 대소문자, 숫자, 특수문자 포함 8자리 이상만 가능합니다 :)");
 							$('#pwCheck').css('color', 'red');
 							$("#reg_submit").attr("disabled", true);
 						}
@@ -146,9 +166,6 @@
 				}, error : function() {
 						console.log("실패");
 				}
-			});
+			}); 
 		});
 	</script>
-	
-	
-<%@ include file = "../includes/footer.jsp"%>		

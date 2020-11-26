@@ -1,6 +1,7 @@
 package org.wof.controller;
 
 import java.lang.reflect.Member;
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -8,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -55,9 +57,9 @@ public class PointController {
     }
     
     @PostMapping("/charging")
-    public void charging(PointVO point, RedirectAttributes rttr){
+    public void charging(PointVO point, MemberVO member, RedirectAttributes rttr){
     		log.info(point);
-    	if(service.ChargingService(point) == 1){
+    	if(service.ChargingService(point, member) == 1){
     		rttr.addFlashAttribute("result", "success");
     	}
     }
@@ -68,9 +70,9 @@ public class PointController {
     }
     
     @PostMapping("/withdraw")
-    public String withdraw(PointVO point, RedirectAttributes rttr){
+    public String withdraw(PointVO point, MemberVO member, RedirectAttributes rttr){
     		
-    	if(service.WithdrawService(point) == 1){
+    	if(service.WithdrawService(point, member) == 1){
     		rttr.addFlashAttribute("result", "success");
     	}
     	
@@ -93,11 +95,15 @@ public class PointController {
     	model.addAttribute("getPointTotal", service.getPointTotalService(member));
     }*/
     
-    @GetMapping("/pwCheck")
+    @RequestMapping(value="/point/pwCheck", method=RequestMethod.GET)
     @ResponseBody
-    public int pwCheck(@RequestParam("userpw") String userpwr){
+    public String pwCheck(@RequestParam("userpw") String userpw ,MemberVO member, Principal principal){
     	
-    	return service.pwCheckService(userpwr);
+    	log.info("=================!!!!!!!!!!!!!!!!!!!!!!!" + principal.getName());
+    	member.setUserid(principal.getName());
+    	member.setUserpw(userpw);
+    	
+    	return service.pwCheckService(member);
     }
     
 }

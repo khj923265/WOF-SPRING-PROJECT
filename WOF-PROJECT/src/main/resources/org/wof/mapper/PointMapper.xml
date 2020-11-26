@@ -5,10 +5,14 @@
 <mapper namespace="org.wof.mapper.PointMapper">
 
 	<insert id="ChargingList" parameterType="org.wof.domain.PointVO">
-		insert into POINT(point_id, point_no, point_type, point_owner, point_amount, point_contents, point_chg_date)  
-		values ('point'||point_id_seq.nextval, point_no_seq.nextval, #{point_type}, #{point_owner}, #{point_amount}, #{point_contents}, sysdate)<!-- point_total = #{point_total} -->
+		insert into POINT(point_id, point_no, point_type, point_owner, point_amount, point_contents, point_chg_date, point_balance)  
+		values ('point'||point_id_seq.nextval, point_no_seq.nextval, #{point_type}, #{point_owner}, #{point_amount}, #{point_contents}, sysdate, #{point_balance})<!-- point_total = #{point_total} -->
 	</insert>
 	
+	<select id="pointBalance" parameterType="org.wof.domain.PointVO" resultType="org.wof.domain.MemberVO">
+		select total_point from member
+		where userid = #{point_owner}
+	</select>
 	<update id="Charging" parameterType="org.wof.domain.PointVO">
 		update MEMBER 
 		set total_point = total_point + #{point_amount}
@@ -16,8 +20,8 @@
 	</update>
 	
 	<insert id="WithdrawList" parameterType="org.wof.domain.PointVO">
-		insert into POINT(point_id, point_no, point_type, point_owner, point_amount, point_contents, point_chg_date)  
-		values ('point'||point_id_seq.nextval, point_id_seq.nextval, #{point_type}, #{point_owner}, -1*#{point_amount}, #{point_contents}, sysdate) <!-- point_balance = #{point_balance} -->
+		insert into POINT(point_id, point_no, point_type, point_owner, point_amount, point_contents, point_chg_date, point_balance)  
+		values ('point'||point_id_seq.nextval, point_id_seq.nextval, #{point_type}, #{point_owner}, -1*#{point_amount}, #{point_contents}, sysdate, #{point_balance}) <!-- point_balance = #{point_balance} -->
 	</insert>
 	
 	<update id="Withdraw" parameterType="org.wof.domain.PointVO">
@@ -115,10 +119,8 @@
   	</select>
   	
   	<select id="pwCheck" parameterType="String" resultType="String">
-   	<![CDATA[
   		select userpw from MEMBER
-  		where member_no = ${member_no};
-  	]]>	 	
+  		where userid = #{userid}
   	</select>
 	
 </mapper>

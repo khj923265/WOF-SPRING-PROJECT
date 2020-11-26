@@ -5,10 +5,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-	<sec:authorize access="isAuthenticated()">
-		<sec:authentication property="principal.member" var="member"/>	
-	</sec:authorize>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,6 +34,11 @@
 </head>
 
 <body>
+
+
+	<sec:authorize access="isAuthenticated()">
+		<sec:authentication property="principal.member" var="member"/>	
+	</sec:authorize>
 
 <!-- Main content -->
 <div class="main-content" id="panel">

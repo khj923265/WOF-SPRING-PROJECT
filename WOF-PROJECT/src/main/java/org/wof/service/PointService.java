@@ -10,11 +10,11 @@ import org.wof.domain.PointVO;
 import org.wof.domain.Standard;
 
 public interface PointService {
-	public int ChargingService(PointVO point);
+	public int ChargingService(PointVO point, MemberVO member);
 	
 	public int PaymentService(PointVO point);
 	
-	public int WithdrawService(PointVO point);
+	public int WithdrawService(PointVO point, MemberVO member);
 	
 	//public int getPointTotalService(MemberVO member);
 	
@@ -22,6 +22,6 @@ public interface PointService {
 	
 	public int getTotalService(Standard standard);
 
-	public int pwCheckService(String userpw);
+	public String pwCheckService(MemberVO member);
 }
 
