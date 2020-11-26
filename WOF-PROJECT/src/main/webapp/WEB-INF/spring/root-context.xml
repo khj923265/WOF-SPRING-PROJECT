@@ -5,6 +5,7 @@
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:task="http://www.springframework.org/schema/task"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
@@ -33,9 +34,10 @@
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-	
+
+
 	<!-- Mail Service Bean -->
-	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+ 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
     <property name="host" value="smtp.gmail.com" />
     <property name="port" value="587" />
     
@@ -50,9 +52,20 @@
         </props>
     </property>
 	</bean>
+	
+	<!-- MyBatis -->
+	<mybatis-spring:scan base-package="org.wof.mapper" />
 
-	<mybatis-spring:scan base-package="org.wof.mapper"/>
 	<context:component-scan base-package="org.wof.service"/>
+	<context:annotation-config></context:annotation-config>
+
+	<!-- 트랜잭션 -->
+	<tx:annotation-driven />
+
+ 	<context:component-scan base-package="org.wof.aop"></context:component-scan>
+
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+
 
 	<tx:annotation-driven/>
 	<context:component-scan base-package="org.wof.task"/>

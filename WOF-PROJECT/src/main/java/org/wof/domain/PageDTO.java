@@ -3,7 +3,6 @@ package org.wof.domain;
 import lombok.Getter;
 import lombok.ToString;
 
-
 /*
  * 화면에서 페이징 처리를 위한 클래스
  * 

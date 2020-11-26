@@ -4,6 +4,36 @@
 
 <mapper namespace="org.wof.mapper.PartnersMapper">
 
+<select id="applyProject" resultType="org.wof.domain.ProjectVO">
+	<![CDATA[
+		select p.proj_title, p.proj_start_date, p.proj_reqr_skill, 
+			p.proj_estimate, p.proj_reqr_person, p.proj_work_place
+		from project p, apply a
+		where p.proj_id = a.proj_id and a.member_no = #{member_no}
+	]]>
+</select>
+
+<select id="partnersSupport" resultType="org.wof.domain.ProjectVO">
+	<![CDATA[
+		select p.proj_title, p.proj_reqr_skill, p.proj_career,
+			p.proj_start_date, p.proj_end_date, 
+			count(p.proj_reqr_person) as proj_reqr_person
+		from project p, apply a
+		where p.proj_id = a.proj_id 
+		group by p.proj_title, p.proj_reqr_skill, p.proj_career, p.proj_start_date, p.proj_end_date
+	]]>
+</select>
+
+<select id="dashboardpartnersApplyProject" resultType="org.wof.domain.ProjectVO">
+	<![CDATA[
+		select p.proj_title, p.proj_work_place, p.proj_reqr_skill, p.proj_start_date
+	from project p, apply a
+	where p.proj_id = a.proj_id and a.member_no = #{member_no}
+		
+	]]>
+</select>
+
+
 	<!-- 파트너스 찾기클릭시(파트너스 전체 리스트 불러오기) /*+INDEX_DESC(MEMBER SYS_C004099)*/ -->
 	<select id="partnersList" resultType="org.wof.domain.PartnersVO">
 		<![CDATA[

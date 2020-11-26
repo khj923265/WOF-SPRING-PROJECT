@@ -26,6 +26,7 @@ import lombok.extern.log4j.Log4j;
 @WebAppConfiguration
 public class ProjectMapperTests {
 
+
 	@Setter(onMethod_ = @Autowired)
 	private ProjectMapper2 projectMapper2;
 
@@ -143,6 +144,7 @@ public class ProjectMapperTests {
 	public void ProjectDelete(){
 		log.info("DELETE COUNT: "+pm1.deleteProject("project8"));
 	}*/
+	
 
 /*	@Test
 	public void testLocation() {
@@ -164,6 +166,8 @@ public class ProjectMapperTests {
 		log.info("UPDATE COUNT: " +count);
 
 	}*/
+
+
 
 /*	@Test
 	public void testaddFollowProjectMapper() {

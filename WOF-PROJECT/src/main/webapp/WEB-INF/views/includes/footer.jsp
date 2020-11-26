@@ -37,6 +37,7 @@
 <!-- .main-content -->
 
 <!-- Core JS -->
+
 <script
 	src="/resources/template/assets/vendor/jquery/dist/jquery.min.js"></script>
 <script

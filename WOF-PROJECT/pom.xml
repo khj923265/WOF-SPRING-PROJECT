@@ -13,6 +13,7 @@
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 	</properties>
+
 	<dependencies>
 		<!-- Spring -->
 		<dependency>
@@ -56,6 +57,7 @@
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>${org.slf4j-version}</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
@@ -107,6 +109,9 @@
 		</dependency>
 
 		<!-- Test -->
+
+
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -127,14 +132,14 @@
 			<version>1.18.10</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<!-- Connection poll(HikariCP) 설정 -->
 		<dependency>
 			<groupId>com.zaxxer</groupId>
 			<artifactId>HikariCP</artifactId>
 			<version>2.7.4</version>
 		</dependency>
-		
+
 		<!-- MyBatis 설정 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -156,14 +161,14 @@
 			<artifactId>mybatis-spring</artifactId>
 			<version>1.3.2</version>
 		</dependency>
-		
+
 		<!-- log4jdbc-log4j2 설정 -->
 		<dependency>
 			<groupId>org.bgee.log4jdbc-log4j2</groupId>
 			<artifactId>log4jdbc-log4j2-jdbc4</artifactId>
 			<version>1.16</version>
 		</dependency>
-		
+
 		<!-- json 데이터 처리 -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -206,31 +211,46 @@
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>5.0.7.RELEASE</version>
 		</dependency>
-		
+
 		<!-- Mail Service -->
 		<dependency>
-    	<groupId>javax.mail</groupId>
-    	<artifactId>mail</artifactId>
-   	 	<version>1.4.3</version>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.3</version>
 		</dependency>
 
 		<dependency>
-    		<groupId>org.springframework</groupId>
-    		<artifactId>spring-context-support</artifactId>
-    		<version>4.1.6.RELEASE</version>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>4.1.6.RELEASE</version>
 		</dependency>
-		
+
+
+		<!-- 썸네일 -->
+		<dependency>
+			<groupId>net.coobird</groupId>
+			<artifactId>thumbnailator</artifactId>
+			<version>0.4.8</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>${org.aspectj-version}</version>
+		</dependency>
+
+
 		<!-- Quarts -->
 		<dependency>
-    	<groupId>org.quartz-scheduler</groupId>
-    	<artifactId>quartz</artifactId>
-    	<version>2.3.0</version>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>2.3.0</version>
 		</dependency>
-	
+
 		<dependency>
-    	<groupId>org.quartz-scheduler</groupId>
-    	<artifactId>quartz-jobs</artifactId>
-   		 <version>2.3.0</version>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz-jobs</artifactId>
+			<version>2.3.0</version>
 		</dependency>
 		
 <!--	 webSocket Chat -->

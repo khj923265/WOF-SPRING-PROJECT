@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.wof.domain.ProjectVO;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.wof.domain.ApplyVO;
@@ -17,12 +18,31 @@ import org.wof.mapper.PartnersMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
+
 @Log4j
 @Service
 @AllArgsConstructor
 public class PartnersServiceImpl implements PartnersService{
 	
 	private PartnersMapper partnersMapper;
+	
+	@Override
+	public List<ProjectVO> applyProject(String member_no, Standard standard) {
+		log.info("get applyProject List...");
+		return partnersMapper.applyProject(member_no, standard);
+	}
+
+	@Override
+	public List<ProjectVO> partnersSupport() {
+		log.info("get partnersSupport List...");
+		return partnersMapper.partnersSupport();
+	}
+
+	@Override
+	public List<ProjectVO> dashboardpartnersApplyProject(String member_no) {
+		log.info("대쉬보드 파트너스 지원 리스트");
+		return partnersMapper.dashboardpartnersApplyProject(member_no);
+	}
 	
 	@Override
 	public List<PartnersVO> partnersList(String member_no, Standard standard) {
