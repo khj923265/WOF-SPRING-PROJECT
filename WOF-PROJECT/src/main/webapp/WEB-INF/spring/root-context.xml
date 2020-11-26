@@ -17,8 +17,8 @@
   	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
   		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
   		 <property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"/>
-  		<property name="username" value="project" />
-  		<property name="password" value="kosta202" />
+  		<property name="username" value="kosta202" />
+  		<property name="password" value="1234" />
   	</bean>
 
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
@@ -62,9 +62,9 @@
 	<!-- 트랜잭션 -->
 	<tx:annotation-driven />
 
- 	<context:component-scan base-package="org.wof.aop"></context:component-scan>
+<!-- 	<context:component-scan base-package="org.wof.aop"></context:component-scan>-->
 
-	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+<!--	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>-->
 
 
 	<tx:annotation-driven/>
