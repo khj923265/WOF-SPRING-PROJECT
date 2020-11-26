@@ -19,9 +19,9 @@ public class ClientServiceImpl implements ClientService {
 	private ClientMapper clientMapper;
 	
 	@Override
-	public List<ProjectVO> dashboardclientProject() {
+	public List<ProjectVO> dashboardclientProject(String member_no) {
 		log.info("대쉬보드 클라이언트 프로젝트 리스트");
-		return clientMapper.dashboardclientProject();
+		return clientMapper.dashboardclientProject(member_no);
 	}
 
 	@Override

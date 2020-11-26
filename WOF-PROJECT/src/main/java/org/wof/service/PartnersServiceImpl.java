@@ -25,7 +25,6 @@ public class PartnersServiceImpl implements PartnersService{
 	private PartnersMapper partnersMapper;
 	
 	@Override
-<<<<<<< HEAD
 	public List<ProjectVO> applyProject(String member_no, Standard standard) {
 		log.info("get applyProject List...");
 		return partnersMapper.applyProject(member_no, standard);
@@ -42,10 +41,9 @@ public class PartnersServiceImpl implements PartnersService{
 		log.info("대쉬보드 파트너스 지원 리스트");
 		return partnersMapper.dashboardpartnersApplyProject(member_no);
 	}
-	public List<PartnersVO> partnersList(Standard standard) {
-=======
+	
+	@Override
 	public List<PartnersVO> partnersList(String member_no, Standard standard) {
->>>>>>> fdac15a0971af09718703a4b504b1c3a9403a641
 		
 		log.info("get List with standard: "+standard);
 		

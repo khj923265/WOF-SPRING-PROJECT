@@ -25,7 +25,7 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @WebAppConfiguration
 public class ProjectMapperTests {
-/*
+
 
 	@Setter(onMethod_ = @Autowired)
 	private ProjectMapper2 projectMapper2;
@@ -144,10 +144,7 @@ public class ProjectMapperTests {
 	public void ProjectDelete(){
 		log.info("DELETE COUNT: "+pm1.deleteProject("project8"));
 	}*/
-<<<<<<< HEAD
 	
-/*	public void ProjectUpdate(){
-=======
 
 /*	@Test
 	public void testLocation() {
@@ -160,7 +157,6 @@ public class ProjectMapperTests {
 
 	/*@Test
 	public void ProjectUpdate(){
->>>>>>> fdac15a0971af09718703a4b504b1c3a9403a641
 		ProjectVO p1 = new ProjectVO();
 		p1.setProj_id("project30");
 		p1.setProj_title("quant 주식 투자 서비스 프로젝트");
@@ -170,11 +166,8 @@ public class ProjectMapperTests {
 		log.info("UPDATE COUNT: " +count);
 
 	}*/
-<<<<<<< HEAD
 
 
-=======
->>>>>>> fdac15a0971af09718703a4b504b1c3a9403a641
 
 /*	@Test
 	public void testaddFollowProjectMapper() {

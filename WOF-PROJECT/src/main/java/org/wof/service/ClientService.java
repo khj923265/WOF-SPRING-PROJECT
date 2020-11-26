@@ -8,7 +8,7 @@ import org.wof.domain.ProjectVO;
 
 public interface ClientService {
 
-	public List<ProjectVO> dashboardclientProject();
+	public List<ProjectVO> dashboardclientProject(String member_no);
 	
 	public List<PartnersVO> dashboardFallowPartners(String member_no);
 }

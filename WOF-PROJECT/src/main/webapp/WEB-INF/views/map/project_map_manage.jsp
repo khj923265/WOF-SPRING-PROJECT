@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 
 
-<%@ include file="includes/header.jsp" %>
+<%@ include file="../includes/header.jsp" %>
 <style>
 .map_wrap, .map_wrap * {
 	margin: 0;
@@ -536,4 +536,4 @@
 			}
 		}
 	</script>
-<%@ include file="includes/footer.jsp" %>
+<%@ include file="../includes/footer.jsp" %>

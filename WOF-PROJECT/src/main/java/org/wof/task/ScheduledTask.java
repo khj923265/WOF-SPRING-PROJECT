@@ -26,31 +26,14 @@ public class ScheduledTask {
 		log.warn("====================");
 		projectMapper2.projectStatusUpdate();
 	}
-/*	
-	//매일 오후 2시에 프로젝트 관련 메일을 날려주는 스케줄러
-<<<<<<< HEAD
-<<<<<<< HEAD
-	@Scheduled(cron = "* * 14 * * ?")
-=======
-
-/*	@Scheduled(cron = "0 0 14 * * ?")
->>>>>>> fdac15a0971af09718703a4b504b1c3a9403a641
-	public void SendingMail() {
-		log.warn("start sending mail....");
-		log.warn("====================");
-		projectService2.RecommendSendMail();
-	}*/
-<<<<<<< HEAD
 //	@Scheduled(cron = "* * 14 * * ?")
 //	public void SendingMail() {
 //		log.warn("start sending mail....");
 //		log.warn("====================");
 //		projectService2.RecommendSendMail();
 //	}
-=======
 
 
->>>>>>> fdac15a0971af09718703a4b504b1c3a9403a641
 	
 	
 

@@ -10,11 +10,8 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-<<<<<<< HEAD
 
-=======
 import org.springframework.test.context.web.WebAppConfiguration;
->>>>>>> fdac15a0971af09718703a4b504b1c3a9403a641
 import org.wof.domain.FollowPartnersVO;
 import org.wof.domain.PartnersVO;
 import org.wof.domain.Standard;

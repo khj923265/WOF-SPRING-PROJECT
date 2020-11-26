@@ -118,9 +118,7 @@ public class PartnersController {
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-<<<<<<< HEAD
 
-=======
 	@RequestMapping("/recommend")
 	public void recommend(
 			@RequestParam("member_no") String member_no, Model model){
@@ -128,7 +126,6 @@ public class PartnersController {
 		model.addAttribute("recommendList", partnersService.recommend(member_no));
 	}
 	
->>>>>>> fdac15a0971af09718703a4b504b1c3a9403a641
 	
 	
 
