@@ -1,10 +1,13 @@
 package org.wof.mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.wof.domain.ApplyVO;
 import org.wof.domain.FollowPartnersVO;
+import org.wof.domain.MemberVO;
 import org.wof.domain.PartnersVO;
 import org.wof.domain.ProjectVO;
 import org.wof.domain.Standard;
@@ -43,6 +46,23 @@ public interface PartnersMapper {
 	@Select("select sysdate from dual")//jUnit test
 	public String getTime();
 	
+	public List<ProjectVO> applyState(
+			@Param("member_no") String member_no,
+			@Param("standard") Standard standard);
 	
+	public ProjectVO applyDetailProject(String proj_id);
 
+	public List<PartnersVO> applyDetailPartners(
+			@Param("proj_id") String proj_id,
+			@Param("standard") Standard standard);
+	
+	public int applyPartnersTotal(@Param("proj_id") String proj_id); // 파트너스 선택 페이징 처리
+	
+	public int applyRegister(@Param("member_no") String[] member_no, @Param("proj_id") String proj_id); // 체크박스 파트너스 선택
+	
+	public String applyCheck(ApplyVO applyVO);
+	
+	public int applyDelete(@Param("member_no") String[] member_no, @Param("proj_id") String proj_id);
+	
+	public List<MemberVO> appliedPartners(String proj_id);
 }

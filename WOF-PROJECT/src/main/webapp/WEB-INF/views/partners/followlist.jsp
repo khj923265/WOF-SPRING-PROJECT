@@ -15,11 +15,12 @@
 	<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
 
 	<!-- Header & Menu -->
-	<jsp:include page="../includes/header.jsp" />
+	<%@ include file="../includes/header.jsp"%>
 
 
 	<!-- Main content -->
 	<div class="main-content" id="panel">
+	
 	<div class="header pb-8 pt-5 md-8">
 		<div class="container">
 			<div class="header-body">
@@ -27,16 +28,13 @@
 				<div class="row">
 					<div class="col">
 						<a class="btn btn-secondary"
-							href="/kosta202-project/Client/PartnersRecommendListAction.do">추천된
-							파트너스</a>
-						<a class="btn btn-secondary"
-							href="/kosta202-project/Client/followPartnerListAction.do">관심
-							파트너스</a>
-						<a class="btn btn-secondary"
-							href="/kosta202-project/Client/registerProjectListAction.do">지원한
-							파트너스</a> 
-						<a class="btn btn-secondary"
-							href="/kosta202-project/Partners/selectpartnerslistAction.do">파트너스
+							href="${pageContext.request.contextPath }/partners/followlist?member_no=${member.member_no }">관심 파트너스 관리</a> 
+							<a class="btn btn-secondary"
+							href="${pageContext.request.contextPath }/partners/recommend?member_no=${member.member_no }">추천 파트너스</a>
+							 <a class="btn btn-secondary"
+							href="${pageContext.request.contextPath}/partners/applystate?member_no=${member.member_no }">파트너스 지원현황</a>
+							<a class="btn btn-secondary"
+							href="${pageContext.request.contextPath}/Partners/selectpartnerslistAction.do">파트너스
 							선택</a>
 						<button type="button" class="btn btn-secondary">계약현황</button>
 						<button type="button" class="btn btn-secondary">계약완료</button>
@@ -137,7 +135,7 @@
 </div>
 	
 	<!-- Footer -->
-	<jsp:include page="../includes/footer.jsp"></jsp:include>
+	<%@ include file="../includes/footer.jsp"%>
 
 		<!-- toastr js 라이브러리 -->
 		<script type="text/javascript"
