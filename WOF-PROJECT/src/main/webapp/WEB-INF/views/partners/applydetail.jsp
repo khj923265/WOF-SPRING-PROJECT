@@ -85,12 +85,20 @@
 				
 					<form id="checkForm" action="applyRegister" method="post">
 					<input type="submit" id="chkBtn">
-					<input type="hidden" name="proj_id" value="${Project.proj_id }">
+					<input type="hidden" name='proj_id' value='${Project.proj_id}'>
 					<c:forEach var="Partners" items="${Partners }">
 						<div class="row shadow p-1 mb-3 bg-white rounded ">
 						<div class="col-sm-1 text-center">
 						<div class="custom-control custom-checkbox">
+						<c:choose>
+						<c:when test="${Partners.applied_member == null }">
 							<input type="checkbox" name="member_no" value="${Partners.member_no }" style="width: 25px; height: 25px;">
+						</c:when>
+						<c:when test="${Partners.applied_member != null }">
+							<input type="checkbox" name="member_no" value="${Partners.member_no }"   disabled="disabled"
+							style="width: 25px; height: 25px;">
+						</c:when>
+						</c:choose>
 						</div>
 						</div>
 							<div class="col-sm-7">
@@ -235,21 +243,52 @@
 				});
 				
 				var checkForm = $("#checkForm");
-				var checkArray = [];
-				
-				$("input[name='member_no']").click(function(){
+				var checkArray = [];					
+				var checkthis = function test() {
+					$(this).attr('checked', false);
+				}
+				$("input[name='member_no']").change(function(){
 					var member_no = $(this).val();
 					var proj_id = $("input[name='proj_id']").val();
-					alert(member_no, proj_id);
-				})
-				
-				$("input[name='member_no']:checked").each(function() {
 					
+
+					
+					$.ajax({
+						url:"/partners/applyCheck",
+						type:"post",
+						data:JSON.stringify({
+							member_no : member_no,
+							proj_id : proj_id
+						}),
+						contentType : "application/json; charset=utf-8",						
+						success : function(data){
+							parseInt(data);
+							console.log(data);
+							if(data == 0){
+								toastr.info("파트너스가 선택되었습니다.");
+							}else{
+								$(this).attr('checked', false);//중복값이면 체크해제
+								toastr.warning("이미 선택된 파트너스 입니다.");
+							}
+							
+						},
+						error : function(error) {
+							toastr.error("선택한 파트너스의 기존 선택 여부가 확인되지 않았습니다.");
+						}
+						
+					})
+					
+					
+				})
+
+				$("input[name='member_no']:checked").each(function() {
+				
 					checkArray.push($(this).val());
 					
 					$("#chkBtn").click(function() {
-						
+						alert("파트너스 선택이 완료되었습니다.");
 						checkForm.submit();
+						
 						
 					});
 					

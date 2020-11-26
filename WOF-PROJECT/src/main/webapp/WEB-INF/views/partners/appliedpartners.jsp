@@ -83,10 +83,10 @@
 				<div class="row">
 				<div class="col-sm-12">
 				
-					<form id="checkForm" action="applyRegister" method="post">
+					<form id="checkForm" action="applyDelete" method="post">
 					<input type="submit" id="chkBtn">
 					<input type="hidden" name="proj_id" value="${Project.proj_id }">
-					<c:forEach var="Partners" items="${Member }">
+					<c:forEach var="Member" items="${Member }">
 						<div class="row shadow p-1 mb-3 bg-white rounded ">
 						<div class="col-sm-1 text-center">
 						<div class="custom-control custom-checkbox">
@@ -106,23 +106,12 @@
 												${Member.userid } 
 												<i class="ni ni-air-baloon ml-1"></i>
 																								
-												<c:if test="${Partners.birthday != null }">
-												${Partners.birthday }년생 
-												</c:if>												
-												
-												<i class="ni ni-map-big ml-1"></i> ${Partners.prefered_area }
+												<i class="ni ni-map-big ml-1"></i> ${Member.real_name }
 											</span>
 										</p>
 										<p class="mt-3 mb-0 text-sm">
 											<span class="text-nowrap"> <i class="ni ni-badge ml-1"></i>
-												${Partners.career } <i
-												class="ni ni-chart-pie-35 ml-1"></i>
-												${Partners.skill }
-											</span>
-										</p>
-										<p class="mt-3 mb-3 text-sm">
-											<span class="text-nowrap"> <i class="ni ni-tag ml-1"></i>
-												<span class="badge badge-primary">${Partners.hashtag }</span>
+												${Member.userphone }
 											</span>
 										</p>
 									</span>
@@ -243,6 +232,7 @@
 					
 					$("#chkBtn").click(function() {
 						
+						alert("삭제되었습니다.");
 						checkForm.submit();
 						
 					});

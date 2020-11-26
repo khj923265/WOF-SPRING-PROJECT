@@ -260,7 +260,8 @@
 				$(".ni-favourite-28").click(function() {
 					var target_member = $(this).find("input").val();
 					var source_member = $("#source_member").val();
-					var clickThis = $(this);
+					var clickThis = $(this);//하트 색 토글을 위해 클릭된 i 테그를 변수에 담음.
+					
 					//로그인 아이디 널 또는 공백체크					
 					if(source_member != null && source_member != ""){					
 					//var state = false;//완료상태 확인

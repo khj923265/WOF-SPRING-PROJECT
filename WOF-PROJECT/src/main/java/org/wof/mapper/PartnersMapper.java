@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.wof.domain.ApplyVO;
 import org.wof.domain.FollowPartnersVO;
+import org.wof.domain.MemberVO;
 import org.wof.domain.PartnersVO;
 import org.wof.domain.ProjectVO;
 import org.wof.domain.Standard;
@@ -57,4 +59,10 @@ public interface PartnersMapper {
 	public int applyPartnersTotal(@Param("proj_id") String proj_id); // 파트너스 선택 페이징 처리
 	
 	public int applyRegister(@Param("member_no") String[] member_no, @Param("proj_id") String proj_id); // 체크박스 파트너스 선택
+	
+	public String applyCheck(ApplyVO applyVO);
+	
+	public int applyDelete(@Param("member_no") String[] member_no, @Param("proj_id") String proj_id);
+	
+	public List<MemberVO> appliedPartners(String proj_id);
 }

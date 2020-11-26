@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.wof.domain.ApplyVO;
 import org.wof.domain.FollowPartnersVO;
 import org.wof.domain.PageDTO;
 import org.wof.domain.PartnersVO;
@@ -129,12 +131,45 @@ public class PartnersController {
 	}
 	
 	@RequestMapping("/applyRegister")
-	public String applyRegister(String[] member_no, String proj_id) {
+	public String applyRegister(String[] member_no, String proj_id, RedirectAttributes rttr) {
 		
 		log.info("applyRegister Controller : " + member_no + proj_id);
 		
 		partnersService.applyRegister(member_no, proj_id);
+		rttr.addAttribute("proj_id", proj_id);
 		
-		return "/partners/applyregisterlist";
+		return "redirect:/partners/appliedpartners";
 	}
+	
+	@RequestMapping("/applyCheck")
+	@ResponseBody
+	public String applyCheck(
+			@RequestBody ApplyVO applyVO){
+		
+		log.info("/applyCheck..." + applyVO);
+		
+		return partnersService.applyCheck(applyVO);
+	}
+	
+	@RequestMapping("/applyDelete")
+	public String applyDelete(String[] member_no, String proj_id, RedirectAttributes rttr) {
+		
+		log.info("apply delete : " + member_no + "/" + proj_id);
+		
+		partnersService.applyDelete(member_no, proj_id);
+		
+		rttr.addAttribute("proj_id", proj_id);
+		
+		return "redirect:/partners/appliedpartners";
+	}
+	
+	@RequestMapping("/appliedpartners")
+	public void appliedPartners(Model model, @RequestParam("proj_id") String proj_id) {
+		
+		log.info("applied partners=============================");
+		
+		model.addAttribute("Project", partnersService.applyDetailProject(proj_id));
+		model.addAttribute("Member", partnersService.appliedPartners(proj_id));
+	}
+	
 }

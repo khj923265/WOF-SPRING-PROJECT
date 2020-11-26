@@ -18,5 +18,6 @@ public class PartnersVO {
 	private Standard standard;
 	
 	private String userid; // 파트너스 선택할 때 필요합니다..
+	private String applied_member; // left outer join 때문에 필요합니다..(중복 값 체크)
 
 }
