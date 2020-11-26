@@ -1,6 +1,7 @@
 package org.wof.service;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -78,12 +79,48 @@ public class MemberServiceImpl implements MemberService{
     public void partnersUpdate(MemberVO memberVO,PartnersVO partnersVO) {
             //비밀번호가 입력이 안된경우
         if (memberVO.getUserpw() == null||memberVO.getUserpw() == "") {
-            mapper.partnersUpdate(memberVO);
+            mapper.userPhoneUpdate(memberVO);
             mapper.partnersUpdate2(partnersVO);
-        }else {//비밀번호가 입려된 경우
+        }else {//비밀번호가 입력된 경우
             memberVO.setUserpw(passwordEncoder.encode(memberVO.getUserpw()));
              mapper.partnersUpdate3(memberVO);
              mapper.partnersUpdate2(partnersVO);
+        }
+    }
+    //로그인시 회원 상태체크,로그인날짜 최신화
+    @Override
+    public String loginIdCheck(String userid) {
+        String status;
+        log.info("userid : " + userid);
+        MemberVO memberVO = mapper.loginIdCheck(userid);
+        if (memberVO.getStatus() != null) {
+            status = memberVO.getStatus();
+            if (status.equals("탈퇴")) {
+                status = "1";
+            } else if (status.equals("휴면")) {
+                status = "2";
+            } else {
+                mapper.loginsysdate(userid);
+                status = "0";
+            }
+        }else {
+            status = "3";
+        }
+        log.info("status : " + status);
+        return status;
+    }
+
+    @Transactional
+    @Override
+    public void clientUpdate(MemberVO memberVO, ClientVO clientVO) {
+        //비밀번호가 입력이 안된경우
+        if (memberVO.getUserpw() == null||memberVO.getUserpw() == "") {
+            mapper.userPhoneUpdate(memberVO);
+            mapper.clientUpdate2(clientVO);
+        }else {//비밀번호가 입력된 경우
+            memberVO.setUserpw(passwordEncoder.encode(memberVO.getUserpw()));
+            mapper.clientUpdate3(memberVO);
+            mapper.clientUpdate2(clientVO);
         }
     }
 }
