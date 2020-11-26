@@ -51,7 +51,10 @@ public class ProjectServiceImpl2 implements ProjectService2 {
 	}
 
 	@Override
-	public FollowProjectVO detailFollowProject(FollowProjectVO vo) {
+	public FollowProjectVO detailFollowProject(String related_project, String related_member) {
+		FollowProjectVO vo = new FollowProjectVO();
+		vo.setRelated_member(related_member);
+		vo.setRelated_project(related_project);
 		return projectMapper2.detailFollowProject(vo);
 	}
 	

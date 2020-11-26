@@ -52,6 +52,27 @@
 												</div>
 											</div>
 										</div>
+										
+									<div class="row mt-3">
+											<div class="col">
+												<div
+													class="card-profile-stats d-flex justify-content-center">
+													<div>
+														<input type="hidden" id="meet_req_mem" value="${member.req_mem}">
+														<span class="heading">${member.real_name}</span> 
+														<span class="description">회원 </span>
+													</div>
+													<div>
+														<span class="heading">${partners.skill}</span>
+														 <span class="description">주요기술</span>
+													</div>
+													<div>
+														<span class="heading">${partners.career}</span> 
+														<span class="description">지역</span>
+													</div>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
 								<div class="col-md-6">
@@ -82,9 +103,8 @@
 									<thead class="thead-light">
 										<tr>
 											<th scope="col" class="sort" data-sort="name">프로젝트/회사명</th>
-											<th scope="col" class="sort" data-sort="skil">기술/역할</th>
-											<th scope="col" class="sort" data-sort="field">분야</th>
-											<th scope="col" class="sort" data-sort="tesk">담당업무</th>
+											<th scope="col" class="sort" data-sort="skil">일정 카테고리</th>
+											<th scope="col" class="sort" data-sort="tesk">일정내용</th>
 											<th scope="col" class="sort" data-sort="completion">날짜</th>
 											<th scope="col"></th>
 										</tr>
@@ -92,7 +112,7 @@
 									<tbody class="list">
 									
 										<c:forEach var="meet" items="${meets}">
-										<tr>
+										<tr id="">
 											<th scope="row">
 												<div class="media align-items-center">
 													<div class="media-body">
@@ -100,7 +120,7 @@
 													</div>
 												</div>
 											</th>
-											<td class="skil">JAVA,개발</td>
+										
 											<td><span class="badge badge-dot mr-4"> <i
 													class="bg-warning"></i> <span class="field">웹솔루션</span>
 											</span></td>
@@ -117,7 +137,7 @@
 											<td class="text-right">
 												<div>
 													<button type="button" class="btn btn-success">수정하기</button>
-													<button type="button" class="btn btn-danger">삭제하기</button>
+													<button type="button" class="btn btn-danger" id="deleteMeetingBtn">삭제하기</button>
 												</div>
 											</td>
 										</tr>
@@ -132,8 +152,30 @@
 				</div>
 			</div>
 		</div>
-	</div>
-	
-	
+	</div>		
 	<!-- footer -->
+		<script type="text/javascript">	
+ 	$(function() {
+ 		$("#deleteMeetingBtn").click(function() {
+ 				alert("delete click");
+ 		      var vo = {
+ 		    		  'meet_contents' : meet_contents,
+ 		    		  'meet_datetime' : info.endStr
+ 		    	      };
+ 			$.ajax({
+ 	        		data: JSON.stringify(vo),
+ 	    	        contentType:'application/json',
+ 	    	        dataType:'json',
+ 	    	        url:'/project/removeSchedule',
+ 	    	        type:'post',
+ 	    	        success:function(resp){
+ 	    	            alert(resp);
+ 	    	        },
+ 	    	        error:function(){
+ 	    	            alert('what is error?');
+ 	    	        }
+ 	    	    })
+			})	
+}); 
+</script>
 	<%@ include file="../includes/footer.jsp"%>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 import org.wof.domain.FollowProjectVO;
 import org.wof.domain.MeetVO;
 import org.wof.service.ProjectService2;
@@ -30,11 +31,12 @@ public class ProjectRestController {
 	private ProjectService2 projectService2;
 	
 	@PostMapping("follwProject/{related_project}")
-	public ResponseEntity<Integer> addFollowProject(Model model,@PathVariable String related_project,String related_member){
-		log.info("rest controller add " + related_project);
+	public ResponseEntity<Integer> addFollowProject(@PathVariable String related_project,String related_member){
+		log.info("rest controller add " + related_project+ "related_member");
 		FollowProjectVO vo = new FollowProjectVO();
-		vo.setRelated_project(related_project);
 		vo.setRelated_member(related_member);
+		vo.setRelated_project(related_project);
+		System.out.println(vo);
 		int result = projectService2.addFollowProject(vo);
 		if (result == 1){
 			return new ResponseEntity<Integer>(1, HttpStatus.OK);
@@ -43,26 +45,19 @@ public class ProjectRestController {
 	}
 	
 	@DeleteMapping("follwProject/{related_project}/{related_member}")
-	public ResponseEntity<Integer> removeFollowProject(Model model,@PathVariable String related_project, @PathVariable String related_member){
-		log.info("rest controller delete " + related_project);
-		FollowProjectVO vo = new FollowProjectVO();
-		vo.setRelated_project(related_project);
-		vo.setRelated_member(related_member);
-		vo = projectService2.detailFollowProject(vo);
-		model.addAttribute("follows", projectService2.listFollowProject(related_member));
-		return new ResponseEntity<Integer>(1, HttpStatus.OK);
+	public ResponseEntity<Integer> removeFollowProject(@PathVariable String related_project, @PathVariable String related_member){
+		log.info("rest controller delete " + related_project + "member" + related_member);
+		FollowProjectVO vo = projectService2.detailFollowProject(related_project, related_member);
+		int result = projectService2.deleteFollowProject(vo.getFollowproject_no());
+		if (result == 1){
+			return new ResponseEntity<Integer>(1, HttpStatus.OK);
+		}else return new ResponseEntity<Integer>(500, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	@PostMapping("project/addSchedule")
 	public Map<Object, Object> addSchedule(@RequestBody MeetVO vo){
-		
+		log.info("add meeting");
 		Map<Object, Object> map = new HashMap<Object, Object>();
-		vo.setMeet_id("meet3");
-		vo.setMeet_req_mem("member29");
-		vo.setMeet_type(0);
-		vo.setMeet_contents(vo.getMeet_contents());
-		vo.setMeet_datetime(vo.getMeet_datetime());
-		System.out.println(vo);
 		projectService2.addMeeting(vo);
 		return map;
 	}

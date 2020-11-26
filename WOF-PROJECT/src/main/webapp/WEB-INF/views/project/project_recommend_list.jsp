@@ -83,27 +83,23 @@
     
         <h2 class="card-title text-uppercase text-muted mb-0 mr-2"><a href="#">${project.proj_title}</a></h2>
     	<c:forEach var="follow" items="${follows}">
-		
-		<c:if test="${not empty follow.proj_id && follow.proj_id eq project.proj_id}">   
-        <span class="justify-content-center">           
+		<c:if test="${follow.proj_id eq project.proj_id}"> 
+		<span class="justify-content-center">           
         <i class="ni ni-favourite-28 mt-2 red" >    
         <input type="hidden" id ="projectId" value="${project.proj_id}" >
         <input type="hidden" id="memberId" value="${member.member_no}" >     
         </i>   
-        </span>    
-    	</c:if>
-    	</c:forEach>
-    	
-    	<c:if test="${empty follow.proj_id && follow.proj_id ne project.proj_id}"> 
-    	<span class="justify-content-center">           
+        </span>
+		</c:if>
+		</c:forEach>
+		
+		
+		<span class="justify-content-center">           
         <i class="ni ni-favourite-28 mt-2" >    
         <input type="hidden" id ="projectId" value="${project.proj_id}" >
         <input type="hidden" id="memberId" value="${member.member_no}" >     
         </i>   
-        </span> 
-		</c:if>
-    	
-		
+        </span>
 
        
     </div>
@@ -161,14 +157,13 @@ ${fn:substring(TextValue,0,60)}<br>${fn:substring(TextValue,61,120)}
 			$(this).toggleClass("red");
 			var related_project = $(this).find('#projectId').val();
 			var related_member = $(this).find('#memberId').val();
-			var data = $()
 			if ($(this).hasClass("red")) { 
 				alert("add"+related_project+related_member );
 				$.ajax({
 					url : "/follwProject/"+related_project,
 					type : "POST",
 					data :{
-						"related_member" : related_member
+						'related_member' : related_member
 					},
 					dataType : "json",
 					success : function(result) {
@@ -187,6 +182,7 @@ ${fn:substring(TextValue,0,60)}<br>${fn:substring(TextValue,61,120)}
 					success : function(result) {
 						alert(result);
 					},
+
 					error : function(error) {
 						alert(error);
 					}

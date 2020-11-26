@@ -15,7 +15,7 @@ public interface ProjectService2 {
 	public int addFollowProject(FollowProjectVO vo);
 	public int deleteFollowProject(String followproject_no);
 	public List<ProjectVO> listFollowProject(String related_member);
-	public FollowProjectVO detailFollowProject(FollowProjectVO vo);
+	public FollowProjectVO detailFollowProject(String related_project, String related_member);
 	
 	
 	public List<MeetVO> listMeeting(String meet_req_mem);

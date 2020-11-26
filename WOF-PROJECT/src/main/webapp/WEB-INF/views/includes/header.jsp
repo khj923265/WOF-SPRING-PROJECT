@@ -37,28 +37,30 @@ document.addEventListener('DOMContentLoaded', function() {
 	      right: 'next'
 	    },
 	    select: function(info) {
-	      alert('selected ' + info.startStr + ' to ' + info.endStr);
+	      alert('enter your schedule !');
 	      var meet_contents = prompt('enter your schedule!');
-	      var meetVO = {
+	      var vo = {
 	    		  'meet_contents' : meet_contents,
-	    		  'meet_datetime' : info.startStr
+	    		  'meet_datetime' : info.endStr,
+	    		  'meet_type' : 0,
+	    		  'meet_req_mem' : $('#meet_req_mem').val()
 	    	      };
 	      calendar.addEvent({
 	         title: meet_contents,
-	         start: info.startStr,
+	         start: info.endStr,
 	         allDay: true
 	      }); // add event
 		$.ajax({
-        		data: JSON.stringify(meetVO),
+        		data: JSON.stringify(vo),
     	        contentType:'application/json',
     	        dataType:'json',
     	        url:'/project/addSchedule',
     	        type:'post',
     	        success:function(resp){
-    	            alert(resp);
+    	            alert("seuccess enter your schedule!");
     	        },
     	        error:function(){
-    	            alert('what is error?');
+    	            alert('error');
     	        }
     	    });
 	      
