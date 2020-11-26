@@ -61,14 +61,13 @@
 				  <th>포인트 충전/송금</th>
 				 </tr>
  <!-- ②포인트 충전/송금 -->  	
- 				  <tr> 																<!-- ajax -->
- 				  <td><form action="getPointTotal" method="get" name="getPointTotal"><b>${member.total_point }</b>&nbsp;P</form></td>	
+ 				  <tr> 																					
+ 				  <td id="totalPoint"><b>${member.total_point }</b>&nbsp;P</form></td>	
             	  <td>              		
-            	  	<a type="button" class="btn btn-primary ml-2" name="charge" value="충전"
-            	  		href = "javascript:popup()" target = "_self">충전</a>
+            	  	<a type="button" class="btn btn-primary ml-2" name="charge" value="충전" id="popup">충전</a>
+            	  		
             	    	<!-- href = "javascript:popup()" target = "_self" -->	
-  			  		<a type="button" class="btn btn-secondary ml-2" name="withdraw" value="인출"
-  			  			href = "javascript:popup2()" target = "_self">인출</a>
+  			  		<a type="button" class="btn btn-secondary ml-2" name="withdraw" value="인출" id="popup2">인출</a>
   			  	  </td>
   			  	  </tr>
             	</table>
@@ -174,7 +173,6 @@
             <div class="card-footer py-4">
               <nav aria-label="...">
                 <ul class="pagination justify-content-end mb-0">
-                
                  <c:if test="${pageMaker.prev }">
                   <li class="page-item "> <!-- disabled -->
                     <a class="page-link" href="${pageMaker.startPage -1 }" tabindex="-1">
@@ -209,7 +207,6 @@
             	<input type="hidden" name="amount" value="${pageMaker.standard.amount }">            	
             </form>
    <!-- end of footer -->
-            
           </div>
         </div>
       </div>
@@ -217,7 +214,7 @@
   </div>
   
   	<script src="/resources/template/assets/vendor/jquery/dist/jquery.min.js"></script>
-  	<script type="text/javascript">
+  	<script>
   	
   		var actionForm = $("#actionForm");
   		
@@ -237,21 +234,31 @@
   		});
   	</script>	
   	
+
+  	
 	<script>
-        function popup(){
+        var popup = document.getElementById('popup');
+        	popup.addEventListener('click',function(){
             var url = "/point/charging";
             var name = "popup test";
             var option = "width = 500, height = 500, top = 100, left = 200, location = no"
             window.open(url, name, option);
-        }
+        })
     </script>
 	<script>
-        function popup2(){
+        var popup2 = document.getElementById('popup2');
+        	popup2.addEventListener('click',function (){
             var url = "/point/withdraw";
             var name = "popup test2";
             var option = "width = 500, height = 500, top = 100, left = 200, location = no"
             window.open(url, name, option);
+        })
+    </script>  
+    
+	<script>
+        function pointRefresh(){
+        	 $("#totalPoint").load(window.location.href + "#totalPoint");
         }
-    </script>    
+    </script> 
   
 <%@ include file = "../includes/footer.jsp"%>

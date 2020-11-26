@@ -35,6 +35,11 @@
 
 <body>
 
+
+	<sec:authorize access="isAuthenticated()">
+		<sec:authentication property="principal.member" var="member"/>	
+	</sec:authorize>
+
 <!-- Main content -->
 <div class="main-content" id="panel">
 
