@@ -14,6 +14,51 @@ select * from project order by proj_reg_date desc
 ]]>
 </select>
 
+
+<select id="getListWithPaging"	resultType="org.wof.domain.ProjectVO">
+		<!-- 쿼리문 -->
+		<!-- SELECT * 
+			FROM
+				(SELECT rownum rn, proj_id, proj_title, proj_reg_date, member_no, proj_apply_deadline,
+					proj_start_date, proj_end_date, proj_estimate, PROJ_REQR_PERSON, PROJ_REQR_SKILL,
+					PROJ_TYPE, PROJ_CAREER, PROJ_PM, PROJ_WORK_TYPE, PROJ_WORK_PLACE, PROJ_WORK_TIME,
+					proj_work_equip, proj_walfare, proj_detail, PROJ_FINISH_DATE, apply_mem, proj_status,
+					PROJ_UPDATE_DATE, PROJ_REPLYCNT, PROJ_TOTAL_DATE
+				FROM
+					(SELECT * 
+					FROM PROJECT
+					ORDER BY lpad(proj_id, 10, '0') DESC
+					)
+				WHERE rownum <= 20
+				)
+			WHERE rn > 10; --> 
+			<![CDATA[
+			SELECT * 
+			FROM
+		 		(SELECT rownum rn, proj_id, proj_title, proj_reg_date, member_no, proj_apply_deadline,
+					proj_start_date, proj_end_date, proj_estimate, PROJ_REQR_PERSON, PROJ_REQR_SKILL,
+					PROJ_TYPE, PROJ_CAREER, PROJ_PM, PROJ_WORK_TYPE, PROJ_WORK_PLACE, PROJ_WORK_TIME,
+					proj_work_equip, proj_walfare, proj_detail, PROJ_FINISH_DATE, apply_mem, proj_status,
+					PROJ_UPDATE_DATE, PROJ_REPLYCNT, PROJ_TOTAL_DATE
+				FROM
+					(SELECT * 
+					FROM PROJECT
+					ORDER BY lpad(proj_id, 10, '0') DESC
+					)
+				WHERE rownum <= #{pageNum} * #{amount}
+				)
+			WHERE rn > (#{pageNum} - 1) * #{amount}
+			]]>
+</select>
+
+
+<select id="getTotalCount" resultType="int">
+	select count(*) from project 
+</select>
+
+
+
+
 <insert id="insertProject" parameterType="org.wof.domain.ProjectVO">
 insert into project(proj_id, proj_title, proj_reg_date, member_no, proj_apply_deadline, proj_start_date, proj_end_date,
 proj_estimate, proj_reqr_person, proj_reqr_skill, proj_type, proj_career, proj_pm, proj_work_type, proj_work_place,
@@ -40,5 +85,11 @@ update project set proj_title=#{proj_title},
 		 proj_detail=#{proj_detail}
 			where proj_id = #{proj_id}
 </update>
+
+
+
+
+
+
 
 </mapper>

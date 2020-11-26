@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.wof.mapper.ProjectReplyMapper">
+
+	<insert id="insert">
+		insert into project_reply(proj_reply_no, proj_reply_cont, proj_reply_date, member_no) 
+			values (seq_project_reply.nextval, #{proj_reply_cont}, TO_DATE(#{proj_reply_date},'yyyy-MM-dd'), #{member_no} )
+	</insert>
+
+
+
+
+
+
+
+</mapper>

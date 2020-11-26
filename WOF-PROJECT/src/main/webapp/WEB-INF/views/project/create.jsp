@@ -240,6 +240,76 @@
 											</div>
 										</div>
 
+
+								<div class="form-group" id="subcategory_input_group"
+											style="display: block;">
+											<label class="form-group-title body-1-bold"
+												style="font-weight: bold;">프로젝트 전문기술 <span
+												class="required" style="color: #CE3861;">*</span></label>
+											<div class="form-content">
+											
+											
+											<span><label class="chip-choice-client"
+													style="display: none;"> <input
+														class="theme-client wishket-chip" name="proj_reqr_skill"
+														type="checkbox" value="Bash">
+														 <span>Bash</span></label></span> <span><label
+													class="chip-choice-client" style="display: inline-block;">
+														<input class="theme-client wishket-chip"
+														name="proj_reqr_skill" type="checkbox" value="C/C++/C#">
+														<span>C/C++/C#</span>
+												</label></span> <span><label class="chip-choice-client"
+													style="display: inline-block;"> <input
+														class="theme-client wishket-chip" name="proj_reqr_skill"
+														type="checkbox" value="Java"> <span>Java</span></label></span> 
+														<span><label class="chip-choice-client"
+													style="display: inline-block;"> <input
+														class="theme-client wishket-chip" name="proj_reqr_skill"
+														type="checkbox" value="JavaScript"> <span>JavaScript</span></label></span>
+														 <span><label class="chip-choice-client"
+													style="display: inline-block;"> <input
+														class="theme-client wishket-chip" name="proj_reqr_skill"
+														type="checkbox" value="Swift"> <span>Swift</span></label></span>
+												<span><label class="chip-choice-client"
+													style="display: inline-block;"> <input
+														class="theme-client wishket-chip" name="proj_reqr_skill"
+														type="checkbox" value="Perl"> <span>Perl</span></label></span>
+												<span><label class="chip-choice-client"
+													style="display: inline-block;"> <input
+														class="theme-client wishket-chip" name="proj_reqr_skill"
+														type="checkbox" value="Ruby"> <span>Ruby</span></label></span>
+												<span><label class="chip-choice-client"
+													style="display: inline-block;"> <input
+														class="theme-client wishket-chip" name="proj_reqr_skill"
+														type="checkbox" value="Python"> <span>Python</span></label></span>
+												<span><label class="chip-choice-client"
+													style="display: none;"> <input
+														class="theme-client wishket-chip" name="proj_reqr_skill"
+														type="checkbox" value="PHP"> <span>PHP</span></label></span>
+												<span><label class="chip-choice-client"
+													style="display: none;"> <input
+														class="theme-client wishket-chip" name="proj_reqr_skill"
+														type="checkbox" value="R"> <span>R</span></label></span>
+												<span><label class="chip-choice-client"
+													style="display: none;"> <input
+														class="theme-client wishket-chip" name="proj_reqr_skill"
+														type="checkbox" value="VBA"> <span>VBA</span></label></span> <span><label
+													class="chip-choice-client" style="display: none;">
+														<input class="theme-client wishket-chip"
+														name="proj_reqr_skill" type="checkbox" value="Scala"> <span>Scala</span>
+												</label></span> <span><label class="chip-choice-client"
+													style="display: none;"> <input
+														class="theme-client wishket-chip" name="proj_reqr_skill"
+														type="checkbox" value="Go"> <span>Go</span></label></span>
+											</div>
+										</div>
+											
+											
+											
+											
+
+
+
 									</div><!-- col-xl-5 -->
 					</div>
 
@@ -295,7 +365,7 @@
 									<label for="working_area" style="font-weight: bold;">근무지역 <span class="required" style="color: #CE3861;">*</span></label>
 									<div class="row">
 										 <div class="col">
-										 <select class="form-control"  name="proj_work_place" onChange="cat1_change(this.value,proj_work_place2)" >
+										 <select class="form-control"  name="proj_work_place" onChange="cat1_change(this.value,proj_work_place1)" >
 											<option selected>-선택-</option>
 											<option value='1'>서울</option>
 											<option value='2'>부산</option>
@@ -317,7 +387,7 @@
 										</div>
 										
 										<div class="col">
-										<select class="form-control" name="proj_work_place2">
+										<select class="form-control" name="proj_work_place1">
 										   <option  selected>-선택-</option>
 											<option value='215'>군산시</option>
 											<option value='216'>김제시</option>

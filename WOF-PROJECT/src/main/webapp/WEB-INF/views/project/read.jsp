@@ -41,7 +41,12 @@
 						</div>
 					</div>
 					<!-- project title-->
-
+					
+					<%-- 
+						<input type='hidden' id='proj_id' name='proj_id' value='<c:out value="${project.getProj_id}"/>'>
+						<input type='hidden' name='pageNum' value='<c:out value="${stand.pageNum}"/>'>
+						<input type='hidden' name='amount' value='<c:out value="${stand.amount}"/>'> --%>
+				
 						
 					<h3 class="mt-0">${project.getProj_title()}</h3>
 					<div class="badge badge-secondary mb-3">Ongoing</div>
