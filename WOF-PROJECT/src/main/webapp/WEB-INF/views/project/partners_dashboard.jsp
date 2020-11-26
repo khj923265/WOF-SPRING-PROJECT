@@ -58,7 +58,7 @@
 												<div
 													class="card-profile-stats d-flex justify-content-center">
 													<div>
-														<input type="hidden" id="meet_req_mem" value="${member.req_mem}">
+														<input type="hidden" id="meet_req_mem" value="${member.member_no}">
 														<span class="heading">${member.real_name}</span> 
 														<span class="description">회원 </span>
 													</div>
@@ -110,9 +110,8 @@
 										</tr>
 									</thead>
 									<tbody class="list">
-									
 										<c:forEach var="meet" items="${meets}">
-										<tr id="">
+										<tr id="contents">
 											<th scope="row">
 												<div class="media align-items-center">
 													<div class="media-body">
@@ -137,7 +136,7 @@
 											<td class="text-right">
 												<div>
 													<button type="button" class="btn btn-success">수정하기</button>
-													<button type="button" class="btn btn-danger" id="deleteMeetingBtn">삭제하기</button>
+													<button type="button" class="btn btn-danger" id="deleteMeetingBtn" value="${meet.meet_id}">삭제하기</button>
 												</div>
 											</td>
 										</tr>
@@ -156,20 +155,16 @@
 	<!-- footer -->
 		<script type="text/javascript">	
  	$(function() {
- 		$("#deleteMeetingBtn").click(function() {
- 				alert("delete click");
- 		      var vo = {
- 		    		  'meet_contents' : meet_contents,
- 		    		  'meet_datetime' : info.endStr
- 		    	      };
+ 		$("#deleteMeetingBtn").click(function() {			
+ 				var meet_id = $(this).val();
+ 				alert("delete click"+ meet_id);
  			$.ajax({
- 	        		data: JSON.stringify(vo),
  	    	        contentType:'application/json',
  	    	        dataType:'json',
- 	    	        url:'/project/removeSchedule',
- 	    	        type:'post',
+ 	    	        url:'/schedule/'+meet_id,
+ 	    	        type:'DELETE',
  	    	        success:function(resp){
- 	    	            alert(resp);
+ 	    	            $(this).html();
  	    	        },
  	    	        error:function(){
  	    	            alert('what is error?');

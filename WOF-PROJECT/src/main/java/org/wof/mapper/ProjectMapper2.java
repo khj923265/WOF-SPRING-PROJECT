@@ -11,8 +11,10 @@ public interface ProjectMapper2 {
 	public List<ProjectVO> listRecommendProject(PartnersVO vo);
 	public List<ProjectVO> pageWithProject(Standard standard);
 	
+	//일정관리
 	public List<MeetVO> listMeeting(String meet_req_mem);
 	public int addMeeting(MeetVO vo);
+	public int deleteMeeting(String meet_id);
 	
 	public int projectStatusUpdate();
 	public List<ProjectVO> locationProject();

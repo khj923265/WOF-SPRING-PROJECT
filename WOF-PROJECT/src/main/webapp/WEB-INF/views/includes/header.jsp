@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
         		data: JSON.stringify(vo),
     	        contentType:'application/json',
     	        dataType:'json',
-    	        url:'/project/addSchedule',
+    	        url:'/schedule/'+vo.meet_req_mem,
     	        type:'post',
     	        success:function(resp){
     	            alert("seuccess enter your schedule!");

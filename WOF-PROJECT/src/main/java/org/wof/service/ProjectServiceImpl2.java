@@ -69,6 +69,11 @@ public class ProjectServiceImpl2 implements ProjectService2 {
 	}
 	
 	@Override
+	public int deleteMeeting(String meet_id) {
+		return projectMapper2.deleteMeeting(meet_id);
+	}
+	
+	@Override
 	public List<MeetVO> listMeeting(String meet_req_mem) {
 		return projectMapper2.listMeeting(meet_req_mem);
 	}

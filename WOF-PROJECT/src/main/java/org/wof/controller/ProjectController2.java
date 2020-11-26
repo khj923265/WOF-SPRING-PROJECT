@@ -48,7 +48,7 @@ public class ProjectController2 {
 	public String projectFollowList(Principal principal, Standard standard, Model model){
 		log.info("follow List 실행");
 		String related_member = memberMapper.memberNo(principal.getName());
-		model.addAttribute("follows", projectService2.listFollowProject(related_member));
+		model.addAttribute("projects", projectService2.listFollowProject(related_member));
 		return "project/project_follow";
 	}
 	
