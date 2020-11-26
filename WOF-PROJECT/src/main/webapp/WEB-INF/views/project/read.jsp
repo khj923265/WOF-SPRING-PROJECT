@@ -41,7 +41,12 @@
 						</div>
 					</div>
 					<!-- project title-->
-
+					
+					<%-- 
+						<input type='hidden' id='proj_id' name='proj_id' value='<c:out value="${project.getProj_id}"/>'>
+						<input type='hidden' name='pageNum' value='<c:out value="${stand.pageNum}"/>'>
+						<input type='hidden' name='amount' value='<c:out value="${stand.amount}"/>'> --%>
+				
 						
 					<h3 class="mt-0">${project.getProj_title()}</h3>
 					<div class="badge badge-secondary mb-3">Ongoing</div>
@@ -111,6 +116,10 @@
 						</div>
 					</div>
 
+	<input class="form-control" type= "hidden" name="member_no" id="member_no"	value='${member.member_no}' readonly="readonly">
+	<input class="form-control" type= "hidden" name="real_name" id="real_name"	value='${member.real_name}' readonly="readonly">
+
+				<div class = "chat">
 					<div class="media mt-2">
 						<div class="media-body">
 							<h5 class="mt-0">Jeremy Tomlinson</h5>
@@ -131,6 +140,7 @@
 							</div>
 						</div>
 					</div>
+				</div>
 
 					<div class="text-center mt-2">
 						<a href="javascript:void(0);" class="text-danger">Load more </a>
@@ -260,3 +270,62 @@
 	<!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+
+<script type="text/javascript" src="/resources/template/bootstrap/js/reply.js"></script>
+
+<<script>
+	$(document).ready(function () {
+	  
+	  var bnoValue = '<c:out value="${project.proj_id}"/>';
+	  var replyUL = $(".chat");
+	  
+	    showList(1);
+	    
+	    function showList(page){
+	    	
+	    	console.log("show list " + page);
+	        
+	        replyService.getList({proj_id:projValue,page: page|| 1 }, function(replyCnt, list) {
+	          
+	        console.log("replyCnt: "+ replyCnt );
+	        console.log("list: " + list);
+	        console.log(list);
+	        
+	        if(page == -1){
+	          pageNum = Math.ceil(replyCnt/10.0);
+	          showList(pageNum);
+	          return;
+	        }
+	          
+	         var str="";
+	         
+	         if(list == null || list.length == 0){
+	           return;
+	         }
+	         
+	         for (var i = 0, len = list.length || 0; i < len; i++) {
+	           str +="<li class='left clearfix' data-rno='"+list[i].rno+"'>";
+	           str +="  <div><div class='header'><strong class='primary-font'>["
+	        	   +list[i].rno+"] "+list[i].replyer+"</strong>"; 
+	           str +="    <small class='pull-right text-muted'>"
+	               +replyService.displayTime(list[i].replyDate)+"</small></div>";
+	           str +="    <p>"+list[i].reply+"</p></div></li>";
+	         }
+	         
+	         replyUL.html(str);
+	         
+	         showReplyPage(replyCnt);
+
+	     
+	       });//end function
+	         
+	     }//end showList
+
+	     
+	  
+	     
+</script>
+
+
+
