@@ -23,6 +23,75 @@
 <!-- Argon CSS -->
 <link rel="stylesheet" href="/resources/template/assets/css/argon.css?v=1.2.0" type="text/css">
 <link rel="stylesheet" type="text/css" href="/resources/template/assets/css/argon.css" media="all" />
+	<link href='/resources/calendar/fullcalendar-5.4.0/lib/main.css' rel='stylesheet' />
+	<script src='/resources/calendar/fullcalendar-5.4.0/lib/main.js'></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type='text/javascript'>
+document.addEventListener('DOMContentLoaded', function() {
+	  var calendarEl = document.getElementById('calendar');
+	  var calendar = new FullCalendar.Calendar(calendarEl, {
+	    selectable: true,
+	    headerToolbar: {
+	      left: 'prev',
+	      center: 'title',
+	      right: 'next'
+	    },
+        eventSources: [{
+
+            events: function(start, end, timezone, callback) {
+
+                $.ajax({
+                    url: '/schedule/list',
+                    type: 'GET',
+                    dataType: "json",
+                    data: JSON.parse(vo),
+                    error: function() {
+                        alert('error!');
+                    },
+                    success: function(data) {
+                        callback(data);
+                    }
+
+                });
+
+            },
+
+        }],
+	    select: function(info) {
+	      alert('enter your schedule !');
+	      var meet_contents = prompt('enter your schedule!');
+	      var vo = {
+	    		  'meet_contents' : meet_contents,
+	    		  'meet_datetime' : info.endStr,
+	    		  'meet_type' : 0,
+	    		  'meet_req_mem' : $('#meet_req_mem').val()
+	    	      };
+	      calendar.addEvent({
+	         title: meet_contents,
+	         start: info.endStr,
+	         allDay: true
+	      }); // add event
+		$.ajax({
+        		data: JSON.stringify(vo),
+    	        contentType:'application/json',
+    	        dataType:'json',
+    	        url:'/schedule/'+vo.meet_req_mem,
+    	        type:'post',
+    	        success:function(resp){
+    	            alert("seuccess enter your schedule!");
+    	        },
+    	        error:function(){
+    	            alert('error');
+    	        }
+    	    });
+	      
+	    }  
+	  });
+	  calendar.render();
+
+});
+</script>
+
 
 </head>
 

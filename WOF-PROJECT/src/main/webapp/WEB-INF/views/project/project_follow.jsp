@@ -1,7 +1,4 @@
 <%@ include file="../includes/header.jsp" %>
-<sec:authorize access="isAuthenticated()">
-	<sec:authentication property="principal.member" var="member"/>	
-</sec:authorize>
 	<div class="header pb-6 container">
       <div class="container-fluid">
         <div class="header-body text-right ">
@@ -76,24 +73,18 @@
             <div class="card card-stats">
 	
 	
-	
-	<c:forEach var="project" items="${follows}">
+	<c:forEach var="project" items="${projects}">
     <div class="ml-3 mt-3 mb-3 card-body">		
 	<div class="row">
     <div class="col-12 row text-center ">
     
         <h2 class="card-title text-uppercase text-muted mb-0 mr-2"><a href="#">${project.proj_title}</a></h2>
-    	
-		
-		<c:if test="${not empty project.proj_id}">   
-        <span class="justify-content-center">           
-        <i class="ni ni-favourite-28 mt-2 red" >    
+		<span class="justify-content-center">           
+        <i class="ni ni-favourite-28 mt-2 color" >    
         <input type="hidden" id ="projectId" value="${project.proj_id}" >
         <input type="hidden" id="memberId" value="${member.member_no}" >     
         </i>   
-        </span>    
-    	</c:if>
-	
+        </span>       
     </div>
     </div>
     <p class="mt-3 mb-0 text-sm">
@@ -120,8 +111,8 @@ ${fn:substring(TextValue,0,60)}<br>${fn:substring(TextValue,61,120)}
 	</p>
 </div>
 
-
-</c:forEach> 
+</c:forEach>
+ 
   
   </div>
 
@@ -137,43 +128,46 @@ ${fn:substring(TextValue,0,60)}<br>${fn:substring(TextValue,61,120)}
 <%@ include file="../includes/footer.jsp" %>
 
 	<style type="text/css">
-	 .red {
-	 	color : red;
+	 .color {
+	 	color : #5e72e4;
 	 }
 	</style>
 	<script src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
+	<script src="http://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script type="text/javascript">	
  	$(function() {
  		//관심 프로젝트 ajax 
  		$(".ni-favourite-28").click(function() {
-			$(this).toggleClass("red");
+			$(this).toggleClass("color");
 			var related_project = $(this).find('#projectId').val();
 			var related_member = $(this).find('#memberId').val();
-			var data = $()
-			if ($(this).hasClass("red")) { 
-				alert("add"+related_project+related_member );
+			if ($(this).hasClass("color")) {
 				$.ajax({
 					url : "/follwProject/"+related_project,
 					type : "POST",
 					data :{
-						"related_member" : related_member
+						'related_member' : related_member
 					},
 					dataType : "json",
 					success : function(result) {
-						alert(result);
+						swal(
+		                        "Add favorite Project!",
+		                        "success"
+		                    );
 					},
 					error : function(error) {
 						alert(error);
 					}
 				})
-			}
-			else {
-				alert("delete"+ related_project);
+			}else {
 				$.ajax({
 					url : "/follwProject/"+related_project+"/"+related_member,
 					type : "DELETE",
 					success : function(result) {
-						alert(result);
+						swal(
+		                        "Delete favorite project!",
+		                        "success"
+		                    );
 					},
 					error : function(error) {
 						alert(error);

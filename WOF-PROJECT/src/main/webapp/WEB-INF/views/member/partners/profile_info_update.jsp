@@ -76,7 +76,7 @@
 										<div class="col-6 col-md-2 pr-0 text-right">보유기술 :</div>
 										<input type="text" name="skill"
 											class="form-control form-control-muted col-6 col-md-4 "
-											placeholder="ex)JAVA"/>
+											placeholder="ex)JAVA" value="${partners.skill}"/>
 									</div>
 									<div class="row my-3 pt-5 inline clearfix">
 										<div class="col-6 col-md-2 pr-0 text-right">선호지역 :</div>
@@ -91,7 +91,7 @@
 									<div class="row my-12 pt-5 inline">
 										<div class="col-2 pr-0 text-right">현재 비빌번호 :</div>
 										<input type="password" id="userpw"
-											   class="form-control form-control-muted col-4 col-offset-1"
+											   class="form-control form-control-muted col-4"
 											   placeholder="password"/>
 										<button type="button" onclick="pwcheck()"
 												class="btn btn-primary col-2">비밀번호 확인</button>

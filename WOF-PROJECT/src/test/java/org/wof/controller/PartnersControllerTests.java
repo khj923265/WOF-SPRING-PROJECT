@@ -1,5 +1,7 @@
 package org.wof.controller;
 
+import static org.junit.Assert.*;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,27 +18,34 @@ import org.wof.mapper.PartnersMapperTests;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-
-//Tset for Controller
 @WebAppConfiguration
-
-@ContextConfiguration({
-	"file:src/main/webapp/WEB-INF/spring/root-context.xml",
-	"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml"
-})
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration({"file:src/main/webapp/WEB-INF/spring/root-context.xml",
+						"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml"})
 @Log4j
 public class PartnersControllerTests {
-	
-	@Setter(onMethod_ = {@Autowired})
+
+	@Setter(onMethod_ = @Autowired)
 	private WebApplicationContext ctx;
 	
 	private MockMvc mockMvc;
-
 	
 	@Before
-	public void setup(){
+	public void setup() {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();
+	}
+/*	@Test
+	public void testappltProject() throws Exception{
+		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/partners/project_apply_detail"))
+				.andReturn().getModelAndView().getModelMap());
+	}*/
+	
+	@Test
+	public void testpartnersSupport() throws Exception {
+		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/partners/partners_support"))
+				.andReturn().getModelAndView().getModelMap());
+
+	
 	}
 	
 	

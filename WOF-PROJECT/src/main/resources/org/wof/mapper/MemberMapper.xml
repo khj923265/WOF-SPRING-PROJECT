@@ -67,13 +67,27 @@
     <update id="Withdrawal" parameterType="org.wof.domain.MemberVO">
         update member set status=#{status} where member_no = #{member_no}
     </update>
-    <update id="partnersUpdate" parameterType="org.wof.domain.MemberVO">
+    <update id="userPhoneUpdate" parameterType="org.wof.domain.MemberVO">
         update member set userphone=#{userphone} where member_no = #{member_no}
     </update>
     <update id="partnersUpdate2" parameterType="org.wof.domain.PartnersVO">
         update partners set skill=#{skill}, prefered_area=#{prefered_area}, hashtag=#{hashtag} where member_no = #{member_no}
     </update>
     <update id="partnersUpdate3" parameterType="org.wof.domain.MemberVO">
+        update member set userpw=#{userpw}, userphone=#{userphone} where member_no = #{member_no}
+    </update>
+    <select id="loginIdCheck" parameterType="String" resultType="org.wof.domain.MemberVO">
+        select * from MEMBER where userid = #{userid}
+    </select>
+    <update id="loginsysdate" parameterType="String">
+        update member set login_date=sysdate where userid=#{userid}
+    </update>
+    <update id="clientUpdate2" parameterType="org.wof.domain.ClientVO">
+        update client set name =#{name}, business_register_no=#{business_register_no},
+        tel=#{tel}, address1=#{address1}, address2=#{address2},
+        profile=#{profile} where member_no=#{member_no}
+    </update>
+    <update id="clientUpdate3" parameterType="org.wof.domain.MemberVO">
         update member set userpw=#{userpw}, userphone=#{userphone} where member_no = #{member_no}
     </update>
 

@@ -17,7 +17,9 @@ public interface PointMapper {
 	
 	public int Withdraw(PointVO point);
 	
-	public int getPointTotal(MemberVO member);
+	//public int getPointTotal(MemberVO member);
+	
+	public MemberVO pointBalance(PointVO point);
 	
 	public List<PointVO> getList();
 	
@@ -26,4 +28,6 @@ public interface PointMapper {
 	public int getTotalCount(Standard standard);
 	
 	//public int Payment(PointVO point);
+	
+	public String pwCheck(String pwcheck);
 }

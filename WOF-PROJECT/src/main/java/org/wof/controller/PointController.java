@@ -1,6 +1,7 @@
 package org.wof.controller;
 
 import java.lang.reflect.Member;
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -8,7 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.wof.domain.MemberVO;
 import org.wof.domain.PageDTO;
@@ -35,11 +38,13 @@ public class PointController {
     	
     	log.info("포인트 관리 페이지(충전/인출/조회)");
     	
-    	model.addAttribute("admin", service.ListService(standard));
+    	//model.addAttribute("admin", service.ListService(standard));
     	
     	model.addAttribute("getList", service.ListService(standard));
     	
     	int total = service.getTotalService(standard);
+    	log.info(standard);
+    	log.info(total);
     	model.addAttribute("pageMaker", new PageDTO(standard, total));
     	
     	
@@ -52,13 +57,11 @@ public class PointController {
     }
     
     @PostMapping("/charging")
-    public String charging(PointVO point, RedirectAttributes rttr){
-    		
-    	if(service.ChargingService(point) == 1){
+    public void charging(PointVO point, MemberVO member, RedirectAttributes rttr){
+    		log.info(point);
+    	if(service.ChargingService(point, member) == 1){
     		rttr.addFlashAttribute("result", "success");
     	}
-    	
-    		return "point/point-admin";
     }
     
     @GetMapping("/withdraw")
@@ -67,9 +70,9 @@ public class PointController {
     }
     
     @PostMapping("/withdraw")
-    public String withdraw(PointVO point, RedirectAttributes rttr){
+    public String withdraw(PointVO point, MemberVO member, RedirectAttributes rttr){
     		
-    	if(service.WithdrawService(point) == 1){
+    	if(service.WithdrawService(point, member) == 1){
     		rttr.addFlashAttribute("result", "success");
     	}
     	
@@ -84,12 +87,23 @@ public class PointController {
     }*/
     
     
-    @GetMapping("/getPointTotal")
+    /*@GetMapping("/getPointTotal")
     public void getPointTotal(Model model){
     	
     	MemberVO member = new MemberVO();
     	
     	model.addAttribute("getPointTotal", service.getPointTotalService(member));
+    }*/
+    
+    @RequestMapping(value="/point/pwCheck", method=RequestMethod.GET)
+    @ResponseBody
+    public String pwCheck(@RequestParam("userpw") String userpw ,MemberVO member, Principal principal){
+    	
+    	log.info("=================!!!!!!!!!!!!!!!!!!!!!!!" + principal.getName());
+    	member.setUserid(principal.getName());
+    	member.setUserpw(userpw);
+    	
+    	return service.pwCheckService(member);
     }
     
 }

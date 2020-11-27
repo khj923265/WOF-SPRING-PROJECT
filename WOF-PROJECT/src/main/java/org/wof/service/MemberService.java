@@ -13,4 +13,6 @@ public interface MemberService {
     String checkPw(MemberVO memberVO);
     void Withdrawal(MemberVO memberVO);
     void partnersUpdate(MemberVO memberVO,PartnersVO partnersVO);
+    String loginIdCheck(String userid);
+    void clientUpdate(MemberVO memberVO,ClientVO clientVO);
 }
