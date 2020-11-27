@@ -195,9 +195,9 @@ select rownum rn, p.member_no, m.userid, substr(p.BIRTHDAY,1,2) as BIRTHDAY,
 	</insert>
 	
 	<delete id="applyDelete" parameterType="map">
-	delete from applyregister
-		<foreach collection="member_no" item="member_no" index="index"  separator=" OR " > 
-        where member_no = #{member_no} and proj_id = #{proj_id}
+	delete from applyregister where 
+		<foreach collection="member_no" item="member_no" index="index"  separator=" OR "> 
+        member_no = #{member_no} and proj_id = #{proj_id}
         </foreach>
 	</delete>
 	

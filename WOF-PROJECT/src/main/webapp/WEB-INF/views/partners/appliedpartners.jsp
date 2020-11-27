@@ -229,7 +229,7 @@
 				$("input[name='member_no']:checked").each(function() { 
 					
 					checkArray.push($(this).val());
-					
+					alert(checkArray);
 					$("#chkBtn").click(function() {
 						
 						alert("삭제되었습니다.");
