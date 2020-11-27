@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.wof.domain.ProjectVO;
+import org.wof.domain.Standard;
 import org.wof.mapper.ProjectMapper;
 
 import lombok.AllArgsConstructor;
@@ -44,9 +45,15 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public List<ProjectVO> getlist() {
-		log.info("getList.........");
-		return pm1.listProject();
+	public List<ProjectVO> getlist(Standard stand) {
+		log.info("getList........." + stand);
+		return pm1.getListWithPaging(stand);
+	}
+
+	@Override
+	public int getTotal(Standard stand) {
+		log.info("get total count");
+		return pm1.getTotalCount(stand);
 	}
 
 }

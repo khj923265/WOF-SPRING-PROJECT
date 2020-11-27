@@ -17,8 +17,11 @@ public interface MemberMapper {
     int signUpClient(MemberVO memberVO);
     String checkPw(String userpw);
     int Withdrawal(MemberVO memberVO);
-    void partnersUpdate(MemberVO memberVO);
+    void userPhoneUpdate(MemberVO memberVO);
     void partnersUpdate2(PartnersVO partnersVO);
     void partnersUpdate3(MemberVO memberVO);
-
+    MemberVO loginIdCheck(String userid);
+    void loginsysdate(String userid);
+    void clientUpdate2(ClientVO clientVO);
+    void clientUpdate3(MemberVO memberVO);
 }

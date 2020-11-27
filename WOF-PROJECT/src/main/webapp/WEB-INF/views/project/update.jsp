@@ -293,8 +293,11 @@
 										<label for="project_overview">프로젝트 상세설명</label>
 										<textarea class="form-control" name="proj_detail"
 											value="${project.getProj_detail()}" rows="5">
-	                                </textarea>
+	                              	  </textarea>
 									</div>
+									
+								<%-- 	<input type='hidden' name='pageNum' value='<c:out value="${stand.pageNum}"/>'>
+									<input type='hidden' name='amount' value='<c:out value="${stand.amount"/>'> --%>
 	
 	
 	

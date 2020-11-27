@@ -19,25 +19,28 @@
 	<!-- top start-->
 	<div class="main-content" id="panel">
 
-		<!-- 하위메뉴 -->
-		<nav class="navbar-expand-sm navbar-light bg-white">
-			<div class="container">
-				<div class="row pt-3 pb-3">
-					<a class="nav-link"
-						href="${pageContext.request.contextPath }/partners/followlist?member_no=${member.member_no }">
-						<span class="nav-link-text">관심 파트너스 관리</span>
-					</a> <a class="nav-link"
-						href="${pageContext.request.contextPath }/partners/recommend?member_no=${member.member_no }">
-						<span class="nav-link-text">추천 파트너스</span>
-					</a> <a class="nav-link"
-						href="${pageContext.request.contextPath }/Client/registerProjectListAction.do">
-						<span class="nav-link-text">제안 및 지원자 현황</span>
-					</a> <a class="nav-link" href="#"> <span class="nav-link-text">프로젝트
-							관리</span>
-					</a>
+	<div class="header pb-4 pt-5 md-8">
+		<div class="container">
+			<div class="header-body">
+				<!-- Card stats -->
+				<div class="row">
+					<div class="col">
+						<a class="btn btn-secondary"
+							href="${pageContext.request.contextPath }/partners/followlist?member_no=${member.member_no }">관심 파트너스 관리</a> 
+							<a class="btn btn-secondary"
+							href="${pageContext.request.contextPath }/partners/recommend?member_no=${member.member_no }">추천 파트너스</a>
+							 <a class="btn btn-secondary"
+							href="${pageContext.request.contextPath}/partners/applystate?member_no=${member.member_no }">파트너스 지원현황</a>
+							<a class="btn btn-secondary"
+							href="${pageContext.request.contextPath}/Partners/selectpartnerslistAction.do">파트너스
+							선택</a>
+						<button type="button" class="btn btn-secondary">계약현황</button>
+						<button type="button" class="btn btn-secondary">계약완료</button>
+					</div>
 				</div>
 			</div>
-		</nav>
+		</div>
+	</div>
 
 		<!--제목 및 내용 -->
 		<div class="container">
@@ -115,10 +118,10 @@
 				<!-- 파트너스리스트 -->
 				<div class="col-sm-9">
 				
-				<input type="hidden" value="${member.member_no }" id="source_member"><!-- 테스트 후 변수로 변경 -->
+				<input type="hidden" value="${member.member_no }" id="source_member">
 				
 					<c:forEach var="partnersList" items="${partnersList }">
-						<div class="row bg-white mb-3">
+						<div class="row shadow-sm p-1 bg-white rounded mb-3">
 							<div class="col-sm-7">
 								<div class="row align-items-center">
 
@@ -257,8 +260,10 @@
 				$(".ni-favourite-28").click(function() {
 					var target_member = $(this).find("input").val();
 					var source_member = $("#source_member").val();
-					var clickThis = $(this);
+					var clickThis = $(this);//하트 색 토글을 위해 클릭된 i 테그를 변수에 담음.
 					
+					//로그인 아이디 널 또는 공백체크					
+					if(source_member != null && source_member != ""){					
 					//var state = false;//완료상태 확인
 					// 아이디 중복체크
 					$.ajax({
@@ -333,9 +338,12 @@
 							toastr.error("관심 파트너스의 중복체크중 오류가 발생하였습니다.");
 						}
 					})//end check ajax
+				
+				}else{
+					toastr.info("관심파트너스를 추가하시려면 로그인 해주세요.");
+				}
 		
-				})//end click
-
+				})//end click				
 			})
 		</script>
 </body>
