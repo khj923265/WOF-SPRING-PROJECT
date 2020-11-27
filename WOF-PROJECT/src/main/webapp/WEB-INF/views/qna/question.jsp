@@ -72,7 +72,7 @@
 										<div class="form-group">
 											<label class="form-control-label" for="input-first-name">휴대폰 번호</label>
 											<input type="text" id = "phoneNum" class="form-control"
-												maxlength="13" placeholder="000-0000-0000">
+												maxlength="13" pattern="^01([0|1|6|7|8|9])-([0-9]{3,4})-([0-9]{4})$"  placeholder="000-0000-0000" >
 												<!-- id="input-first-name" -->
 										</div>
 									</div>

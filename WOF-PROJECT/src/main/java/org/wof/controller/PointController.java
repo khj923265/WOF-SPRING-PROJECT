@@ -99,7 +99,7 @@ public class PointController {
     @ResponseBody
     public String pwCheck(@RequestParam("userpw") String userpw ,MemberVO member, Principal principal){
     	
-    	log.info("=================!!!!!!!!!!!!!!!!!!!!!!!" + principal.getName());
+    	log.info("¢¾¢¾¢¾¢¾¢¾¢¾¢¾¢¾¢¾¢¾¢¾¢¾¢¾¢¾¢¾ principal.getName() : ¢¾¢¾¢¾¢¾¢¾¢¾¢¾¢¾¢¾¢¾¢¾¢¾¢¾¢¾¢¾" + principal.getName());
     	member.setUserid(principal.getName());
     	member.setUserpw(userpw);
     	

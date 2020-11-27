@@ -107,37 +107,40 @@
 	</script>
 	
 	<script>
+	<!--[-_.]?-->
+	var pwCheck = true;
+	var expPw = /^[0-9a-zA-Z]([0-9a-zA-Z])[0-9a-zA-Z]([0-9a-zA-Z])[a-zA-Z]{2,3}$/i;
 	// 유효성 검사(1 = 중복 / 0 != 중복)
 	$('#userpw').blur(function() {
 		// id = "id_reg" / name = "userId"
 		var userpw = $('#userpw').val();
+		
 		$.ajax({
 			url : '/point/pwCheck?userpw='+ userpw,
 			type : 'get',
 			success : function(data) {
 		
 			parseInt(data);
-			console.log("1 = 중복o / 0 = 중복x : "+ data);	
-			if (data == 1){
-				$("#pwCheck").text("사용중인 아이디입니다.");
-			}else if (data == 0){
-				if (!expId.test(id)){
-					$("#pwCheck").text("이메일 형식이 아닙니다.");
-				}else {
-					$("#pwCheck").text("사용가능한 아이디입니다.");
-					ischeckId = true;
+			
+			console.log("1 = 일치 / 0 = 불일치 : "+ data);	
+			if (data == 0){
+				$("#pwCheck").text("비밀번호 불일치");
+				$("#pwCheck").css("color", "red");
+			}else if (data == 1){
+					$("#pwCheck").text("비밀번호 일치");
+					$("#pwCheck").css("color", "green");
+					//$("#reg_submit").attr("disabled", true);
+					pwCheck = false;
 				}
 			}
-		}
 		,error:function(request,status,error){
 		alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);}
-
+	
 	})		
-				
-				
-				
-				
-				if (data == 1) {
+});
+	</script>
+
+	<!--  if (data == 1) {
 						// 1 : 아이디가 중복되는 문구
 						$("#pwCheck").text("사용중인 아이디입니다 :p");
 						$("#pwCheck").css("color", "red");
@@ -166,6 +169,5 @@
 				}, error : function() {
 						console.log("실패");
 				}
-			}); 
-		});
-	</script>
+	-->		
+	
