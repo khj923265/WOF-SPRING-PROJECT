@@ -11,28 +11,8 @@
 	<!-- top start-->
 	<div class="main-content" id="panel">
 
-	<div class="header pb-4 pt-5 md-8">
-		<div class="container">
-			<div class="header-body">
-				<!-- Card stats -->
-				<div class="row">
-					<div class="col">
-						<a class="btn btn-secondary"
-							href="${pageContext.request.contextPath }/partners/followlist?member_no=${member.member_no }">관심 파트너스 관리</a> 
-							<a class="btn btn-secondary"
-							href="${pageContext.request.contextPath }/partners/recommend?member_no=${member.member_no }">추천 파트너스</a>
-							 <a class="btn btn-secondary"
-							href="${pageContext.request.contextPath}/partners/applystate?member_no=${member.member_no }">파트너스 지원현황</a>
-							<a class="btn btn-secondary"
-							href="${pageContext.request.contextPath}/Partners/selectpartnerslistAction.do">파트너스
-							선택</a>
-						<button type="button" class="btn btn-secondary">계약현황</button>
-						<button type="button" class="btn btn-secondary">계약완료</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+	<!-- Sub menu -->
+	<%@ include file="menu.jsp"%>
 
 		<!--제목 및 내용 -->
 		<div class="container">
@@ -83,16 +63,19 @@
 				<div class="row">
 				<div class="col-sm-12">
 				
+					<button id="allCheck" class="btn btn-default mb-3">전체선택</button>
+					<button id="chkBtn" class="btn btn-default mb-3">선택한 파트너스 등록</button>
+					
 					<form id="checkForm" action="applyRegister" method="post">
-					<input type="submit" id="chkBtn">
 					<input type="hidden" name='proj_id' value='${Project.proj_id}'>
 					<c:forEach var="Partners" items="${Partners }">
 						<div class="row shadow p-1 mb-3 bg-white rounded ">
-						<div class="col-sm-1 text-center">
+						<div class="col-sm-1 my-auto">
 						<div class="custom-control custom-checkbox">
 						<c:choose>
 						<c:when test="${Partners.applied_member == null }">
-							<input type="checkbox" name="member_no" value="${Partners.member_no }" style="width: 25px; height: 25px;">
+							<input type="checkbox" name="member_no" value="${Partners.member_no }" 
+							style="width: 25px; height: 25px;">
 						</c:when>
 						<c:when test="${Partners.applied_member != null }">
 							<input type="checkbox" name="member_no" value="${Partners.member_no }"   disabled="disabled"
@@ -133,6 +116,15 @@
 												<span class="badge badge-primary">${Partners.hashtag }</span>
 											</span>
 										</p>
+									
+									<c:if test="${Partners.applied_member != null }">
+										<p class="mt-3 mb-3 text-sm">
+											<span class="text-nowrap"> <i class="ni ni-check-bold"></i>
+												<span class="badge badge-pill badge-info">이미 선택한 파트너스 입니다.</span>
+											</span>
+										</p>
+									</c:if>
+						
 									</span>
 								</div>
 							</div>
@@ -153,23 +145,17 @@
 								</span>
 							</div> --%>
 
-							<div class="col-sm-4">
-								<div class="progress-wrapper mt-4">
-									<div class="progress-info">
-										<div class="progress-label">
-											<span>현재 프로젝트 진행도</span>
-										</div>
-										<div class="progress-percentage">
-											<span>60%</span>
-										</div>
-									</div>
-									<div class="progress">
-										<div class="progress-bar bg-info" role="progressbar"
-											aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-											style="width: 60%;"></div>
-									</div>
-								</div>
-							</div>
+							<%-- <div class="col-sm-4">
+								<c:choose>
+								<c:when test="${Partners.applied_member == null }">
+									<input type="checkbox" name="member_no" value="${Partners.member_no }" style="width: 25px; height: 25px;">
+								</c:when>
+								<c:when test="${Partners.applied_member != null }">
+									<input type="checkbox" name="member_no" value="${Partners.member_no }"   disabled="disabled"
+									style="width: 25px; height: 25px;">
+								</c:when>
+								</c:choose>
+							</div> --%>
 
 						</div>
 					</c:forEach>
@@ -226,6 +212,9 @@
 		<!-- toastr js 라이브러리 -->
 		<script type="text/javascript"
 			src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+		
+		<!-- SweetAlert2 library -->
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 			
 		<!-- Hakgeun js -->
 		<script type="text/javascript">
@@ -243,59 +232,58 @@
 				});
 				
 				var checkForm = $("#checkForm");
-				var checkArray = [];					
-				var checkthis = function test() {
-					$(this).attr('checked', false);
-				}
-				$("input[name='member_no']").change(function(){
-					var member_no = $(this).val();
-					var proj_id = $("input[name='proj_id']").val();
-					
-
-					
-					$.ajax({
-						url:"/partners/applyCheck",
-						type:"post",
-						data:JSON.stringify({
-							member_no : member_no,
-							proj_id : proj_id
-						}),
-						contentType : "application/json; charset=utf-8",						
-						success : function(data){
-							parseInt(data);
-							console.log(data);
-							if(data == 0){
-								toastr.info("파트너스가 선택되었습니다.");
-							}else{
-								$(this).attr('checked', false);//중복값이면 체크해제
-								toastr.warning("이미 선택된 파트너스 입니다.");
-							}
-							
-						},
-						error : function(error) {
-							toastr.error("선택한 파트너스의 기존 선택 여부가 확인되지 않았습니다.");
-						}
-						
-					})
-					
-					
+				var checkArray = [];
+				
+				//전체선택 버튼 - 기존에 선택된 버튼이 있으면 해제되고 한번 더 누르면 전체선택됨 - 수정해야함.
+				$("#allCheck").click(function(){
+					if($("input[name='member_no']").is(':checked')){
+						$("input[name='member_no']").prop("checked", false);
+					}else{
+						$("input[name='member_no']").prop("checked", true);
+					}
+				})
+				
+				//체크박스 클릭시 alert message - 전체선택후 해제시 선택메시지만 뜸. 수정해야함
+				$("input[name='member_no']").click(function(){
+					if($("input[name='member_no']").is(":checked") == true){
+						toastr.success("파트너스가 선택되었습니다.");						
+					}else{
+						toastr.info("파트너스 선택이 해제되었습니다.");
+					}					
 				})
 
-				$("input[name='member_no']:checked").each(function() {
-				
-					checkArray.push($(this).val());
-					
-					$("#chkBtn").click(function() {
-						alert("파트너스 선택이 완료되었습니다.");
-						checkForm.submit();
+				//submit 버튼
+				$("#chkBtn").click(function() {
+					if($("input[name='member_no']").is(":checked") == true){
+						$("input[name='member_no']:checked").each(function() {
 						
-						
-					});
-					
+							checkArray.push($(this).val());
+							
+						});
+						Swal.fire({
+							  title: '파트너스가 등록되었습니다!',
+							  text: "확인버튼을 누르시면 등록이 완료됩니다.",
+							  icon: 'success',
+							  showCancelButton: true,
+							  confirmButtonColor: '#11cdef',
+							  cancelButtonColor: '#172b4d',
+							  confirmButtonText: '확인',
+							  cancelButtonText: '취소'
+							}).then((result) => {
+							  if (result.isConfirmed) {
+								  checkForm.submit();
+							  }
+							})
+					}else{
+						toastr.error("선택된 파트너스가 없습니다. 파트너스를 선택해주세요!");
+						return false;
+					}
 				});
 				
-
-
+				function success(){
+					
+				}
+				
 			});
 		</script>
 </body>

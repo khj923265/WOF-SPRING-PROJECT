@@ -37,17 +37,17 @@
 								class="nav-link-text">제안 지원</span>
 						</a></li>
 						<li class="nav-item"><a class="nav-link"
-							href="project_apply_detail.jsp"> <i
+							href="#"> <i
 								class="ni ni-bullet-list-67 text-default"></i> <span
 								class="nav-link-text">공지사항</span>
 						</a></li>
 						<li class="nav-item"><a class="nav-link"
-							href="project_apply_detail.jsp"> <i
+							href="#"> <i
 								class="ni ni-archive-2 text-default"></i> <span
 								class="nav-link-text">문의하기</span>
 						</a></li>
 						<li class="nav-item"><a class="nav-link"
-							href="project_apply_detail.jsp"> <i
+							href="../member/client/client_info_update"> <i
 								class="ni ni-settings-gear-65 text-default"></i> <span
 								class="nav-link-text">기본 정보 변경</span>
 						</a></li>

@@ -181,8 +181,8 @@
 		CAREER, SKILL, PREFERED_AREA, applied_member
 		from
 		(
-select rownum rn, p.member_no, m.userid, substr(p.BIRTHDAY,1,2) as BIRTHDAY,
-			p.CAREER, p.SKILL, p.PREFERED_AREA, ar.member_no as applied_member
+		select rownum rn, p.member_no, m.userid, substr(p.BIRTHDAY,1,2) as BIRTHDAY,
+		p.CAREER, p.SKILL, p.PREFERED_AREA, ar.member_no as applied_member
 		from 
         member m join partners p
         on m.member_no = p.member_no 
@@ -191,6 +191,7 @@ select rownum rn, p.member_no, m.userid, substr(p.BIRTHDAY,1,2) as BIRTHDAY,
         left outer join applyregister ar
         on ar.member_no = p.member_no
 		where a.proj_id = #{proj_id}
+		order by available_date desc
 		)
 		where rownum <= #{standard.pageNum} * #{standard.amount}
 		

@@ -40,18 +40,13 @@ public class PartnersController {
 		model.addAttribute("project_apply_detail", partnersService.applyProject(member_no, standard));
 	}
 	
-	@GetMapping("/partners_support")
-	public void partnersSupport(Model model) {
-		log.info("파트너스 지원 현황 list");
-		model.addAttribute("partnersSupport", partnersService.partnersSupport());
-	}
-	
 	@GetMapping("/dashboard_partners")
 	public void dashboardpartnersApplyProject(Model model, @RequestParam("member_no") String member_no) {
 		log.info("파트너스 대쉬보드 지원 리스트");
 		model.addAttribute("dashboardpartnersApplyProject", partnersService.dashboardpartnersApplyProject(member_no));
 	}
 	
+	//파트너스 전체 목록
 	@RequestMapping("/list")
 	public void partnersList(
 			@RequestParam("member_no") String member_no, Model model, Standard standard){
@@ -66,6 +61,7 @@ public class PartnersController {
 		model.addAttribute("pageMaker", new PageDTO(standard, total));
 	}
 	
+	//관심파트너스로 추가한 파트너스 목록
 	@RequestMapping("/followlist")
 	public void followList(
 			@RequestParam("member_no") String member_no, Model model, Standard standard){
@@ -82,7 +78,7 @@ public class PartnersController {
 		model.addAttribute("pageMaker", new PageDTO(standard, followTotal));
 	}
 	
-	
+	//관심파트너스 추가시 기존 추가여부 중복체크
 	@RequestMapping("/followCheck")
 	@ResponseBody
 	public String followCheck(
@@ -93,6 +89,7 @@ public class PartnersController {
 		return partnersService.followCheck(followPartnersVO);
 	}
 	
+	//관심파트너스 추가
 	@RequestMapping("/followYes")
 	public ResponseEntity<String> followYes(
 			@RequestBody FollowPartnersVO followPartnersVO){
@@ -106,6 +103,7 @@ public class PartnersController {
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
+	//관심파트너스 삭제
 	@RequestMapping("/followNo")
 	public ResponseEntity<String> followNo(
 			@RequestBody FollowPartnersVO followPartnersVO){
@@ -119,7 +117,7 @@ public class PartnersController {
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-
+	//추천 파트너스 목록
 	@RequestMapping("/recommend")
 	public void recommend(
 			@RequestParam("member_no") String member_no, Model model){
@@ -127,6 +125,7 @@ public class PartnersController {
 		model.addAttribute("recommendList", partnersService.recommend(member_no));
 	}
 	
+	//클라이언트가 등록한 프로젝트들에 지원한 지원자 count
 	@RequestMapping("/applystate")
 	public void applyState(
 			@RequestParam("member_no") String member_no, Model model, Standard standard) {
@@ -134,7 +133,7 @@ public class PartnersController {
 		model.addAttribute("applyState", partnersService.applyState(member_no,standard));
 	}
 	
-	
+	//하나의 프로젝트에 지원한 파트너스의 목록
 	@RequestMapping("/applydetail")
 	public void applyDetail(
 			@RequestParam("member_no") String member_no, 
@@ -151,6 +150,7 @@ public class PartnersController {
 		model.addAttribute("pageMaker", new PageDTO(standard, total));
 	}
 	
+	//하나의 프로젝트에 지원한 파트너스 중 선택
 	@RequestMapping("/applyRegister")
 	public String applyRegister(String[] member_no, String proj_id, RedirectAttributes rttr) {
 		
@@ -162,6 +162,7 @@ public class PartnersController {
 		return "redirect:/partners/appliedpartners";
 	}
 	
+	//기존 선택한 파트너스 여부 중복체크
 	@RequestMapping("/applyCheck")
 	@ResponseBody
 	public String applyCheck(
@@ -172,6 +173,7 @@ public class PartnersController {
 		return partnersService.applyCheck(applyVO);
 	}
 	
+	//하나의 프로젝트에 지원한 파트너스 삭제
 	@RequestMapping("/applyDelete")
 	public String applyDelete(String[] member_no, String proj_id, RedirectAttributes rttr) {
 		
