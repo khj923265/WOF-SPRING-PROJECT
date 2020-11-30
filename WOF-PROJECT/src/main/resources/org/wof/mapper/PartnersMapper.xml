@@ -34,14 +34,14 @@
 </select>
 
 	<sql id="standard">
-	  <trim prefix="()" suffix=") AND " prefixOverrides="OR">
+	  <trim prefix="(" suffix=") AND " prefixOverrides="OR">
 	    <foreach item="type" collection="typeArr">
 	      <trim prefix="OR">
 	        <choose>
 	          <when test="keyword != null">
-		        career like '%'||#{keyword}||'%' 
-		        or skill like '%'||#{keyword}||'%' 
-		        or prefered_area like '%'||#{keyword}||'%'
+		        career like '%'||#{standard.keyword}||'%' 
+		        or skill like '%'||#{standard.keyword}||'%' 
+		        or prefered_area like '%'||#{standard.keyword}||'%'
 		      </when>
 		    </choose>
 		  </trim>
@@ -68,7 +68,7 @@
         and f.source_member = #{member_no}        
         where 
         ]]>
-        <include refid="standard"></include>
+        <!-- <include refid="standard"></include> -->
         <![CDATA[
         rownum <= #{standard.pageNum} * #{standard.amount}
         order by m.LOGIN_DATE desc

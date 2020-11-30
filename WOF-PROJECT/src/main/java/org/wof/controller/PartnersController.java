@@ -50,8 +50,8 @@ public class PartnersController {
 	@RequestMapping("/list")
 	public void partnersList(
 			@RequestParam("member_no") String member_no, Model model, Standard standard){
-		//principal: "+principal.getName()
-		log.info("list: "+standard);
+
+		log.info("list: "+standard.getKeyword());
 		model.addAttribute("partnersList", partnersService.partnersList(member_no, standard));
 		
 		int total = partnersService.getTotal(standard);

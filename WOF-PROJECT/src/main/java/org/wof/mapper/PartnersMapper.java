@@ -26,7 +26,7 @@ public interface PartnersMapper {
 	public List<ProjectVO> dashboardpartnersApplyProject(@Param("member_no") String member_no);
 	
 	public List<PartnersVO> partnersList(
-			@Param("member_no")String member_no, 
+			@Param("member_no")String member_no,
 			@Param("standard") Standard standard);
 	
 	public int getTotalCount(Standard standard);//파트너스 전체 카운트(페이징처리)

@@ -39,7 +39,7 @@
 								<div class="input-group-prepend">
 									<span class="input-group-text"><i class="fas fa-search"></i></span>
 								</div>
-								<input class="form-control" placeholder="Search" type="text" name="keyword">
+								<input type="text" name="keyword" class="form-control" placeholder="Search" >
 								<input type="hidden" name='member_no' value='${member.member_no}'>
 								<input type="hidden" name='pageNum' value = '${pageMaker.standard.pageNum}'>
 								<input type="hidden" name='amount' value = '${pageMaker.standard.amount}'>
