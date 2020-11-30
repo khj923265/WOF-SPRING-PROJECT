@@ -33,6 +33,21 @@
 	]]>
 </select>
 
+	<sql id="standard">
+	  <trim prefix="()" suffix=") AND " prefixOverrides="OR">
+	    <foreach item="type" collection="typeArr">
+	      <trim prefix="OR">
+	        <choose>
+	          <when test="keyword != null">
+		        career like '%'||#{keyword}||'%' 
+		        or skill like '%'||#{keyword}||'%' 
+		        or prefered_area like '%'||#{keyword}||'%'
+		      </when>
+		    </choose>
+		  </trim>
+		</foreach>
+	  </trim>
+	</sql>
 
 	<!-- 파트너스 찾기클릭시(파트너스 전체 리스트 불러오기) /*+INDEX_DESC(MEMBER SYS_C004099)*/ -->
 	<select id="partnersList" resultType="org.wof.domain.PartnersVO">
@@ -50,8 +65,12 @@
         on m.MEMBER_NO = p.MEMBER_NO
         left outer join followpartners f
         on p.member_no = f.target_member
-        and f.source_member = #{member_no}
-        where rownum <= #{standard.pageNum} * #{standard.amount}
+        and f.source_member = #{member_no}        
+        where 
+        ]]>
+        <include refid="standard"></include>
+        <![CDATA[
+        rownum <= #{standard.pageNum} * #{standard.amount}
         order by m.LOGIN_DATE desc
         )
         
@@ -60,6 +79,7 @@
 		]]>
 	</select>
 	
+	<!-- 파트너스 찾기 토탈 -->
 	<select id="getTotalCount" resultType="int">
 		select count(*)
 		from member m

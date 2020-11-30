@@ -100,5 +100,16 @@ public class PartnersMapperTests {
 //		log.info(mapper.getClass().getName());
 //		log.info(mapper.getTime());
 //	}
+	
+	@Test
+	public void testSearch(){
+		Standard standard = new Standard();
+		standard.setKeyword("서울");
+		
+		List<PartnersVO> list = mapper.partnersList("member91", standard);
+		
+		list.forEach(board ->log.info(board));
+	}
+	
 
 }

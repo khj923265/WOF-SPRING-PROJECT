@@ -56,7 +56,7 @@ public class PartnersController {
 		
 		int total = partnersService.getTotal(standard);
 		
-		log.info("total: "+total);		
+		log.info("total: "+total);
 		
 		model.addAttribute("pageMaker", new PageDTO(standard, total));
 	}
