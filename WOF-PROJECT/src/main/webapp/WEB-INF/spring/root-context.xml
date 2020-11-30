@@ -14,18 +14,11 @@
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd ">
 
 	<!-- HikariCP configuration -->
-<!--   	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+  	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
   		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
   		 <property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"/>
   		<property name="username" value="kosta202" />
   		<property name="password" value="1234" />
-  	</bean> -->
-  	
-  	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-  		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
-  		<property name="jdbcUrl" value="jdbc:oracle:thin:@//kosta-wof-project-db.cjsmm2q2xupk.ap-northeast-1.rds.amazonaws.com/orcl" />
-  		<property name="username" value="project" />
-  		<property name="password" value="kosta202" />
   	</bean>
 
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
