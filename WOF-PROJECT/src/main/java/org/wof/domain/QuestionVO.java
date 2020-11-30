@@ -2,6 +2,7 @@ package org.wof.domain;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -19,4 +20,5 @@ public class QuestionVO implements Serializable {
 	private int quest_ans_check;
 	private int quest_deleted;
 	
+	private List<QuestAttachVO> AttachList;
 }
