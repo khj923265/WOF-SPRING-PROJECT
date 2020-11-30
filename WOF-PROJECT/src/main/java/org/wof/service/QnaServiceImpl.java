@@ -12,7 +12,6 @@ import org.wof.mapper.QnaMapper;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
-import oracle.sql.DATE;
 
 @Service
 @Log4j
@@ -27,7 +26,7 @@ public class QnaServiceImpl implements QnaService {
 	@Override
 	public int QuestionService(QuestionVO quest) {
 		
-		log.info("¢¾¢¾¢¾¢¾1:1¹®ÀÇ¢¾¢¾¢¾¢¾ question..." + quest);
+		log.info("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1:1ï¿½ï¿½ï¿½Ç¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ question..." + quest);
 		
 		qnaMapper.Question(quest);
 		
@@ -36,7 +35,7 @@ public class QnaServiceImpl implements QnaService {
 		
 		//log.info("quest type:");
 		
-		//ÃæÀü¿©ºÎ È®ÀÎ (ÃæÀü ³»¿ª)
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
 		int questionResult = qnaMapper.Question(quest);
 		
 		return questionResult;
