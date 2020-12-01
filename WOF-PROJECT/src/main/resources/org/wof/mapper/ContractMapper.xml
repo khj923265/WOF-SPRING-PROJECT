@@ -20,7 +20,7 @@
 		]]>
 	</select>
 	
-	<select id='contract_target' resultType="org.wof.domain.ContractTarget">
+	<select id='contract_target' resultType="org.wof.domain.ContractTargetVO">
 		<![CDATA[
 		select 
 		m.member_no, m.userid, m.real_name, m.userphone, p.birthday
