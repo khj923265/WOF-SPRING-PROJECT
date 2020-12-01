@@ -9,10 +9,11 @@
 		values ('point'||point_id_seq.nextval, point_no_seq.nextval, #{point_type}, #{point_owner}, #{point_amount}, #{point_contents}, sysdate, #{point_balance})<!-- point_total = #{point_total} -->
 	</insert>
 	
-	<select id="pointBalance" parameterType="org.wof.domain.PointVO" resultType="org.wof.domain.MemberVO">
-		select total_point from member
+	<select id="pointBalance" parameterType="org.wof.domain.PointVO" resultType="int">
+		select point_balance from point
 		where userid = #{point_owner}
 	</select>
+	
 	<update id="Charging" parameterType="org.wof.domain.PointVO">
 		update MEMBER 
 		set total_point = total_point + #{point_amount}
@@ -30,11 +31,22 @@
 		where member_no = #{point_owner}
 	</update>
 	
-	<!-- <insert id="getPointTotal" parameterType="org.wof.domain.MemberVO">
-		INSERT into POINT
-		VALUES (${)
-		WHERE member_no = #{member_no}
-	</insert> -->
+	<insert id="PaymentList" parameterType="org.wof.domain.PointVO">
+		insert into POINT(point_id, point_no, point_type, point_owner, point_amount, point_contents, point_chg_date, point_balance)  
+		values ('point'||point_id_seq.nextval, point_id_seq.nextval, #{point_type}, #{point_owner}, -1*#{point_amount}, #{PROJ_TITLE}, sysdate, #{point_balance})
+	</insert>
+	
+	<update id="PaymentFrom" parameterType="org.wof.domain.PointVO">
+		update MEMBER 
+		set total_point = total_point - #{point_amount}
+		where member_no = #{point_owner}
+	</update>
+	
+	<update id="PaymentTo" parameterType="org.wof.domain.PointVO">
+		update MEMBER 
+		set total_point = total_point + #{point_amount}
+		where member_no = #{point_owner}
+	</update>
 	
 	<select id="getList" resultType="org.wof.domain.PointVO">
 	<![CDATA[
@@ -46,14 +58,7 @@
 	</select>
 	<!-- order by point_id desc -->
 	<!-- bno > 0 and rownum <= 100 -->
-	
-	
-	<!-- <update id="Payment" parameterType="org.wof.domain.PointVO">
-		update POINT 
-		set point_id = 'point'||point_seq.nextval, point_amount = #{point_amount}, point_contents = #{point_contents}, 
-			point_chg_date = sysdate, point_balance = #{point_balance}
-		where POINT_OWNER 
-	</update> -->
+
 	
 	<!-- <sql id="PointSearch">
 		<trim prefix="(" suffix=") AND " prefixOverrides="OR">

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.wof.domain.MemberVO;
 import org.wof.domain.PageDTO;
-import org.wof.domain.PointSearch;
 import org.wof.domain.PointVO;
 import org.wof.domain.Standard;
 import org.wof.service.PointService;
@@ -79,31 +78,21 @@ public class PointController {
     		return "point/point-admin";
     }
     
-    /*@PostMapping("/withdraw")
-    public String withdraw(@RequestParam("member_no") String member_no, PointVO point, RedirectAttributes rttr){
-    
-    	
-    		return "redirect:/point/point-admin";
-    }*/
-    
-    
-    /*@GetMapping("/getPointTotal")
-    public void getPointTotal(Model model){
-    	
-    	MemberVO member = new MemberVO();
-    	
-    	model.addAttribute("getPointTotal", service.getPointTotalService(member));
-    }*/
-    
     @RequestMapping(value="/point/pwCheck", method=RequestMethod.GET)
     @ResponseBody
     public String pwCheck(@RequestParam("userpw") String userpw ,MemberVO member, Principal principal){
     	
-    	log.info("=================!!!!!!!!!!!!!!!!!!!!!!!" + principal.getName());
+    	log.info("======== principal.getName() : ========" + principal.getName());
     	member.setUserid(principal.getName());
     	member.setUserpw(userpw);
     	
     	return service.pwCheckService(member);
     }
+    
+    /*@RequestMapping(value="/point/payment")
+    public int payment(PointVO point, MemberVO member, RedirectAttributes rttr){
+    	
+    	return service.PaymentFromService(point, member);
+    }*/
     
 }

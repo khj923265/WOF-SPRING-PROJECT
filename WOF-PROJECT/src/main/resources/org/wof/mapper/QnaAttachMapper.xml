@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.wof.mapper.QuestAttachMapper">
+
+	<insert id="insert">
+	insert into QUESTATTACH (uuid, uploadpath, filename, filetype, quest_no)
+	values(#{uuid}, #{uploadPath}, #{fileName}, #{fileType}, #{quest_no})
+	</insert>
+
+	<delete id="delete">
+	delete from QUESTATTACH where uuid = #{uuid}
+	</delete>
+
+	<select id="findByQuest_no" resultType="org.wof.domain.QuestAttachVO">
+		select * from QUESTATTACH where quest_no = #{quest_no}
+	</select>
+
+	<delete id="deleteAll">
+		delete QUESTATTACH where quest_no = #{quest_no}
+	</delete>
+
+</mapper>
+
+

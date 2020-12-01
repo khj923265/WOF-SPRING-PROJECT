@@ -4,35 +4,34 @@
 
 <mapper namespace="org.wof.mapper.QnaMapper">
 
-	<insert id="Question" parameterType="org.wof.domain.QuestionVO">
-		insert into QUESTION(quest_id, quest_no, quest_type, quest_title, quest_writer, 
-							 quest_contents, quest_reg_date, quest_ans_check, quest_deleted)  
-		values ('quest'||quest_id_seq.nextval, quest_no_seq.nextval, #{quest_type}, #{quest_title}, 
-					#{quest_writer}, #{quest_contents}, sysdate, #{quest_ans_check}, #{quest_deleted})
-	</insert>
-	
 	<select id="getList" resultType="org.wof.domain.QuestionVO">
 	<![CDATA[
-		SELECT  q.quest_no, q.quest_title, q.quest_reg_date, q.quest_ans_check, m.real_name
-		FROM QUESTION q, MEMBER m
-		WHERE q.quest_writer = m.member_no
+		select  q.quest_no, q.quest_title, q.quest_reg_date, q.quest_ans_check, m.real_name
+		from QUESTION q, MEMBER m
+		where q.quest_writer = m.member_no
 		and m.member_no = ${member_no};
 		]]>
 	</select>
 	
 	<select id="getListPaging" resultType="org.wof.domain.QuestionVO">
-  	<![CDATA[
-  	select *
+  	
+	<![CDATA[
+		select
+		*
 		from
-		(select rownum rn, quest_id, quest_no, quest_type, quest_title, quest_writer, 
-				quest_contents, quest_reg_date, quest_ans_check, quest_deleted
-			from
-  			(select * from question
-  				order by lpad(quest_id, 10, '0') desc)       
-				where rownum <= #{pageNum} * #{amount})
-					where rn > (#{pageNum} -1) * #{amount}
-      	]]>
-      	
+			(
+			select /*+INDEX_DESC(QUESTION SYS_C007421) */
+			rownum rn, QUEST_NO, QUEST_TITLE, QUEST_WRITER, QUEST_CONTENTS, QUEST_REG_DATE, QUEST_UPDATE_DATE, QUEST_ANS_CHECK, QUEST_DELETED
+			from QUESTION
+			where 		
+	]]>
+	<include refid="standard"></include>
+	
+	<![CDATA[
+		rownum <= #{pageNum} * #{amount}
+		)
+	where rn > (#{pageNum} -1) * #{amount}
+	]]>
   	</select>
   	
   	<select id="getTotalCount" resultType="int">
@@ -40,6 +39,54 @@
   		select count(*) from QUESTION
   	]]>	
   	</select>
+  	
+  	<sql id="standard">
+	<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+		<foreach collection="typeArr" item="type">
+			<trim prefix="OR">
+				<choose>
+					<when test="type == 'T'.toString()">
+						title like '%'||#{keyword}||'%'
+					</when>
+					
+					<when test="type == 'C'.toString()">
+						content like '%'||#{keyword}||'%'
+					</when>
+					
+					<when test="type == 'W'.toString()">
+						writer like '%'||#{keyword}||'%'
+					</when>
+				</choose>
+			</trim>
+		</foreach>
+	</trim>
+</sql>
+
+	<insert id="insert" parameterType="org.wof.domain.QuestionVO">
+		insert into QUESTION(quest_id, quest_no, quest_type, quest_title, quest_writer, 
+							 quest_contents, quest_reg_date, quest_ans_check, quest_deleted)  
+		values ('quest'||quest_id_seq.nextval, quest_no_seq.nextval, #{quest_type}, #{quest_title}, 
+					#{quest_writer}, #{quest_contents}, sysdate, 0, 0)
+	</insert>
+	
+	<insert id="insertSelectKey">
+		<selectKey keyProperty="quest_no" order="BEFORE" resultType="long">
+			select quest_no_seq.nextval from dual
+		</selectKey>
+	
+		insert into QUESTION (quest_no, quest_title, quest_writer, quest_contents) 
+		values (#{quest_no}, #{quest_title}, #{quest_writer}, #{quest_contents})
+	</insert>
+
+	<select id="read" resultType="org.wof.domain.QuestionVO">
+		select * from QUESTION where quest_no = #{quest_no}
+	</select>
+
+	<delete id="delete">
+		delete from QUESTION where quest_no = #{quest_no}
+	</delete>
+	
+	
 	
 </mapper>
 

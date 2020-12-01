@@ -17,17 +17,21 @@ public interface PointMapper {
 	
 	public int Withdraw(PointVO point);
 	
+	public int PaymentList(PointVO point);
+	
+	public int PaymentFrom(PointVO point);
+	
+	public int PaymentTo(PointVO point);
+	
 	//public int getPointTotal(MemberVO member);
 	
-	public MemberVO pointBalance(PointVO point);
+	public int pointBalance(PointVO point);
 	
 	public List<PointVO> getList();
 	
 	public List<PointVO> getListPaging(Standard standard);
 	
 	public int getTotalCount(Standard standard);
-	
-	//public int Payment(PointVO point);
-	
+
 	public String pwCheck(String pwcheck);
 }

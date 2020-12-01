@@ -55,70 +55,238 @@
 									<th scope="col"></th>
 								</tr>
 							</thead>
+							
 							<tbody class="list">
-								<tr>
-									<td scope="row">
-										<div class="align-items-center">
-											<span class="name mb-0 text-sm">1</span>
-										</div>
-									</td>
-									<td class="budget text-primary">클라이언트 찜하기가 안됩니다.</td>
-									<td><span class="status">2020.10.20 16:10</span></td>
-									<td>
-										<div class="d-flex align-items-center">
-											<!-- <span class="completion mr-2">60%</span> -->
-											<div>
+								<c:forEach var="quest" items="${getList }">
+									<tr>
+										<td scope="row">
+											<div class="align-items-center">
+												<span class="name mb-0 text-sm"><c:out value="${quest.quest_no }" /></span>
+											</div>	
+										</td>
+										<td class="budget text-primary">
+											<a class='move'
+											href='<c:out value="${quest.quest_no }"/>'> 
+											<c:out value="${quest.quest_title }" />
+											</a>
+										</td>
+										<td>
+											<span class="status">
+												<fmt:parseDate var="dt" value="${quest.quest_reg_date }"
+													pattern="yyyy-MM-dd" /> 
+												<fmt:formatDate value="${dt }"
+													pattern="yyyy/MM/dd" />
+											</span>		
+										</td>
+										
+										<td>
+											<div class="d-flex align-items-center">
 												<div>
 													<span class="badge badge-info">답변 대기</span>
 												</div>
-												<!-- <div class="progress">
-													<div class="progress-bar bg-warning" role="progressbar"
-														aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-														style="width: 60%;"></div>
-												</div> -->
 											</div>
-										</div>
-									</td>
-									<td class="text-right">
-										<div class="dropdown">
-											<a class="btn btn-sm btn-icon-only text-light" href="#"
-												role="button" data-toggle="dropdown" aria-haspopup="true"
-												aria-expanded="false"> <i class="fas fa-ellipsis-v"></i>
-											</a>
-											<div
-												class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-												<a class="dropdown-item" href="#">채팅</a>
+										</td>
+									
+										<td class="text-right">
+											<div class="dropdown">
+												<a class="btn btn-sm btn-icon-only text-light" href="#"
+													role="button" data-toggle="dropdown" aria-haspopup="true"
+													aria-expanded="false"> <i class="fas fa-ellipsis-v"></i>
+												</a>
+												<div
+													class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+													<a class="dropdown-item" href="#">채팅</a>
+												</div>
 											</div>
-										</div>
-									</td>
-								</tr>
+										</td>
+									</tr>
+								</c:forEach>
+								
+								
 							</tbody>
+							
+									
 						</table>
-					</div>
-					<!-- Card footer -->
-					<div class="card-footer py-4">
-						<nav aria-label="...">
-							<ul class="pagination justify-content-end mb-0">
-								<li class="page-item disabled"><a class="page-link"
-									href="#" tabindex="-1"> <i class="fas fa-angle-left"></i> <span
-										class="sr-only">Previous</span>
-								</a></li>
-								<li class="page-item active"><a class="page-link" href="#">1</a>
-								</li>
-								<li class="page-item"><a class="page-link" href="#">2 <span
-										class="sr-only">(current)</span></a></li>
-								<li class="page-item"><a class="page-link" href="#">3</a></li>
-								<li class="page-item"><a class="page-link" href="#"> <i
-										class="fas fa-angle-right"></i> <span class="sr-only">Next</span>
-								</a></li>
+						
+						<div class='row'>
+							<div class="col-lg-12">
+
+								<form id='searchForm' action="/qna/question-list" method='get'>
+									<select name='type'>
+										<option value=""
+											<c:out value="${pageMaker.standard.type == null?'selected':''}"/>>--</option>
+										<option value="T"
+											<c:out value="${pageMaker.standard.type eq 'T'?'selected':''}"/>>제목</option>
+										<option value="C"
+											<c:out value="${pageMaker.standard.type eq 'C'?'selected':''}"/>>내용</option>
+										<option value="W"
+											<c:out value="${pageMaker.standard.type eq 'W'?'selected':''}"/>>작성자</option>
+										<option value="TC"
+											<c:out value="${pageMaker.standard.type eq 'TC'?'selected':''}"/>>제목
+											or 내용</option>
+										<option value="TW"
+											<c:out value="${pageMaker.standard.type eq 'TW'?'selected':''}"/>>제목
+											or 작성자</option>
+										<option value="TWC"
+											<c:out value="${pageMaker.standard.type eq 'TWC'?'selected':''}"/>>제목
+											or 내용 or 작성자</option>
+									</select> <input type='text' name='keyword'
+										value='<c:out value="${pageMaker.standard.keyword}"/>' /> <input
+										type='hidden' name='pageNum'
+										value='<c:out value="${pageMaker.standard.pageNum}"/>' /> <input
+										type='hidden' name='amount'
+										value='<c:out value="${pageMaker.standard.amount}"/>' />
+									<button class='btn btn-default'>검색</button>
+								</form>
+							</div>
+						</div>
+
+						<nav aria-label="Page navigation example">
+							<ul class="pagination justify-content-end">
+								<c:if test="${pageMaker.prev }">
+									<li class="page-item disabled"><a class="page-link"
+										href="${pageMaker.startPage }" aria-label="Previous"> <i
+											class="fa fa-angle-left"></i><span class="re-only">Prev</span></a></li>
+								</c:if>
+
+								<c:forEach var="num" begin="${pageMaker.startPage }"
+									end="${pageMaker.endPage }">
+									<li
+										class="page-item ${pageMaker.standard.pageNum == num ? 'active':''}">
+										<a href="${num }" class="page-link">${num }</a>
+									</li>
+								</c:forEach>
+
+								<c:if test="${pageMaker.next }">
+									<li class="page-item disabled"><a class="page-link"
+										href="${pageMaker.endPage +1}" aria-label="Next"> <i
+											class="fa fa-angle-right"></i><span class="sr-only">Next</span></a></li>
+								</c:if>
 							</ul>
+							<!-- page -->
 						</nav>
+
+						<form id='actionForm' action="/community/partners_community_list"
+							method='get'>
+							<input type='hidden' name='pageNum'
+								value="${pageMaker.standard.pageNum }"> <input type='hidden'
+								name='amount' value="${pageMaker.standard.amount }">
+							<input type='hidden' name ="type" value='<c:out value="${pageMaker.standard.type }"/>'>
+							<input type='hidden' name="keyword" value='<c:out value="${pageMaker.standard.keyword }"/>'>
+						</form>
+
+						<!-- Modal  추가 -->
+						<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+							aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+
+										<h4 class="modal-title" id="myModalLabel">WOF</h4>
+									</div>
+									<div class="modal-body">처리가 완료되었습니다.</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal">확인</button>
+
+									</div>
+								</div>
+								<!-- /.modal-content -->
+							</div>
+							<!-- /.modal-dialog -->
+						</div>
+						<!-- /.modal -->
 					</div>
+						
 				</div>
 			</div>
 		</div>
-
-		</div>
 	</div>
+</div>					
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+	$(document)
+			.ready(
+					function() {
+						var result = '<c:out value="${result}"/>';
+
+						checkModal(result);
+
+						history.replaceState({}, null, null);
+
+						function checkModal(result) {
+
+							if (result === '' || history.state) {
+								return;
+							}
+
+							if (parseInt(result) > 0) {
+								$(".modal-body").html(
+										"문의사항" + parseInt(result)
+												+ "번이 작성되었습니다.");
+							}
+
+							$("#myModal").modal("show");
+						}
+
+						var actionForm = $("#actionForm");
+
+						$(".page-item a").on(
+								"click",
+								function(e) {
+									e.preventDefault();
+
+									console.log('click');
+
+									actionForm.find("input[name='pageNum']")
+											.val($(this).attr("href"));
+									actionForm.submit();
+								});
+
+						$(".move")
+								.on("click",
+										function(e) {
+
+											e.preventDefault();
+									 		
+											actionForm
+													.append("<input type='hidden' name='quest_no' value='"
+															+ $(this).attr(
+																	"href")
+															+ "'>");
+											actionForm
+													.attr("action",
+															"/qna/question-get");
+											actionForm.submit();
+										});
+						
+						var searchForm = $("#searchForm");
+						
+						$("#searchForm button").on("click", function(e) {
+							
+							if(!searchForm.find("option:selected").val()) {
+								alert("검색 종류를 선택해야합니다.");
+								return false;
+							}
+							
+							if(!searchForm.find("input[name='keyword']").val()) {
+								alert("키워드를 입력해야합니다.");
+								return false;
+							}
+							
+							searchForm.find("input[name='pageNum']").val("1");
+							e.preventDefault();
+							
+							searchForm.submit();
+							
+						});
+					});
+</script>
+						
+
 	
 <%@ include file = "../includes/footer.jsp"%>		
