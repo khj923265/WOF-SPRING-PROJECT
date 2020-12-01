@@ -28,8 +28,9 @@ public interface PartnersMapper {
 	public List<PartnersVO> partnersList(
 			@Param("member_no")String member_no,
 			@Param("standard") Standard standard);
+	//
 	
-	public int getTotalCount(Standard standard);//파트너스 전체 카운트(페이징처리)
+	public int getTotalCount(@Param("standard") Standard standard);//파트너스 전체 카운트(페이징처리)
 	
 	
 	public List<PartnersVO>	followList(
@@ -52,10 +53,13 @@ public interface PartnersMapper {
 	
 	public List<PartnersVO> recommend(
 			@Param("address") String address, 
-			@Param("skillList") List<String> skillList); //지역 + 스킬 매칭 추천	
+			@Param("skillList") List<String> skillList,
+			@Param("standard") Standard standard ); //지역 + 스킬 매칭 추천	
 	
-	@Select("select sysdate from dual")//jUnit test
-	public String getTime();
+	public int recommendCount(
+			@Param("address") String address, 
+			@Param("skillList") List<String> skillList,
+			@Param("standard") Standard standard);
 	
 	public List<ProjectVO> applyState(
 			@Param("member_no") String member_no,

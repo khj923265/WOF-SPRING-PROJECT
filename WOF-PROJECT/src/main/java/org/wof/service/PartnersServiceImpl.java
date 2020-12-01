@@ -60,7 +60,7 @@ public class PartnersServiceImpl implements PartnersService{
 	}
 	
 	@Override
-	public List<PartnersVO> recommend(String member_no) {
+	public List<PartnersVO> recommend(String member_no, Standard standard) {
 		log.info("get recommend with standard: "+member_no);
 		String clientAddress = partnersMapper.clientAddress(member_no);
 		
@@ -77,17 +77,47 @@ public class PartnersServiceImpl implements PartnersService{
 			
 				}//end if
 			}//end for
-		}//end for		
+		}//end for
 		
 		if(clientAddress == null || clientAddress == "" || skillList == null){
 			return null;
 		}else{
 			
-			String address = clientAddress.substring(0, 2);			
+			String address = clientAddress.substring(0, 2);
 			
-			return partnersMapper.recommend(address, skillList);
+			return partnersMapper.recommend(address, skillList, standard);
 		}
 		
+	}
+	
+	@Override
+	public int recommendCount(String member_no, Standard standard) {
+		log.info("get recommend with standard: "+member_no);
+		String clientAddress = partnersMapper.clientAddress(member_no);
+		
+		List<String> projectSkillList = partnersMapper.projectSkill(member_no);
+		
+		List<String> skillList = new ArrayList<>();
+		String []skill;
+		for(String data : projectSkillList){
+			skill = data.split(", ");			
+			for(String data2 : skill){
+				data2.trim();
+				if(!skillList.contains(data2)){
+					skillList.add(data2);
+			
+				}//end if
+			}//end for
+		}//end for
+		
+		if(clientAddress == null || clientAddress == "" || skillList == null){
+			return 0;
+		}else{
+			
+			String address = clientAddress.substring(0, 2);
+			
+			return partnersMapper.recommendCount(address, skillList, standard);
+		}
 	}
 	
 	@Override
