@@ -47,8 +47,8 @@ public class ProjectRestController {
 		
 	}
 	
-	@DeleteMapping("followNo/{related_project}")
-	public ResponseEntity<Integer> removeFollowProject(@PathVariable String related_project, String related_member){
+	@DeleteMapping("followNo/{related_project}/{related_member}")
+	public ResponseEntity<Integer> removeFollowProject(@PathVariable String related_project, @PathVariable String related_member){
 		log.info("rest controller delete " + related_project + "member" + related_member);
 		FollowProjectVO vo = projectService2.detailFollowProject(related_project, related_member);
 		int result = projectService2.deleteFollowProject(vo.getFollowproject_no());

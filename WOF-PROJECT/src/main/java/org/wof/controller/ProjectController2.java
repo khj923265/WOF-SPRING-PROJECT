@@ -65,6 +65,4 @@ public class ProjectController2 {
 		model.addAttribute("meets", projectService2.listMeeting(related_member));
 	}
 	
-	
-
 }

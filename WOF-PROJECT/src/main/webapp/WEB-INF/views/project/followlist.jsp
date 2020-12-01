@@ -67,7 +67,7 @@
           <div class="card">
             <!-- Card header -->
             <div class="card-header border-0">
-              <h3 class="mb-0">Recommend Project List</h3>
+              <h3 class="mb-0">Follow Project List</h3>
             </div>
             <!-- card body -->
             <div class="card card-stats">
@@ -79,25 +79,13 @@
     <div class="col-12 row text-center ">
     
         <h2 class="card-title text-uppercase text-muted mb-0 mr-2"><a href="#">${follow.proj_title}</a></h2>
+		
 		<span class="justify-content-center">           
-          <c:choose>
-        <span class="justify-content-center"> 
-		<c:when test="${follow.proj_id != null }"> 	          
-        <i class="ni ni-favourite-28 mt-2 color" >
-        </c:when >
-        <c:when test="${follow.proj_id == null}">
-         <i class="ni ni-favourite-28 mt-2" >
-        </c:when>
-        </c:choose>    
+        <i class="ni ni-favourite-28 mt-2 color">    
         <input type="hidden" id ="projectId" value="${follow.proj_id}" >
         <input type="hidden" id="memberId" value="${member.member_no}" >     
         </i>   
-        </span>    
-        <input type="hidden" id ="projectId" value="${follow.proj_id}" >
-        <input type="hidden" id="memberId" value="${member.member_no}" >     
-        </i>   
-        </span> 
-        
+        </span>   
               
     </div>
     </div>
@@ -157,7 +145,7 @@ ${fn:substring(TextValue,0,60)}<br>${fn:substring(TextValue,61,120)}
 			var related_member = $(this).find('#memberId').val();
 			if ($(this).hasClass("color")) {
 				$.ajax({
-					url : "/follwProject/"+related_project,
+					url : "/followYes/"+related_project,
 					type : "POST",
 					data :{
 						'related_member' : related_member
@@ -175,7 +163,7 @@ ${fn:substring(TextValue,0,60)}<br>${fn:substring(TextValue,61,120)}
 				})
 			}else {
 				$.ajax({
-					url : "/follwProject/"+related_project+"/"+related_member,
+					url : "/followNo/"+related_project+"/"+related_member,
 					type : "DELETE",
 					success : function(result) {
 						swal(

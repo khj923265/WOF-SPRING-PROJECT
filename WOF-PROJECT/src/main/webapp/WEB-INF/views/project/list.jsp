@@ -447,7 +447,11 @@
 
 	<!-- Footer -->
 	<%@ include file="../includes/footer.jsp" %>
-	
+		<style type="text/css">
+	 .color {
+	 	color : #5e72e4;
+	 }
+	</style>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			var pagingActionForm = $("#pagingActionForm");
@@ -471,87 +475,49 @@
 		
 </script>
 
-	<script type="text/javascript">
-	
-	$(function() {
-	
-		$(".ni-favourite-28").click(function() {
-			$(this).toggleClass("red");
-			var related_proj = $(this).find("input").val();
-			if ($(this).hasClass("red") === true) { /* if($(".ni-favourite-28").hasClass("color") === true){ */
-				alert("관심 프로젝트로 등록되었습니다.");
+<script src="http://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript">	
+ 	$(function() {
+ 		//관심 프로젝트 ajax 
+ 		$(".ni-favourite-28").click(function() {
+			$(this).toggleClass("color");
+			var related_project = $(this).find('#projectId').val();
+			var related_member = $(this).find('#memberId').val();
+			if ($(this).hasClass("color")) {
 				$.ajax({
-					url : "FollowProjectInsertAction.do",
-					type : "post",
-					data : {
-						"related_proj" : related_proj
+					url : "/followYes/"+related_project,
+					type : "POST",
+					data :{
+						'related_member' : related_member
 					},
+					dataType : "json",
 					success : function(result) {
+						swal(
+		                        "Add favorite Project!",
+		                        "success"
+		                    );
 					},
 					error : function(error) {
+						alert(error);
 					}
 				})
-			}
-
-			else {
-				alert("관심 프로젝트에서 해제되었습니다.");
+			}else {
 				$.ajax({
-					url : "FollowProjectDeleteAction.do",
-					type : "related_proj",
-					data : {
-						"related_proj" : related_proj
-					},
+					url : "/followNo/"+related_project+"/"+related_member,
+					type : "DELETE",
 					success : function(result) {
-						alert(result);
-						warning.success("관심 파트너스에 삭제되었습니다!")
+						swal(
+		                        "Delete favorite project!",
+		                        "success"
+		                    );
 					},
 					error : function(error) {
-						toastr.error("관심 파트너스가 삭제되지 않았습니다.")
+						alert(error);
 					}
-				})
-			}
-			
-		})
-		
-	});
-	function followProject() {
-
-		$('#related_proj').toggleClass("red");
-		var related_proj = $('#related').val();
-		if ($('#related_proj').hasClass("red") === true) { /* if($(".ni-favourite-28").hasClass("color") === true){ */
-			alert("관심 프로젝트로 등록되었습니다.");
-			$.ajax({
-				url : "FollowProjectInsertAction.do",
-				type : "post",
-				data : {
-					"related_proj" : related_proj
-				},
-				success : function(result) {
-				},
-				error : function(error) {
+					})
 				}
-			})
-		}
-
-		else {
-			alert("관심 프로젝트에서 해제되었습니다.");
-			$.ajax({
-				url : "FollowProjectDeleteAction.do",
-				type : "related_proj",
-				data : {
-					"related_proj" : related_proj
-				},
-				success : function(result) {
-					alert(result);
-					warning.success("관심 파트너스에 삭제되었습니다!")
-				},
-				error : function(error) {
-					toastr.error("관심 파트너스가 삭제되지 않았습니다.")
-				}
-			})
-		}
-
-	}
+		});		
+}); 
 	</script>
 	
 	<script type="text/javascript">
