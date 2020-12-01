@@ -88,7 +88,7 @@
 					  </ul>
 					</nav>
 					
-					<form id='actionForm' action="/partners/followlist" method="get">
+					<form id='actionForm' action="/partners/applystate" method="get">
 						<input type="hidden" name='member_no' value='${member.member_no}'>
 						<input type="hidden" name='pageNum' value = '${pageMaker.standard.pageNum}'>
 						<input type="hidden" name='amount' value = '${pageMaker.standard.amount}'>
@@ -102,5 +102,20 @@
 	<!-- Footer -->
 	<%@ include file="../includes/footer.jsp"%>
 
+<script>
+var actionForm = $("#actionForm");
+
+$(".page-item a").on(
+		"click",
+		function(e) {
+			e.preventDefault();
+
+			console.log('click');
+
+			actionForm.find("input[name='pageNum']")
+					.val($(this).attr("href"));
+			actionForm.submit();
+		});
+</script>
 </body>
 </html>

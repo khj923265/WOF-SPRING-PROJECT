@@ -18,7 +18,7 @@
 						<a class="btn btn-secondary" href="${pageContext.request.contextPath}/Project/RecommendProjectListAction.do">추천된
 							프로젝트</a>
 						<a class="btn btn-secondary"
-							href="/kosta202-project/Partners/listApplyProjectAction.do">지원한
+							href="/partners/project_apply_detail?member_no=${member.member_no}">지원한
 							프로젝트</a> 
 						<a class="btn btn-secondary"
 							href="/kosta202-project/Partners/">진행중 프로젝트</a> <a
@@ -67,7 +67,7 @@
 												pattern="yyyy-MM-dd HH:mm:ss" /> <fmt:formatDate
 												value="${dt }" pattern="yyyy/MM/dd" /></td>
 										<td>${ProjectVO.proj_reqr_person }명</td>
-										<td class="text-right"><a class="" href="#">자세히보기</a></td>
+										<td class="text-right"><a class="" href="/project/read?proj_id=${ProjectVO.proj_id }">자세히보기</a></td>
 									</tr>
 								</c:forEach>
 								<%--                     <c:forEach var="ProjectVO" items="${list }">
@@ -87,31 +87,60 @@
 
 						</table>
 					</div>
-					<div class="card-footer py-4">
-						<nav aria-label="...">
-							<ul class="pagination justify-content-end mb-0">
-								<li class="page-item disabled"><a class="page-link"
-									href="#" tabindex="-1"> <i class="fas fa-angle-left"></i> <span
-										class="sr-only">Previous</span>
-								</a></li>
-								<li class="page-item active"><a class="page-link" href="#">1</a>
-								</li>
-								<li class="page-item"><a class="page-link" href="#">2 <span
-										class="sr-only">(current)</span></a></li>
-								<li class="page-item"><a class="page-link" href="#">3</a></li>
-								<li class="page-item"><a class="page-link" href="#"> <i
-										class="fas fa-angle-right"></i> <span class="sr-only">Next</span>
-								</a></li>
-							</ul>
-						</nav>
-					</div>
+					<!-- 페이징 -->
+					<nav aria-label="Page navigation example">
+					  <ul class="pagination justify-content-center">
+					  <c:if test="${pageMaker.prev }">
+					    <li class="page-item disabled">
+					      <a class="page-link" href="${pageMaker.startPage-1}">
+					        <i class="fa fa-angle-left"></i>
+					        <span class="sr-only">Previous</span>
+					      </a>
+					    </li>
+					  </c:if>
+					  
+					  <c:forEach var="num" begin="${pageMaker.startPage}"
+					  end="${pageMaker.endPage}">
+					    <li class="page-item ${pageMaker.standard.pageNum == num ? "active":""}" >
+					    <a class="page-link" href="${num}">${num}</a></li>
+					  </c:forEach>
+					  
+					  <c:if test="${pageMaker.next}">
+					    <li class="page-item">
+					      <a class="page-link" href="${pageMaker.endPage +1}">
+					        <i class="fa fa-angle-right"></i>
+					        <span class="sr-only">Next</span>
+					      </a>
+					    </li>
+					   </c:if>
+					  </ul>
+					</nav>
+					<form id='actionForm' action="/partners/project_apply_detail" method="get">
+						<input type="hidden" name='member_no' value='${member.member_no}'>
+						<input type="hidden" name='pageNum' value = '${pageMaker.standard.pageNum}'>
+						<input type="hidden" name='amount' value = '${pageMaker.standard.amount}'>
+					</form>
 				</div>
 			</div>
 		</div>
 	</div>
 
 
+<script>
+var actionForm = $("#actionForm");
+
+$(".page-item a").on(
+		"click",
+		function(e) {
+			e.preventDefault();
+
+			console.log('click');
+
+			actionForm.find("input[name='pageNum']")
+					.val($(this).attr("href"));
+			actionForm.submit();
+		});
+</script>
+
 	<!-- Footer -->
 	<%@ include file="../includes/footer.jsp" %>
-</body>
-</html>

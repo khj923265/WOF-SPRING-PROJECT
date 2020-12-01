@@ -154,7 +154,7 @@
 					  </ul>
 					</nav>
 					
-					<form id='actionForm' action="/partners/applydetail" method="get">
+					<form id='actionForm' action="/partners/appliedpartners" method="get">
 						<input type="hidden" name='proj_id' value='${Project.proj_id}'>
 						<input type="hidden" name='member_no' value='${Project.member_no}'>
 						<input type="hidden" name='pageNum' value = '${pageMaker.standard.pageNum}'>
@@ -178,6 +178,7 @@
 		
 		<!-- SweetAlert2 library -->
 		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+			
 			
 		<!-- Hakgeun js -->
 		<script type="text/javascript">

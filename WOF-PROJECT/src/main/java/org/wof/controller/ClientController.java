@@ -24,6 +24,8 @@ public class ClientController {
 		log.info("클라이언트 대쉬보드 프로젝트 리스트");
 		model.addAttribute("dashboardclientProject", clientservice.dashboardclientProject(member_no));
 		model.addAttribute("dashboardFallowPartners", clientservice.dashboardFallowPartners(member_no));
+		model.addAttribute("dashboardRegisterProject", clientservice.dashboardRegisterProject(member_no));
+		model.addAttribute("recommendList", clientservice.dashboardRecommend(member_no));
 	}
 	
 }

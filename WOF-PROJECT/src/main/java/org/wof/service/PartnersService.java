@@ -14,6 +14,8 @@ public interface PartnersService {
 	
 	public List<ProjectVO> applyProject(String member_no, Standard standard);
 	
+	public int applyProjectTotal(Standard standard);
+	
 	public List<ProjectVO> partnersSupport();
 	
 	public List<ProjectVO> dashboardpartnersApplyProject(String member_no);
@@ -36,6 +38,8 @@ public interface PartnersService {
 	
 	public List<ProjectVO> applyState(String member_no, Standard standard);
 	
+	public int applyStateTotal(Standard standard);
+	
 	public ProjectVO applyDetailProject(String proj_id);
 	
 	public List<PartnersVO> applyDetailPartners(String proj_id, Standard standard);
@@ -49,5 +53,7 @@ public interface PartnersService {
 	public int applyDelete(String[] member_no, String proj_id);
 	
 	public List<MemberVO> appliedPartners(String proj_id);
+	
+	public int appliedpartnersTotal(Standard standard);
 
 }

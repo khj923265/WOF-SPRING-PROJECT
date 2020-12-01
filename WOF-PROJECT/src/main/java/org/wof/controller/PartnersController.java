@@ -36,8 +36,14 @@ public class PartnersController {
 	
 	@GetMapping("/project_apply_detail")
 	public void project_apply_detail(Model model, Standard standard, @RequestParam("member_no") String member_no) {
-		log.info("지원한 프로젝트 list");
+		log.info("지원한 프로젝트 list" + member_no);
 		model.addAttribute("project_apply_detail", partnersService.applyProject(member_no, standard));
+		
+		int total = partnersService.applyProjectTotal(standard);
+
+		log.info("apply Project count" + total);
+		
+		model.addAttribute("pageMaker", new PageDTO(standard, total));
 	}
 	
 	@GetMapping("/dashboard_partners")
@@ -131,6 +137,12 @@ public class PartnersController {
 			@RequestParam("member_no") String member_no, Model model, Standard standard) {
 		log.info("Controller applyState : " + member_no);
 		model.addAttribute("applyState", partnersService.applyState(member_no,standard));
+		
+		int total = partnersService.applyStateTotal(standard);
+		
+		log.info("페이징 : " + total);
+		
+		model.addAttribute("pageMaker", new PageDTO(standard, total));
 	}
 	
 	//하나의 프로젝트에 지원한 파트너스의 목록
@@ -187,12 +199,16 @@ public class PartnersController {
 	}
 	
 	@RequestMapping("/appliedpartners")
-	public void appliedPartners(Model model, @RequestParam("proj_id") String proj_id) {
+	public void appliedPartners(Model model, @RequestParam("proj_id") String proj_id, Standard standard) {
 		
 		log.info("applied partners=============================");
 		
+		int total = partnersService.appliedpartnersTotal(standard);
+		
+		
 		model.addAttribute("Project", partnersService.applyDetailProject(proj_id));
 		model.addAttribute("Member", partnersService.appliedPartners(proj_id));
+		model.addAttribute("pageMaker", new PageDTO(standard, total));
 	}
 	
 }

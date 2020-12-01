@@ -34,6 +34,6 @@ public class ProjectVO {
 	private int proj_replyCnt;				// 댓글 개수
 	private int cal_date;			// 총 일수
 	//private List<ProjectAttachVO> proj_attachList;
-	
+	private List<ProjectAttachVO> attachList;
 	
 }

@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
 <!-- Header & Menu -->
@@ -15,7 +13,7 @@
 	<div class="scrollbar-inner">
 		<!-- Brand -->
 		<div class="sidenav-header  align-items-center">
-			<a href="${pageContext.request.contextPath }/Project/movemain.do"><img
+			<a href="${pageContext.request.contextPath }/main"><img
 				alt=""
 				src="${pageContext.request.contextPath }/resources/template/assets/img/brand/logo_transparent.png"
 				style="height: 50px; width: 100px; margin-left: 10px;"> </a>
@@ -76,6 +74,11 @@
 							<i class="ni ni-palette"></i> <span class="nav-link-text">페널티
 								관리</span>
 					</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="${pageContext.request.contextPath}/community/partners_community_list">
+							<i class="ni ni-palette"></i> <span class="nav-link-text">커뮤니티 게시판
+								</span>
+					</a></li>					
 				</ul>
 			</div>
 		</div>
@@ -108,7 +111,7 @@
 						</div>
 						<button type="button" class="btn btn-secondary">제안받은 요청</button>
 						<a class="btn btn-primary"
-							href="/kosta202-project/Partners/listApplyProjectAction.do">지원
+							href="/partners/project_apply_detail?member_no=${member.member_no}">지원
 							프로젝트</a>
 						<button type="button" class="btn btn-secondary">계약요청</button>
 						<button type="button" class="btn btn-secondary">진행중인 프로젝트</button>
@@ -143,6 +146,16 @@
 							<div class="col-md-12 column ui-sortable">
 								<b>제안 및 지원현황</b>
 								<div class="card bg-light text-dark">
+										<c:choose>
+										<c:when test="${empty dashboardpartnersApplyProject }">
+										<div class="card-body">
+										<center>
+										<br>
+										<h5 data-toggle="tooltip" data-placement="top" title="추가정보 등록 후 이용할 수 있습니다.">조회 결과가 없습니다.</h5>
+										</center>
+										</div>
+										</c:when>
+									<c:when test="${!empty dashboardpartnersApplyProject }">
 									<div class="card-body">
 										<table class="table align-items-center table-flush">
 											<thead class="thead-light">
@@ -173,6 +186,8 @@
 											</tbody>
 										</table>
 									</div>
+									</c:when>
+									</c:choose>
 								</div>
 								<!-- 리스트  -->
 							</div>

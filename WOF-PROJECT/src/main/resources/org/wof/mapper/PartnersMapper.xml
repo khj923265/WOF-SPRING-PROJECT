@@ -6,11 +6,22 @@
 
 <select id="applyProject" resultType="org.wof.domain.ProjectVO">
 	<![CDATA[
-		select p.proj_title, p.proj_start_date, p.proj_reqr_skill, 
+	select proj_id, proj_title, proj_start_date, proj_reqr_skill, proj_estimate, proj_reqr_person, proj_work_place
+	from
+	(
+		select rownum rn, p.proj_id, p.proj_title, p.proj_start_date, p.proj_reqr_skill, 
 			p.proj_estimate, p.proj_reqr_person, p.proj_work_place
 		from project p, apply a
 		where p.proj_id = a.proj_id and a.member_no = #{member_no}
+	)
+	where rownum <= #{standard.pageNum} * #{standard.amount}
 	]]>
+</select>
+
+<select id="applyProjectTotal" resultType="int">
+		select count(*)
+		from apply a, project p
+		where p.proj_id = a.proj_id
 </select>
 
 <select id="partnersSupport" resultType="org.wof.domain.ProjectVO">
@@ -178,9 +189,16 @@
 		member_no, proj_apply_deadline, proj_reqr_person,
 		apply_mem, proj_start_date
 		from project 
-		where member_no = #{member_no})
+		where member_no = #{member_no} 
+		)
 		where rownum <= #{standard.pageNum} * #{standard.amount}
 		]]>
+	</select>
+	
+	<select id="applyStateTotal" resultType="int">
+		select count(*)
+		from apply a, member m
+        where a.member_no = m.member_no
 	</select>
 	
 	<select id="applyDetailProject" resultType="org.wof.domain.ProjectVO">
@@ -236,6 +254,8 @@
 		and proj_id = #{proj_id}
 	</select>
 	
+	
+	<!-- 선택 -->
 	<insert id="applyRegister" parameterType="map">
 		
 		<foreach collection="member_no" item="member_no" index="index"  open="INSERT ALL " separator=" " close="SELECT * FROM DUAL" > 
@@ -245,6 +265,8 @@
         </foreach>
 	</insert>
 	
+	
+	<!-- 파트너스 삭제 -->
 	<delete id="applyDelete" parameterType="map">
 	delete from applyregister where 
 		<foreach collection="member_no" item="member_no" index="index"  separator=" OR "> 
@@ -252,11 +274,25 @@
         </foreach>
 	</delete>
 	
+	<!-- 선택한 파트너스 -->
 	<select id="appliedPartners" resultType="org.wof.domain.MemberVO">
 		<![CDATA[
-			select m.member_no, m.userid, m.real_name, m.userphone
+		select member_no, userid, real_name, userphone
+		from
+		(
+			select rownum rn, m.member_no, m.userid, m.real_name, m.userphone
 			from member m, applyregister a
 			where m.member_no = a.member_no and a.proj_id = #{proj_id}
+			and rownum <= (#{pageNum} -1) * #{amount}
+		)	
+		where rn > (#{pageNum} -1) * #{amount}
+	
 		]]>
+	</select>
+	
+	<select id="appliedpartnersTotal" resultType="int">
+		select count(*)
+		from applyregister a, member m
+        where a.member_no = m.member_no
 	</select>
 </mapper>

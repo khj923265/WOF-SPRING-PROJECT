@@ -47,7 +47,7 @@
 								class="nav-link-text">문의하기</span>
 						</a></li>
 						<li class="nav-item"><a class="nav-link"
-							href="../client/client_info_update"> <i
+							href="../member/client/client_info_update"> <i
 								class="ni ni-settings-gear-65 text-default"></i> <span
 								class="nav-link-text">기본 정보 변경</span>
 						</a></li>
@@ -110,7 +110,55 @@
 								<div class="col-md-11 column ui-sortable">
 									<b>등록된 프로젝트</b>
 									<div class="card bg-light text-dark">
-										<div class="card-body">아아아아아</div>
+									<c:choose>
+										<c:when test="${empty dashboardRegisterProject }">
+										<div class="card-body">
+										<center>
+										<br>
+										<h5 data-toggle="tooltip" data-placement="top" title="추가정보 등록 후 이용할 수 있습니다.">조회 결과가 없습니다.</h5>
+										</center>
+										</div>
+										</c:when>
+									<c:when test="${!empty dashboardRegisterProject }">
+										<div class="card-body">
+										<table class="table align-items-center table-flush">
+												<thead class="thead-light">
+													<tr>
+														<th scope="col"><i class="ni ni-chart-pie-35 ml-1"></i>
+															#프로젝트명</th>
+														<th scope="col"><i class="ni ni-money-coins"></i>예상금액</th>
+														<th scope="col"><i class="ni ni-single-02"></i> 모집인원</th>
+														<th scope="col"><i class="ni ni-square-pin"></i>필수경력</th>
+														<th scope="col"><i class="ni ni-badge ml-1"></i>
+															프로젝트 시작일</th>
+														<th scope="col"><i class="ni ni-air-baloon ml-1"></i>
+															모집 마감일</th>
+													</tr>
+												</thead>
+												<tbody>
+													<c:forEach var="ProjectVO"
+														items="${dashboardRegisterProject }">
+														<tr>
+															<th scope="row">${ProjectVO.proj_title }</th>
+															<td>${ProjectVO.proj_estimate }</td>
+															<td>${ProjectVO.proj_reqr_person }</td>
+															<td>${ProjectVO.proj_career }</td>
+															<td><fmt:parseDate var="dt"
+																	value="${ProjectVO.proj_start_date }"
+																	pattern="yyyy-MM-dd HH:mm:ss" /> <fmt:formatDate
+																	value="${dt }" pattern="yyyy/MM/dd" /></td>
+															<td><fmt:parseDate var="dt"
+																	value="${ProjectVO.proj_apply_deadline }"
+																	pattern="yyyy-MM-dd HH:mm:ss" /> <fmt:formatDate
+																	value="${dt }" pattern="yyyy/MM/dd" /></td>
+														</tr>
+													</c:forEach>
+												</tbody>
+											</table>
+										
+										</div>
+										</c:when>
+										</c:choose>
 									</div>
 								</div>
 								<div class="col-md-1 column ui-sortable"></div>
@@ -118,8 +166,18 @@
 							<br> <br>
 							<div class="row">
 								<div class="col-md-11 column ui-sortable">
-									<b>제안 및 지원자현황</b>
+									<b>제안 및 지원자현황</b>${member.member_no } ${client.member_no }
 									<div class="card bg-light text-dark">
+									<c:choose>
+										<c:when test="${empty dashboardclientProject }">
+										<div class="card-body">
+										<center>
+										<br>
+										<h5 data-toggle="tooltip" data-placement="top" title="추가정보 등록 후 이용할 수 있습니다.">조회 결과가 없습니다.</h5>
+										</center>
+										</div>
+										</c:when>
+									<c:when test="${!empty dashboardclientProject }">
 										<div class="card-body">
 											<table class="table align-items-center table-flush">
 												<thead class="thead-light">
@@ -153,6 +211,8 @@
 												</tbody>
 											</table>
 										</div>
+										</c:when>
+										</c:choose>
 									</div>
 								</div>
 								<div class="col-md-1 column ui-sortable"></div>
@@ -162,6 +222,16 @@
 								<div class="col-md-5 column ui-sortable">
 									<b>추천 파트너스</b>
 									<div class="card bg-light text-dark">
+									<c:choose>
+										<c:when test="${empty recommendList }">
+										<div class="card-body">
+										<center>
+										<br>
+										<h5 data-toggle="tooltip" data-placement="top" title="추가정보 등록 후 이용할 수 있습니다.">조회 결과가 없습니다.</h5>
+										</center>
+										</div>
+										</c:when>
+									<c:when test="${!empty recommendList }">
 										<div class="card-body">
 											<table class="table align-items-center table-flush">
 												<thead class="thead-light">
@@ -169,26 +239,42 @@
 														<th scope="col"><i class="ni ni-chart-bar-32 mr-3"></i>
 															이름</th>
 														<th scope="col"><i class="ni ni-map-big ml-1"></i>
-															희망지역</th>
+															경력</th>
+														<th scope="col"><i class="ni ni-map-big ml-1"></i>
+															보유기술</th>
 													</tr>
 												</thead>
 												<tbody>
-													<c:forEach var="PartnerVO" items="${partners_recommend_list}">
+													<c:forEach var="recommendList" items="${recommendList}">
 														<tr>
-															<td>${PartnerVO.mem_id }</td>
-															<td>${PartnerVO.partner_loca }</td>
+															<td>${recommendList.member_no }</td>
+															<td>${recommendList.career }</td>
+															<td>${recommendList.skill }</td>
 														</tr>
 													</c:forEach>
 												</tbody>
 											</table>
 										</div>
+										</c:when>
+										</c:choose>
 									</div>
 								</div>
+								
 								<div class="col-md-1 column ui-sortable"></div>
 								<div class="col-md-5 column ui-sortable">
 									<b>관심 파트너스</b>${member.member_no} 
 									${client.member_no }
 									<div class="card bg-light text-dark">
+										<c:choose>
+										<c:when test="${empty dashboardFallowPartners }">
+										<div class="card-body">
+										<center>
+										<br>
+										<h5 data-toggle="tooltip" data-placement="top" title="추가정보 등록 후 이용할 수 있습니다.">조회 결과가 없습니다.</h5>
+										</center>
+										</div>
+										</c:when>
+									<c:when test="${!empty dashboardFallowPartners }">
 										<div class="card-body">
 											<table class="table align-items-center table-flush">
 												<thead class="thead-light">
@@ -203,7 +289,6 @@
 													</tr>
 												</thead>
 												<tbody>
-												<c:if test="${member.member_no eq client.member_no }">
 													<c:forEach var="dashboardFallowPartners" items="${dashboardFallowPartners}">
 														<tr>
 															<td>${dashboardFallowPartners.member_no }</td>
@@ -211,10 +296,11 @@
 															<td>${dashboardFallowPartners.skill }</td>
 														</tr>
 													</c:forEach>
-													</c:if>
 												</tbody>
 											</table>
 										</div>
+										</c:when>
+										</c:choose>
 									</div>
 								</div>
 								<div class="col-md-1 column ui-sortable"></div>
