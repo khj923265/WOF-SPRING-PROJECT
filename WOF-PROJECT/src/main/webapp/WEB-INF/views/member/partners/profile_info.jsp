@@ -14,10 +14,20 @@
 								<div class="col-8">
 									<h1 class="mb-0">프로필 관리</h1>
 								</div>
-								<div class="col-4 text-right">
-									<a class="btn btn-success"
-									   href="/member/partners/profile_info_update">수정하기</a>
+								<div class="col-2 text-right">
+									<button type="button" class="btn btn-success" id="targetProfileForm" data-toggle="modal" data-target="#PartnersProfileUpdateForm">수정하기</button>
 								</div>
+								<div class="col-2 text-right">
+									<input name="withdrawal" type="button" class="btn btn-danger"
+										   onclick="return memberDelete()" value="회원탈퇴">
+								</div>
+
+								<!-- Button trigger modal -->
+<%--								<div class="col-4 text-right">--%>
+<%--									<a class="btn btn-success"--%>
+<%--									   href="javascript:void(0)" onclick="profileManagement.openForm(${member.userid})">수정하기</a>--%>
+<%--								</div>--%>
+
 							</div>
 						</div>
 						<div class="card-body">
@@ -88,105 +98,47 @@
 							<hr class="my-4" />
 							<!-- Address -->
 							<h6 class="heading-small text-muted mb-4">이력서 관리</h6>
-							<div>
-								<ul
-									class="nav nav-pills nav-fill flex-column flex-sm-row col-12"
-									id="tabs-text" role="tablist">
-									<li class="nav-item col-3"><a
-										class="nav-link mb-sm-3 mb-md-0 active" id="tabs-text-1-tab"
-										data-toggle="tab" href="#tabs-text-1" role="tab"
-										aria-controls="tabs-text-1" aria-selected="true">프로젝트/경력
-											사항</a></li>
-									<li class="nav-item col-3"><a
-										class="nav-link mb-sm-3 mb-md-0" id="tabs-text-2-tab"
-										data-toggle="tab" href="#tabs-text-2" role="tab"
-										aria-controls="tabs-text-2" aria-selected="false">자기소개/MBTI</a>
+
+
+							<div class="nav-wrapper">
+								<ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
+									<li class="nav-item col-3">
+										<a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true">
+											<i class="ni ni-calendar-grid-58 mr-2"></i>프로젝트/경력 사항</a>
+									</li>
+									<li class="nav-item col-3">
+										<a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false">
+											<i class="ni ni-bell-55 mr-2"></i>자기소개</a>
+									</li>
+									<li class="col-4"></li>
+									<li class="nav-item col-2">
+										<button type="button" class="btn btn-primary" id="targetProfileInsertForm" data-toggle="modal" data-target="#ProfileInsertForm">프로젝트/경력 등록하기</button>
 									</li>
 								</ul>
 							</div>
-							<div class="col-12 mt-3">
-								<button type="button" class="btn btn-primary col-12">
-									<i class="ni ni-fat-add text-warning" style="font-size: 20px"></i>추가등록
-								</button>
+
+
+							<div class="card shadow">
+								<div class="card-body">
+									<div class="tab-content" id="myTabContent">
+										<div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
+											<%@include file="./project_profile_list.jsp"%>
+
+
+										</div>
+										<div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
+											<%@include file="./profile_personalstatement.jsp"%>
+
+
+										</div>
+									</div>
+								</div>
 							</div>
 
-							<!-- start list -->
-							<div class="table-responsive mt-4">
-								<table class="table align-items-center">
-									<thead class="thead-light">
-										<tr>
-											<th scope="col" class="sort" data-sort="name">프로젝트/회사명</th>
-											<th scope="col" class="sort" data-sort="skil">기술/역할</th>
-											<th scope="col" class="sort" data-sort="field">분야</th>
-											<th scope="col" class="sort" data-sort="tesk">담당업무</th>
-											<th scope="col" class="sort" data-sort="completion">날짜</th>
-											<th scope="col"></th>
-										</tr>
-									</thead>
-									<tbody class="list">
 
-										<tr>
-											<th scope="row">
-												<div class="media align-items-center">
-													<div class="media-body">
-														<span class="name mb-0 text-sm">kosta202 프로젝트</span>
-													</div>
-												</div>
-											</th>
-											<td class="skil">JAVA,개발</td>
-											<td><span class="badge badge-dot mr-4"> <i
-													class="bg-warning"></i> <span class="field">웹솔루션</span>
-											</span></td>
-											<td>
-												<div>
-													<span class="tesk">영화정보 및 체크인 정보 관리 시스템 설계</span>
-												</div>
-											</td>
-											<td>
-												<div class="d-flex align-items-center">
-													<span>2020.10.19</span>
-												</div>
-											</td>
-											<td class="text-right">
-												<div>
-													<button type="button" class="btn btn-success">수정하기</button>
-													<button type="button" class="btn btn-danger">삭제하기</button>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<th scope="row">
-												<div class="media align-items-center">
-													<div class="media-body">
-														<span class="name mb-0 text-sm">kosta202 프로젝트</span>
-													</div>
-												</div>
-											</th>
-											<td class="skil">JAVA,개발</td>
-											<td><span class="badge badge-dot mr-4"> <i
-													class="bg-warning"></i> <span class="field">웹솔루션</span>
-											</span></td>
-											<td>
-												<div>
-													<span class="tesk">영화정보 및 체크인 정보 관리 시스템 설계</span>
-												</div>
-											</td>
-											<td>
-												<div class="d-flex align-items-center">
-													<span>2020.10.19</span>
-												</div>
-											</td>
-											<td class="text-right">
-												<div>
-													<button type="button" class="btn btn-success">수정하기</button>
-													<button type="button" class="btn btn-danger">삭제하기</button>
-												</div>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-							<!-- end list -->
+
+
+
 							<!-- Description -->
 						</div>
 					</div>
@@ -194,7 +146,120 @@
 			</div>
 		</div>
 	</div>
-	
-	
+
+	<%@ include file="./project_profile_insert_form.jsp"%>
+	<%@ include file="./project_profile_update_form.jsp"%>
+	<%@ include file="./profile_form.jsp"%>
 	<!-- footer -->
 	<%@ include file="../../includes/footer.jsp"%>
+<script src='/resources/js/member/partners/profileManagement.js'></script>
+<script>
+
+	function profileinsert(){
+		if (document.$('#name').value == null){
+			alert("프로젝트 명을 입력하세요.");
+			return false;
+		}else if (document.$('#skill').value == null){
+			alert("기술/역할을 입력하세요.");
+			return false;
+		}else if (document.$('#field').value == null){
+			alert("분야를 입력하세요.");
+			return false;
+		}else if (document.$('#responsibilities').value == null){
+			alert("담당업무을 입력하세요.");
+			return false;
+		}else if (document.$('#date').value == null){
+			alert("시작날짜를 입력하세요.");
+			return false;
+		}else if (document.$('#date2').value == null){
+			alert("종료날짜를 입력하세요.");
+			return false;
+		}
+	}
+	//현재비밀번호 인증
+	function pwcheck(){
+		var userpw = $('#userpw').val();
+		var member_no ="${member.member_no}";
+		var ischeckpw = false;
+		console.log(userpw);
+		$.ajax({
+			url : '/member/pwcheck',
+			type : 'post',
+			contentType: 'application/json',
+			datatype: 'json',
+			data : JSON.stringify({"member_no":member_no,"userpw":userpw}),
+			success : function (data){
+				console.log(data);
+				parseInt(data);
+
+				if (data == 1){
+					$("#pwcheck").text("인증완료!!!");
+					ischeckpw = true;
+				}else if (data == 0){
+					$("#pwcheck").text("인증X");
+				}
+			},error:function(request,status,error){
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);}
+		})
+	}
+
+	//회원정보 수정하기 버튼
+	function infoUpdate(){
+		if (!ischeckId){
+			alert("비밀번호 인증을 확안하세요.")
+			return false;
+		}else if (document.infoupdate.userpw !== document.infoupdate.userpwch){
+			alert("비밀번호가 다릅니다.")
+			return false;
+		}else {
+			return true;
+		}
+	}
+
+	//회원탈퇴
+	function memberDelete() {
+		if (confirm("정말 탈퇴하시겠습니까??" +
+				"* 탈퇴 후 한달뒤엔 모든 정보가 사라집니다.") == true){    //확인
+			location.href="/member/withdrawal?userid=${member.userid}";
+		}else{   //취소
+			return false;
+		}
+	}
+
+	//핸드폰 번호 자동'-'생성
+	var autoHypenPhone = function(str){
+		str = str.replace(/[^0-9]/g, '');
+		var tmp = '';
+		if( str.length < 4){
+			return str;
+		}else if(str.length < 7){
+			tmp += str.substr(0, 3);
+			tmp += '-';
+			tmp += str.substr(3);
+			return tmp;
+		}else if(str.length < 11){
+			tmp += str.substr(0, 3);
+			tmp += '-';
+			tmp += str.substr(3, 3);
+			tmp += '-';
+			tmp += str.substr(6);
+			return tmp;
+		}else{
+			tmp += str.substr(0, 3);
+			tmp += '-';
+			tmp += str.substr(3, 4);
+			tmp += '-';
+			tmp += str.substr(7);
+			return tmp;
+		}
+
+		return str;
+	}
+
+	var phoneNum = document.getElementById('userphone');
+
+	phoneNum.onkeyup = function(){
+		this.value = autoHypenPhone( this.value ) ;
+	}
+
+</script>

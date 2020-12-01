@@ -35,10 +35,10 @@ public class PartnersMapperTests {
 		partnersmapper.applyProject("member26").forEach(project -> log.info(project));
 	}
 */
-	@Test
+/*	@Test
 	public void testpartnersSupport() {
 		partnersmapper.partnersSupport().forEach(project -> log.info(project));
-	}
+	}*/
 	
 	@Setter(onMethod_ = @Autowired)
 	private PartnersMapper mapper;
@@ -100,5 +100,30 @@ public class PartnersMapperTests {
 //		log.info(mapper.getClass().getName());
 //		log.info(mapper.getTime());
 //	}
-
+	
+/*	@Test
+	public void testSearch(){
+		Standard standard = new Standard();
+		standard.setKeyword("서울");
+		
+		List<PartnersVO> list = mapper.partnersList("member91", standard);
+		
+		list.forEach(board ->log.info(board));
+	}
+	*/
+	
+/*	@Test
+	public void testPaging() {
+		
+		Standard standard = new Standard();
+		
+		standard.setPageNum(3);
+		standard.setAmount(10);
+		
+		partnersmapper.applyStateTotal(standard);
+		
+		
+		
+		
+	}*/
 }

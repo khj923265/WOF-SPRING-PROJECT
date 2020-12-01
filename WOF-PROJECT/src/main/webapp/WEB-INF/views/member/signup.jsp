@@ -28,7 +28,7 @@
 			    <div class="container">
 			    	<div class="row">
 						<div class="form-group col-md-12 mt-3 form-inline">
-					        <label for="example-email-input" class="form-control-label col-md-5">이메일:(아이디) :</label>
+					        <label for="example-email-input" class="form-control-label col-md-5 align-self-center">이메일:(아이디) :</label>
 					        <div class="col-md-7">
 					        	<input class="form-control" type="email" name="userid" id="userid">
 					        </div>
@@ -38,7 +38,7 @@
 							<div class="check-font col-md-12" id="check"></div>
 						</div>
 					    <div class="form-group col-md-12 form-inline">
-					        <label for="example-password-input" class="form-control-label col-md-5">비밀번호 :</label>
+					        <label for="example-password-input" class="form-control-label col-md-5 align-self-center">비밀번호 :</label>
 					        <div class="col-md-7">
 					        	<input class="form-control" type="password" name="userpw"
 								   placeholder="8자이상 특수문자포함"
@@ -46,19 +46,19 @@
 					        </div>
 					    </div>
 					    <div class="form-group col-md-12 form-inline">
-					        <label for="example-password-input" class="form-control-label col-md-5">비밀번호 확인 :</label>
+					        <label for="example-password-input" class="form-control-label col-md-5 align-self-center">비밀번호 확인 :</label>
 					        <div class="col-md-7">
 					        	<input class="form-control" type="password" name="userpwck">
 					        </div>
 					    </div>
 					    <div class="form-group col-md-12 form-inline">
-					        <label for="example-name-input" class="form-control-label col-md-5">이름 :</label>
+					        <label for="example-name-input" class="form-control-label col-md-5 align-self-center">이름 :</label>
 					        <div class="col-md-7">
 					        	<input class="form-control" type="text" name="real_name">
 					        </div>
 					    </div>
 					    <div class="form-group col-md-12 form-inline">
-					        <label for="example-tel-input" class="form-control-label col-md-5">전화번호 :</label>
+					        <label for="example-tel-input" class="form-control-label col-md-5 align-self-center">전화번호 :</label>
 					        <div class="col-md-7">
 					        	<input class="form-control" type="text" name="userphone"
 								id="userphone" maxlength="13" pattern="^01([0|1|6|7|8|9])-([0-9]{3,4})-([0-9]{4})$">
@@ -105,8 +105,7 @@
 				url : '/member/idCheck?userid='+id,
 				type : 'get',
 				success : function (data){
-					parseInt(data);
-
+					console.log(data);
 					if (data == 1){
 						$("#check").text("사용중인 아이디입니다.");
 					}else if (data == 0){

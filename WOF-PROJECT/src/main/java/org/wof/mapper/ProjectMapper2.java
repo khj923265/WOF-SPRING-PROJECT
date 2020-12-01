@@ -6,8 +6,8 @@ import org.wof.domain.*;
 
 public interface ProjectMapper2 {
 
-	public List<ProjectVO> projectList();
-	public int totalProject();
+	public List<ProjectVO> projectList(Standard stand);
+	public int totalProject(Standard stand);
 	public List<ProjectVO> listRecommendProject(PartnersVO vo);
 	public List<ProjectVO> pageWithProject(Standard standard);
 	
@@ -18,7 +18,7 @@ public interface ProjectMapper2 {
 	
 	public int projectStatusUpdate();
 	public List<ProjectVO> locationProject();
-	public ProjectVO projectList2(String proj_id);
+	public ProjectVO projectDetail(String proj_id);
 	
 	//관심프로젝트 등록
 	public int addFollowProject(FollowProjectVO vo);

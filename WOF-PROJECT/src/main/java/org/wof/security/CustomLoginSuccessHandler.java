@@ -27,15 +27,15 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
         });
 
         if (roleNames.contains("ROLE_ADMIN")){
-            httpServletResponse.sendRedirect("member/admin");
+            httpServletResponse.sendRedirect("/member/admin");
             return;
         }
         if (roleNames.contains("ROLE_CLIENT")){
-            httpServletResponse.sendRedirect("member/success/client");
+            httpServletResponse.sendRedirect("/member/success/client");
             return;
         }
         if (roleNames.contains("ROLE_PARTNERS")){
-            httpServletResponse.sendRedirect("member/success/partners");
+            httpServletResponse.sendRedirect("/member/partners/profile_info");
             return;
         }
         if (roleNames.contains("ROLE_USER")){

@@ -21,12 +21,14 @@ public interface PartnersMapper {
 	public List<ProjectVO> applyProject(@Param("member_no") String member_no,
 			@Param("standard") Standard standard);
 	
+	public int applyProjectTotal(Standard standard);
+	
 	public List<ProjectVO> partnersSupport();
 	
 	public List<ProjectVO> dashboardpartnersApplyProject(@Param("member_no") String member_no);
 	
 	public List<PartnersVO> partnersList(
-			@Param("member_no")String member_no, 
+			@Param("member_no")String member_no,
 			@Param("standard") Standard standard);
 	
 	public int getTotalCount(Standard standard);//파트너스 전체 카운트(페이징처리)
@@ -57,6 +59,8 @@ public interface PartnersMapper {
 	@Select("select sysdate from dual")//jUnit test
 	public String getTime();
 	
+	public int applyStateTotal(Standard standard);
+	
 	public List<ProjectVO> applyState(
 			@Param("member_no") String member_no,
 			@Param("standard") Standard standard);
@@ -76,4 +80,6 @@ public interface PartnersMapper {
 	public int applyDelete(@Param("member_no") String[] member_no, @Param("proj_id") String proj_id);
 	
 	public List<MemberVO> appliedPartners(String proj_id);
+	
+	public int appliedpartnersTotal(Standard standard);
 }

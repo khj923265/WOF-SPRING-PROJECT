@@ -163,4 +163,21 @@ public class PartnersServiceImpl implements PartnersService{
 		return partnersMapper.appliedPartners(proj_id);
 	}
 
+	@Override
+	public int applyStateTotal(Standard standard) {
+		
+		return partnersMapper.applyStateTotal(standard);
+	}
+
+	@Override
+	public int appliedpartnersTotal(Standard standard) {
+		
+		return partnersMapper.appliedpartnersTotal(standard);
+	}
+	
+	@Override
+	public int applyProjectTotal(Standard standard) {
+		
+		return partnersMapper.applyProjectTotal(standard);
+	}
 }

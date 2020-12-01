@@ -52,7 +52,7 @@
         </props>
     </property>
 	</bean>
-	
+
 	<!-- MyBatis -->
 	<mybatis-spring:scan base-package="org.wof.mapper" />
 
@@ -71,5 +71,6 @@
 	<context:component-scan base-package="org.wof.task"/>
 	
 	<!-- <task:annotation-driven/> -->
+
 
 </beans>

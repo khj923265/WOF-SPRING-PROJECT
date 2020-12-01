@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.wof.mapper.ProjectAttachMapper">
+
+<insert id="insert">
+	insert into projectattach (uuid, uploadpath, filename, filetype, proj_id)
+	values(#{uuid}, #{uploadPath}, #{fileName}, #{fileType}, #{proj_id})
+</insert>
+
+<delete id="delete">
+delete from projectattach where uuid = #{uuid}
+</delete>
+
+<select id="findByPno" resultType="org.wof.domain.ProjectAttachVO">
+	select * from projectattach where proj_id = #{proj_id}
+</select>
+
+<delete id="deleteAll">
+	delete projectattach where proj_id = #{proj_id}
+</delete>
+
+<select id="checkAuth" resultType="org.wof.domain.ContractTargetVO">
+
+	select contract_write_source, related_proj, contract_write_target, m.member_no
+	from contract c, project p, member m
+	where c.related_proj = p.proj_id and c.contract_write_target and m.member_no = c.contract_write_target
+	and contract_write_target = #{member_no}
+	
+</select>
+</mapper>

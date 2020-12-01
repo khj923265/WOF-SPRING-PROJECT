@@ -41,6 +41,7 @@ public class QnaServiceImpl implements QnaService {
 	@Override
 	public List<QuestionVO> ListService(Standard standard) {
 		
+<<<<<<< HEAD
 		log.info("========= list paging =========");
 		log.info(standard);
 		log.info("=======================");
@@ -61,6 +62,9 @@ public class QnaServiceImpl implements QnaService {
 	//@Transactional
 	@Override
 	public void registerService(QuestionVO quest) {
+=======
+		log.info("��������1:1���Ǣ������� question..." + quest);
+>>>>>>> 853f2004e6122174ee00b08d41fe70ac9879a777
 		
 		log.info("======== register ========" + quest);
 		
@@ -107,6 +111,11 @@ public class QnaServiceImpl implements QnaService {
 	            e.printStackTrace();
 	        }
 		
+<<<<<<< HEAD
+=======
+		//�������� Ȯ�� (���� ����)
+		int questionResult = qnaMapper.Question(quest);
+>>>>>>> 853f2004e6122174ee00b08d41fe70ac9879a777
 		
 		if(quest.getAttachList() == null || quest.getAttachList().size() <= 0) {
 			return;

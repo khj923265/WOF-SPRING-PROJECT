@@ -6,11 +6,22 @@
 
 <select id="applyProject" resultType="org.wof.domain.ProjectVO">
 	<![CDATA[
-		select p.proj_title, p.proj_start_date, p.proj_reqr_skill, 
+	select proj_id, proj_title, proj_start_date, proj_reqr_skill, proj_estimate, proj_reqr_person, proj_work_place
+	from
+	(
+		select rownum rn, p.proj_id, p.proj_title, p.proj_start_date, p.proj_reqr_skill, 
 			p.proj_estimate, p.proj_reqr_person, p.proj_work_place
 		from project p, apply a
 		where p.proj_id = a.proj_id and a.member_no = #{member_no}
+	)
+	where rownum <= #{standard.pageNum} * #{standard.amount}
 	]]>
+</select>
+
+<select id="applyProjectTotal" resultType="int">
+		select count(*)
+		from apply a, project p
+		where p.proj_id = a.proj_id
 </select>
 
 <select id="partnersSupport" resultType="org.wof.domain.ProjectVO">
@@ -33,6 +44,21 @@
 	]]>
 </select>
 
+	<sql id="standard">
+	  <trim prefix="(" suffix=") AND " prefixOverrides="OR">
+	    <foreach item="type" collection="typeArr">
+	      <trim prefix="OR">
+	        <choose>
+	          <when test="keyword != null">
+		        career like '%'||#{standard.keyword}||'%' 
+		        or skill like '%'||#{standard.keyword}||'%' 
+		        or prefered_area like '%'||#{standard.keyword}||'%'
+		      </when>
+		    </choose>
+		  </trim>
+		</foreach>
+	  </trim>
+	</sql>
 
 	<!-- 파트너스 찾기클릭시(파트너스 전체 리스트 불러오기) /*+INDEX_DESC(MEMBER SYS_C004099)*/ -->
 	<select id="partnersList" resultType="org.wof.domain.PartnersVO">
@@ -50,8 +76,12 @@
         on m.MEMBER_NO = p.MEMBER_NO
         left outer join followpartners f
         on p.member_no = f.target_member
-        and f.source_member = #{member_no}
-        where rownum <= #{standard.pageNum} * #{standard.amount}
+        and f.source_member = #{member_no}        
+        where 
+        ]]>
+        <!-- <include refid="standard"></include> -->
+        <![CDATA[
+        rownum <= #{standard.pageNum} * #{standard.amount}
         order by m.LOGIN_DATE desc
         )
         
@@ -60,6 +90,7 @@
 		]]>
 	</select>
 	
+	<!-- 파트너스 찾기 토탈 -->
 	<select id="getTotalCount" resultType="int">
 		select count(*)
 		from member m
@@ -158,9 +189,16 @@
 		member_no, proj_apply_deadline, proj_reqr_person,
 		apply_mem, proj_start_date
 		from project 
-		where member_no = #{member_no})
+		where member_no = #{member_no} 
+		)
 		where rownum <= #{standard.pageNum} * #{standard.amount}
 		]]>
+	</select>
+	
+	<select id="applyStateTotal" resultType="int">
+		select count(*)
+		from apply a, member m
+        where a.member_no = m.member_no
 	</select>
 	
 	<select id="applyDetailProject" resultType="org.wof.domain.ProjectVO">
@@ -181,8 +219,8 @@
 		CAREER, SKILL, PREFERED_AREA, applied_member
 		from
 		(
-select rownum rn, p.member_no, m.userid, substr(p.BIRTHDAY,1,2) as BIRTHDAY,
-			p.CAREER, p.SKILL, p.PREFERED_AREA, ar.member_no as applied_member
+		select rownum rn, p.member_no, m.userid, substr(p.BIRTHDAY,1,2) as BIRTHDAY,
+		p.CAREER, p.SKILL, p.PREFERED_AREA, ar.member_no as applied_member
 		from 
         member m join partners p
         on m.member_no = p.member_no 
@@ -191,6 +229,7 @@ select rownum rn, p.member_no, m.userid, substr(p.BIRTHDAY,1,2) as BIRTHDAY,
         left outer join applyregister ar
         on ar.member_no = p.member_no
 		where a.proj_id = #{proj_id}
+		order by available_date desc
 		)
 		where rownum <= #{standard.pageNum} * #{standard.amount}
 		
@@ -215,6 +254,8 @@ select rownum rn, p.member_no, m.userid, substr(p.BIRTHDAY,1,2) as BIRTHDAY,
 		and proj_id = #{proj_id}
 	</select>
 	
+	
+	<!-- 선택 -->
 	<insert id="applyRegister" parameterType="map">
 		
 		<foreach collection="member_no" item="member_no" index="index"  open="INSERT ALL " separator=" " close="SELECT * FROM DUAL" > 
@@ -224,18 +265,34 @@ select rownum rn, p.member_no, m.userid, substr(p.BIRTHDAY,1,2) as BIRTHDAY,
         </foreach>
 	</insert>
 	
+	
+	<!-- 파트너스 삭제 -->
 	<delete id="applyDelete" parameterType="map">
-	delete from applyregister
-		<foreach collection="member_no" item="member_no" index="index"  separator=" OR " > 
-        where member_no = #{member_no} and proj_id = #{proj_id}
+	delete from applyregister where 
+		<foreach collection="member_no" item="member_no" index="index"  separator=" OR "> 
+        member_no = #{member_no} and proj_id = #{proj_id}
         </foreach>
 	</delete>
 	
+	<!-- 선택한 파트너스 -->
 	<select id="appliedPartners" resultType="org.wof.domain.MemberVO">
 		<![CDATA[
-			select m.member_no, m.userid, m.real_name, m.userphone
+		select member_no, userid, real_name, userphone
+		from
+		(
+			select rownum rn, m.member_no, m.userid, m.real_name, m.userphone
 			from member m, applyregister a
 			where m.member_no = a.member_no and a.proj_id = #{proj_id}
+			and rownum <= (#{pageNum} -1) * #{amount}
+		)	
+		where rn > (#{pageNum} -1) * #{amount}
+	
 		]]>
+	</select>
+	
+	<select id="appliedpartnersTotal" resultType="int">
+		select count(*)
+		from applyregister a, member m
+        where a.member_no = m.member_no
 	</select>
 </mapper>

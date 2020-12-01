@@ -7,30 +7,11 @@
 
 	<!-- Main Content -->
 	<div class="main-content" id="panel">
-	<div class="header pb-8 pt-5 md-8">
-		<div class="container">
-			<div class="header-body">
-				<!-- Card stats -->
-				<div class="row">
-					<div class="col">
-						<a class="btn btn-secondary"
-							href="${pageContext.request.contextPath }/partners/followlist?member_no=${member.member_no }">관심 파트너스 관리</a> 
-							<a class="btn btn-secondary"
-							href="${pageContext.request.contextPath }/partners/recommend?member_no=${member.member_no }">추천 파트너스</a>
-							 <a class="btn btn-secondary"
-							href="${pageContext.request.contextPath}/partners/applystate?member_no=${member.member_no }">파트너스 지원현황</a>
-							<a class="btn btn-secondary"
-							href="${pageContext.request.contextPath}/Partners/selectpartnerslistAction.do">파트너스
-							선택</a>
-						<button type="button" class="btn btn-secondary">계약현황</button>
-						<button type="button" class="btn btn-secondary">계약완료</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+	
+	<!-- Sub menu -->
+	<%@ include file="menu.jsp"%>
 
-	<div class="container mt--7">
+	<div class="container mt-3">
 		<!-- Table -->
 		<div class="row">
 			<div class="col">

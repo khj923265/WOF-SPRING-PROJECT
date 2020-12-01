@@ -111,11 +111,11 @@
 									</thead>
 									<tbody class="list">
 										<c:forEach var="meet" items="${meets}">
-										<tr id="contents">
+										<tr class="contents">
 											<th scope="row">
 												<div class="media align-items-center">
 													<div class="media-body">
-														<span class="name mb-0 text-sm">${meet.meet_type}</span>
+														<span class="name mb-0 text-sm" id="type">${meet.meet_type}</span>
 													</div>
 												</div>
 											</th>
@@ -125,18 +125,18 @@
 											</span></td>
 											<td>
 												<div>
-													<span class="tesk">${meet.meet_contents}</span>
+													<span class="tesk" id="contetns">${meet.meet_contents}</span>
 												</div>
 											</td>
 											<td>
 												<div class="d-flex align-items-center">
-													<span>${meet.meet_datetime}</span>
+													<span id="datetime">${meet.meet_datetime}</span>
 												</div>
 											</td>
 											<td class="text-right">
 												<div>
 													<button type="button" class="btn btn-success">수정하기</button>
-													<button type="button" class="btn btn-danger" id="deleteMeetingBtn" value="${meet.meet_id}">삭제하기</button>
+													<button onclick="deleteClick();" class="btn btn-danger" id="deleteMeetingBtn" value="${meet.meet_id}">삭제하기</button>
 												</div>
 											</td>
 										</tr>
@@ -153,18 +153,21 @@
 		</div>
 	</div>		
 	<!-- footer -->
-		<script type="text/javascript">	
+<script type="text/javascript">	
  	$(function() {
- 		$("#deleteMeetingBtn").click(function() {			
+ 		$("#deleteMeetingBtn").on('click', function() {			
  				var meet_id = $(this).val();
- 				alert("delete click"+ meet_id);
+ 				var $contents = $(this).parents('tr');
+ 				alert("delete click"+ $contents);
  			$.ajax({
  	    	        contentType:'application/json',
  	    	        dataType:'json',
  	    	        url:'/schedule/'+meet_id,
  	    	        type:'DELETE',
  	    	        success:function(resp){
- 	    	            alert('삭제 완료되었습니다.');
+ 	    	           alert('삭제 완료되었습니다.');
+ 	    	          $contents.remove();
+ 	    	           	
  	    	        },
  	    	        error:function(){
  	    	            alert('what is error?');

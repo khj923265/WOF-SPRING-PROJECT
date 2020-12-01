@@ -49,7 +49,7 @@
 						class="nav-link">프로젝트 등록</a></li>
 					<li class="nav-item"><a href="${pageContext.request.contextPath }/project/list" 
 						class="nav-link">프로젝트 찾기</a></li>
-					<li class="nav-item"><a	href="/kosta202-project/project/project_map_manage.jsp"
+					<li class="nav-item"><a	href="/map/project_map_manage"
 						class="nav-link">프로젝트 맵</a></li>
 					<li class="nav-item"><a href="${pageContext.request.contextPath }/partners/list?member_no=${member.member_no}"
 						class="nav-link">파트너스 찾기</a></li>
@@ -268,14 +268,14 @@
 							</div>
 							<c:if test="${member.auth == 'ROLE_CLIENT' }">
 								<a
-									href="${pageContext.request.contextPath }/client/dashboard_client.jsp"
+									href="${pageContext.request.contextPath }/client/dashboard_client?member_no=${member.member_no}"
 									class="dropdown-item"> <i class="ni ni-single-02"></i> <span>My
 										dashboard</span>
 								</a>
 							</c:if>
 							<c:if test="${member.auth == 'ROLE_PARTNERS' }">
 								<a
-									href="${pageContext.request.contextPath }/partners/dashboard_partners.jsp"
+									href="${pageContext.request.contextPath }/partners/dashboard_partners?member_no=${member.member_no}"
 									class="dropdown-item"> <i class="ni ni-single-02"></i> <span>My
 										dashboard</span>
 								</a>
