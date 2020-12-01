@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.wof.domain.CommunityAttachVO;
 import org.wof.domain.PageDTO;
 import org.wof.domain.PointVO;
 import org.wof.domain.QuestAttachVO;
@@ -55,14 +54,12 @@ public class QnaController {
 	    }
 	    
 	    @GetMapping("/question-register")
-	    //@Secured({"ROLE_PARTNERS"})
 	    public void questionRegister(){
 	    	
 	    }
 	    
 	    @PostMapping("/question-register")
-	    //@PreAuthorize("hasRole('ROLE_PARTNERS','ROLE_CLIENTS')")
-	    public String questionRegister(QuestionVO quest, RedirectAttributes rttr){
+	    public String questionRegister(QuestionVO quest, Model model, RedirectAttributes rttr){
 		 
 	    	log.info("================ 문의사항 내역 ================");
 	    	log.info("question-register" + quest);
@@ -72,31 +69,41 @@ public class QnaController {
 			}   	
 	    	log.info("==========================================");
 	    	
-	    	service.registerService(quest);
+	    	
+	    	
+	    	  try {
+	    		  
+	    		  service.registerService(quest); //  quest(메일관련 정보)를 sendMail에 저장함
+	              model.addAttribute("message", "이메일이 발송되었습니다."); // 이메일이 발송되었다는 메시지를 출력시킨다.
+	   
+	          } catch (Exception e) {
+	              e.printStackTrace();
+	              model.addAttribute("message", "이메일 발송 실패..."); // 이메일 발송이 실패되었다는 메시지를 출력
+	          }
 	    	
 	    	rttr.addFlashAttribute("result", quest.getQuest_no());
+	    	
 	    	
 	    	return "redirect:/qna/question-list";
 	    	
 	    }
 	    
-	    @GetMapping({"/question_get"})
+	    @GetMapping({"/question-get"})
 		public void get(@RequestParam("quest_no") Long quest_no, @ModelAttribute("standard") Standard standard, Model model) {
 			
-			log.info("/question_get");
+			log.info("/question-get");
 			
 			model.addAttribute("quest", service.getService(quest_no));
 		}
 	    
 	   
-		@PostMapping("/question_remove")
+		@PostMapping("/question-remove")
 		//@PreAuthorize("principal.username == #writer")
-	    public String questionRemove(@RequestParam("quest_id") Long quest_no, Standard standard, RedirectAttributes rttr, String writer) {
+	    public String questionRemove(@RequestParam("quest_no") Long quest_no, Standard standard, RedirectAttributes rttr, String writer) {
 			log.info("remove" + quest_no);
 			
 			List<QuestAttachVO> attachList = service.getAttachListService(quest_no);
 					
-			
 			if(service.removeService(quest_no)) {
 				
 				deleteFiles(attachList);

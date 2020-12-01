@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.wof.domain.MemberVO;
 import org.wof.domain.PointSearch;
 import org.wof.domain.PointVO;
+import org.wof.domain.ProjectVO;
 import org.wof.domain.Standard;
 import org.wof.mapper.PointMapper;
 
@@ -49,7 +50,7 @@ public class PointServiceImpl implements PointService {
 		//point_balance
 		//String userId = member.getMember_no();
 		
-		pointMapper.pointBalance(point);
+		int balance = pointMapper.pointBalance(point);
 		
 		point.setPoint_balance(member.getTotal_point());
 		
@@ -87,11 +88,47 @@ public class PointServiceImpl implements PointService {
 		return withdrawResult;
 	}
 	
-	/*@Override
-	public int getPointTotalService(MemberVO member) {
+	
+
+	@Override
+	public int PaymentFromService(PointVO point, MemberVO member, ProjectVO project) {
+	
 		
-		return pointMapper.getPointTotal(member);
-	}*/
+	if(project.getProj_status() == 2){
+		//포인트 결제
+		pointMapper.PaymentFrom(point);
+		//point_type => 0:충전, 1:인출, "2:결제", 3:입금
+		point.setPoint_type(2);
+	}
+	
+	log.info("포인트  결제" + point);
+		//point_balance
+		
+		//point.setPoint_balance(member.getTotal_point());
+		
+		//결제여부 확인 (결젠 내역)
+		int paymentResult = pointMapper.PaymentList(point);
+		
+		return paymentResult;
+	}
+
+	@Override
+	public int PaymentToService(PointVO point, MemberVO member) {
+		
+		
+		pointMapper.PaymentTo(point);
+		//point_type => 0:충전, "1:인출", 2:결제, "3:입금"
+		point.setPoint_type(3);
+		
+		//point_balance
+		
+		//point.setPoint_balance(member.getTotal_point());
+		
+		//결제여부 확인 (결젠 내역)
+		int paymentResult = pointMapper.PaymentList(point);
+		
+		return paymentResult;
+	}
 	
 	
 	@Override
@@ -107,11 +144,6 @@ public class PointServiceImpl implements PointService {
 	}
 	
 	@Override
-	public int PaymentService(PointVO point){
-		return 1;
-	}
-
-	@Override
 	public String pwCheckService(MemberVO member) {
 		
 		String data = "0";
@@ -126,6 +158,7 @@ public class PointServiceImpl implements PointService {
 		
 		return data;
 	}
+
 
 
 
