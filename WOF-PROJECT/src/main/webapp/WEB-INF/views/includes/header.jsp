@@ -124,7 +124,7 @@
 						href="${pageContext.request.contextPath }/partners/list?member_no=${member.member_no}"><span
 							class="nav-link-text">파트너스 찾기</span></a></li>
 					<li class="nav-item"><a class="nav-link active"
-						href="${pageContext.request.contextPath }/project/project_map_manage.jsp">
+						href="${pageContext.request.contextPath }/map/project_map_manage">
 							<span class="nav-link-text">프로젝트 맵</span>
 					</a></li>
 					<li class="nav-item"><a class="nav-link" href="#"><span
@@ -339,14 +339,14 @@
 							</div>
 							<c:if test="${member.auth == 'ROLE_CLIENT' }">
 								<a
-									href="${pageContext.request.contextPath }/client/dashboard_client.jsp"
+									href="${pageContext.request.contextPath }/client/dashboard_client?member_no=${member.member_no}"
 									class="dropdown-item"> <i class="ni ni-single-02"></i> <span>My
 										dashboard</span>
 								</a>
 							</c:if>
 							<c:if test="${member.auth == 'ROLE_PARTNERS' }">
 								<a
-									href="${pageContext.request.contextPath }/partners/dashboard_partners.jsp"
+									href="${pageContext.request.contextPath }/partners/dashboard_partners?member_no=${member.member_no}"
 									class="dropdown-item"> <i class="ni ni-single-02"></i> <span>My
 										dashboard</span>
 								</a>

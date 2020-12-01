@@ -10,29 +10,9 @@
 	<!-- Main Content -->
 	<!-- top start-->
 	<div class="main-content" id="panel">
-
-	<div class="header pb-4 pt-5 md-8">
-		<div class="container">
-			<div class="header-body">
-				<!-- Card stats -->
-				<div class="row">
-					<div class="col">
-						<a class="btn btn-secondary"
-							href="${pageContext.request.contextPath }/partners/followlist?member_no=${member.member_no }">관심 파트너스 관리</a> 
-							<a class="btn btn-secondary"
-							href="${pageContext.request.contextPath }/partners/recommend?member_no=${member.member_no }">추천 파트너스</a>
-							 <a class="btn btn-secondary"
-							href="${pageContext.request.contextPath}/partners/applystate?member_no=${member.member_no }">파트너스 지원현황</a>
-							<a class="btn btn-secondary"
-							href="${pageContext.request.contextPath}/Partners/selectpartnerslistAction.do">파트너스
-							선택</a>
-						<button type="button" class="btn btn-secondary">계약현황</button>
-						<button type="button" class="btn btn-secondary">계약완료</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+	
+	<!-- Sub menu -->
+	<%@ include file="menu.jsp"%>
 
 		<!--제목 및 내용 -->
 		<div class="container">
@@ -82,13 +62,15 @@
 				<!-- 파트너스리스트 -->
 				<div class="row">
 				<div class="col-sm-12">
+					
+					<button id="allCheck" class="btn btn-default mb-3">전체선택</button>
+					<button id="chkBtn" class="btn btn-default mb-3">선택한 파트너스 삭제</button>
 				
 					<form id="checkForm" action="applyDelete" method="post">
-					<input type="submit" id="chkBtn">
 					<input type="hidden" name="proj_id" value="${Project.proj_id }">
 					<c:forEach var="Member" items="${Member }">
 						<div class="row shadow p-1 mb-3 bg-white rounded ">
-						<div class="col-sm-1 text-center">
+						<div class="col-sm-1 my-auto">
 						<div class="custom-control custom-checkbox">
 							<input type="checkbox" name="member_no" value="${Member.member_no }" style="width: 25px; height: 25px;">
 						</div>
@@ -134,22 +116,8 @@
 								</span>
 							</div> --%>
 
-							<div class="col-sm-4">
-								<div class="progress-wrapper mt-4">
-									<div class="progress-info">
-										<div class="progress-label">
-											<span>현재 프로젝트 진행도</span>
-										</div>
-										<div class="progress-percentage">
-											<span>60%</span>
-										</div>
-									</div>
-									<div class="progress">
-										<div class="progress-bar bg-info" role="progressbar"
-											aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-											style="width: 60%;"></div>
-									</div>
-								</div>
+							<div class="col-sm-4 my-auto">
+								<button type="button" class="btn btn-outline-default">계약서작성</button>
 							</div>
 
 						</div>
@@ -186,7 +154,7 @@
 					  </ul>
 					</nav>
 					
-					<form id='actionForm' action="/partners/applydetail" method="get">
+					<form id='actionForm' action="/partners/appliedpartners" method="get">
 						<input type="hidden" name='proj_id' value='${Project.proj_id}'>
 						<input type="hidden" name='member_no' value='${Project.member_no}'>
 						<input type="hidden" name='pageNum' value = '${pageMaker.standard.pageNum}'>
@@ -207,6 +175,10 @@
 		<!-- toastr js 라이브러리 -->
 		<script type="text/javascript"
 			src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+		
+		<!-- SweetAlert2 library -->
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+			
 			
 		<!-- Hakgeun js -->
 		<script type="text/javascript">
@@ -226,21 +198,56 @@
 				var checkForm = $("#checkForm");
 				var checkArray = [];
 				
-				$("input[name='member_no']:checked").each(function() { 
+				
+				//전체선택 버튼 - 기존에 선택된 버튼이 있으면 해제되고 한번 더 누르면 전체선택됨 - 수정해야함.
+				$("#allCheck").click(function(){
+					if($("input[name='member_no']").is(':checked')){
+						$("input[name='member_no']").prop("checked", false);
+					}else{
+						$("input[name='member_no']").prop("checked", true);
+					}
+				})
+				
+				//체크박스 클릭시 alert message - 전체선택후 해제시 선택메시지만 뜸. 수정해야함
+				$("input[name='member_no']").click(function(){
+					if($("input[name='member_no']").is(":checked") == true){
+						toastr.success("파트너스가 선택되었습니다.");						
+					}else{
+						toastr.info("파트너스 선택이 해제되었습니다.");
+					}					
+				})
+
+				//submit 버튼
+				$("#chkBtn").click(function() {
+					if($("input[name='member_no']").is(":checked") == true){
 					
-					checkArray.push($(this).val());
-					
-					$("#chkBtn").click(function() {
+						$("input[name='member_no']:checked").each(function() { 
 						
-						alert("삭제되었습니다.");
-						checkForm.submit();
+							checkArray.push($(this).val());						
 						
-					});
+						});
+						Swal.fire({
+							  title: '파트너스가 삭제되었습니다!',
+							  text: "확인버튼을 누르시면 삭제가 완료됩니다.",
+							  icon: 'success',
+							  showCancelButton: true,
+							  confirmButtonColor: '#11cdef',
+							  cancelButtonColor: '#172b4d',
+							  confirmButtonText: '확인',
+							  cancelButtonText: '취소'
+							}).then((result) => {
+							  if (result.isConfirmed) {
+								  checkForm.submit();
+							  }
+							})
+						
+					}else{
+						toastr.error("선택된 파트너스가 없습니다. 파트너스를 선택해주세요!");
+						return false;
+					}
 					
 				});
 				
-
-
 			});
 		</script>
 </body>

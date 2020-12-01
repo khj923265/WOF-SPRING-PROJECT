@@ -18,31 +18,11 @@
 	<!-- Main Content -->
 	<!-- top start-->
 	<div class="main-content" id="panel">
+	
+	<!-- Sub menu -->
+	<%@ include file="menu.jsp"%>
 
-	<div class="header pb-4 pt-5 md-8">
-		<div class="container">
-			<div class="header-body">
-				<!-- Card stats -->
-				<div class="row">
-					<div class="col">
-						<a class="btn btn-secondary"
-							href="${pageContext.request.contextPath }/partners/followlist?member_no=${member.member_no }">관심 파트너스 관리</a> 
-							<a class="btn btn-secondary"
-							href="${pageContext.request.contextPath }/partners/recommend?member_no=${member.member_no }">추천 파트너스</a>
-							 <a class="btn btn-secondary"
-							href="${pageContext.request.contextPath}/partners/applystate?member_no=${member.member_no }">파트너스 지원현황</a>
-							<a class="btn btn-secondary"
-							href="${pageContext.request.contextPath}/Partners/selectpartnerslistAction.do">파트너스
-							선택</a>
-						<button type="button" class="btn btn-secondary">계약현황</button>
-						<button type="button" class="btn btn-secondary">계약완료</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-		<!--제목 및 내용 -->
+	<!--제목 및 내용 -->
 		<div class="container">
 			<!-- 제목 -->
 			<div class="row mt-3">
@@ -52,14 +32,17 @@
 				<div class="col-lg-3 col-3"></div>
 				<div class="col-lg-6 col-7">
 					<form class="navbar-search navbar-search-light form-inline mr-sm-3"
-						id="navbar-search-main">
+					id="navbar-search-main" action="partners/list" method="get">
 						<div class="form-group mb-0">
 							<div
 								class="input-group input-group-alternative input-group-merge mr-2">
 								<div class="input-group-prepend">
 									<span class="input-group-text"><i class="fas fa-search"></i></span>
 								</div>
-								<input class="form-control" placeholder="Search" type="text">
+								<input type="text" name="keyword" class="form-control" placeholder="Search" >
+								<input type="hidden" name='member_no' value='${member.member_no}'>
+								<input type="hidden" name='pageNum' value = '${pageMaker.standard.pageNum}'>
+								<input type="hidden" name='amount' value = '${pageMaker.standard.amount}'>
 							</div>
 							<button type="button" class="btn btn-secondary">Search</button>
 						</div>
@@ -70,10 +53,11 @@
 			<!-- 체크박스 및 파트너스 리스트 -->
 			<div class="row">
 				<!-- 체크박스 -->
-				<div class="col-sm-3">
-					<div class="row mr-2 bg-white">
-						<div class="col-sm-12">
-							<h3 class="mt-3 p-1">전문분야</h3>
+				<div class="col-sm-3"> <!--position-absolute id="followquick" -->
+					<div class="row">
+						<div class="col-sm-12" >
+						<div class="pl-3 shadow-sm rounded bg-white position-relative" id="followquick">
+							<h3 class="p-1">전문분야</h3>
 							<div class="custom-control custom-checkbox">
 								<input type="checkbox" class="custom-control-input"
 									id="customCheck1"> <label class="custom-control-label"
@@ -110,12 +94,14 @@
 									id="customCheck7"> <label class="custom-control-label"
 									for="customCheck7">6년차 이상</label>
 							</div>
-							`
+						</div>
 						</div>
 					</div>
+				
 				</div>
 
 				<!-- 파트너스리스트 -->
+				
 				<div class="col-sm-9">
 				
 				<input type="hidden" value="${member.member_no }" id="source_member">
@@ -231,6 +217,7 @@
 					</form>
 
 				</div>
+				
 			</div>
 		</div>
 
@@ -245,6 +232,14 @@
 		<!-- Hakgeun js -->
 		<script type="text/javascript">
 			$(function() {
+				$(window).scroll(function(){
+					var scrollTop = $(document).scrollTop();
+					if (scrollTop < 0) {
+					 scrollTop = 0;
+					}
+					$("#followquick").stop();
+					$("#followquick").animate( { "top" : scrollTop });
+					});
 				
 				var actionForm = $("#actionForm");
 				
@@ -256,6 +251,7 @@
 					actionForm.find("input[name='pageNum']").val($(this).attr("href"));
 					actionForm.submit();
 				});
+				 
 				
 				$(".ni-favourite-28").click(function() {
 					var target_member = $(this).find("input").val();
@@ -343,7 +339,7 @@
 					toastr.info("관심파트너스를 추가하시려면 로그인 해주세요.");
 				}
 		
-				})//end click				
+				})//end click
 			})
 		</script>
 </body>

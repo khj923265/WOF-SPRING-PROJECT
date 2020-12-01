@@ -11,4 +11,8 @@ public interface ClientService {
 	public List<ProjectVO> dashboardclientProject(String member_no);
 	
 	public List<PartnersVO> dashboardFallowPartners(String member_no);
+	
+	public List<ProjectVO> dashboardRegisterProject(String member_no);
+	
+	public List<PartnersVO> dashboardRecommend(String member_no);
 }
