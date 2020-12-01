@@ -41,7 +41,6 @@ public class QnaServiceImpl implements QnaService {
 	@Override
 	public List<QuestionVO> ListService(Standard standard) {
 		
-<<<<<<< HEAD
 		log.info("========= list paging =========");
 		log.info(standard);
 		log.info("=======================");
@@ -62,10 +61,7 @@ public class QnaServiceImpl implements QnaService {
 	//@Transactional
 	@Override
 	public void registerService(QuestionVO quest) {
-=======
-		log.info("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1:1ï¿½ï¿½ï¿½Ç¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ question..." + quest);
->>>>>>> 853f2004e6122174ee00b08d41fe70ac9879a777
-		
+		log.info("å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™1:1å ì™ì˜™å ì‹¤ï¿½å ì™ì˜™å ì™ì˜™å ì™ì˜™å ï¿½ question..." + quest);
 		log.info("======== register ========" + quest);
 		
 		qnaMapper.insertSelectKey(quest);
@@ -76,36 +72,36 @@ public class QnaServiceImpl implements QnaService {
 		
 		
 		 try {
-	            // ÀÌ¸ŞÀÏ °´Ã¼
+	            // ì´ë©”ì¼ ê°ì²´
 	            MimeMessage msg = mailSender.createMimeMessage();
 	 
-	            // ¹Ş´Â »ç¶÷À» ¼³Á¤ (¼ö½ÅÀÚ, ¹Ş´Â»ç¶÷ÀÇ ÀÌ¸ŞÀÏ ÁÖ¼Ò °´Ã¼¸¦ »ı¼ºÇØ¼­ ¼ö½ÅÀÚ ÀÌ¸ŞÀÏÁÖ¼Ò¸¦ ´ãÀ½)
+	            // ë°›ëŠ” ì‚¬ëŒì„ ì„¤ì • (ìˆ˜ì‹ ì, ë°›ëŠ”ì‚¬ëŒì˜ ì´ë©”ì¼ ì£¼ì†Œ ê°ì²´ë¥¼ ìƒì„±í•´ì„œ ìˆ˜ì‹ ì ì´ë©”ì¼ì£¼ì†Œë¥¼ ë‹´ìŒ)
 	            msg.addRecipient(RecipientType.TO, new InternetAddress(quest.getReceiveMail()));
 	 
 	            /*
-	             * createMimeMessage() : MimeMessage°´Ã¼¸¦ »ı¼º½ÃÅ´ (ÀÌ°ÍÀ» ÀÌ¿ëÇØ¼­ ¸Ş½ÃÁö¸¦ ±¸¼ºÇÑ µÚ ¸ŞÀÏ ¹ß¼Û)
-	             * addRecipient() : ¸Ş½ÃÁöÀÇ ¹ß½ÅÀÚ¸¦ ¼³Á¤ InternetAddress() : ÀÌ¸ŞÀÏ ÁÖ¼Ò getReceiveMail() :
-	             * ¼ö½ÅÀÚ ÀÌ¸ŞÀÏ ÁÖ¼Ò
+	             * createMimeMessage() : MimeMessageê°ì²´ë¥¼ ìƒì„±ì‹œí‚´ (ì´ê²ƒì„ ì´ìš©í•´ì„œ ë©”ì‹œì§€ë¥¼ êµ¬ì„±í•œ ë’¤ ë©”ì¼ ë°œì†¡)
+	             * addRecipient() : ë©”ì‹œì§€ì˜ ë°œì‹ ìë¥¼ ì„¤ì • InternetAddress() : ì´ë©”ì¼ ì£¼ì†Œ getReceiveMail() :
+	             * ìˆ˜ì‹ ì ì´ë©”ì¼ ì£¼ì†Œ
 	             */
 	 
-	            // º¸³»´Â »ç¶÷(ÀÌ¸ŞÀÏÁÖ¼Ò+ÀÌ¸§)
-	            // (¹ß½ÅÀÚ, º¸³»´Â »ç¶÷ÀÇ ÀÌ¸ŞÀÏ ÁÖ¼Ò¿Í ÀÌ¸§À» ´ãÀ½)
-	            // ÀÌ¸ŞÀÏ ¹ß½ÅÀÚ
+	            // ë³´ë‚´ëŠ” ì‚¬ëŒ(ì´ë©”ì¼ì£¼ì†Œ+ì´ë¦„)
+	            // (ë°œì‹ ì, ë³´ë‚´ëŠ” ì‚¬ëŒì˜ ì´ë©”ì¼ ì£¼ì†Œì™€ ì´ë¦„ì„ ë‹´ìŒ)
+	            // ì´ë©”ì¼ ë°œì‹ ì
 	            msg.addFrom(new InternetAddress[] { new InternetAddress(quest.getSenderMail(), quest.getQuest_writer()) });
 	 
-	            // ÀÌ¸ŞÀÏ Á¦¸ñ (ÀÎÄÚµùÀ» ÇØ¾ß ÇÑ±ÛÀÌ ±úÁöÁö ¾ÊÀ½)
+	            // ì´ë©”ì¼ ì œëª© (ì¸ì½”ë”©ì„ í•´ì•¼ í•œê¸€ì´ ê¹¨ì§€ì§€ ì•ŠìŒ)
 	            msg.setSubject(quest.getQuest_title(), "utf-8");
-	            // ÀÌ¸ŞÀÏ º»¹® (ÀÎÄÚµùÀ» ÇØ¾ß ÇÑ±ÛÀÌ ±úÁöÁö ¾ÊÀ½)
+	            // ì´ë©”ì¼ ë³¸ë¬¸ (ì¸ì½”ë”©ì„ í•´ì•¼ í•œê¸€ì´ ê¹¨ì§€ì§€ ì•ŠìŒ)
 	            msg.setText(quest.getQuest_contents(), "utf-8");
 	 
-//	            html·Î º¸³¾ °æ¿ì            
+//	            htmlë¡œ ë³´ë‚¼ ê²½ìš°            
 //	            MimeMessage message = mailSender.createMimeMessage();
 //	            MimeMessageHelper helper 
 //	            = new MimeMessageHelper(message, true);
 //	            helper.setTo("test@host.com");
 //	            helper.setText("<html><body><img src='cid:identifier1234'></body></html>", true);
 	 
-	            // ÀÌ¸ŞÀÏ º¸³»±â
+	            // ì´ë©”ì¼ ë³´ë‚´ê¸°
 	            mailSender.send(msg);
 	        } catch (Exception e) {
 	            e.printStackTrace();
@@ -113,7 +109,7 @@ public class QnaServiceImpl implements QnaService {
 		
 <<<<<<< HEAD
 =======
-		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
+		//å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™ í™•å ì™ì˜™ (å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™)
 		int questionResult = qnaMapper.Question(quest);
 >>>>>>> 853f2004e6122174ee00b08d41fe70ac9879a777
 		
@@ -151,7 +147,7 @@ public class QnaServiceImpl implements QnaService {
 	@Override
 	public List<QuestAttachVO> getAttachListService(Long quest_no) {
 		
-			log.info("====ÆÄÀÏ ¾÷·Îµå ====" + quest_no);
+			log.info("====íŒŒì¼ ì—…ë¡œë“œ ====" + quest_no);
 			
 		return attachMapper.findByQuest_no(quest_no);
 	}

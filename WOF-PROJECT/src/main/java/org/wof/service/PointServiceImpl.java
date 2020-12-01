@@ -52,6 +52,8 @@ public class PointServiceImpl implements PointService {
 		
 		int balance = pointMapper.pointBalance(point);
 		
+		int sum = balance+point.getPoint_amount()
+		
 		point.setPoint_balance(member.getTotal_point());
 		
 		
