@@ -26,10 +26,15 @@
         <security:access-denied-handler ref="customeAccessDenied"/>
         <security:form-login login-page="/member/customlogin" authentication-success-handler-ref="customLoginSuccess"
                              username-parameter="userid" password-parameter="userpw" login-processing-url="/login"/>
-        <security:logout logout-url="/customlogout" invalidate-session="true"
+        <security:logout logout-url="/customlogout" logout-success-url="/member/customlogin" invalidate-session="true"
                          delete-cookies="remember-me,JSESSION_ID"/>
         <!--       자동로그인 토큰 설정-->
         <security:remember-me data-source-ref="dataSource" token-validity-seconds="604800"/>
+
+<!--        <security:session-management invalid-session-url="/">-->
+<!--            &lt;!&ndash; 동일 ID의 세션 최대수가 한 개, 그 이상일 경우는 기존 세션 무효화 &ndash;&gt;-->
+<!--            <security:concurrency-control max-sessions="1" error-if-maximum-exceeded="false" />-->
+<!--        </security:session-management>-->
     </security:http>
 
 

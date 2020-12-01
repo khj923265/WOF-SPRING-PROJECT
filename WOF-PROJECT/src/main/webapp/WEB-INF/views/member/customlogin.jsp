@@ -2,7 +2,6 @@
          pageEncoding="UTF-8"%>
 <!-- Header & Menu -->
     <%@ include file="../includes/header.jsp" %>
-
 <!-- Main content -->
 	<div class="main-content" id="panel">
 		<div class="header bg-gradient-primary pt-5 pb-3">
@@ -55,13 +54,17 @@
                   <input type="button" class="btn btn-primary my-4" onclick="check()" value="로그인">
                 </div>
               </form>
+                <div class="text-center">
+                  <a class="center" href="https://kauth.kakao.com/oauth/authorize?client_id=99f3b410c68833a20809dc9bf060d24e&redirect_uri=http://localhost:8081/member/kakaologin&response_type=code"><img src="/resources/img/kakao_login_button.png"></a>
+                </div>
             </div>
           </div>
           <div class="row mt-3">
-            <div class="col-6">
-              <a href="#" class="text-light"><small>아이디/비밀번호 찾기(coomingsoon)</small></a>
+            <div class="col-8">
+                <a type="button" class="text-light" id="targetFindIdForm" data-toggle="modal" data-target="#FiedIdForm"><small>아이디/</small></a>
+                <a type="button" class="text-light" id="targetFindPwForm" data-toggle="modal" data-target="#FiedPwForm"><small>비밀번호 찾기</small></a>
             </div>
-            <div class="col-6 text-right">
+            <div class="col-4 text-right">
               <a href="signup" class="text-light"><small>회원가입</small></a>
             </div>
           </div>
@@ -69,6 +72,11 @@
       </div>
     </div>
   </div>
+<!-- Footer -->
+
+<%@ include file="./find_id_form.jsp" %>
+<%@ include file="./find_pw_form.jsp" %>
+<%@ include file="../includes/footer.jsp" %>
 <script type="text/javascript">
     function check() {
         var id = $('#userid').val();
@@ -81,7 +89,7 @@
             url : '/member/loginIdCheck?userid='+id,
             type : 'get',
             success : function (data){
-                parseInt(data);
+                console.log(data);
                 if (data == 1){
                     alert("탈퇴된 회원입니다.");
                     return false;
@@ -90,7 +98,14 @@
                     return false;
                 }else if (data == 3){
                     alert("아이디가 없습니다.");
-                }else {
+                    return false;
+                }else if (data == 4){
+                    alert("카카오로 로그안하세요.");
+                    return false;
+                }else if (data == 6){
+                    alert("비밀번호를 확인하세요");
+                    return false;
+                } else{
                     document.login.submit();
                 }
             },error:function(request,status,error){
@@ -106,8 +121,102 @@
             check();
         }
     }
+    //핸드폰 - 자동 생성
+    var autoHypenPhone = function(str){
+        str = str.replace(/[^0-9]/g, '');
+        var tmp = '';
+        if( str.length < 4){
+            return str;
+        }else if(str.length < 7){
+            tmp += str.substr(0, 3);
+            tmp += '-';
+            tmp += str.substr(3);
+            return tmp;
+        }else if(str.length < 11){
+            tmp += str.substr(0, 3);
+            tmp += '-';
+            tmp += str.substr(3, 3);
+            tmp += '-';
+            tmp += str.substr(6);
+            return tmp;
+        }else{
+            tmp += str.substr(0, 3);
+            tmp += '-';
+            tmp += str.substr(3, 4);
+            tmp += '-';
+            tmp += str.substr(7);
+            return tmp;
+        }
+
+        return str;
+    }
+
+    var phoneNum = document.getElementById('userphone');
+
+    phoneNum.onkeyup = function(){
+        this.value = autoHypenPhone( this.value ) ;
+    }
+    var phoneNumPW = document.getElementById('userphonePW');
+
+    phoneNumPW.onkeyup = function(){
+        this.value = autoHypenPhone( this.value ) ;
+    }
+
+    function findIdForm(){
+        var memberVO = {
+            "real_name":$('#real_name').val(),
+            "userphone":$('#userphone').val()
+        };
+        $.ajax({
+            url: '/member/findIdForm',
+            type: 'POST',
+            datatype: 'json',
+            data: JSON.stringify(memberVO),
+            contentType : 'application/json',
+            success: function(data) {
+                console.log(data)
+                if (data.userid=="anonymousUser"){
+                    alert("이름 or 번호를 확인하세요.");
+                }else {
+                alert(data.userid+" 입니다.");
+                }
+            },
+            error: function() {
+                alert('error!');
+            }
+
+        });
+    }
+
+    function findPwForm(){
+        var memberVO = {
+            "userid":$('#useridPW').val(),
+            "real_name":$('#real_namePW').val(),
+            "userphone":$('#userphonePW').val()
+        };
+        $.ajax({
+            url: '/member/findPwForm',
+            type: 'POST',
+            datatype: 'json',
+            data: JSON.stringify(memberVO),
+            contentType : 'application/json',
+            success: function(data) {
+                console.log(data)
+                if (data.userpw == "anonymousUser"){
+                    alert("아이디 or 이름 or 번호를 확인하세요.");
+                }else {
+                    alert(data.userpw+" 입니다." +
+                        "로그인 후 반드시 비밀번호를 변경하세요");
+                }
+            },
+            error: function() {
+                alert('error!');
+            }
+
+        });
+    }
+
+
+
+
 </script>
-	<!-- Footer -->
-    <%@ include file="../includes/footer.jsp" %>
-</body>
-</html>
