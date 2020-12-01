@@ -79,6 +79,11 @@ public class ProjectServiceImpl2 implements ProjectService2 {
 	}
 	
 	@Override
+	public int updateMeeting(MeetVO vo) {
+		return projectMapper2.updateMeeting(vo);
+	}
+	
+	@Override
 	public int totalList(Standard stand) {
 		return projectMapper2.totalProject(stand);
 	}
@@ -116,5 +121,7 @@ public class ProjectServiceImpl2 implements ProjectService2 {
 	      }
 	       mailSender.send(message);
 	}
+
+
 
 }

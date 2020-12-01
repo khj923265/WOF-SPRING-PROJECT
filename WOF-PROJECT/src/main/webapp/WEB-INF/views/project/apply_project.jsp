@@ -16,7 +16,7 @@
 			<div class="col">
 				<div class="card shadow">
 					<div class="card-header border-0">
-						<h3 class="mb-0">관심 프로젝트 목록</h3>
+						<h3 class="mb-0">지원한 프로젝트 목록</h3>
 					</div>
 
 					<div class="table-responsive">
@@ -36,13 +36,16 @@
 							<tbody>
 								<c:forEach var="follow" items="${follows}">
 									<tr>
-										<td><a href="#">${follow.proj_apply_deadline}</a></td>
-										<td>${follow.proj_start_date }</td>
-										<td>${follow.proj_work_place }</td>
+										<td><a href="#">${follow.proj_title}</a></td>
+										<td>${follow.proj_apply_deadline}</td>
+										<td>${follow.proj_start_date}</td>
+										<td>${follow.proj_work_place}</td>
 										<td>${follow.proj_work_place}</td>
 										<td>${follow.proj_career}</td>
 										<td>${follow.skill}</td>
 										<td>${follow.proj_estimate}</td>
+										<td><a class="btn btn-danger" ref="${pageContext.request.contextPath}/project/recommend?member_no=${member.member_no}">지원한 프로젝트</a>
+										</td>
 									</tr>
 								</c:forEach>
 

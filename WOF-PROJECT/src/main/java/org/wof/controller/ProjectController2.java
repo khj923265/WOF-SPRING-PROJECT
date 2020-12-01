@@ -27,15 +27,6 @@ public class ProjectController2 {
 	private ProjectService2 projectService2;
 	private MemberMapper memberMapper;
 	private ProjectMapper2 projectMapper2;
-
-/*	@GetMapping("recommend_list")
-	public String projectRecommendList(Principal principal, Standard standard, Model model){
-		log.info("recommend List 실행");
-		String related_member = memberMapper.memberNo(principal.getName());
-		PartnersVO vo = memberMapper.partnersInfo(related_member);
-		model.addAttribute("projects", projectService2.listRecommendProject(vo));
-		return "project/project_recommend_list";
-	}*/
 	
 	@GetMapping("recommend")
 	public void projectRecommendList(Principal principal, Standard stand, Model model){
@@ -53,6 +44,16 @@ public class ProjectController2 {
 		log.info("follow List 실행");
 		String related_member = memberMapper.memberNo(principal.getName());
 		model.addAttribute("follow", projectService2.listFollowProject(related_member));		
+	}
+	
+	@GetMapping("apply_project")
+	public void projectApplyList(Principal principal, Standard standard, Model model, HttpServletRequest request){
+		log.info("apply project list 실행");
+		HttpSession session = request.getSession();
+		String related_member = memberMapper.memberNo(principal.getName());
+		PartnersVO vo = memberMapper.partnersInfo(related_member);
+		session.setAttribute("partners", vo);
+		//model.addAttribute("follow", projectService2.listFollowProject(related_member));		
 	}
 	
 	@GetMapping("meeting")

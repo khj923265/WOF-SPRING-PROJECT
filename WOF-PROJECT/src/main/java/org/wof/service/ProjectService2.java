@@ -22,5 +22,6 @@ public interface ProjectService2 {
 	public List<MeetVO> listMeeting(String meet_req_mem);
 	public int addMeeting(MeetVO vo);
 	public int deleteMeeting(String meet_id);
+	public int updateMeeting(MeetVO vo);
 
 }

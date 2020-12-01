@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 		 pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!-- Header & Menu -->
 	<%@include file="../includes/header.jsp"%>
 	<!-- Main content -->
@@ -13,6 +14,7 @@
 							<div class="row align-items-center">
 								<div class="col-8">
 									<h1 class="mb-0">프로젝트 관리</h1>
+									<button type="button" id="emailBtn" class="btn btn-success" data-toggle="modal" data-target="#emailBtn">문의하기</button>
 								</div>
 								<div class="col-4 text-right">
 								</div>
@@ -103,29 +105,24 @@
 									<thead class="thead-light">
 										<tr>
 											<th scope="col" class="sort" data-sort="name">프로젝트/회사명</th>
-											<th scope="col" class="sort" data-sort="skil">일정 카테고리</th>
-											<th scope="col" class="sort" data-sort="tesk">일정내용</th>
-											<th scope="col" class="sort" data-sort="completion">날짜</th>
+											<th scope="col" class="sort" data-sort="tesk">날짜</th>
+											<th scope="col" class="sort" data-sort="completion">일정내용</th>
 											<th scope="col"></th>
 										</tr>
 									</thead>
 									<tbody class="list">
 										<c:forEach var="meet" items="${meets}">
 										<tr class="contents">
-											<th scope="row">
-												<div class="media align-items-center">
-													<div class="media-body">
-														<span class="name mb-0 text-sm" id="type">${meet.meet_type}</span>
-													</div>
-												</div>
-											</th>
-										
-											<td><span class="badge badge-dot mr-4"> <i
-													class="bg-warning"></i> <span class="field">웹솔루션</span>
-											</span></td>
 											<td>
-												<div>
-													<span class="tesk" id="contetns">${meet.meet_contents}</span>
+												<div class="d-flex align-items-center">
+													<c:choose>
+													<c:when test="${meet.meet_type eq 0}">
+													<span >온라인 미팅</span>
+													</c:when>
+													<c:when test="${meet.meet_type ne 1}">
+													<span >오프라인 미팅</span>
+													</c:when>
+													</c:choose>
 												</div>
 											</td>
 											<td>
@@ -133,9 +130,15 @@
 													<span id="datetime">${meet.meet_datetime}</span>
 												</div>
 											</td>
+											<td>
+												<div>
+													<span class="tesk" id="contents">${meet.meet_contents}</span>
+												</div>
+											</td>
+
 											<td class="text-right">
 												<div>
-													<button type="button" class="btn btn-success">수정하기</button>
+													<button type="button" id="updateMeetingBtn"  class="btn btn-success" data-toggle="modal" data-target="#calendarEditBtn" value="${meet.meet_id}">수정하기</button>
 													<button onclick="deleteClick();" class="btn btn-danger" id="deleteMeetingBtn" value="${meet.meet_id}">삭제하기</button>
 												</div>
 											</td>
@@ -153,19 +156,80 @@
 		</div>
 	</div>		
 	<!-- footer -->
-<script type="text/javascript">	
+<div class="modal fade" id="calendarEditBtn" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">일정 변경하기</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+    <div class="form-group">
+        <label for="example-text-input" class="form-control-label">일정내용</label>
+        <input class="form-control" type="text" value="${meet.meet_contents}" id="meet_contents">
+    </div>
+    <div class="form-group">
+        <label for="example-date-input" class="form-control-label">날짜</label>
+        <input class="form-control" type="date" value="${meet.meet_datetime}" id="meet_datetime">
+    </div>
+	</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+        <button type="button" class="btn btn-primary" id="meetingUpdateBtn">수정하기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="emailBtn" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">일정 변경하기</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+<form>
+  <div class="form-group">
+    <label for="exampleFormControlInput1">Email address</label>
+    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Example textarea</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+  </div>
+</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+        <button type="button" class="btn btn-primary" id="meetingUpdateBtn">수정하기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="/resources/js/partners/meeting.js"></script>
+<script src="http://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
  	$(function() {
  		$("#deleteMeetingBtn").on('click', function() {			
  				var meet_id = $(this).val();
  				var $contents = $(this).parents('tr');
- 				alert("delete click"+ $contents);
  			$.ajax({
  	    	        contentType:'application/json',
  	    	        dataType:'json',
  	    	        url:'/schedule/'+meet_id,
  	    	        type:'DELETE',
  	    	        success:function(resp){
- 	    	           alert('삭제 완료되었습니다.');
+					swal(
+		               "일정을 삭제하셨습니다."
+		             );
  	    	          $contents.remove();
  	    	           	
  	    	        },
@@ -175,5 +239,23 @@
  	    	    })
 			})	
 }); 
+</script>
+<script type="text/javascript">
+    
+    $('#meetingUpdateBtn').on('click', function(event) {          
+        var meet = {
+                meet_id : $(),
+                meet_req_mem : 'member101',     
+        		meet_datetime : $('#meet_datetime').val(),
+				meet_contents : $('#meet_contents').val()
+           };
+        alert(meet_req_mem + meet_id);
+        meetingService.update(meet, function(result){
+            alert(result);
+        	$('.modal').modal('hide');
+
+        })
+        	
+    });
 </script>
 	<%@ include file="../includes/footer.jsp"%>
