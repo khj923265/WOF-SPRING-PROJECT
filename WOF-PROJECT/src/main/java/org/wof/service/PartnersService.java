@@ -22,7 +22,9 @@ public interface PartnersService {
 	
 	public List<PartnersVO> partnersList(String member_no, Standard standard);
 	
-	public List<PartnersVO> recommend(String member_no);//지역, 보유기술 받아야함.
+	public List<PartnersVO> recommend(String member_no, Standard standard);
+	
+	public int recommendCount(String member_no, Standard standard);
 	
 	public List<PartnersVO>	followList(String member_no, Standard standard);
 	

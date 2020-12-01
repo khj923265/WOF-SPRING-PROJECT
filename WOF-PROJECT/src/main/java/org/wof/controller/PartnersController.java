@@ -56,8 +56,12 @@ public class PartnersController {
 	@RequestMapping("/list")
 	public void partnersList(
 			@RequestParam("member_no") String member_no, Model model, Standard standard){
+		
+		if(standard.getKeyword() != null){
+			standard.getKeyword().trim();//키워드 공백제거
+		}
 
-		log.info("list: "+standard.getKeyword());
+		log.info("list: "+standard);
 		model.addAttribute("partnersList", partnersService.partnersList(member_no, standard));
 		
 		int total = partnersService.getTotal(standard);
@@ -126,9 +130,14 @@ public class PartnersController {
 	//추천 파트너스 목록
 	@RequestMapping("/recommend")
 	public void recommend(
-			@RequestParam("member_no") String member_no, Model model){
-		log.info("controller recommendList: " + partnersService.recommend(member_no));
-		model.addAttribute("recommendList", partnersService.recommend(member_no));
+			@RequestParam("member_no") String member_no, Model model, Standard standard){
+		log.info("controller recommendList: " + partnersService.recommend(member_no, standard));
+		
+		int recommendTotal = partnersService.recommendCount(member_no, standard);
+		log.info("recommendTotal: "+recommendTotal);
+		model.addAttribute("pageMaker", new PageDTO(standard, recommendTotal));
+		
+		model.addAttribute("recommendList", partnersService.recommend(member_no, standard));
 	}
 	
 	//클라이언트가 등록한 프로젝트들에 지원한 지원자 count

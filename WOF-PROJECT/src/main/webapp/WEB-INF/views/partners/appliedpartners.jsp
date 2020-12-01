@@ -117,7 +117,13 @@
 							</div> --%>
 
 							<div class="col-sm-4 my-auto">
-								<button type="button" class="btn btn-outline-default">계약서작성</button>
+								<button type="button" class="btn btn-outline-default">계약서작성
+								<a href="${pageContext.request.contextPath }/contract/read?source_no=${Project.member_no }
+								&target_no=${Member.member_no }&proj_id=${Project.proj_id }"></a>
+								<%-- <input type="hidden" name="source_no" value="${Project.member_no }"/>
+								<input type="hidden" name="target_no" value="${Member.member_no }" />
+								<input type="hidden" name="proj_id" value="${Project.proj_id }" /> --%>
+								</button>
 							</div>
 
 						</div>
@@ -208,7 +214,7 @@
 					}
 				})
 				
-				//체크박스 클릭시 alert message - 전체선택후 해제시 선택메시지만 뜸. 수정해야함
+				//체크박스 클릭시 alert message
 				$("input[name='member_no']").click(function(){
 					if($("input[name='member_no']").is(":checked") == true){
 						toastr.success("파트너스가 선택되었습니다.");						

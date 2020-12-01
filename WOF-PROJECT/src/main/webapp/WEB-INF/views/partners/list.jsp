@@ -32,19 +32,21 @@
 				<div class="col-lg-3 col-3"></div>
 				<div class="col-lg-6 col-7">
 					<form class="navbar-search navbar-search-light form-inline mr-sm-3"
-					id="navbar-search-main" action="partners/list" method="get">
+					id="searchForm" action="/partners/list" method="get">
 						<div class="form-group mb-0">
 							<div
 								class="input-group input-group-alternative input-group-merge mr-2">
 								<div class="input-group-prepend">
 									<span class="input-group-text"><i class="fas fa-search"></i></span>
 								</div>
-								<input type="text" name="keyword" class="form-control" placeholder="Search" >
+								<input type="text" name="keyword" class="form-control" placeholder="Search" />
+								<%-- value='<c:out value="${pageMaker.standard.keyowrd }"/>' />
+								<input type="hidden" name='type' value='<c:out value="${pageMaker.standard.type }"/>' /> --%>
 								<input type="hidden" name='member_no' value='${member.member_no}'>
-								<input type="hidden" name='pageNum' value = '${pageMaker.standard.pageNum}'>
-								<input type="hidden" name='amount' value = '${pageMaker.standard.amount}'>
+								<input type="hidden" name='pageNum' value = '${pageMaker.standard.pageNum}' />
+								<input type="hidden" name='amount' value = '${pageMaker.standard.amount}' />
 							</div>
-							<button type="button" class="btn btn-secondary">Search</button>
+							<button class="btn btn-secondary">Search</button>
 						</div>
 					</form>
 				</div>
@@ -214,6 +216,7 @@
 						<input type="hidden" name='member_no' value='${member.member_no}'>
 						<input type="hidden" name='pageNum' value = '${pageMaker.standard.pageNum}'>
 						<input type="hidden" name='amount' value = '${pageMaker.standard.amount}'>
+						<input type="hidden" name='keyword' value = '${pageMaker.standard.keyword}'>
 					</form>
 
 				</div>
@@ -251,6 +254,21 @@
 					actionForm.find("input[name='pageNum']").val($(this).attr("href"));
 					actionForm.submit();
 				});
+				
+				var searchForm = $("#searchForm")
+				
+				$("#searchForm button").on("click", function(e){
+					if(!searchForm.find("input[name='keyword']").val()){
+						toastr.info("키워드를 입력하세요");
+						return false;
+					}
+					
+					searchForm.find("input[name='pageNum']").val("1");
+					e.preventDefault();
+					
+					searchForm.submit();
+				
+				})
 				 
 				
 				$(".ni-favourite-28").click(function() {

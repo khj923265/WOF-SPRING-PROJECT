@@ -45,18 +45,10 @@
 </select>
 
 	<sql id="standard">
-	  <trim prefix="(" suffix=") AND " prefixOverrides="OR">
-	    <foreach item="type" collection="typeArr">
-	      <trim prefix="OR">
-	        <choose>
-	          <when test="keyword != null">
-		        career like '%'||#{standard.keyword}||'%' 
-		        or skill like '%'||#{standard.keyword}||'%' 
-		        or prefered_area like '%'||#{standard.keyword}||'%'
-		      </when>
-		    </choose>
-		  </trim>
-		</foreach>
+	  <trim prefix="(" suffix=")" prefixOverrides="OR">
+        	p.career like '%'||#{standard.keyword}||'%' 
+		    or p.skill like '%'||#{standard.keyword}||'%' 
+		    or p.prefered_area like '%'||#{standard.keyword}||'%'
 	  </trim>
 	</sql>
 
@@ -79,7 +71,12 @@
         and f.source_member = #{member_no}        
         where 
         ]]>
-        <!-- <include refid="standard"></include> -->
+        <if test="standard.keyword != null">
+        <if test="standard.keyword != ''">
+        <include refid="standard"></include>
+        and
+        </if>
+        </if>
         <![CDATA[
         rownum <= #{standard.pageNum} * #{standard.amount}
         order by m.LOGIN_DATE desc
@@ -96,6 +93,12 @@
 		from member m
         JOIN partners p
         on m.MEMBER_NO = p.MEMBER_NO
+          <if test="standard.keyword != null">
+          <if test="standard.keyword != ''">
+          where
+        	<include refid="standard"></include>
+          </if>
+          </if>
 	</select>
 	
 	<!-- 관심 파트너스 체크 -->
@@ -161,22 +164,46 @@
 	
 	<!-- 추천 파트너스 리스트 -->
 	<select id="recommend" parameterType="map" resultType="org.wof.domain.PartnersVO">
-		select 
-		MEMBER_NO,
-		substr(BIRTHDAY,1,2) as BIRTHDAY,
-		CAREER,
-		SKILL,
-		PREFERED_AREA,
-		HASHTAG,
-		AVAILABLE_DATE,
-		PROFILE
+		<![CDATA[
+		select MEMBER_NO, substr(BIRTHDAY,1,2) as BIRTHDAY,	CAREER,	SKILL,
+		PREFERED_AREA, HASHTAG, AVAILABLE_DATE, PROFILE
+		
+		from(
+		select
+		rownum rn, MEMBER_NO, substr(BIRTHDAY,1,2) as BIRTHDAY,	CAREER,	SKILL,
+		PREFERED_AREA, HASHTAG, AVAILABLE_DATE, PROFILE
+		from partners
+		where 
+		]]>
+		<trim prefix="(" suffix=") AND" prefixOverrides="OR">
+		PREFERED_AREA like '%'||#{address}||'%'
+		<foreach collection="skillList" item="skillList" separator=" OR " open="OR">
+		skill like '%'||#{skillList}||'%'
+		</foreach>
+		</trim>
+		<![CDATA[
+		rownum <= #{standard.pageNum} * #{standard.amount}
+        order by AVAILABLE_DATE desc
+		)
+		where rn > (#{standard.pageNum} -1) * #{standard.amount} 
+		]]>
+		
+		
+	</select>
+	
+	<!-- 추천 파트너스 토탈 -->
+	<select id="recommendCount" parameterType="map" resultType="int">
+		select count(*)
 		
 		from partners
 		
-		where PREFERED_AREA like '%'||#{address}||'%' or
-		<foreach collection="skillList" item="skillList" separator=" or ">
+		where 
+		<trim prefix="(" suffix=")" prefixOverrides="OR">
+		PREFERED_AREA like '%'||#{address}||'%'
+		<foreach collection="skillList" item="skillList" separator=" OR " open="OR">
 		skill like '%'||#{skillList}||'%'
 		</foreach>
+		</trim>
 		
 	</select>
 	
