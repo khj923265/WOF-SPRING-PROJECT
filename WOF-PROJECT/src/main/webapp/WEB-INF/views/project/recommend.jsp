@@ -67,24 +67,67 @@
           <div class="card">
             <!-- Card header -->
             <div class="card-header border-0">
-              <h3 class="mb-0">Recommend Project List</h3>
+              <h3 class="mb-0">Recommend project List</h3>
             </div>
             <!-- card body -->
+					
+						<!-- pagination -->
+								<nav aria-label="Page navigation">
+									<ul class="pagination justify-content-end">
+										<c:if test="${pageDto.prev }">
+											<li class="page-item">
+												<a class="page-link" href="${pageDto.startPage - 1 }" tabindex="-1">
+												<i class="fa fa-angle-left"></i>
+												<span class="sr-only">Prev</span>
+												</a>
+											</li>
+										</c:if>
+	
+										<c:forEach var="num" begin="${pageDto.startPage}" end="${pageDto.endPage }">
+											<li class="page-item ${pageDto.standard.pageNum == num ? 'active':'' }">
+												<a class="page-link" href="${num}">
+												<c:out value="${num }" />
+												</a>
+											</li>
+										</c:forEach>
+										
+										<c:if test="${pageDto.next }">
+											<li class="page-item">
+												<a class="page-link" href="/project/project_recommend_list/${pageDto.endPage + 1 }">
+												<i class="fa fa-angle-right"></i>
+												<span class="sr-only">Next</span>
+												</a>
+											</li>
+										</c:if>
+									</ul>
+								</nav>
+								
+								<form id="pagingActionForm" action="/project/project_recommend_list" method="get">
+									<input type="hidden" name="pageNum" value="${pageDto.standard.pageNum}">
+									<input type="hidden" name="amount" value="${pageDto.standard.amount}">
+								</form>
+								<!-- pagination -->
+            
+            
             <div class="card card-stats">
 	
 	
 	<c:forEach var="project" items="${projects}">
+	
+	
     <div class="ml-3 mt-3 mb-3 card-body">		
 	<div class="row">
     <div class="col-12 row text-center ">
     
         <h2 class="card-title text-uppercase text-muted mb-0 mr-2"><a href="#">${project.proj_title}</a></h2>
+
 		<span class="justify-content-center">           
-        <i class="ni ni-favourite-28 mt-2 color" >    
+        <i class="ni ni-favourite-28 mt-2 " >    
         <input type="hidden" id ="projectId" value="${project.proj_id}" >
         <input type="hidden" id="memberId" value="${member.member_no}" >     
         </i>   
-        </span>       
+        </span>
+		       
     </div>
     </div>
     <p class="mt-3 mb-0 text-sm">
@@ -112,7 +155,7 @@ ${fn:substring(TextValue,0,60)}<br>${fn:substring(TextValue,61,120)}
 </div>
 
 </c:forEach>
- 
+	
   
   </div>
 
@@ -136,14 +179,28 @@ ${fn:substring(TextValue,0,60)}<br>${fn:substring(TextValue,61,120)}
 	<script src="http://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script type="text/javascript">	
  	$(function() {
+ 		
+ 	//프로젝트 목록	
+	$(document).ready(function() {
+			var pagingActionForm = $("#pagingActionForm");
+			
+			$(".page-item a").on("click", function(e) {
+				e.preventDefault();
+				
+				pagingActionForm.find("input[name='pageNum']").val($(this).attr("href"));
+				pagingActionForm.submit();
+			});
+
+		});	
  		//관심 프로젝트 ajax 
  		$(".ni-favourite-28").click(function() {
 			$(this).toggleClass("color");
 			var related_project = $(this).find('#projectId').val();
 			var related_member = $(this).find('#memberId').val();
+			
 			if ($(this).hasClass("color")) {
 				$.ajax({
-					url : "/follwProject/"+related_project,
+					url : "/followYes/"+related_project,
 					type : "POST",
 					data :{
 						'related_member' : related_member
@@ -154,6 +211,7 @@ ${fn:substring(TextValue,0,60)}<br>${fn:substring(TextValue,61,120)}
 		                        "Add favorite Project!",
 		                        "success"
 		                    );
+						
 					},
 					error : function(error) {
 						alert(error);
@@ -161,8 +219,11 @@ ${fn:substring(TextValue,0,60)}<br>${fn:substring(TextValue,61,120)}
 				})
 			}else {
 				$.ajax({
-					url : "/follwProject/"+related_project+"/"+related_member,
-					type : "DELETE",
+					url : "/followNo/"+related_project,
+					type : "delete",
+					data :{
+						'related_member' : related_member
+					},
 					success : function(result) {
 						swal(
 		                        "Delete favorite project!",
@@ -177,3 +238,4 @@ ${fn:substring(TextValue,0,60)}<br>${fn:substring(TextValue,61,120)}
 		});		
 }); 
 </script>
+		
