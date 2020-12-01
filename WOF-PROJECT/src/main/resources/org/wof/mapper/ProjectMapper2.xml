@@ -4,29 +4,28 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.wof.mapper.ProjectMapper2">
 
-
-	<!-- 추천 프로젝트 페이징-->
-<!-- 		<select id="pageWithProject" resultType="org.wof.domain.ProjectVO">
-		<![CDATA[
-		select proj_id, proj_work_place, proj_detaiil, proj_reqr_skill, proj_career
-		from(
-		select 
-		rownum rn, p.proj_id,  p.proj_work_place, p.proj_detaiil, p.proj_reqr_skill, p.proj_career
-		from followproject fp, project p, partner pn
-		where fp.related_project = p.proj_id
-        and pn.member_no = fp.related_member
-		and pn.member_no = #{member_no}
-		and rownum <= #{standard.pageNum} * #{standard.amount}
-		)
-		where rn > (#{standard.pageNum} -1) * #{standard.amount}
-		]]>
-	</select>  -->
 	
 		<select id="projectList" resultType="org.wof.domain.ProjectVO">
-			select * from project
+		<![CDATA[
+			SELECT * 
+			FROM
+		 		(SELECT rownum rn, proj_id, proj_title, proj_reg_date, member_no, proj_apply_deadline,
+					proj_start_date, proj_end_date, proj_estimate, PROJ_REQR_PERSON, PROJ_REQR_SKILL,
+					PROJ_TYPE, PROJ_CAREER, PROJ_PM, PROJ_WORK_TYPE, PROJ_WORK_PLACE, PROJ_WORK_TIME,
+					proj_work_equip, proj_walfare, proj_detail, PROJ_FINISH_DATE, apply_mem, proj_status,
+					PROJ_UPDATE_DATE, PROJ_REPLYCNT, PROJ_TOTAL_DATE
+				FROM
+					(SELECT * 
+					FROM PROJECT
+					ORDER BY lpad(proj_id, 10, '0') DESC
+					)
+				WHERE rownum <= #{pageNum} * #{amount}
+				) 
+			WHERE rn > (#{pageNum} - 1) * #{amount}
+			]]>
 		</select>
 	
-	<select id="projectList2" parameterType="java.lang.String" resultType="org.wof.domain.ProjectVO">
+	<select id="projectDetail" parameterType="java.lang.String" resultType="org.wof.domain.ProjectVO">
 			select * from project where proj_id = #{proj_id}
 	</select>
 	
@@ -34,8 +33,29 @@
 		select count(*) from project
 	</select>
 	
-	<select id="listRecommendProject" parameterType="org.wof.domain.PartnersVO" resultType="org.wof.domain.ProjectVO">
+<!-- 	<select id="listRecommendProject" parameterType="org.wof.domain.PartnersVO" resultType="org.wof.domain.ProjectVO">
 		select p.* from project p where p.proj_work_place like '%' || #{prefered_area} || '%' and p.proj_reqr_skill like '%' || #{skill} || '%'
+	</select> -->
+	
+	<select id="listRecommendProject" parameterType="org.wof.domain.PartnersVO" resultType="org.wof.domain.ProjectVO">
+			<![CDATA[
+			SELECT p.* 
+			FROM
+		 		(SELECT rownum rn, proj_id, proj_title, proj_reg_date, member_no, proj_apply_deadline,
+					proj_start_date, proj_end_date, proj_estimate, PROJ_REQR_PERSON, PROJ_REQR_SKILL,
+					PROJ_TYPE, PROJ_CAREER, PROJ_PM, PROJ_WORK_TYPE, PROJ_WORK_PLACE, PROJ_WORK_TIME,
+					proj_work_equip, proj_walfare, proj_detail, PROJ_FINISH_DATE, apply_mem, proj_status,
+					PROJ_UPDATE_DATE, PROJ_REPLYCNT, PROJ_TOTAL_DATE
+				FROM
+					(SELECT * 
+					FROM PROJECT
+					ORDER BY lpad(proj_id, 10, '0') DESC
+					)
+				WHERE rownum <= #{pageNum} * #{amount}
+				) 
+			WHERE rn > (#{pageNum} - 1) * #{amount} and
+			proj_work_place like '%' || #{prefered_area} || '%' and p.proj_reqr_skill like '%' || #{skill} || '%'
+			]]>
 	</select>
 	   
    <!-- 관심 프로젝트 -->

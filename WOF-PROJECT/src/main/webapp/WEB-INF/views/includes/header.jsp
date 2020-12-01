@@ -27,7 +27,9 @@
 	<script src='/resources/calendar/fullcalendar-5.4.0/lib/main.js'></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type='text/javascript'>
+
 document.addEventListener('DOMContentLoaded', function() {
+	
 	  var calendarEl = document.getElementById('calendar');
 	  var calendar = new FullCalendar.Calendar(calendarEl, {
 	    selectable: true,
@@ -36,27 +38,6 @@ document.addEventListener('DOMContentLoaded', function() {
 	      center: 'title',
 	      right: 'next'
 	    },
-        eventSources: [{
-
-            events: function(start, end, timezone, callback) {
-
-                $.ajax({
-                    url: '/schedule/list',
-                    type: 'GET',
-                    dataType: "json",
-                    data: JSON.parse(vo),
-                    error: function() {
-                        alert('error!');
-                    },
-                    success: function(data) {
-                        callback(data);
-                    }
-
-                });
-
-            },
-
-        }],
 	    select: function(info) {
 	      alert('enter your schedule !');
 	      var meet_contents = prompt('enter your schedule!');
@@ -78,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
     	        url:'/schedule/'+vo.meet_req_mem,
     	        type:'post',
     	        success:function(resp){
-    	            alert("seuccess enter your schedule!");
+    	        	alert("seuccess enter your schedule!");  
     	        },
     	        error:function(){
     	            alert('error');
@@ -346,9 +327,9 @@ document.addEventListener('DOMContentLoaded', function() {
 							</c:if>
 							<c:if test="${member.auth == 'ROLE_PARTNERS' }">
 								<a
-									href="${pageContext.request.contextPath }/partners/dashboard_partners.jsp"
+									href="${pageContext.request.contextPath }/project/meeting"
 									class="dropdown-item"> <i class="ni ni-single-02"></i> <span>My
-										dashboard</span>
+										meeting</span>
 								</a>
 							</c:if>
 							<a href="#!" class="dropdown-item"> <i
