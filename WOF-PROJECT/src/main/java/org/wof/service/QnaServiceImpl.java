@@ -61,7 +61,6 @@ public class QnaServiceImpl implements QnaService {
 	//@Transactional
 	@Override
 	public void registerService(QuestionVO quest) {
-		log.info("占쏙옙占쏙옙占쏙옙占쏙옙1:1占쏙옙占실�占쏙옙占쏙옙占쏙옙占� question..." + quest);
 		log.info("======== register ========" + quest);
 		
 		qnaMapper.insertSelectKey(quest);
@@ -72,7 +71,6 @@ public class QnaServiceImpl implements QnaService {
 		
 		
 		 try {
-	            // 이메일 객체
 	            MimeMessage msg = mailSender.createMimeMessage();
 	 
 	            // 받는 사람을 설정 (수신자, 받는사람의 이메일 주소 객체를 생성해서 수신자 이메일주소를 담음)
@@ -94,7 +92,7 @@ public class QnaServiceImpl implements QnaService {
 	            // 이메일 본문 (인코딩을 해야 한글이 깨지지 않음)
 	            msg.setText(quest.getQuest_contents(), "utf-8");
 	 
-//	            html로 보낼 경우            
+//	            html�� ���� ���            
 //	            MimeMessage message = mailSender.createMimeMessage();
 //	            MimeMessageHelper helper 
 //	            = new MimeMessageHelper(message, true);
@@ -102,17 +100,14 @@ public class QnaServiceImpl implements QnaService {
 //	            helper.setText("<html><body><img src='cid:identifier1234'></body></html>", true);
 	 
 	            // 이메일 보내기
+	            // �̸��� ������
 	            mailSender.send(msg);
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        }
-		
-<<<<<<< HEAD
-=======
-		//占쏙옙占쏙옙占쏙옙占쏙옙 확占쏙옙 (占쏙옙占쏙옙 占쏙옙占쏙옙)
-		int questionResult = qnaMapper.Question(quest);
->>>>>>> 853f2004e6122174ee00b08d41fe70ac9879a777
-		
+
+//		int questionResult = qnaMapper.Question(quest);
+
 		if(quest.getAttachList() == null || quest.getAttachList().size() <= 0) {
 			return;
 		}

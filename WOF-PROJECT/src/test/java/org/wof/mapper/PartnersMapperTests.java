@@ -40,6 +40,11 @@ public class PartnersMapperTests {
 		partnersmapper.partnersSupport().forEach(project -> log.info(project));
 	}*/
 	
+//	@Test
+//	public void testpartnersSupport() {
+//		partnersmapper.partnersSupport().forEach(project -> log.info(project));
+//	}
+//	
 	@Setter(onMethod_ = @Autowired)
 	private PartnersMapper mapper;
 	
@@ -105,6 +110,7 @@ public class PartnersMapperTests {
 	public void testSearch(){
 		Standard standard = new Standard();
 		standard.setKeyword("서울");
+		//standard.setType("S");
 		
 		List<PartnersVO> list = mapper.partnersList("member91", standard);
 		
