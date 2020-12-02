@@ -6,7 +6,7 @@
 
 	<insert id="insert">
 		insert into project_reply(proj_reply_no, proj_id, proj_reply_cont, proj_reply_date, member_no) 
-			values (seq_project_reply.nextval, #{proj_id}, #{proj_reply_cont}, TO_DATE(#{proj_reply_date},'yyyy-MM-dd'), #{member_no} )
+			values ('p_rno'||seq_project_reply.nextval, #{proj_id}, #{proj_reply_cont}, TO_DATE(#{proj_reply_date},'yyyy-MM-dd'), #{member_no} )
 	</insert>
 
 	<select id="read" resultType="org.wof.domain.ProjectReplyVO">

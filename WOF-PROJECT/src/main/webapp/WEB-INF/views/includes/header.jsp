@@ -39,11 +39,12 @@
 		<a href="${pageContext.request.contextPath }/main"><img
 			alt=""
 			src="/resources/template/assets/img/brand/logo_transparent.png"
-			style="height: 50px; width: 100px; margin-left: 10px;"> </a>
+			style="height: 50px; width: 100px; margin-left: 30px;"> </a>
 		<div class="container-fluid">
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 
 				<!-- Navbar links -->
+				
 				<ul class="navbar-nav align-items-center  ml-md-auto">
 					<li class="nav-item mr-0 mr-md-2"><a class="nav-link"
 						href="${pageContext.request.contextPath }/project/create"><span
@@ -301,6 +302,7 @@
 						</div>
 						<!-- .dropdown-menu dropdown-menu-right --></li>
 				</ul>
+				
 			</div>
 			<!-- .collapse navbar-collapse -->
 		</div>
