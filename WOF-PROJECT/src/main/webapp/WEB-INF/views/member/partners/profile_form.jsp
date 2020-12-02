@@ -60,10 +60,10 @@
                                            class="form-control form-control-muted col-6 col-md-4 "
                                            placeholder="password"/>
                                 </div>
-                                <input type="hidden" name="member_no" value="${member.member_no}">
+                                <input type="hidden" name="member_no" id="member_no" value="${member.member_no}">
                                 <div class="row pt-3 inline">
                                     <div class="col-5 text-right">
-                                        <input type="submit" class="btn btn-success" onsubmit="return infoUpdate()"
+                                        <input type="submit" class="btn btn-success" onsubmit="return profileManagement.infoUpdate()"
                                                formaction="/member/partnersinfoupdate" value="수정하기"/>
                                     </div>
                                     <div class="col-4 text-right">

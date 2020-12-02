@@ -1,10 +1,7 @@
 package org.wof.service;
 
 
-import org.wof.domain.ClientVO;
-import org.wof.domain.MemberVO;
-import org.wof.domain.PartnersVO;
-import org.wof.domain.ProjectProfileVO;
+import org.wof.domain.*;
 
 import java.security.Principal;
 import java.util.HashMap;
@@ -30,6 +27,10 @@ public interface MemberService {
     ProjectProfileVO projectprofileinfo(String userid);
     void profileupdate(PartnersVO partnersVO);
     void projectprofiledelete(String no);
+    void projectProfileUpdate(ProjectProfileVO projectProfileVO);
+    void meetingupdate(MeetVO meetVO);
+    MeetVO meetInfo(String meet_id);
+
 
     //카카오 토큰,회원정보 가져오기
     String kakaoAccessToken(String authorize_code);

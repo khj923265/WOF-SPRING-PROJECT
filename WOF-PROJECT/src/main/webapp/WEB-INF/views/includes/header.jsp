@@ -390,7 +390,7 @@
                                 </a>
                             </c:if>
                             <c:if test="${member.auth == 'ROLE_PARTNERS' }">
-                                <a href="${pageContext.request.contextPath }/partners/dashboard_partners?member_no=${member.member_no}"
+                                <a href="${pageContext.request.contextPath }/partners/profile_info"
                                    class="dropdown-item"> <i class="ni ni-single-02"></i>
                                     <span>My meeting</span>
                                 </a>

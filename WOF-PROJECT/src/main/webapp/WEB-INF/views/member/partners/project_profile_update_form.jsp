@@ -72,7 +72,7 @@
                                                         <td class="text-right">
                                                             <div>
                                                                 <button type="submit" class="btn btn-success"
-                                                                        onsubmit="profileUpdate()">수정
+                                                                        onsubmit="projectProfileUpdate()">수정
                                                                 </button>
                                                             </div>
                                                         </td>
