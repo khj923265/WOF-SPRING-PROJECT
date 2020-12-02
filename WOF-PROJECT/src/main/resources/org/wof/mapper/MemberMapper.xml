@@ -64,10 +64,13 @@
     <select id="checkPw" parameterType="String" resultType="String">
         select userpw from member where member_no = #{member_no}
     </select>
+    <select id="checkPw2" parameterType="String" resultType="String">
+        select userpw from member where userid = #{userid}
+    </select>
     <update id="Withdrawal" parameterType="org.wof.domain.MemberVO">
-        update member set status=#{status} where member_no = #{member_no}
+        update member set status=#{status}, signout_date=sysdate where userid = #{userid}
     </update>
-    <update id="partnersUpdate" parameterType="org.wof.domain.MemberVO">
+    <update id="userPhoneUpdate" parameterType="org.wof.domain.MemberVO">
         update member set userphone=#{userphone} where member_no = #{member_no}
     </update>
     <update id="partnersUpdate2" parameterType="org.wof.domain.PartnersVO">
@@ -76,6 +79,59 @@
     <update id="partnersUpdate3" parameterType="org.wof.domain.MemberVO">
         update member set userpw=#{userpw}, userphone=#{userphone} where member_no = #{member_no}
     </update>
+    <select id="loginIdCheck" parameterType="String" resultType="String">
+        select status from member where userid = #{userid}
+    </select>
+    <update id="loginsysdate" parameterType="String">
+        update member set login_date=sysdate where userid=#{userid}
+    </update>
+    <update id="clientUpdate2" parameterType="org.wof.domain.ClientVO">
+        update client set name =#{name}, business_register_no=#{business_register_no},
+        tel=#{tel}, address1=#{address1}, address2=#{address2},
+        profile=#{profile} where member_no=#{member_no}
+    </update>
+    <update id="clientUpdate3" parameterType="org.wof.domain.MemberVO">
+        update member set userpw=#{userpw}, userphone=#{userphone} where member_no = #{member_no}
+    </update>
+    <select id="projectProfileList" parameterType="string" resultType="org.wof.domain.ProjectProfileVO">
+        select * from PROJECT_PROFILE where userid = #{userid}
+    </select>
+    <insert id="projectprofileinsert" parameterType="org.wof.domain.ProjectProfileVO">
+        insert into project_profile (no,userid, name, skill, field, responsibilities, startdate, enddate)
+         values (project_profile_seq.nextval,#{userid},#{name},#{skill},#{field},#{responsibilities},#{startdate},#{enddate})
+    </insert>
+    <select id="projectprofileinfo" parameterType="String" resultType="org.wof.domain.ProjectProfileVO">
+        select * from project_profile where no = #{no}
+    </select>
+    <update id="profileupdate" parameterType="org.wof.domain.PartnersVO">
+        update partners set profile=#{profile} where member_no=#{member_no}
+    </update>
+    <delete id="projectprofiledelete" parameterType="String">
+        delete from project_profile where no = #{no}
+    </delete>
+    <insert id="kakaoSignup" parameterType="org.wof.domain.MemberVO">
+        <selectKey keyProperty="member_no" resultType="String" order="BEFORE">
+            select 'kakao'||kakao_seq.nextval FROM DUAL
+        </selectKey>
+        insert into member (member_no, userid, userpw, real_name, auth)
+        values (#{member_no}, #{userid}, #{userpw}, #{real_name}, #{auth})
+    </insert>
+    <select id="kakaoIdCheck" parameterType="String" resultType="String">
+        select member_no from member where userid = #{userid}
+    </select>
+    <select id="findIdCount" parameterType="org.wof.domain.MemberVO" resultType="int">
+        select count(*) from member where real_name = #{real_name} and userphone = #{userphone}
+    </select>
+    <select id="findIdForm" parameterType="org.wof.domain.MemberVO" resultType="String">
+        select userid from member where real_name = #{real_name} and userphone = #{userphone}
+    </select>
+    <select id="findPwCount" parameterType="org.wof.domain.MemberVO" resultType="int">
+        select count(*) from member where userid = #{userid} and real_name = #{real_name} and userphone = #{userphone}
+    </select>
+    <update id="setEncodePassword" parameterType="org.wof.domain.MemberVO">
+        update member set userpw = #{userpw} where userid = #{userid}
+    </update>
+
 
 
 </mapper>

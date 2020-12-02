@@ -1,5 +1,6 @@
 package org.wof.mapper;
 
+import static org.junit.Assert.*;
 import java.util.List;
 
 import org.junit.Test;
@@ -9,6 +10,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.wof.domain.FollowPartnersVO;
 import org.wof.domain.PartnersVO;
@@ -19,11 +21,30 @@ import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
+@ContextConfiguration({"file:src/main/webapp/WEB-INF/spring/root-context.xml", 
+	"file:src/main/webapp/WEB-INF/spring/appServlet/security-context.xml"})
 @Log4j
 @WebAppConfiguration
 public class PartnersMapperTests {
+
+	@Setter(onMethod_ = @Autowired)
+	private PartnersMapper partnersmapper;
 	
+/*	@Test
+	public void testapplyProject() {
+		partnersmapper.applyProject("member26").forEach(project -> log.info(project));
+	}
+*/
+/*	@Test
+	public void testpartnersSupport() {
+		partnersmapper.partnersSupport().forEach(project -> log.info(project));
+	}*/
+	
+//	@Test
+//	public void testpartnersSupport() {
+//		partnersmapper.partnersSupport().forEach(project -> log.info(project));
+//	}
+//	
 	@Setter(onMethod_ = @Autowired)
 	private PartnersMapper mapper;
 	
@@ -78,11 +99,37 @@ public class PartnersMapperTests {
 //		log.info(cliendAddress);
 //	}
 	
-	@Test
-	@WithUserDetails
-	public void testGetTime(){
-		log.info(mapper.getClass().getName());
-		log.info(mapper.getTime());
+//	@Test
+//	@WithUserDetails
+//	public void testGetTime(){
+//		log.info(mapper.getClass().getName());
+//		log.info(mapper.getTime());
+//	}
+	
+/*	@Test
+	public void testSearch(){
+		Standard standard = new Standard();
+		standard.setKeyword("서울");
+		//standard.setType("S");
+		
+		List<PartnersVO> list = mapper.partnersList("member91", standard);
+		
+		list.forEach(board ->log.info(board));
 	}
-
+	*/
+	
+/*	@Test
+	public void testPaging() {
+		
+		Standard standard = new Standard();
+		
+		standard.setPageNum(3);
+		standard.setAmount(10);
+		
+		partnersmapper.applyStateTotal(standard);
+		
+		
+		
+		
+	}*/
 }

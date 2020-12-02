@@ -2,6 +2,7 @@ package org.wof.service;
 
 import java.util.List;
 
+import org.wof.domain.ProjectAttachVO;
 import org.wof.domain.ProjectVO;
 import org.wof.domain.Standard;
 
@@ -13,4 +14,6 @@ public interface ProjectService {
 	public List<ProjectVO> getlist(Standard stand);
 	public int getTotal(Standard stand);
 	
+	
+	//public List<ProjectAttachVO> getAttachList(String proj_id);
 }

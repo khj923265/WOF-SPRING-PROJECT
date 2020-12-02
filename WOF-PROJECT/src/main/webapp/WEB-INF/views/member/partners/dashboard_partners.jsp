@@ -84,6 +84,11 @@
 								class="ni ni-bullet-list-67 text-default"></i> <span
 								class="nav-link-text">공지사항</span>
 						</a></li>
+						
+						<li class="nav-item"><a class="nav-link"
+						href="${pageContext.request.contextPath}/community/partners_commmunity_list">
+							<i class="ni ni-archive-2"></i> <span class="nav-link-text">파트너스 커뮤니티 게시판</span>
+					</a></li>
 					</ul>
 					<!-- Divider -->
 					<hr class="my-3">

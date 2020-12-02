@@ -4,6 +4,54 @@
 
 <mapper namespace="org.wof.mapper.PartnersMapper">
 
+<select id="applyProject" resultType="org.wof.domain.ProjectVO">
+	<![CDATA[
+	select proj_id, proj_title, proj_start_date, proj_reqr_skill, proj_estimate, proj_reqr_person, proj_work_place
+	from
+	(
+		select rownum rn, p.proj_id, p.proj_title, p.proj_start_date, p.proj_reqr_skill, 
+			p.proj_estimate, p.proj_reqr_person, p.proj_work_place
+		from project p, apply a
+		where p.proj_id = a.proj_id and a.member_no = #{member_no}
+	)
+	where rownum <= #{standard.pageNum} * #{standard.amount}
+	]]>
+</select>
+
+<select id="applyProjectTotal" resultType="int">
+		select count(*)
+		from apply a, project p
+		where p.proj_id = a.proj_id
+</select>
+
+<select id="partnersSupport" resultType="org.wof.domain.ProjectVO">
+	<![CDATA[
+		select p.proj_title, p.proj_reqr_skill, p.proj_career,
+			p.proj_start_date, p.proj_end_date, 
+			count(p.proj_reqr_person) as proj_reqr_person
+		from project p, apply a
+		where p.proj_id = a.proj_id 
+		group by p.proj_title, p.proj_reqr_skill, p.proj_career, p.proj_start_date, p.proj_end_date
+	]]>
+</select>
+
+<select id="dashboardpartnersApplyProject" resultType="org.wof.domain.ProjectVO">
+	<![CDATA[
+		select p.proj_title, p.proj_work_place, p.proj_reqr_skill, p.proj_start_date
+	from project p, apply a
+	where p.proj_id = a.proj_id and a.member_no = #{member_no}
+		
+	]]>
+</select>
+
+	<sql id="standard">
+	  <trim prefix="(" suffix=")" prefixOverrides="OR">
+        	p.career like '%'||#{standard.keyword}||'%' 
+		    or p.skill like '%'||#{standard.keyword}||'%' 
+		    or p.prefered_area like '%'||#{standard.keyword}||'%'
+	  </trim>
+	</sql>
+
 	<!-- 파트너스 찾기클릭시(파트너스 전체 리스트 불러오기) /*+INDEX_DESC(MEMBER SYS_C004099)*/ -->
 	<select id="partnersList" resultType="org.wof.domain.PartnersVO">
 		<![CDATA[
@@ -20,8 +68,17 @@
         on m.MEMBER_NO = p.MEMBER_NO
         left outer join followpartners f
         on p.member_no = f.target_member
-        and f.source_member = #{member_no}
-        where rownum <= #{standard.pageNum} * #{standard.amount}
+        and f.source_member = #{member_no}        
+        where 
+        ]]>
+        <if test="standard.keyword != null">
+        <if test="standard.keyword != ''">
+        <include refid="standard"></include>
+        and
+        </if>
+        </if>
+        <![CDATA[
+        rownum <= #{standard.pageNum} * #{standard.amount}
         order by m.LOGIN_DATE desc
         )
         
@@ -30,11 +87,18 @@
 		]]>
 	</select>
 	
+	<!-- 파트너스 찾기 토탈 -->
 	<select id="getTotalCount" resultType="int">
 		select count(*)
 		from member m
         JOIN partners p
         on m.MEMBER_NO = p.MEMBER_NO
+          <if test="standard.keyword != null">
+          <if test="standard.keyword != ''">
+          where
+        	<include refid="standard"></include>
+          </if>
+          </if>
 	</select>
 	
 	<!-- 관심 파트너스 체크 -->
@@ -100,23 +164,162 @@
 	
 	<!-- 추천 파트너스 리스트 -->
 	<select id="recommend" parameterType="map" resultType="org.wof.domain.PartnersVO">
-		select 
-		MEMBER_NO,
-		substr(BIRTHDAY,1,2) as BIRTHDAY,
-		CAREER,
-		SKILL,
-		PREFERED_AREA,
-		HASHTAG,
-		AVAILABLE_DATE,
-		PROFILE
+		<![CDATA[
+		select MEMBER_NO, substr(BIRTHDAY,1,2) as BIRTHDAY,	CAREER,	SKILL,
+		PREFERED_AREA, HASHTAG, AVAILABLE_DATE, PROFILE
 		
+		from(
+		select
+		rownum rn, MEMBER_NO, substr(BIRTHDAY,1,2) as BIRTHDAY,	CAREER,	SKILL,
+		PREFERED_AREA, HASHTAG, AVAILABLE_DATE, PROFILE
 		from partners
-		
-		where PREFERED_AREA like '%'||#{address}||'%' or
-		<foreach collection="skillList" item="skillList" separator=" or ">
+		where 
+		]]>
+		<trim prefix="(" suffix=") AND" prefixOverrides="OR">
+		PREFERED_AREA like '%'||#{address}||'%'
+		<foreach collection="skillList" item="skillList" separator=" OR " open="OR">
 		skill like '%'||#{skillList}||'%'
 		</foreach>
+		</trim>
+		<![CDATA[
+		rownum <= #{standard.pageNum} * #{standard.amount}
+        order by AVAILABLE_DATE desc
+		)
+		where rn > (#{standard.pageNum} -1) * #{standard.amount} 
+		]]>
+		
 		
 	</select>
 	
+	<!-- 추천 파트너스 토탈 -->
+	<select id="recommendCount" parameterType="map" resultType="int">
+		select count(*)
+		
+		from partners
+		
+		where 
+		<trim prefix="(" suffix=")" prefixOverrides="OR">
+		PREFERED_AREA like '%'||#{address}||'%'
+		<foreach collection="skillList" item="skillList" separator=" OR " open="OR">
+		skill like '%'||#{skillList}||'%'
+		</foreach>
+		</trim>
+		
+	</select>
+	
+	<select id="applyState" resultType="org.wof.domain.ProjectVO">
+		<![CDATA[
+        select proj_id, proj_title, member_no, proj_apply_deadline, proj_reqr_person,
+		apply_mem, proj_start_date
+		from
+		(select rownum rn, proj_id, proj_title,
+		member_no, proj_apply_deadline, proj_reqr_person,
+		apply_mem, proj_start_date
+		from project 
+		where member_no = #{member_no} 
+		)
+		where rownum <= #{standard.pageNum} * #{standard.amount}
+		]]>
+	</select>
+	
+	<select id="applyStateTotal" resultType="int">
+		select count(*)
+		from apply a, member m
+        where a.member_no = m.member_no
+	</select>
+	
+	<select id="applyDetailProject" resultType="org.wof.domain.ProjectVO">
+		select proj_id, proj_title, member_no,
+				proj_reg_date, proj_apply_deadline, proj_start_date, proj_end_date,
+				proj_estimate, proj_reqr_person,
+				proj_reqr_skill, proj_career,
+				proj_work_type, proj_work_place, proj_work_time, proj_work_equip
+		from project
+		
+		where proj_id = #{proj_id}
+	</select>
+	
+	<select id="applyDetailPartners" resultType="org.wof.domain.PartnersVO">
+		<![CDATA[
+		
+		select member_no, userid, substr(BIRTHDAY,1,2) as BIRTHDAY,
+		CAREER, SKILL, PREFERED_AREA, applied_member
+		from
+		(
+		select rownum rn, p.member_no, m.userid, substr(p.BIRTHDAY,1,2) as BIRTHDAY,
+		p.CAREER, p.SKILL, p.PREFERED_AREA, ar.member_no as applied_member
+		from 
+        member m join partners p
+        on m.member_no = p.member_no 
+        join apply a
+        on p.member_no = a.member_no 
+        left outer join applyregister ar
+        on ar.member_no = p.member_no
+		where a.proj_id = #{proj_id}
+		order by available_date desc
+		)
+		where rownum <= #{standard.pageNum} * #{standard.amount}
+		
+		]]>
+	</select>
+	
+		<select id="applyPartnersTotal" resultType="int">
+		<![CDATA[
+		
+		select count(*)
+		from member m, partners p, apply a
+		where m.member_no = p.member_no and p.member_no = a.member_no
+			and a.proj_id = #{proj_id}
+		
+		]]>
+	</select>
+	
+	<select id="applyCheck" parameterType="org.wof.domain.ApplyVO" resultType="String">
+		select count(*)
+		from applyregister
+		where member_no = #{member_no}
+		and proj_id = #{proj_id}
+	</select>
+	
+	
+	<!-- 선택 -->
+	<insert id="applyRegister" parameterType="map">
+		
+		<foreach collection="member_no" item="member_no" index="index"  open="INSERT ALL " separator=" " close="SELECT * FROM DUAL" > 
+         into applyregister (member_no, proj_id)
+        values
+            (#{member_no}, #{proj_id})
+        </foreach>
+	</insert>
+	
+	
+	<!-- 파트너스 삭제 -->
+	<delete id="applyDelete" parameterType="map">
+	delete from applyregister where 
+		<foreach collection="member_no" item="member_no" index="index"  separator=" OR "> 
+        member_no = #{member_no} and proj_id = #{proj_id}
+        </foreach>
+	</delete>
+	
+	<!-- 선택한 파트너스 -->
+	<select id="appliedPartners" resultType="org.wof.domain.MemberVO">
+		<![CDATA[
+		select member_no, userid, real_name, userphone
+		from
+		(
+			select rownum rn, m.member_no, m.userid, m.real_name, m.userphone
+			from member m, applyregister a
+			where m.member_no = a.member_no and a.proj_id = #{proj_id}
+			and rownum <= (#{pageNum} -1) * #{amount}
+		)	
+		where rn > (#{pageNum} -1) * #{amount}
+	
+		]]>
+	</select>
+	
+	<select id="appliedpartnersTotal" resultType="int">
+		select count(*)
+		from applyregister a, member m
+        where a.member_no = m.member_no
+	</select>
 </mapper>

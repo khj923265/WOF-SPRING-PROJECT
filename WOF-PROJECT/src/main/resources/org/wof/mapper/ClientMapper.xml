@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.wof.mapper.ClientMapper">
+
+<select id="dashboardRegisterProject" resultType="org.wof.domain.ProjectVO">
+	select proj_title, proj_estimate, proj_reqr_person, proj_career, proj_start_date, proj_apply_deadline
+	from project where member_no = #{member_no}
+</select>
+
+<select id="dashboardclientProject" resultType="org.wof.domain.ProjectVO">
+	<![CDATA[
+		select p.proj_title, p.proj_estimate, p.apply_mem, p.proj_work_place,
+			p.proj_reqr_skill, p.proj_start_date
+		from project p, apply a
+		where p.proj_id = a.proj_id and p.member_no = #{member_no}
+	]]>
+	
+</select>
+
+<select id="dashboardFallowPartners" resultType="org.wof.domain.PartnersVO">
+<![CDATA[
+	select p.member_no, p.career, p.skill
+	from partners p, followpartners f
+	where p.member_no = f.target_member and f.source_member = #{member_no} and rownum <= 5
+	order by f.FOLLOWING_DATE desc
+]]>
+</select>
+
+
+	<!-- 로그인한 클라이언트의 지역 가저오기 -->
+	<select id="clientAddress" resultType="String">
+		select c.ADDRESS1
+		from member m left outer join client c
+		on m.member_no = c.member_no
+		where m.member_no = #{member_no}
+	</select>
+
+	<!-- 로그인한 클라이언트가 올린 프로젝트 스킬 가저오기 -->
+	<select id="projectSkill" resultType="String">
+		select proj_reqr_skill
+		from project
+		where member_no = #{member_no}
+	</select>
+	
+<select id="dashboardRecommend" resultType="org.wof.domain.PartnersVO" parameterType="map">
+	<![CDATA[
+	
+	select member_no, birthday, career, skill,
+	prefered_area, hashtag, available_date, profile
+	from
+		(
+		select
+		rownum rn, 
+		MEMBER_NO,
+		substr(BIRTHDAY,1,2) as BIRTHDAY,
+		CAREER,
+		SKILL,
+		PREFERED_AREA,
+		HASHTAG,
+		AVAILABLE_DATE,
+		PROFILE
+		
+		from partners
+		
+		where PREFERED_AREA like '%'||#{address}||'%' or
+		]]>
+		<foreach collection="skillList" item="skillList" separator=" or ">
+		skill like '%'||#{skillList}||'%'
+		</foreach>
+		)
+	<![CDATA[
+		where rownum <= 5
+	]]>
+</select>
+
+</mapper>

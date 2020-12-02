@@ -18,28 +18,11 @@
 	<!-- Main Content -->
 	<!-- top start-->
 	<div class="main-content" id="panel">
+	
+	<!-- Sub menu -->
+	<%@ include file="menu.jsp"%>
 
-		<!-- 하위메뉴 -->
-		<nav class="navbar-expand-sm navbar-light bg-white">
-			<div class="container">
-				<div class="row pt-3 pb-3">
-					<a class="nav-link"
-						href="${pageContext.request.contextPath }/partners/followlist?member_no=${member.member_no }">
-						<span class="nav-link-text">관심 파트너스 관리</span>
-					</a> <a class="nav-link"
-						href="${pageContext.request.contextPath }/partners/recommend?member_no=${member.member_no }">
-						<span class="nav-link-text">추천 파트너스</span>
-					</a> <a class="nav-link"
-						href="${pageContext.request.contextPath }/Client/registerProjectListAction.do">
-						<span class="nav-link-text">제안 및 지원자 현황</span>
-					</a> <a class="nav-link" href="#"> <span class="nav-link-text">프로젝트
-							관리</span>
-					</a>
-				</div>
-			</div>
-		</nav>
-
-		<!--제목 및 내용 -->
+	<!--제목 및 내용 -->
 		<div class="container">
 			<!-- 제목 -->
 			<div class="row mt-3">
@@ -49,16 +32,21 @@
 				<div class="col-lg-3 col-3"></div>
 				<div class="col-lg-6 col-7">
 					<form class="navbar-search navbar-search-light form-inline mr-sm-3"
-						id="navbar-search-main">
+					id="searchForm" action="/partners/list" method="get">
 						<div class="form-group mb-0">
 							<div
 								class="input-group input-group-alternative input-group-merge mr-2">
 								<div class="input-group-prepend">
 									<span class="input-group-text"><i class="fas fa-search"></i></span>
 								</div>
-								<input class="form-control" placeholder="Search" type="text">
+								<input type="text" name="keyword" class="form-control" placeholder="Search" />
+								<%-- value='<c:out value="${pageMaker.standard.keyowrd }"/>' />
+								<input type="hidden" name='type' value='<c:out value="${pageMaker.standard.type }"/>' /> --%>
+								<input type="hidden" name='member_no' value='${member.member_no}'>
+								<input type="hidden" name='pageNum' value = '${pageMaker.standard.pageNum}' />
+								<input type="hidden" name='amount' value = '${pageMaker.standard.amount}' />
 							</div>
-							<button type="button" class="btn btn-secondary">Search</button>
+							<button class="btn btn-secondary">Search</button>
 						</div>
 					</form>
 				</div>
@@ -67,10 +55,11 @@
 			<!-- 체크박스 및 파트너스 리스트 -->
 			<div class="row">
 				<!-- 체크박스 -->
-				<div class="col-sm-3">
-					<div class="row mr-2 bg-white">
-						<div class="col-sm-12">
-							<h3 class="mt-3 p-1">전문분야</h3>
+				<div class="col-sm-3"> <!--position-absolute id="followquick" -->
+					<div class="row">
+						<div class="col-sm-12" >
+						<div class="pl-3 shadow-sm rounded bg-white position-relative" id="followquick">
+							<h3 class="p-1">전문분야</h3>
 							<div class="custom-control custom-checkbox">
 								<input type="checkbox" class="custom-control-input"
 									id="customCheck1"> <label class="custom-control-label"
@@ -107,18 +96,20 @@
 									id="customCheck7"> <label class="custom-control-label"
 									for="customCheck7">6년차 이상</label>
 							</div>
-							`
+						</div>
 						</div>
 					</div>
+				
 				</div>
 
 				<!-- 파트너스리스트 -->
+				
 				<div class="col-sm-9">
 				
-				<input type="hidden" value="${member.member_no }" id="source_member"><!-- 테스트 후 변수로 변경 -->
+				<input type="hidden" value="${member.member_no }" id="source_member">
 				
 					<c:forEach var="partnersList" items="${partnersList }">
-						<div class="row bg-white mb-3">
+						<div class="row shadow-sm p-1 bg-white rounded mb-3">
 							<div class="col-sm-7">
 								<div class="row align-items-center">
 
@@ -225,9 +216,11 @@
 						<input type="hidden" name='member_no' value='${member.member_no}'>
 						<input type="hidden" name='pageNum' value = '${pageMaker.standard.pageNum}'>
 						<input type="hidden" name='amount' value = '${pageMaker.standard.amount}'>
+						<input type="hidden" name='keyword' value = '${pageMaker.standard.keyword}'>
 					</form>
 
 				</div>
+				
 			</div>
 		</div>
 
@@ -242,6 +235,14 @@
 		<!-- Hakgeun js -->
 		<script type="text/javascript">
 			$(function() {
+				$(window).scroll(function(){
+					var scrollTop = $(document).scrollTop();
+					if (scrollTop < 0) {
+					 scrollTop = 0;
+					}
+					$("#followquick").stop();
+					$("#followquick").animate( { "top" : scrollTop });
+					});
 				
 				var actionForm = $("#actionForm");
 				
@@ -254,11 +255,29 @@
 					actionForm.submit();
 				});
 				
+				var searchForm = $("#searchForm")
+				
+				$("#searchForm button").on("click", function(e){
+					if(!searchForm.find("input[name='keyword']").val()){
+						toastr.info("키워드를 입력하세요");
+						return false;
+					}
+					
+					searchForm.find("input[name='pageNum']").val("1");
+					e.preventDefault();
+					
+					searchForm.submit();
+				
+				})
+				 
+				
 				$(".ni-favourite-28").click(function() {
 					var target_member = $(this).find("input").val();
 					var source_member = $("#source_member").val();
-					var clickThis = $(this);
+					var clickThis = $(this);//하트 색 토글을 위해 클릭된 i 테그를 변수에 담음.
 					
+					//로그인 아이디 널 또는 공백체크					
+					if(source_member != null && source_member != ""){					
 					//var state = false;//완료상태 확인
 					// 아이디 중복체크
 					$.ajax({
@@ -333,9 +352,12 @@
 							toastr.error("관심 파트너스의 중복체크중 오류가 발생하였습니다.");
 						}
 					})//end check ajax
+				
+				}else{
+					toastr.info("관심파트너스를 추가하시려면 로그인 해주세요.");
+				}
 		
 				})//end click
-
 			})
 		</script>
 </body>

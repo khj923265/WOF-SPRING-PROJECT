@@ -136,6 +136,34 @@
 				<!-- end card-body-->
 			</div>
 			<!-- end card-->
+			<sec:authorize access="isAuthenticated()">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title mb-3">파일 목록</h5>
+					<div class="panel-body">
+						<div class='uploadResult1'>
+							<ul>
+							</ul>
+						</div>
+					</div>	
+				</div>
+			</div>
+			</sec:authorize>
+						
+<style>
+.uploadResult1 ul {
+	display: flex;
+	flex-flow: row;
+	justify-content: center;
+		align-items: center;
+}
+.uploadResult1 ul li {
+	list-style: none;
+	padding: 10px;
+	align-content: center;
+	text-align: center;
+}
+</style>
 		</div>
 		<!-- end col -->
 
@@ -150,7 +178,7 @@
 									<div class="row">
 										<div class="col">
 											<div class="text-left">
-												<h5 class="h3">${member.getRealname()}</h5>
+												<h5 class="h3">${member.getReal_name()}</h5>
 												<div class="h5 mt-4">
 													<i class="ni business_briefcase-24 mr-2"></i>
 													${member.getUserid()}
@@ -184,35 +212,50 @@
 							</div>
 						</div>
 						<!-- end card-->
-
+						${member.member_no}
+						${partners.member_no }
+						${checkAuth.member_no }
+						<c:out value="${checkAuth.member_no }"/>
+						<input type="hidden" name = "checkAuth" value="${checkAuth.member_no }">
+						<div class="" align="center">
+							<input class="btn btn-default" id="chatConnect"  type="button" value="채팅하기">
+							<input class="btn btn-default" id="applyButton" type="button" value="지원하기">
+						</div>
+	
+						<sec:authorize access="isAuthenticated()">
+						<c:if test="${partners.member_no eq member.member_no }">
 						<div class="card" style="height:300px; margin-top: 20px; ">
 							<div class="card-body">
-								<h5 class="card-title mb-3">Files</h5>
+								<h5 class="card-title mb-3">파일 관리</h5>
 								<!-- 산출물 -->
-								<div class="card mb-1 shadow-none border" >
-									<form action="insertFileAction.do" method="post"
-										enctype="multipart/form-data">
-										파일번호 : <input type="text" name="file_id"><br>
-										프로젝트번호 : <input type="text" name="apply_id"><br>
-										회원번호 : <input type="text" name="mem_id"><br>
-										파일선택하기<br> <input type="file" name="fname">
+								<div class="panel-body">
+										<div class="form-group uploadDiv">
+											<input type ="file" name='uploadFile' multiple>
+										</div>
 										
-									</form>
+										<div class='uploadResult'>
+											<ul>
+											
+											</ul>
+										</div>
 								</div>
 								<div class="card mb-1 shadow-none border"></div>
 								
-								<div class="" align="center">
-									<input " id="fileUpload"  type="button" value="파일업로드">
-								</div>
+								
+								<form role="form" action="/project/fileup" method="post">
+									<button type="submit" class="btn btn-default">파일 올리기</button>
+									<input type="hidden" name='proj_id' value='${project.getProj_id()}'>
+									<input class="form-control" type= "hidden" name="member_no" id="member_no"	value='${member.member_no}'>
+								</form>
+							<br>
+							
+
 							</div><!-- card body -->
 						</div><!-- card -->
-								
-								
-								<div class="" align="center">
-									<input class="btn btn-default" id="chatConnect"  type="button" value="채팅하기">
-									<input class="btn btn-default" id="applyButton" type="button" value="지원하기">
-								</div>
-	
+						</c:if>
+						</sec:authorize>
+
+
 					
 					</div>
 				</div>
@@ -275,8 +318,248 @@
 
 <script type="text/javascript" src="/resources/template/bootstrap/js/reply.js"></script>
 
+<<<<<<< HEAD
 <script>
 $(document).ready(function () {
+=======
+
+<script>
+$(document).ready(function(e) {
+
+	  var formObj = $("form[role='form']");
+	  
+	  $("button[type='submit']").on("click", function(e){
+	    
+	    e.preventDefault();
+	    
+	    console.log("submit clicked");
+	    
+	    var str = "";
+	    
+	    $(".uploadResult ul li").each(function(i, obj){
+	      
+	      var jobj = $(obj);
+	      
+	      console.dir(jobj);
+	      console.log("-------------------------");
+	      console.log(jobj.data("filename"));
+	      
+	      
+	      str += "<input type='hidden' name='attachList["+i+"].fileName' value='"+jobj.data("filename")+"'>";
+	      str += "<input type='hidden' name='attachList["+i+"].uuid' value='"+jobj.data("uuid")+"'>";
+	      str += "<input type='hidden' name='attachList["+i+"].uploadPath' value='"+jobj.data("path")+"'>";
+	      str += "<input type='hidden' name='attachList["+i+"].fileType' value='"+ jobj.data("type")+"'>";
+	      
+	    });
+	    
+	    console.log(str);
+	    
+	    
+	    
+	    var memau = "${partners.member_no }";
+	    
+	    var memaa = "${applyregister.member_no}";
+	   alert(memaa);
+	    
+ 		if(memau != "${member.member_no}") {
+			alert("본인이 진행중인 프로젝트만 파일 업로드가 가능합니다.");
+			return;
+		} else {
+		    formObj.append(str).submit();
+		    alert("파일이 업로드 완료.");
+		}
+
+	  });
+	  
+		var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
+		  var maxSize = 5242880; //5MB
+		  
+		  function checkExtension(fileName, fileSize){
+		    
+		    if(fileSize >= maxSize){
+		      alert("파일 사이즈 초과");
+		      return false;
+		    }
+		    
+		    if(regex.test(fileName)){
+		      alert("해당 종류의 파일은 업로드할 수 없습니다.");
+		      return false;
+		    }
+		    return true;
+		  }
+		  
+		  $("input[type='file']").change(function(e){
+
+			    var formData = new FormData();
+			    
+			    var inputFile = $("input[name='uploadFile']");
+			    
+			    var files = inputFile[0].files;
+			    
+			    for(var i = 0; i < files.length; i++){
+
+			      if(!checkExtension(files[i].name, files[i].size) ){
+			        return false;
+			      }
+			      formData.append("uploadFile", files[i]);
+			      
+			    }
+			    
+				$.ajax({
+					url: '/uploadAjaxAction',
+					processData: false,
+					contentType: false,
+					data:formData, type: 'POST',
+						dataType: 'json',
+						success: function(result) {
+							console.log(result);
+							showUploadResult(result);
+						}
+				}); // end ajax
+			  });  
+		  
+		  function showUploadResult(uploadResultArr){
+			    
+			    if(!uploadResultArr || uploadResultArr.length == 0){ return; }
+			    
+			    var uploadUL = $(".uploadResult ul");
+			    
+			    var str ="";
+			    
+			    $(uploadResultArr).each(function(i, obj){
+			    
+			        /* //image type
+			        if(obj.image){
+			          var fileCallPath =  encodeURIComponent( obj.uploadPath+ "/s_"+obj.uuid +"_"+obj.fileName);
+			          str += "<li><div>";
+			          str += "<span> "+ obj.fileName+"</span>";
+			          str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
+			          str += "<img src='/display?fileName="+fileCallPath+"'>";
+			          str += "</div>";
+			          str +"</li>";
+			        }else{
+			          var fileCallPath =  encodeURIComponent( obj.uploadPath+"/"+ obj.uuid +"_"+obj.fileName);            
+			            var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
+			              
+			          str += "<li><div>";
+			          str += "<span> "+ obj.fileName+"</span>";
+			          str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='file' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
+			          str += "<img src='/resources/img/attach.png'></a>";
+			          str += "</div>";
+			          str +"</li>";
+			        } */
+					//image type
+					
+					if(obj.image){
+						var fileCallPath =  encodeURIComponent( obj.uploadPath+ "/s_"+obj.uuid +"_"+obj.fileName);
+						str += "<li data-path='"+obj.uploadPath+"'";
+						str +=" data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'"
+						str +" ><div>";
+						str += "<span> "+ obj.fileName+"</span>";
+						str += "<button type='button' data-file=\'"+fileCallPath+"\' "
+						str += "data-type='image' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
+						str += "<img src='/display?fileName="+fileCallPath+"'>";
+						str += "</div>";
+						str +"</li>";
+					}else{
+						var fileCallPath =  encodeURIComponent( obj.uploadPath+"/"+ obj.uuid +"_"+obj.fileName);			      
+					    var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
+					      
+						str += "<li "
+						str += "data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"' ><div>";
+						str += "<span> "+ obj.fileName+"</span>";
+						str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='file' " 
+						str += "class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
+						str += "<img src='/resources/img/attach.png'></a>";
+						str += "</div>";
+						str +"</li>";
+					}
+
+			    });
+			    
+			    uploadUL.append(str);
+			  }
+		  
+		  $(".uploadResult").on("click", "button", function(e){
+			    
+			    console.log("delete file");
+			      
+			    var targetFile = $(this).data("file");
+			    var type = $(this).data("type");
+			    
+			    var targetLi = $(this).closest("li");
+			    
+			    $.ajax({
+			      url: '/deleteFile',
+			      data: {fileName: targetFile, type:type},
+			      dataType:'text',
+			      type: 'POST',
+			        success: function(result){
+			           alert(result);
+			           
+			           targetLi.remove();
+			         }
+			    }); //$.ajax
+			   });
+});  
+		  
+</script> <!-- 파일업로드 -->
+
+
+<script>
+	$(document).ready(function() {
+		(function() {
+			var proj_id = '<c:out value="${project.getProj_id()}"/>';
+
+			$.getJSON("/project/getAttachList", {
+				proj_id : proj_id
+			}, function(arr) {
+				console.log(arr);
+				
+				var str = "";
+				
+				$(arr).each(function(i, attach) {
+					
+					if(attach.fileType) {
+						var fileCallPath = encodeURIComponent(attach.uploadPath+"/s_"+attach.uuid+"_"+attach.fileName);
+						
+						str += "<li data-path='"+ attach.uploadPath+"'data-uuid='"+attach.uuid+"'data-filename='"+attach.fileName+"'data-tyoe='"+attach.fileType+"'><div>";
+						str += "<img src='/display?fileName="+fileCallPath+"'>";
+						str += "</div>";
+						str += "</li>";
+					} else {
+						str += "<li data-path = '"+attach.uploadPath+"' data-uuid='"+attach.uuid+"'data-filename='"+attach.fileName+"'data-type='"+attach.fileType+"'><div>";
+						str += "<span>" + attach.fileName + "</span><br/>";
+						str += "<img src = '/resources/img/attach.png'>";
+						str += "</div>";
+						str += "</li>";
+					}
+				});
+				$(".uploadResult1 ul").html(str);
+				
+			});
+		})();
+		
+		$(".uploadResult1").on("click", "li", function(e) {
+			console.log("view image file");
+			
+			var liObj = $(this);
+			
+			var path = encodeURIComponent(liObj.data("path") + "/" + liObj.data("uuid") + "_" + liObj.data("filename"));
+			
+			if(liObj.data("type")) {
+				showImage(path.replace(new RegExp(/\\/g), "/"));
+			} else {
+				self.location = "/download?fileName="+ path
+			}
+		});
+
+	});
+</script>
+
+<script>
+	$(document).ready(function () {
+>>>>>>> e6e4121daf83de5e57d567b4db746192d6b21d17
 	  
 	  var projValue = '<c:out value="${board.getProj_id}"/>';
 	  var replyUL = $(".chat");

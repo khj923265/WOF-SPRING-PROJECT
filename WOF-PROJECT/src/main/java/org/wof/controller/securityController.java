@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.security.Principal;
+
 
 @Controller
 @AllArgsConstructor
@@ -29,14 +31,9 @@ public class securityController {
         if (logout != null){
             model.addAttribute("logout","Logout!");
         }
+
         return "member/customlogin";
     }
-    @PostMapping("/customlogout")
-    public String customlogout(){
-        return "member/customlogin";
-    }
-
-
 
 
 }

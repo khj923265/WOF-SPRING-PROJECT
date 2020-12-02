@@ -4,49 +4,28 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.wof.mapper.ProjectMapper2">
 
-
-	<!-- 추천 프로젝트를 하기 위한 페이징과 검색 불러오기 -->
-<!-- 	<select id="ProjectList" resultType="org.wof.domain.ProjectVO">
-	 <![CDATA[
-		select *
-		from 
-		(
-			select 
-			rownum rn, proj_title, proj_work_place, proj_reqr_skill, proj_detail, proj_id
-			from project
-			where 
-		]]>	
-		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
-			<foreach item='type' collection="typeArr">
-				<trim prefix="OR">
-					<choose>
-						<when test="type == 'T'.toString()">
-							proj_title like '%'||#{keyword}||'%'
-						</when>
-						<when test="type == 'L'.toString()">
-							proj_work_place like '%'||#{keyword}||'%'
-						</when>
-						<when test="type == 'S'.toString()">
-							proj_reqr_skill like '%'||#{keyword}||'%'
-						</when>
-					</choose>
-				</trim>
-			</foreach>
-		</trim>
-		
-		
-		 <![CDATA[
-			rownum <= #{pageNum} * #{amount}
-		)
-		where rn > (#{pageNum} -1 ) * #{amount}
-	  ]]>
-	</select> -->
 	
 		<select id="projectList" resultType="org.wof.domain.ProjectVO">
-			select * from project
+		<![CDATA[
+			SELECT * 
+			FROM
+		 		(SELECT rownum rn, proj_id, proj_title, proj_reg_date, member_no, proj_apply_deadline,
+					proj_start_date, proj_end_date, proj_estimate, PROJ_REQR_PERSON, PROJ_REQR_SKILL,
+					PROJ_TYPE, PROJ_CAREER, PROJ_PM, PROJ_WORK_TYPE, PROJ_WORK_PLACE, PROJ_WORK_TIME,
+					proj_work_equip, proj_walfare, proj_detail, PROJ_FINISH_DATE, apply_mem, proj_status,
+					PROJ_UPDATE_DATE, PROJ_REPLYCNT, PROJ_TOTAL_DATE
+				FROM
+					(SELECT * 
+					FROM PROJECT
+					ORDER BY lpad(proj_id, 10, '0') DESC
+					)
+				WHERE rownum <= #{pageNum} * #{amount}
+				) 
+			WHERE rn > (#{pageNum} - 1) * #{amount}
+			]]>
 		</select>
 	
-	<select id="projectList2" parameterType="java.lang.String" resultType="org.wof.domain.ProjectVO">
+	<select id="projectDetail" parameterType="java.lang.String" resultType="org.wof.domain.ProjectVO">
 			select * from project where proj_id = #{proj_id}
 	</select>
 	
@@ -54,8 +33,29 @@
 		select count(*) from project
 	</select>
 	
-	<select id="listRecommendProject" parameterType="org.wof.domain.ProjectVO" resultType="org.wof.domain.ProjectVO">
-		
+<!-- 	<select id="listRecommendProject" parameterType="org.wof.domain.PartnersVO" resultType="org.wof.domain.ProjectVO">
+		select p.* from project p where p.proj_work_place like '%' || #{prefered_area} || '%' and p.proj_reqr_skill like '%' || #{skill} || '%'
+	</select> -->
+	
+	<select id="listRecommendProject" parameterType="org.wof.domain.PartnersVO" resultType="org.wof.domain.ProjectVO">
+			<![CDATA[
+			SELECT p.* 
+			FROM
+		 		(SELECT rownum rn, proj_id, proj_title, proj_reg_date, member_no, proj_apply_deadline,
+					proj_start_date, proj_end_date, proj_estimate, PROJ_REQR_PERSON, PROJ_REQR_SKILL,
+					PROJ_TYPE, PROJ_CAREER, PROJ_PM, PROJ_WORK_TYPE, PROJ_WORK_PLACE, PROJ_WORK_TIME,
+					proj_work_equip, proj_walfare, proj_detail, PROJ_FINISH_DATE, apply_mem, proj_status,
+					PROJ_UPDATE_DATE, PROJ_REPLYCNT, PROJ_TOTAL_DATE
+				FROM
+					(SELECT * 
+					FROM PROJECT
+					ORDER BY lpad(proj_id, 10, '0') DESC
+					)
+				WHERE rownum <= #{pageNum} * #{amount}
+				) 
+			WHERE rn > (#{pageNum} - 1) * #{amount} and
+			proj_work_place like '%' || #{prefered_area} || '%' and p.proj_reqr_skill like '%' || #{skill} || '%'
+			]]>
 	</select>
 	   
    <!-- 관심 프로젝트 -->
@@ -70,11 +70,12 @@
    </delete> 
    
    <select id="listFollowProject" parameterType="java.lang.String"  resultType="org.wof.domain.ProjectVO">
-   	select p.* from followproject fp, project p where fp.related_member = #{related_member} and p.proj_id = fp.related_project
+   	select p.* from followproject fp, project p 
+   	where fp.related_member = #{related_member} and p.proj_id = fp.related_project
    </select>
    
    <select id="detailFollowProject" parameterType="org.wof.domain.FollowProjectVO" resultType="org.wof.domain.FollowProjectVO">
-   	select followproject_no from followproject where related_member = #{related_member} and related_project = #{related_project}
+   	select * from followproject where related_member = #{related_member} and related_project = #{related_project}
    </select>
    
    <!-- project status -->
@@ -83,5 +84,22 @@
    update project set proj_status = 2 where proj_start_date <= sysdate
     ]]>
    </update>
+   
+   <select id="listMeeting" parameterType="java.lang.String" resultType="org.wof.domain.MeetVO">
+   	<![CDATA[
+   		select * from meet where meet_req_mem = #{meet_req_mem}
+   ]]>
+   </select>
+   
+   <insert id="addMeeting" parameterType="org.wof.domain.MeetVO">
+   	   <![CDATA[
+      INSERT INTO meet VALUES ('meet'|| meet_seq.nextval, #{meet_req_mem}, #{meet_type}, #{meet_datetime}, #{meet_contents})
+      ]]>
+   </insert>
+   
+   <delete id="deleteMeeting" parameterType="java.lang.String">
+   	delete from meet where meet_id = #{meet_id}
+   </delete>
+   
 
 </mapper>

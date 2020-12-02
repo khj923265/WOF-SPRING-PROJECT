@@ -7,13 +7,14 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.wof.domain.FollowProjectVO;
+import org.wof.domain.MeetVO;
+import org.wof.domain.PartnersVO;
 import org.wof.domain.ProjectVO;
-
+import org.wof.domain.Standard;
 import org.wof.mapper.ProjectMapper2;
 
 @Service
@@ -25,13 +26,13 @@ public class ProjectServiceImpl2 implements ProjectService2 {
 	private JavaMailSender mailSender;
 
 	@Override
-	public List<ProjectVO> projectList() {
-		return projectMapper2.projectList();
+	public List<ProjectVO> projectList(Standard stand) {
+		return projectMapper2.projectList(stand);
 	}
 
 	@Override
-	public ProjectVO projectList2(String proj_id) {
-		return projectMapper2.projectList2(proj_id);
+	public ProjectVO projectDetail(String proj_id) {
+		return projectMapper2.projectDetail(proj_id);
 	}
 
 	@Override
@@ -50,35 +51,64 @@ public class ProjectServiceImpl2 implements ProjectService2 {
 	}
 
 	@Override
-	public FollowProjectVO detailFollowProject(FollowProjectVO vo) {
+	public FollowProjectVO detailFollowProject(String related_project, String related_member) {
+		FollowProjectVO vo = new FollowProjectVO();
+		vo.setRelated_member(related_member);
+		vo.setRelated_project(related_project);
 		return projectMapper2.detailFollowProject(vo);
 	}
-
+	
 	@Override
-	public void RecommendSendMail() {
+	public List<ProjectVO> listRecommendProject(PartnersVO vo) {
+		return projectMapper2.listRecommendProject(vo);
+	}
+	
+	@Override
+	public int addMeeting(MeetVO vo) {
+		return projectMapper2.addMeeting(vo);
+	}
+	
+	@Override
+	public int deleteMeeting(String meet_id) {
+		return projectMapper2.deleteMeeting(meet_id);
+	}
+	
+	@Override
+	public List<MeetVO> listMeeting(String meet_req_mem) {
+		return projectMapper2.listMeeting(meet_req_mem);
+	}
+	
+	@Override
+	public int totalList(Standard stand) {
+		return projectMapper2.totalProject(stand);
+	}
+	
+	@Override
+	public void RecommendSendMail(String loginUser, Standard stand) {
+		
 
 			Random rm = new Random();
-			int total = projectMapper2.totalProject();
+			int total = projectMapper2.totalProject(stand);
 			String project_id = "project" + (rm.nextInt(total)+1);
-			ProjectVO vo = projectMapper2.projectList2(project_id);
+			ProjectVO vo = projectMapper2.projectDetail(project_id);
 
 	       MimeMessage message = mailSender.createMimeMessage();
 	       MimeMessageHelper messageHelper;
-	       String contents = "";
-	       contents += "<html><head><body>";
-	       contents = "<a href='#'>WOF 홈페이지로 이동하기</a>";
-	       contents += "<h2>고객님에게 제안드리는 오늘의 프로젝트</h2>";
-	       contents += "<b>"+vo.getProj_title()+"</b><br>";
-	       contents += "<b>"+ vo.getProj_detail()+ "</b><br>";
-	       contents += "<p>WOF</p></body></html>";
+	       
+	       StringBuffer contents = new StringBuffer();
+	       	contents.append("<h1>WOF")
+	       	.append("현재 올라와 있는 프로젝트")
+	       	.append(vo.getProj_title())
+	       	.append(vo.getProj_detail())
+	       	.append("</h1>");
 
 	      try {
 
 	         messageHelper = new MimeMessageHelper(message, true, "UTF-8");
-	          messageHelper.setFrom("jaeeun@naver.com"); // 보내는사람 생략하거나 하면 정상작동을 안함
-	          messageHelper.setTo("jaeeunlim0329@gmail.com"); // 받는사람 이메일
+	          messageHelper.setFrom("wof@wof.com"); // 보내는사람 생략하거나 하면 정상작동을 안함
+	          messageHelper.setTo(loginUser); // 받는사람 이메일
 	          messageHelper.setSubject("[WOF] 고객님에게 알맞은 프로젝트를 추천해드립니다."); // 메일제목은 생략이 가능하다
-	          messageHelper.setText(contents,"true"); // 메일 내용
+	          messageHelper.setText(contents.toString(), "html"); // 메일 내용
 
 	      } catch (MessagingException e) {
 	         // TODO Auto-generated catch block
