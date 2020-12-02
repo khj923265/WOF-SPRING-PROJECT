@@ -1,5 +1,6 @@
 package org.wof.service;
 
+import java.io.Console;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -9,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.wof.domain.ContractSourceVO;
+import org.wof.domain.ContractVO;
 import org.wof.domain.MemberVO;
 import org.wof.domain.PointSearch;
 import org.wof.domain.PointVO;
@@ -34,32 +38,26 @@ public class PointServiceImpl implements PointService {
 	Date date = new Date();
 	String currentDate = new SimpleDateFormat("yy-MM-dd").format(date);
 	
-	
+	@Transactional
 	@Override
 	public int ChargingService(PointVO point, MemberVO member){
-		
 		
 		log.info("포인트 충전" + point);
 		
 		//포인트 누적
 		pointMapper.Charging(point);
 		
-		//point_type => "0:충전", 1:인출, 2:결제
+		//member에서 total_point가져오기
+		int balance = pointMapper.getTotalpoint(point);
+		
+		//point_type => "0:충전", 1:인출, 2:결제, 3:보관, 4:전송, (5:입금, 6:환불)
 		point.setPoint_type(0);
 		
 		//point_balance
-		//String userId = member.getMember_no();
+		System.out.println("service point : "+point);
+		point.setPoint_balance(balance);
 		
-		int balance = pointMapper.pointBalance(point);
-		
-		int sum = balance+point.getPoint_amount()
-		
-		point.setPoint_balance(member.getTotal_point());
-		
-		
-		//log.info("point type:" + point.getPoint_type());
-		
-		//충전여부 확인 (충전 내역)
+		//충전 여부 확인
 		int chargingResult = pointMapper.ChargingList(point);
 		
 		return chargingResult;
@@ -70,19 +68,22 @@ public class PointServiceImpl implements PointService {
 		
 		log.info("포인트 인출" + point);
 		
-		
 		//포인트 누적
 		pointMapper.Withdraw(point);
 		
-		//point_type => 0:충전, "1:인출", 2:결제
+		//member에서 total_point가져오기
+		int balance = pointMapper.getTotalpoint(point);
+		
+		//point_type => 0:충전, "1:인출", 2:결제, 3:보관, 4:전송, (5:입금, 6:환불)
 		point.setPoint_type(1);
 		
 		//point_balance
+		System.out.println("service point : "+point);
+		point.setPoint_balance(balance);
 		
 		/*if(member.getTotal_point() < point.getPoint_amount()){
 			throw new BalanceInsufficientException("잔고 부족 :"+(point.getPoint_amount()-member.getTotal_point())+"이 모자랍니다.");
 		}*/
-		point.setPoint_balance(member.getTotal_point());
 		
 		//인출여부 확인 (인출 내역)
 		int withdrawResult = pointMapper.WithdrawList(point);
@@ -90,53 +91,89 @@ public class PointServiceImpl implements PointService {
 		return withdrawResult;
 	}
 	
-	
-
 	@Override
-	public int PaymentFromService(PointVO point, MemberVO member, ProjectVO project) {
-	
+	public int PaymentInService(PointVO point, ContractVO contract) {
 		
-	if(project.getProj_status() == 2){
-		//포인트 결제
+		log.info("포인트 결제" + point);
+		
+		//pointMapper.getContract(contract);
+
+		//contract.setBusiness_register_no(contract.getBusiness_register_no());
+		
+		point.setPoint_owner(contract.getClient());
+		point.setPoint_amount(contract.getProj_estimate());
+		point.setPoint_contents(contract.getProj_title());
+		point.setPoint_chg_date(contract.getProj_start_date());
+		
+		log.error("-------------확인------------"+point);
+		//포인트 누적
 		pointMapper.PaymentFrom(point);
-		//point_type => 0:충전, 1:인출, "2:결제", 3:입금
-		point.setPoint_type(2);
-	}
-	
-	log.info("포인트  결제" + point);
+		
+		//member에서 total_point가져오기
+		int balance = pointMapper.getTotalpoint(point);
+		
 		//point_balance
+		System.out.println("member에서 total_point가져온 후 : " + point);
+		point.setPoint_balance(balance);
 		
-		//point.setPoint_balance(member.getTotal_point());
+		//결제 (인출 )
+		pointMapper.PaymentFromList(point);
 		
-		//결제여부 확인 (결젠 내역)
-		int paymentResult = pointMapper.PaymentList(point);
 		
-		return paymentResult;
+		//포인트 누적
+		pointMapper.HoldFrom(point);
+		
+		//member에서 total_point가져오기
+		int balance2 = pointMapper.getTotalpoint(point);
+		
+		//point_balance
+		System.out.println("member에서 total_point가져온 후 : " + point);
+		point.setPoint_balance(balance2);
+		
+		//결제 (인출 )
+		pointMapper.PaymentFromList(point);
+		
+		//결제여부 확인 (인출 내역)
+		int result = pointMapper.PaymentFrom(point);
+				
+		return result;
+		
 	}
 
 	@Override
-	public int PaymentToService(PointVO point, MemberVO member) {
+	public int PaymentOutService(PointVO point, MemberVO member, ContractSourceVO contract) {
 		
+		log.info("포인트 전송" + point);
 		
+		//포인트 누적
 		pointMapper.PaymentTo(point);
-		//point_type => 0:충전, "1:인출", 2:결제, "3:입금"
-		point.setPoint_type(3);
+		
+		//member에서 total_point가져오기
+		int balance = pointMapper.getTotalpoint(point);
+		
+		//point_type => 0:충전, 1:인출, 2:결제, 3:보관, "4:전송", (5:입금, 6:환불)
+		point.setPoint_type(4);
 		
 		//point_balance
+		System.out.println("member에서 total_point가져온 후 : " + point);
+		point.setPoint_balance(balance);
 		
-		//point.setPoint_balance(member.getTotal_point());
+		//결제여부 확인 (인출 내역)
+		int paymentOutResult = pointMapper.PaymentToList(point);
 		
-		//결제여부 확인 (결젠 내역)
-		int paymentResult = pointMapper.PaymentList(point);
-		
-		return paymentResult;
+		return paymentOutResult;
 	}
-	
-	
+
 	@Override
-	public List<PointVO> ListService(Standard standard) {
+	public List<PointVO> ListService(MemberVO member, PointVO point, Standard standard) {
 			
-		return pointMapper.getListPaging(standard);
+		member = pointMapper.getMember_no(member);
+		
+		member.getReal_name();
+		
+		point.setPoint_owner(member.getMember_no());
+		
+		return pointMapper.getList(point);
 	}
 	
 	@Override
@@ -160,15 +197,5 @@ public class PointServiceImpl implements PointService {
 		
 		return data;
 	}
-
-
-
-
-
-
-	
-
-
-
 
 }
