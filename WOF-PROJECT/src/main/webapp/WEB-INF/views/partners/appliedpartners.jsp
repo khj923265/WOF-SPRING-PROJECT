@@ -93,7 +93,7 @@
 										</p>
 										<p class="mt-3 mb-0 text-sm">
 											<span class="text-nowrap"> <i class="ni ni-badge ml-1"></i>
-												${Member.userphone }
+												${Member.userPhone }
 											</span>
 										</p>
 									</span>
@@ -117,13 +117,15 @@
 							</div> --%>
 
 							<div class="col-sm-4 my-auto">
-								<button type="button" class="btn btn-outline-default">계약서작성
+								
 								<a href="${pageContext.request.contextPath }/contract/read?source_no=${Project.member_no }
-								&target_no=${Member.member_no }&proj_id=${Project.proj_id }"></a>
+								&target_no=${Member.member_no }&proj_id=${Project.proj_id }">
+								<button type="button" class="btn btn-outline-default">계약서작성</button>
+								</a>
 								<%-- <input type="hidden" name="source_no" value="${Project.member_no }"/>
 								<input type="hidden" name="target_no" value="${Member.member_no }" />
 								<input type="hidden" name="proj_id" value="${Project.proj_id }" /> --%>
-								</button>
+								
 							</div>
 
 						</div>

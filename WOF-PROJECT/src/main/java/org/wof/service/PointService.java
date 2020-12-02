@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.naming.InsufficientResourcesException;
 
+import org.wof.domain.ContractSourceVO;
+import org.wof.domain.ContractVO;
 import org.wof.domain.MemberVO;
 import org.wof.domain.PointSearch;
 import org.wof.domain.PointVO;
@@ -15,13 +17,11 @@ public interface PointService {
 	
 	public int WithdrawService(PointVO point, MemberVO member);
 	
-	public int PaymentFromService(PointVO point, MemberVO member, ProjectVO project);
+	public int PaymentInService(PointVO point, ContractVO contract);
 
-	public int PaymentToService(PointVO point, MemberVO member);
+	public int PaymentOutService(PointVO point, MemberVO member, ContractSourceVO contract);
 	
-	//public int getPointTotalService(MemberVO member);
-	
-	public List<PointVO> ListService(Standard standard);
+	public List<PointVO> ListService(MemberVO member, PointVO point, Standard standard);
 	
 	public int getTotalService(Standard standard);
 

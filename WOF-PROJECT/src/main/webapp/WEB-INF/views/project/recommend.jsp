@@ -284,7 +284,7 @@
     
         <div class="row align-items-center" >
         <h2 class="card-title text-uppercase text-muted mb-0 mr-2"><a href="#">${project.proj_title}</a></h2>
-		<span class="justify-content-center ">
+		<span class="justify-content-center mr-2">
 		<c:choose>
 		<c:when test="${project.followproject_no == null}">         
         <i class="ni ni-favourite-28 mt-2 " >
@@ -297,31 +297,43 @@
         <input type="hidden" id="memberId" value="${member.member_no}" >     
         </i>   
         </span>
+        
+         <fmt:parseDate value="2020-11-25" var="strPlanDate" pattern="yyyy-MM-dd"/>
+            <fmt:parseNumber value="${strPlanDate.time / (1000*60*60*24)}" integerOnly="true" var="strDate"></fmt:parseNumber>
+            <fmt:parseDate value="${project.getProj_apply_deadline()}" var="endPlanDate" pattern="yyyy-MM-dd"/>
+            <fmt:parseNumber value="${endPlanDate.time / (1000*60*60*24)}" integerOnly="true" var="endDate"></fmt:parseNumber>
+            
+            <i class="ni ni-notification-70 mr-2"></i>
+            <span  style="color: red;">마감  ${endDate - strDate}일 전</span>
      	
 	</div>	      
     </div>
-   
+   <div>
     <p class="mt-3 mb-0 text-sm">
     <i class="ni ni-check-bold mr-3"></i><span class="text-success mr-2">${project.proj_career}</span>
-   <i class="ni ni-key-25 mr-3"></i><span class="text-success mr-2">${project.proj_estimate}원</span>
+  	 <i class="ni ni-key-25 mr-3"></i><span class="text-success mr-2">${project.proj_estimate}원</span>
 	</p>
-	
+	</div>
+	<div>
 	<p class="mt-3 mb-0 text-sm">
     <i class="ni ni-single-02 mr-3"></i><span class="text-success mr-2">${project.proj_reqr_person}</span>
    <i class="ni ni-time-alarm mr-3"></i><span class="text-success mr-2">${project.proj_work_time}</span>
    <i class="ni ni-compass-04 mr-3"></i><span class="text-success mr-2">${project.proj_work_place}</span>
 	</p>
+ 	</div>
  	
     <div class="mt-3 mr-3 text-sm d-flex">
-	<c:set var="TextValue" value="${project.proj_detail}" />
+	<c:set var="TextValue" value="${project.proj_detail}"/>
 	${fn:substring(TextValue,0,60)}<br>${fn:substring(TextValue,61,120)}
 	<br>${fn:substring(TextValue,121,180)}<br>${fn:substring(TextValue,181,240)}
-	<br>${fn:substring(TextValue,241,300)} <br>${fn:substring(TextValue,301,360)}...
 	</div>
 	
+	<div>
 	<p class="mt-3 mb-0 text-sm">
-   <i class="ni ni-chart-bar-32 mr-3"></i><span class="text-success mr-2">${project.apply_mem} people </span>
+   <i class="ni ni-chart-bar-32 mr-3"></i><span class="text-success mr-2">${project.apply_mem}명</span>
 	</p>
+	</div>
+	
 </div>
 </c:forEach>
 	

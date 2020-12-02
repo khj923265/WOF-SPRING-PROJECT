@@ -49,7 +49,7 @@
 												value="${dt }" pattern="yyyy/MM/dd" /></td>
 										<!-- 자세히보기  -->
 										<td class="text-right"><a class=""
-											href="${pageContext.request.contextPath}/partners/applydetail?member_no=${member.member_no }&proj_id=${ProjectVO.proj_id}">자세히보기</a></td>
+											href="${pageContext.request.contextPath}/partners/applydetail?member_no=${member.member_no }&proj_id=${ProjectVO.proj_id}">파트너스 선택</a></td>
 
 									</tr>
 								</c:forEach>

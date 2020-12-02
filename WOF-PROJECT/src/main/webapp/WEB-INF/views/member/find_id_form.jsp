@@ -28,7 +28,7 @@
                             </div>
                             <div class="row pt-3 inline">
                                 <div class="col-6 text-center">
-                                    <input type="button" class="btn btn-success" onclick="return findIdForm()"
+                                    <input type="button" class="btn btn-success" onclick="return loginservice.findIdForm()"
                                            value="아이디 찾기"/>
                                 </div>
                                 <div class="col-4 text-center">

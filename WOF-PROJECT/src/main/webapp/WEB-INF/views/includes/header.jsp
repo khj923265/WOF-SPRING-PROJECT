@@ -153,7 +153,7 @@
                                     <span>마이페이지</span>
                                 </a>
                             </c:if>
-                            <a href="${pageContext.request.contextPath }/project/meeting?member_no=${member.member_no}"
+                            <a href="${pageContext.request.contextPath }/member/partners/profile_info"
                              class="dropdown-item"> <i
                                     class="ni ni-settings-gear-65"></i> <span>회원정보수정</span>
                             </a> <a href="" class="dropdown-item"> <i
