@@ -227,7 +227,7 @@
 						<!-- end card-->
 						${member.member_no}
 						${partners.member_no }
-						${checkAuth.member_no }
+						${checkAuth }/
 						<c:out value="${checkAuth.member_no }"/>
 						<input type="hidden" name = "checkAuth" value="${checkAuth.member_no }">
 						<div class="" align="center">
@@ -236,7 +236,7 @@
 						</div>
 	
 						<sec:authorize access="isAuthenticated()">
-						<c:if test="${partners.member_no eq member.member_no }">
+						<c:if test="${checkAuth.member_no eq member.member_no }">
 						<div class="card" style="height:300px; margin-top: 20px; ">
 							<div class="card-body">
 								<h5 class="card-title mb-3">파일 관리</h5>

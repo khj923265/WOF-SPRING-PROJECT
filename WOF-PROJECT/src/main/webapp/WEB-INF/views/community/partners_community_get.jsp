@@ -393,7 +393,7 @@
 						
 						<sec:authorize access="isAuthenticated()">
 						
-						replyer = '<sec:authentication property = "principal.username"/>';
+						replyer = '<sec:authentication property = "principal.member_no"/>';
 						
 						</sec:authorize>
 						

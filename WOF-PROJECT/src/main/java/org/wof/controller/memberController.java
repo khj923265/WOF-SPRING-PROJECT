@@ -149,7 +149,6 @@ public class memberController {
         HttpSession session = request.getSession();
 
         ClientVO clientVO = service.clientInfo(principal.getName());
-
         session.setAttribute("client",clientVO);
 
         return "redirect:/client/dashboard_client?member_no="+clientVO.getMember_no();
@@ -179,7 +178,7 @@ public class memberController {
 
 
 
-        return "redirect:/client/client/dashboard_client";
+        return "redirect:/client/dashboard_client";
     }
 
     //------------------------------------------------------------------------

@@ -10,7 +10,7 @@ public interface ProjectAttachMapper {
 
 	public void insert(ProjectAttachVO vo);
 	
-	public List<ContractTargetVO> checkAuth(String member_no);
+	public List<ContractTargetVO> checkAuth(ContractTargetVO contracttargetVO);
 	
 	public void delete(String uuid);
 	

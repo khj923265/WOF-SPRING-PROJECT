@@ -82,10 +82,10 @@ public class ProjectController {
 	
 	}
 	
-
+	@GetMapping("/fileup")
 	@PostMapping("/fileup")
 	public String fileup(ProjectVO projectvo, RedirectAttributes rttr, Model model,  
-			@RequestParam("member_no") String member_no, ContractTargetVO targetVO) {
+			@RequestParam("member_no") String member_no, ContractTargetVO contracttargetVO) {
 		
 		
 		log.info("fileup " + projectvo);
@@ -97,8 +97,9 @@ public class ProjectController {
 		service.register(projectvo);
 		
 		
-		model.addAttribute("checkAuth", service.checkAuth(member_no));
-		log.info("checkAuth : " + targetVO);
+		model.addAttribute("checkAuth", service.checkAuth(contracttargetVO));
+		
+		log.info("checkAuth : " + contracttargetVO);
 		rttr.addFlashAttribute("result", projectvo.getProj_id());
 		rttr.addFlashAttribute("result", projectvo.getMember_no());
 		

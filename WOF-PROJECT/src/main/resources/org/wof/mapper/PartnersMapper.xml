@@ -13,8 +13,9 @@
 			p.proj_estimate, p.proj_reqr_person, p.proj_work_place
 		from project p, apply a
 		where p.proj_id = a.proj_id and a.member_no = #{member_no}
+		and rownum <= #{standard.pageNum} * #{standard.amount}
 	)
-	where rownum <= #{standard.pageNum} * #{standard.amount}
+		where rn > (#{standard.pageNum} -1) * #{standard.amount}
 	]]>
 </select>
 
@@ -310,10 +311,10 @@
 			select rownum rn, m.member_no, m.userid, m.real_name, m.userphone
 			from member m, applyregister a
 			where m.member_no = a.member_no and a.proj_id = #{proj_id}
-			and rownum <= (#{pageNum} -1) * #{amount}
+			and rownum <= #{standard.pageNum} * #{standard.amount}
+			order by m.LOGIN_DATE desc
 		)	
-		where rn > (#{pageNum} -1) * #{amount}
-	
+		where rn > (#{standard.pageNum} -1) * #{standard.amount}
 		]]>
 	</select>
 	
