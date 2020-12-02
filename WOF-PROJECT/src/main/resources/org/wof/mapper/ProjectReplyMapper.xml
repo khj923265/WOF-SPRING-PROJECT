@@ -5,28 +5,28 @@
 <mapper namespace="org.wof.mapper.ProjectReplyMapper">
 
 	<insert id="insert">
-		insert into project_reply(proj_reply_no, proj_id, proj_reply_cont, proj_reply_date, member_no) 
-			values ('p_rno'||seq_project_reply.nextval, #{proj_id}, #{proj_reply_cont}, TO_DATE(#{proj_reply_date},'yyyy-MM-dd'), #{member_no} )
+		insert into project_reply(rno, pno, reply, replyer, replydate) 
+			values ('rno'||seq_project_reply.nextval, #{pno}, #{reply}, #{replyer}, sysdate )
 	</insert>
 
 	<select id="read" resultType="org.wof.domain.ProjectReplyVO">
-		select * from project_reply where proj_reply_no = #{proj_reply_no}
+		select * from project_reply where rno = #{rno}
 	</select>
 	
 	<delete id="delete">
-		delete from project_reply where proj_reply_no = #{proj_reply_no}
+		delete from project_reply where rno = #{rno}
 	</delete>
 	
 	<update id="update">
-		update project_reply set proj_reply_cont = #{proj_reply_cont}, proj_reply_update = sysdate
-			where proj_reply_no = #{proj_reply_no}
+		update project_reply set reply = #{reply}, proj_reply_update = sysdate
+			where rno = #{rno}
 	</update>
 
 	<select id="getListWithPaging" resultType="org.wof.domain.ProjectReplyVO">
 		select *
 		from project_reply
-		where proj_id = #{proj_id}
-		order by proj_reply_date desc
+		where pno = #{pno}
+		order by replydate desc
 	</select>
 
 

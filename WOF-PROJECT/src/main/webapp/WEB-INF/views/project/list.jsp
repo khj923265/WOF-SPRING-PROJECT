@@ -7,61 +7,52 @@
 	<!-- Header & Menu -->
 	<%@ include file="../includes/header.jsp" %>
 
-
+	<!-- Sub menu -->
+	<%-- <%@ include file="menu.jsp"%> --%>
+	
 
 	<!-- Main Content -->
-	<div class="header pb-6 container">
-		<div class="container-fluid">
-			<div class="header-body text-right ">
-				<div class="row py-4">
-					<div class="col-lg-6 col-7">
-						<form
-							class="navbar-search navbar-search-light form-inline mr-sm-3"
-							id="navbar-search-main">
-							<div class="form-group mb-0">
-								<div
-									class="input-group input-group-alternative input-group-merge mr-2">
-									<div class="input-group-prepend">
-										<span class="input-group-text"><i class="fas fa-search"></i></span>
-									</div>
-									<input class="form-control" placeholder="Search" type="text"
-										value="searchKey">
+	<!-- top start-->
+	<div class="main-content" id="panel">
+	
+	
+	
+	
+	
+	<div class="container">
+			
+		<div class="row mb-3">
+				<div class="col-lg-3 col-3"></div>
+				<div class="col-lg-6 col-7">
+					<form class="navbar-search navbar-search-light form-inline mr-sm-3"
+					id="searchForm" action="/partners/list" method="get">
+						<div class="form-group mb-0">
+							<div
+								class="input-group input-group-alternative input-group-merge mr-2">
+								<div class="input-group-prepend">
+									<span class="input-group-text"><i class="fas fa-search"></i></span>
 								</div>
-								<button type="button" class="btn btn-secondary">Search</button>
+								<input type="text" name="keyword" class="form-control" placeholder="Search" />
+								<%-- value='<c:out value="${pageMaker.standard.keyowrd }"/>' />
+								<input type="hidden" name='type' value='<c:out value="${pageMaker.standard.type }"/>' /> --%>
+								<input type="hidden" name='member_no' value='${member.member_no}'>
+								<input type="hidden" name='pageNum' value = '${pageMaker.standard.pageNum}' />
+								<input type="hidden" name='amount' value = '${pageMaker.standard.amount}' />
 							</div>
-						</form>
-					</div>
+							<button class="btn btn-secondary">Search</button>
+						</div>
+					</form>
 				</div>
 			</div>
-		</div>
-	</div>
+
 
 	<!-- Page content -->
-	<div class="container">
-		<div class="row justify-content-center">
-			<div class="col-3">
-				<div class="container-fluid mt--6">
+				<div class="row">
+				<!-- 체크박스 -->
+				<div class="col-sm-3" style="margin-top: 30px;">
 					<div class="row">
-
-						<div class="card card-profile">
-
-							<div class="card-header text-left border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-								
-									<i class="ni ni-active-40"></i>
-									<span>검색</span><br><br>
-								
-							</div>
-							<div class="card-body pt-0">
-								<div class="container">
-									<div class="row col justify-content-center">
-										<div class="col-lg-3 order-lg-2"></div>
-									</div>
-
-									<div class="row">
-										<div class="col"></div>
-									</div>
-									<div class="text-left">
-										
+						<div class="col-sm-12" >
+						<div class="pl-3 shadow-sm rounded bg-white position-relative" id="findquick" >
 										
 										
 										<h5 class="h3">프로젝트 카테고리</h5>
@@ -284,28 +275,94 @@
 									
 									
 									
-									
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-				</div>
-			</div>
+				
 
 			<!-- list -->
-			<div class="col-9 container-fluid mt--6" >
-				<div class="row">
-					<div class="col">
-						<div class="card">
-							<!-- Card header -->
-							<div class="card-header border-0">
-								<h3 class="mb-0">프로젝트 리스트</h3>
-							</div>
-							
+			<div class="col-sm-9">
+			
+								<c:forEach var="project" items="${list}">
+
+									<div class="row shadow-sm p-1 bg-white rounded mb-3"  style="margin-left: 10px; margin-top: 10px">
+									
+									
+										<div class="col-sm-7" >
+											<div class="row align-items-center" >
+
+												<h2 class="card-title text-uppercase text-muted mb-0 mr-2">
+													${project.getProj_id()}
+													<a	href='/project/read?proj_id=<c:out value="${project.getProj_id()}"/>'>${project.getProj_title()}</a> 
+													<%-- <a class="move" href='<c:out value="${project.getProj_id()}"/>'>${project.getProj_title()}</a> --%>
+												</h2>
+												
+												
+												<span class="justify-content-center">
+													<i id="related_proj" class="ni ni-favourite-28 mt-2" >
+													<input type="hidden" value="${project.getProj_id()}" name="related_proj" id="related">
+													</i>
+												</span>&nbsp;&nbsp;&nbsp;&nbsp;
+												
+												
+
+											<fmt:parseDate value="2020-11-25" var="strPlanDate" pattern="yyyy-MM-dd"/>
+											<fmt:parseNumber value="${strPlanDate.time / (1000*60*60*24)}" integerOnly="true" var="strDate"></fmt:parseNumber>
+											<fmt:parseDate value="${project.getProj_apply_deadline()}" var="endPlanDate" pattern="yyyy-MM-dd"/>
+											<fmt:parseNumber value="${endPlanDate.time / (1000*60*60*24)}" integerOnly="true" var="endDate"></fmt:parseNumber>
+
+
+												<i class="ni ni-notification-70 mr-2"></i>
+												<span  style="color: red;">마감  ${endDate - strDate}일 전</span>
+												
+											</div>
+											</div>
+										
+
+										<p class="mt-3 mb-0 text-sm">
+											<i class="ni ni-check-bold mr-3"></i><span
+												class="text-success mr-2">${project.getProj_career()}</span>
+											<i class="ni ni-money-coins mr-3"></i><span
+												class="text-success mr-2">${project.getProj_estimate()}
+												원</span>
+										</p>
+										
+									 	<p class="mt-3 mb-0 text-sm">
+											<i class="ni ni-album-2"></i><span
+												class="text-success mr-2">${project.getProj_start_date()}</span>
+											<i class="ni ni-album-2"></i><span
+												class="text-success mr-2">${project.getProj_end_date()}</span>
+										</p> 
+
+										<p class="mt-3 mb-0 text-sm">
+											<i class="ni ni-single-02 mr-3"></i><span
+												class="text-success mr-2">${project.getProj_walfare()}명</span>
+											<i class="ni ni-time-alarm mr-3"></i><span
+												class="text-success mr-2">${project.getProj_work_time()}</span>
+											<i class="ni ni-compass-04 mr-3"></i><span
+												class="text-success mr-2">${project.getProj_work_place()}</span>
+										</p>
+
+										<div class="mt-3 mr-3 text-sm">
+											<span class="text-nowrap">
+           											<c:set var="TextValue"
+													value="${project.getProj_detail()}" />
+												${fn:substring(TextValue,0,70)}<br>${fn:substring(TextValue,71,140)}
+												<br>${fn:substring(TextValue,141,210)}...
+											</span>
+										</div>
+
+										<p class="mt-3 mb-0 text-sm">
+											<i class="ni ni-chart-bar-32 mr-3"></i><span
+												class="text-success mr-2">3명지원</span>
+										</p>
+									</div>
+								</c:forEach>
+
 						<!-- pagination -->
 								<nav aria-label="Page navigation">
-									<ul class="pagination justify-content-end">
+									<ul class="pagination justify-content-center">
 										<c:if test="${pageDto.prev }">
 											<li class="page-item">
 												<a class="page-link" href="${pageDto.startPage - 1 }" tabindex="-1">
@@ -339,109 +396,14 @@
 									<input type="hidden" name="amount" value="${pageDto.standard.amount }">
 								</form>
 								<!-- pagination -->
-								
-							
-							
-							<!-- card body -->
-							<div class="card card-stats">
 
 
-								
 
-
-								<c:forEach var="project" items="${list}">
-									<!-- Card body -->
-									<div class="ml-3 mt-3 mb-3 card-body">
-									
-										<div class="row">
-											<div class="col-12 row text-center ">
-
-												<h2 class="card-title text-uppercase text-muted mb-0 mr-2">
-													${project.getProj_id()}
-													<a	href='/project/read?proj_id=<c:out value="${project.getProj_id()}"/>'>${project.getProj_title()}</a> 
-													<%-- <a class="move" href='<c:out value="${project.getProj_id()}"/>'>${project.getProj_title()}</a> --%>
-												</h2>
-												
-												
-												<span class="justify-content-center">
-													<i id="related_proj" class="ni ni-favourite-28 mt-2" >
-													<input type="hidden" value="${project.getProj_id()}" name="related_proj" id="related">
-													</i>
-												</span>&nbsp;&nbsp;&nbsp;&nbsp;
-												
-												
-												
-												
-											
-											<fmt:parseDate value="2020-11-25" var="strPlanDate" pattern="yyyy-MM-dd"/>
-											<fmt:parseNumber value="${strPlanDate.time / (1000*60*60*24)}" integerOnly="true" var="strDate"></fmt:parseNumber>
-											<fmt:parseDate value="${project.getProj_apply_deadline()}" var="endPlanDate" pattern="yyyy-MM-dd"/>
-											<fmt:parseNumber value="${endPlanDate.time / (1000*60*60*24)}" integerOnly="true" var="endDate"></fmt:parseNumber>
-
-
-												<i class="ni ni-notification-70 mr-2"></i>
-												<span  style="color: red;">마감  ${endDate - strDate}일 전</span>
-												
-
-											</div>
-										</div>
-
-										<p class="mt-3 mb-0 text-sm">
-											<i class="ni ni-check-bold mr-3"></i><span
-												class="text-success mr-2">${project.getProj_career()}</span>
-											<i class="ni ni-money-coins mr-3"></i><span
-												class="text-success mr-2">${project.getProj_estimate()}
-												원</span>
-										</p>
-										
-									 	<p class="mt-3 mb-0 text-sm">
-											<i class="ni ni-album-2"></i><span
-												class="text-success mr-2">${project.getProj_start_date()}</span>
-											<i class="ni ni-album-2"></i><span
-												class="text-success mr-2">${project.getProj_end_date()}</span>
-										</p> 
-
-										<p class="mt-3 mb-0 text-sm">
-											<i class="ni ni-single-02 mr-3"></i><span
-												class="text-success mr-2">${project.getProj_walfare()}명</span>
-											<i class="ni ni-time-alarm mr-3"></i><span
-												class="text-success mr-2">${project.getProj_work_time()}</span>
-											<i class="ni ni-compass-04 mr-3"></i><span
-												class="text-success mr-2">${project.getProj_work_place()}</span>
-										</p>
-
-										<div class="mt-3 mr-3 text-sm">
-											<span class="text-nowrap"> <%--  <c:choose>
-           <c:when test="${project.getProj_detail()}" > 60}">
-   					${fn:substring(TextValue,0,60)}<br>${fn:substring(TextValue,61,120)}
-   					<br>${fn:substring(TextValue,121,180)}<br>${fn:substring(TextValue,181,TextValue.length())}
-   			</c:when>
-   			<c:otherwise>
-   				<c:out value="${fn:substring(TextValue,0,TextValue.length())}"/>
-   			</c:otherwise>	
-  
-    </c:choose> --%> <c:set var="TextValue"
-													value="${project.getProj_detail()}" />
-												${fn:substring(TextValue,0,70)}<br>${fn:substring(TextValue,71,140)}
-												<br>${fn:substring(TextValue,141,210)}<br>${fn:substring(TextValue,211,280)}
-												<br>${fn:substring(TextValue,281,350)} <br>${fn:substring(TextValue,351,420)}...
-											</span>
-										</div>
-
-										<p class="mt-3 mb-0 text-sm">
-											<i class="ni ni-chart-bar-32 mr-3"></i><span
-												class="text-success mr-2">3명지원</span>
-										</p>
-									</div>
-								</c:forEach>
 
 							</div>
 						</div>
-					</div>
+					</div>	
 				</div>
-			</div>
-		</div>
-	</div>
 
 	<!-- list end -->
 	
@@ -453,6 +415,18 @@
 	
 	<script type="text/javascript">
 		$(document).ready(function() {
+			
+			
+			$(window).scroll(function(){
+				var scrollTop = $(document).scrollTop();
+				if (scrollTop < 0) {
+				 scrollTop = 0;
+				}
+				$("#findquick").stop();
+				$("#findquick").animate( { "top" : scrollTop });
+				});
+			
+			
 			var pagingActionForm = $("#pagingActionForm");
 			
 			$(".page-item a").on("click", function(e) {

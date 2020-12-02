@@ -22,7 +22,7 @@ import org.wof.service.ProjectReplyService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
-@RequestMapping("/reply/")
+@RequestMapping("/replies/")
 @RestController
 @Log4j
 @AllArgsConstructor
@@ -38,34 +38,34 @@ public class ProjectReplyController {
 		return insertCount ==1? new ResponseEntity<>("success",HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	@GetMapping(value="/pages/{proj_id}/{page}",
+	@GetMapping(value="/pages/{pno}/{page}",
 			produces={MediaType.APPLICATION_XML_VALUE,
 					  MediaType.APPLICATION_JSON_UTF8_VALUE})
-	public ResponseEntity<List<ProjectReplyVO>> getList(@PathVariable("page") int page, @PathVariable("proj_id") String proj_id){
+	public ResponseEntity<List<ProjectReplyVO>> getList(@PathVariable("page") int page, @PathVariable("pno") String pno){
 		log.info("getList.....");
 		Standard stand = new Standard(page,10);
 		log.info(stand);
-		return new ResponseEntity<>(service.getList(stand, proj_id),HttpStatus.OK);
+		return new ResponseEntity<>(service.getList(stand, pno),HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/{p_rno}",
+	@GetMapping(value = "/{rno}",
 			produces={ MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
-	public ResponseEntity<ProjectReplyVO> get(@PathVariable("p_rno") String p_rno){
-		log.info("Get: " +p_rno);
-		return new ResponseEntity<>(service.get(p_rno), HttpStatus.OK);
+	public ResponseEntity<ProjectReplyVO> get(@PathVariable("rno") String rno){
+		log.info("Get: " +rno);
+		return new ResponseEntity<>(service.get(rno), HttpStatus.OK);
 	}
 	
-	@DeleteMapping(value= "/{p_rno}", produces = {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> remove(@PathVariable("p_rno") String p_rno){
-		log.info("remove: "+p_rno);
-		return service.remove(p_rno)==1? new ResponseEntity<>("success",HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	@DeleteMapping(value= "/{rno}", produces = {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> remove(@PathVariable("rno") String rno){
+		log.info("remove: "+rno);
+		return service.remove(rno)==1? new ResponseEntity<>("success",HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	@RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH}, value ="/{p_rno}", 
+	@RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH}, value ="/{rno}", 
 			consumes ="application/json", produces={MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> modify(@RequestBody ProjectReplyVO vo, @PathVariable("p_rno") String p_rno){
-		vo.setProj_reply_no(p_rno);
-		log.info("p_rno: "+p_rno);
+	public ResponseEntity<String> modify(@RequestBody ProjectReplyVO vo, @PathVariable("rno") String rno){
+		vo.setRno(rno);
+		log.info("rno: "+rno);
 		
 		log.info("modify: "+vo);
 		return service.modify(vo) ==1? new ResponseEntity<>("success",HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

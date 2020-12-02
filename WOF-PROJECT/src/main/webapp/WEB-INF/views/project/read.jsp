@@ -3,6 +3,21 @@
 	
 	<!-- Header & Menu -->
 	<%@ include file="../includes/header.jsp" %>
+	
+<style>
+.uploadResult1 ul {
+	display: flex;
+	flex-flow: row;
+	justify-content: center;
+		align-items: center;
+}
+.uploadResult1 ul li {
+	list-style: none;
+	padding: 10px;
+	align-content: center;
+	text-align: center;
+}
+</style>
 
 <sec:authorize access="isAuthenticated()">
       <sec:authentication property="principal.member" var="member"/>   
@@ -103,52 +118,34 @@
 					<h4 class="mt-0 mb-3">Comments (258)</h4>
 
 					<textarea class="form-control form-control-light mb-2"
-						placeholder="Write message" id="example-textarea" rows="3"></textarea>
+						placeholder="Write message" id="example-textarea" rows="3" name="reply_contents"></textarea>
+						
 					<div class="text-right">
-						<div class="btn-group mb-2">
-							<button type="button"
-								class="btn btn-link btn-sm text-muted font-18">
-								<i class="dripicons-paperclip"></i>
-							</button>
-						</div>
 						<div class="btn-group mb-2 ml-2">
-							<button type="button" class="btn btn-primary btn-sm">Submit</button>
+							<button id='modalRegisterBtn'  type="button" class="btn btn-primary btn-sm">Submit</button>
 						</div>
 					</div>
 
 	<input class="form-control" type= "hidden" name="member_no" id="member_no"	value='${member.member_no}' readonly="readonly">
 	<input class="form-control" type= "hidden" name="real_name" id="real_name"	value='${member.real_name}' readonly="readonly">
 
-				<div class = "chat">
+				
 					<div class="media mt-2">
 						<div class="media-body">
-							<h5 class="mt-0">Jeremy Tomlinson</h5>
-							Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
-							scelerisque ante sollicitudin. Cras purus odio, vestibulum in
-							vulputate at, tempus viverra turpis. Fusce condimentum nunc ac
-							nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-
-							<div class="media mt-3">
-								<div class="media-body">
-									<h5 class="mt-0">Kathleen Thomas</h5>
-									Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
-									scelerisque ante sollicitudin. Cras purus odio, vestibulum in
-									vulputate at, tempus viverra turpis. Fusce condimentum nunc ac
-									nisi vulputate fringilla. Donec lacinia congue felis in
-									faucibus.
-								</div>
-							</div>
+							<ul class="chat">	
+								  <!--  <input id='modalModBtn' type="button" class="btn btn-warning" name="Modify">
+     							   <input id='modalRemoveBtn' type="button" class="btn btn-danger" name="Remove"> -->
+							</ul>
 						</div>
 					</div>
-				</div>
 
 					<div class="text-center mt-2">
 						<a href="javascript:void(0);" class="text-danger">Load more </a>
 					</div>
-				</div>
-				<!-- end card-body-->
-			</div>
-			<!-- end card-->
+				</div>	<!-- end card-body-->
+				
+				
+			</div><!-- end card-->
 			<sec:authorize access="isAuthenticated()">
 			<div class="card">
 				<div class="card-body">
@@ -163,20 +160,7 @@
 			</div>
 			</sec:authorize>
 						
-<style>
-.uploadResult1 ul {
-	display: flex;
-	flex-flow: row;
-	justify-content: center;
-		align-items: center;
-}
-.uploadResult1 ul li {
-	list-style: none;
-	padding: 10px;
-	align-content: center;
-	text-align: center;
-}
-</style>
+
 		</div>
 		<!-- end col -->
 
@@ -225,15 +209,12 @@
 							</div>
 						</div>
 						<!-- end card-->
-						${member.member_no}
+						<%-- ${member.member_no}
 						${partners.member_no }
-						${checkAuth.member_no }
+						${checkAuth.member_no } --%>
 						<c:out value="${checkAuth.member_no }"/>
 						<input type="hidden" name = "checkAuth" value="${checkAuth.member_no }">
-						<div class="" align="center">
-							<input class="btn btn-default" id="chatConnect"  type="button" value="채팅하기">
-							<input class="btn btn-default" id="applyButton" type="button" value="지원하기">
-						</div>
+					
 	
 						<sec:authorize access="isAuthenticated()">
 						<c:if test="${partners.member_no eq member.member_no }">
@@ -256,19 +237,25 @@
 								
 								
 								<form role="form" action="/project/fileup" method="post">
-									<button type="submit" class="btn btn-default">파일 올리기</button>
+									<button type="submit" class="">파일 올리기</button>
 									<input type="hidden" name='proj_id' value='${project.getProj_id()}'>
 									<input class="form-control" type= "hidden" name="member_no" id="member_no"	value='${member.member_no}'>
 								</form>
 							<br>
 							
-
+						
+						
+						
 							</div><!-- card body -->
 						</div><!-- card -->
 						</c:if>
 						</sec:authorize>
 
 
+						<div class="" align="center">
+							<input class="btn btn-default" id="chatConnect"  type="button" value="채팅하기">
+							<input class="btn btn-default" id="applyButton" type="button" value="지원하기">
+						</div>
 					
 					</div>
 				</div>
@@ -287,38 +274,42 @@
 	<!-- Footer -->
 	<%@ include file="../includes/footer.jsp" %>
 
-
-
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-				<h4 class="modal-title">경고창</h4>
+			<!-- 프로젝트 삭제 모달 -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title">경고창</h4>
+						</div>
+						<div class="modal-body">
+							<p>정말로 삭제하시겠습니까?</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">취소</button>
+							<a href="/project/delete?proj_id=${project.getProj_id()}"><button
+									type="button" class="btn btn-primary">삭제</button></a>
+						</div>
+					</div>
+					<!-- /.modal-content -->
+				</div>
+				<!-- /.modal-dialog -->
 			</div>
-			<div class="modal-body">
-				<p>정말로 삭제하시겠습니까?</p>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-				<a href="/project/delete?proj_id=${project.getProj_id()}"><button
-						type="button" class="btn btn-primary">삭제</button></a>
-			</div>
-		</div>
-		<!-- /.modal-content -->
-	</div>
-	<!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
+			<!-- /.modal -->
 
 
-<script type="text/javascript" src="/resources/template/bootstrap/js/reply.js"></script>
 
 
-<script>
+
+			<script type="text/javascript"
+				src="/resources/template/bootstrap/js/reply.js"></script>
+
+
+			<script>
 $(document).ready(function(e) {
 
 	  var formObj = $("form[role='form']");
@@ -498,7 +489,7 @@ $(document).ready(function(e) {
 			   });
 });  
 		  
-</script> <!-- 파일업로드 -->
+</script><!-- 파일업로드 -->
 
 
 <script>
@@ -552,55 +543,195 @@ $(document).ready(function(e) {
 	});
 </script>
 
-<script>
+
+
+
+	<!--프로젝트 댓글달기-->
+	<script type="text/javascript" src="/resources/js/reply.js"></script>
+
+	<script>
 	$(document).ready(function () {
-	  
-	  var bnoValue = '<c:out value="${project.proj_id}"/>';
-	  var replyUL = $(".chat");
-	  
-	    showList(1);
-	    
-	    function showList(page){
-	    	
-	    	console.log("show list " + page);
-	        
-	        replyService.getList({proj_id:projValue,page: page|| 1 }, function(replyCnt, list) {
-	          
-	        console.log("replyCnt: "+ replyCnt );
-	        console.log("list: " + list);
-	        console.log(list);
-	        
-	        if(page == -1){
-	          pageNum = Math.ceil(replyCnt/10.0);
-	          showList(pageNum);
-	          return;
-	        }
-	          
-	         var str="";
-	         
-	         if(list == null || list.length == 0){
-	           return;
-	         }
-	         
-	         for (var i = 0, len = list.length || 0; i < len; i++) {
-	           str +="<li class='left clearfix' data-rno='"+list[i].rno+"'>";
-	           str +="  <div><div class='header'><strong class='primary-font'>["
-	        	   +list[i].rno+"] "+list[i].replyer+"</strong>"; 
-	           str +="    <small class='pull-right text-muted'>"
-	               +replyService.displayTime(list[i].replyDate)+"</small></div>";
-	           str +="    <p>"+list[i].reply+"</p></div></li>";
-	         }
-	         
-	         replyUL.html(str);
-	         
-	         showReplyPage(replyCnt);
+		  
+		  var pnoValue = '<c:out value="${project.getProj_id}"/>';
+		  var replyUL = $(".chat");
+		  
+		    showList(1);
+		    
+		function showList(page){
+			
+			  console.log("show list " + page);
+		    
+		    replyService.getList({pno:pnoValue,page: page|| 1 }, function(replyCnt, list) {
+		      
+		    console.log("replyCnt: "+ replyCnt );
+		    console.log("list: " + list);
+		    console.log(list);
+		    
+		    if(page == -1){
+		      pageNum = Math.ceil(replyCnt/10.0);
+		      showList(pageNum);
+		      return;
+		    }
+		      
+		     var str="";
+		     
+		     if(list == null || list.length == 0){
+		       return;
+		     }
+		     
+		     for (var i = 0, len = list.length || 0; i < len; i++) {
+		       str +="<li class='left clearfix' data-rno='"+list[i].rno+"'>";
+		       str +="  <div><div class='header'><strong class='primary-font'>["
+		    	   +list[i].rno+"] "+list[i].replyer+"</strong>"; 
+		       str +="    <small class='pull-right text-muted'>"
+		           +replyService.displayTime(list[i].replyDate)+"</small></div>";
+		       str +="    <p>"+list[i].reply+"</p></div></li>";
+		     }
+		     
+		     replyUL.html(str);
+		     
+		     showReplyPage(replyCnt);
 
-	     
-	       });//end function
-	         
-	     }//end showList
+		 
+		   });//end function
+		     
+		 }//end showList
+		    
+		    var pageNum = 1;
+		    var replyPageFooter = $(".panel-footer");
+		    
+		    function showReplyPage(replyCnt){
+		      
+		      var endNum = Math.ceil(pageNum / 10.0) * 10;  
+		      var startNum = endNum - 9; 
+		      
+		      var prev = startNum != 1;
+		      var next = false;
+		      
+		      if(endNum * 10 >= replyCnt){
+		        endNum = Math.ceil(replyCnt/10.0);
+		      }
+		      
+		      if(endNum * 10 < replyCnt){
+		        next = true;
+		      }
+		      
+		      var str = "<ul class='pagination pull-right'>";
+		      
+		      if(prev){
+		        str+= "<li class='page-item'><a class='page-link' href='"+(startNum -1)+"'>Previous</a></li>";
+		      }
+		      
+		      for(var i = startNum ; i <= endNum; i++){
+		        
+		        var active = pageNum == i? "active":"";
+		        
+		        str+= "<li class='page-item "+active+" '><a class='page-link' href='"+i+"'>"+i+"</a></li>";
+		      }
+		      
+		      if(next){
+		        str+= "<li class='page-item'><a class='page-link' href='"+(endNum + 1)+"'>Next</a></li>";
+		      }
+		      
+		      str += "</ul></div>";
+		      
+		      console.log(str);
+		      
+		      replyPageFooter.html(str);
+		    }
+		     
+		    replyPageFooter.on("click","li a", function(e){
+		       e.preventDefault();
+		       console.log("page click");
+		       
+		       var targetPageNum = $(this).attr("href");
+		       
+		       console.log("targetPageNum: " + targetPageNum);
+		       
+		       pageNum = targetPageNum;
+		       
+		       showList(pageNum);
+		     });     
+		    
+		    
+		  //댓글 조회 클릭 이벤트 처리 
+		    $(".chat").on("click", "li", function(e){
+		      
+		      var rno = $(this).data("rno");
+		      
+		      replyService.get(rno, function(reply){
+		      
+		        modalInputReply.val(reply.reply);
+		        modalInputReplyer.val(reply.replyer);
+		        modalInputReplyDate.val(replyService.displayTime( reply.replyDate))
+		        .attr("readonly","readonly");
+		        modal.data("rno", reply.rno);
+		        
+		        modal.find("button[id !='modalCloseBtn']").hide();
+		        modalModBtn.show();
+		        modalRemoveBtn.show();
+		        
+		        $(".modal").modal("show");
+		            
+		      });
+		    });
+		  
+		    var modalRegisterBtn = $("#modalRegisterBtn");	    
+		    var modalModBtn = $("#modalModBtn");
+		    var modalRemoveBtn = $("#modalRemoveBtn");
 
-	     
-	  
-	     
-</script>
+		    modalRegisterBtn.on("click",function(e){
+		      
+		      var reply = {
+		            reply: modalInputReply.val(),
+		            replyer:modalInputReplyer.val(),
+		            bno:bnoValue
+		          };
+		      replyService.add(reply, function(result){
+		        
+		        alert(result);
+		        
+		        modal.find("input").val("");
+		        modal.modal("hide");
+		        
+		        //showList(1);
+		        showList(-1);
+		        
+		      });
+		      
+		    });
+		    
+		  
+		 /*    modalModBtn.on("click", function(e){
+		    	  
+		     	  var reply = {rno:modal.data("rno"), reply: modalInputReply.val()};
+		     	  
+		     	  replyService.update(reply, function(result){
+		     	        
+		     	    alert(result);
+		     	    modal.modal("hide");
+		     	    showList(pageNum);
+		     	    
+		     	  });
+		     	  
+		     	});
+
+
+		     	modalRemoveBtn.on("click", function (e){
+		     	  
+		     	  var rno = modal.data("rno");
+		     	  
+		     	  replyService.remove(rno, function(result){
+		     	        
+		     	      alert(result);
+		     	      modal.modal("hide");
+		     	      showList(pageNum);
+		     	      
+		     	  });
+		     	  
+		     	}); */
+		  
+		 
+		});
+
+		</script>

@@ -65,7 +65,7 @@ public class ProjectReplyMapperTests {
 	public void testUpdate(){
 		String targetRno = "p_rno2";
 		ProjectReplyVO vo = mapper.read(targetRno);
-		vo.setProj_reply_cont("update reply test");
+		vo.setReply("update reply test");
 		int count = mapper.update(vo);
 		log.info("update count : " +count);
 	}
