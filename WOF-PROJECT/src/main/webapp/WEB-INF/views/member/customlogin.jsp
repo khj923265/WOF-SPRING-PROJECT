@@ -65,17 +65,17 @@
                 <a type="button" class="text-light" id="targetFindPwForm" data-toggle="modal" data-target="#FiedPwForm"><small>비밀번호 찾기</small></a>
             </div>
             <div class="col-4 text-right">
-              <a href="signup" class="text-light"><small>회원가입</small></a>
+              <a href="/member/signup" class="text-light"><small>회원가입</small></a>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-<!-- Footer -->
-
+<%--modal--%>
 <%@ include file="./find_id_form.jsp" %>
 <%@ include file="./find_pw_form.jsp" %>
+<!-- Footer -->
 <%@ include file="../includes/footer.jsp" %>
 <script type="text/javascript">
     function check() {
