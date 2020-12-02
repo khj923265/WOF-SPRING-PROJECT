@@ -78,11 +78,9 @@ public class ProjectRestController {
 	@PostMapping("schedule/update/{meet_id}")
 	public ResponseEntity<Integer> updateSchedule(@PathVariable String meet_id, MeetVO meet){
 		log.info("update meeting");
-		System.out.println(meet_id);
 		MeetVO meet1 = new MeetVO();
 		meet1.setMeet_id(meet_id);
 		meet1.setMeet_datetime(meet.getMeet_datetime());
-		System.out.println(meet1);
 		int result = projectService2.updateMeeting(meet);
 		if (result == 1){
 			return new ResponseEntity<Integer>(1, HttpStatus.OK);

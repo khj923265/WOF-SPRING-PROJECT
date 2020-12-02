@@ -49,6 +49,11 @@ public class ProjectServiceImpl2 implements ProjectService2 {
 	public List<ProjectVO> listFollowProject(String related_member) {
 		return projectMapper2.listFollowProject(related_member);
 	}
+	
+	@Override
+	public List<ProjectVO> listFollowProject1(String related_member) {
+		return projectMapper2.listFollowProject1(related_member);
+	}
 
 	@Override
 	public FollowProjectVO detailFollowProject(String related_project, String related_member) {

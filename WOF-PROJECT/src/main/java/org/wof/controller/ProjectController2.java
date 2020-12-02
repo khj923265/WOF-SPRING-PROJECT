@@ -33,10 +33,10 @@ public class ProjectController2 {
 		log.info("recommend List 실행");
 		String related_member = memberMapper.memberNo(principal.getName());
 		PartnersVO vo = memberMapper.partnersInfo(related_member);
-		model.addAttribute("projects", projectService2.projectList(stand));
+//		model.addAttribute("projects", projectService2.projectList(stand));
 		int total = projectMapper2.totalProject(stand);
 		model.addAttribute("pageDto", new PageDTO(stand, total));
-		model.addAttribute("follows", projectService2.listFollowProject(related_member));
+		model.addAttribute("projects", projectMapper2.listFollowProject1(related_member));
 	}
 	
 	@GetMapping("followlist")

@@ -15,6 +15,7 @@ public interface ProjectService2 {
 	public void RecommendSendMail(String loginUser, Standard stand);
 	public int addFollowProject(FollowProjectVO vo);
 	public int deleteFollowProject(String followproject_no);
+	public List<ProjectVO> listFollowProject1(String related_member);
 	public List<ProjectVO> listFollowProject(String related_member);
 	public FollowProjectVO detailFollowProject(String related_project, String related_member);
 	

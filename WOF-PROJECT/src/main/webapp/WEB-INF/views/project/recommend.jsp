@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-
 	<!-- Header & Menu -->
 	<%@ include file="../includes/header.jsp" %>
 
@@ -344,31 +343,32 @@
 	<div class="row">
     <div class="col-12 row text-center ">
     
+         
         <h2 class="card-title text-uppercase text-muted mb-0 mr-2"><a href="#">${project.proj_title}</a></h2>
-
-		<c:forEach var="follow" items="${follows}">
-		<c:when test="${follow.proj_id eq project.proj_id}">
-		<span class="justify-content-center">           
-        <i class="ni ni-favourite-28 mt-2 color" >    
-        <input type="hidden" id ="projectId" value="${project.proj_id}" >
-        <input type="hidden" id="memberId" value="${member.member_no}" >     
-        </i>   
-        </span>
-		</c:when>
-		</c:forEach>
 		
-		<span class="justify-content-center ">           
-        <i class="ni ni-favourite-28 mt-2 " >    
+		
+		<span class="justify-content-center ">
+		
+		
+		<c:choose>
+		<c:when test="${project.followproject_no == null}">         
+        <i class="ni ni-favourite-28 mt-2 " >
+        </c:when>
+        <c:when test="${project.followproject_no != null }">         
+        <i class="ni ni-favourite-28 mt-2 color" >
+        </c:when>
+         </c:choose> 
         <input type="hidden" id ="projectId" value="${project.proj_id}" >
         <input type="hidden" id="memberId" value="${member.member_no}" >     
         </i>   
         </span>
-		       
+     	
+		      
     </div>
    
     <p class="mt-3 mb-0 text-sm">
     <i class="ni ni-check-bold mr-3"></i><span class="text-success mr-2">${project.proj_career}</span>
-   <i class="ni ni-key-25 mr-3"></i><span class="text-success mr-2">${project.proj_estimate}wonÂÂ</span>
+   <i class="ni ni-key-25 mr-3"></i><span class="text-success mr-2">${project.proj_estimate}원</span>
 	</p>
 	
 	<p class="mt-3 mb-0 text-sm">
@@ -431,8 +431,7 @@ ${fn:substring(TextValue,0,60)}<br>${fn:substring(TextValue,61,120)}
 					dataType : "json",
 					success : function(result) {
 						swal(
-		                        "관심 프로젝트에 등록하셨습니다.",
-		                        "success"
+		                        "관심 프로젝트에 등록하셨습니다."
 		                    );
 						
 					},
@@ -442,15 +441,14 @@ ${fn:substring(TextValue,0,60)}<br>${fn:substring(TextValue,61,120)}
 				})
 			}else {
 				$.ajax({
-					url : "/followNo/"+related_project,
+					url : "/followNo/"+related_project+"/"+related_member,
 					type : "delete",
 					data :{
 						'related_member' : related_member
 					},
 					success : function(result) {
 						swal(
-		                        "관심 프로젝트에서 해제하셨습니다.",
-		                        "success"
+		                        "관심 프로젝트에서 해제하셨습니다."
 		                    );
 					},
 					error : function(error) {

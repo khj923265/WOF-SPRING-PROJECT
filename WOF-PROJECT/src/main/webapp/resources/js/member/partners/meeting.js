@@ -15,8 +15,6 @@ var meetingService = (function(){
             success: function(data) {
                 alert('success');
                 $('.modal').modal('hide');
-                $('#datetime').text() = meet.meet_datetime;
-				$('#contetns').text() = meet.meet_contents;
             },
             error: function() {
                 alert('error!');
