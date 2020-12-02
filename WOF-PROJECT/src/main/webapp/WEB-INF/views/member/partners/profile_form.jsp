@@ -46,7 +46,7 @@
                                     <input type="password" id="userpw"
                                            class="form-control form-control-muted col-4"
                                            placeholder="password"/>
-                                    <button type="button" onclick="pwcheck()"
+                                    <button type="button" onclick="profileManagement.pwcheck()"
                                             class="btn btn-primary col-2 align-self-center">비밀번호 확인</button>
                                     <div class="col-4" id="pwcheck"></div>
                                 </div>
