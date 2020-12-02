@@ -20,7 +20,7 @@
 					</div>
 
 					<div class="table-responsive">
-						<table class="table align-items-center table-flush">
+						<table class="table table-flush">
 							<thead class="thead-light">
 								<tr>
 									<th scope="col">프로젝트 제목</th>
@@ -30,19 +30,19 @@
 									<th scope="col">경력</th>
 									<th scope="col">필요기술</th>
 									<th scope="col">프로젝트 금액</th>
-									<th scope="col"></th>
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="follow" items="${follows}">
+							
+								<c:forEach var="follow" items="${follow}">
 									<tr>
-										<td><a href="#">${follow.proj_apply_deadline}</a></td>
-										<td>${follow.proj_start_date }</td>
-										<td>${follow.proj_work_place }</td>
+										<td><a class="color" href="/project/read?proj_id=${follow.proj_id}">${follow.proj_title}</a></td>
+										<td>${follow.proj_start_date}</td>
+										<td>${follow.proj_apply_deadline}</td>
 										<td>${follow.proj_work_place}</td>
 										<td>${follow.proj_career}</td>
-										<td>${follow.skill}</td>
-										<td>${follow.proj_estimate}</td>
+										<td>${follow.proj_reqr_skill}</td>
+										<td>${follow.proj_estimate}원</td>
 									</tr>
 								</c:forEach>
 
@@ -95,8 +95,9 @@
 
 	<style type="text/css">
 	 .color {
-	 	color : #5e72e4;
+	 	color : #f5365c;
 	 }
+	 
 	</style>
 	<script src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
 	<script src="http://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

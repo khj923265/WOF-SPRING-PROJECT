@@ -35,6 +35,9 @@ public interface MemberMapper {
     void partnersUpdate2(PartnersVO partnersVO);
     void partnersUpdate3(MemberVO memberVO);
     PartnersVO partnersInfo(String member_no);
+    void projectProfileUpdate(ProjectProfileVO projectProfileVO);
+    void meetingupdate(MeetVO meetVO);
+    MeetVO meetInfo(String meet_id);
 
     //카카오 로그인 관련
     int kakaoSignup(MemberVO memberVO);

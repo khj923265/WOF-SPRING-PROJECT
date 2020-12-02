@@ -1,29 +1,21 @@
-var meetingService = (function(){
-	
-	function update(meet, callback, error){
-		    $.ajax({
-            url: '/schedule/update/'+meet.meet_id,
-            type: 'post',
-            data : {
-            	meet_id : meet.meet_id,
-            	meet_req_mem : meet.meet_req_mem,
-            	meet_datetime : meet.meet_datetime,
-            	meet_contents : meet.meet_contents
-            },
+var meetingService = {
+    openForm: function (meet_id) {
+        $.ajax({
+            url: '/member/meetingupdate?meet_id=' + meet_id,
+            type: 'GET',
             dataType: "json",
-            
-            success: function(data) {
-                alert('success');
-                $('.modal').modal('hide');
+            success: function (data) {
+                //data draw
+                meetingService.draw(data);
+                $('#updateMeetingBtn').click();
             },
-            error: function() {
+            error: function () {
                 alert('error!');
             }
         });
-	}
-		
-	return {
-		update : update
-	};
-	
-})();
+    },
+    draw: function (data) {
+        $('#meet_contents').val(data.meet_contents);
+        $('#meet_datetime').val(data.meet_datetime);
+    }
+}

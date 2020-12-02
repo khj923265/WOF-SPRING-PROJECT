@@ -22,29 +22,11 @@ var replyService = (function() {
 			}
 		})
 	}
-
-//	function getList(param, callback, error) {
-//
-//		var bno = param.bno;
-//		var page = param.page || 1;
-//
-//		$.getJSON("/replies/pages/" + bno + "/" + page + ".json",
-//				function(data) {
-//					if (callback) {
-//						callback(data);
-//					}
-//				}).fail(function(xhr, status, err) {
-//			if (error) {
-//				error();
-//			}
-//		});
-//	}
-	
 	
 
 	function getList(param, callback, error) {
 
-	    var bno = param.bno;
+	    var proj_id = param.proj_id;
 	    var page = param.page || 1;
 	    
 	    $.getJSON("/reply/pages/" + proj_id + "/" + page + ".json",
@@ -62,10 +44,10 @@ var replyService = (function() {
 	  }
 
 	
-	function remove(rno, callback, error) {
+	function remove(p_rno, callback, error) {
 		$.ajax({
 			type : 'delete',
-			url : '/reply/' + rno,
+			url : '/reply/' + p_rno,
 			success : function(deleteResult, status, xhr) {
 				if (callback) {
 					callback(deleteResult);
@@ -81,11 +63,11 @@ var replyService = (function() {
 
 	function update(reply, callback, error) {
 
-		console.log("RNO: " + reply.rno);
+		console.log("RNO: " + reply.p_rno);
 
 		$.ajax({
 			type : 'put',
-			url : '/reply/' + reply.rno,
+			url : '/reply/' + reply.p_rno,
 			data : JSON.stringify(reply),
 			contentType : "application/json; charset=utf-8",
 			success : function(result, status, xhr) {
@@ -101,7 +83,7 @@ var replyService = (function() {
 		});
 	}
 
-	function get(rno, callback, error) {
+	function get(p_rno, callback, error) {
 
 		$.get("/reply/" + proj_id + ".json", function(result) {
 

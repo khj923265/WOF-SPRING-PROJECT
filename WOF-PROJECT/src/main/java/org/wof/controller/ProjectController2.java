@@ -33,15 +33,14 @@ public class ProjectController2 {
 		log.info("recommend List 실행");
 		String related_member = memberMapper.memberNo(principal.getName());
 		PartnersVO vo = memberMapper.partnersInfo(related_member);
-//		model.addAttribute("projects", projectService2.projectList(stand));
 		int total = projectMapper2.totalProject(stand);
 		model.addAttribute("pageDto", new PageDTO(stand, total));
+		//model.addAttribute("projects", projectMapper2.listRecommendProject(vo, stand));
 		model.addAttribute("projects", projectMapper2.listFollowProject1(related_member));
 	}
 	
 	@GetMapping("followlist")
 	public void projectFollowList(Principal principal, Standard standard, Model model){
-		log.info("follow List 실행");
 		String related_member = memberMapper.memberNo(principal.getName());
 		model.addAttribute("follow", projectService2.listFollowProject(related_member));		
 	}
@@ -52,8 +51,7 @@ public class ProjectController2 {
 		HttpSession session = request.getSession();
 		String related_member = memberMapper.memberNo(principal.getName());
 		PartnersVO vo = memberMapper.partnersInfo(related_member);
-		session.setAttribute("partners", vo);
-		//model.addAttribute("follow", projectService2.listFollowProject(related_member));		
+		session.setAttribute("partners", vo);	
 	}
 	
 	@GetMapping("meeting")

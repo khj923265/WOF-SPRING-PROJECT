@@ -604,6 +604,3 @@ $(document).ready(function(e) {
 	  
 	     
 </script>
-
-
-

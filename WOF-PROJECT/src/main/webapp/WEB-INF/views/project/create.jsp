@@ -521,6 +521,10 @@
 	</form>
 </div>	
 
+<div id="frogue-container" class="position-right-bottom" data-chatbot="f397ce6d-a5db-4fc4-b8d4-4f2c9c143b34" data-user="nannanru@gmail.com" data-init-key="value"></div>
+
+
+
 <!-- Footer -->
 	<%@ include file="../includes/footer.jsp" %>
 
@@ -762,4 +766,12 @@ function cat1_change(key,sel){
 
   </script>
   
-  
+  <script><!--챗봇 api-->
+(function(d, s, id){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "https:\/\/danbee.ai/js/plugins/frogue-embed/frogue-embed.min.js";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'frogue-embed'));
+</script> 

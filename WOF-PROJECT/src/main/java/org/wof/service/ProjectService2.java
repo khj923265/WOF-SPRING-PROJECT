@@ -7,10 +7,10 @@ import org.wof.domain.*;
 public interface ProjectService2 {
 	
 
-	public List<ProjectVO> projectList(Standard stand);
+
 	public int totalList(Standard stand);
 	public ProjectVO projectDetail(String proj_id);
-	public List<ProjectVO> listRecommendProject(PartnersVO vo);
+	public List<ProjectVO> listRecommendProject(PartnersVO vo, Standard stand);
 	
 	public void RecommendSendMail(String loginUser, Standard stand);
 	public int addFollowProject(FollowProjectVO vo);

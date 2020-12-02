@@ -6,9 +6,8 @@ import org.wof.domain.*;
 
 public interface ProjectMapper2 {
 
-	public List<ProjectVO> projectList(Standard stand);
 	public int totalProject(Standard stand);
-	public List<ProjectVO> listRecommendProject(PartnersVO vo);
+	public List<ProjectVO> listRecommendProject(PartnersVO vo, Standard stand);
 	public List<ProjectVO> pageWithProject(Standard standard);
 	public List<ProjectVO> listFollowProject1(String related_member);
 	
