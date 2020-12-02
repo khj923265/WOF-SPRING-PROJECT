@@ -146,46 +146,6 @@
 <!-- Main content -->
 <div class="main-content" id="panel">
 
-<<<<<<< HEAD
-	<!-- Topnav -->
-	<nav
-		class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
-		<a href="${pageContext.request.contextPath }/main"><img
-			alt=""
-			src="/resources/template/assets/img/brand/logo_transparent.png"
-			style="height: 50px; width: 100px; margin-left: 30px;"> </a>
-		<div class="container-fluid">
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-				<!-- Navbar links -->
-				
-				<ul class="navbar-nav align-items-center  ml-md-auto">
-					<li class="nav-item mr-0 mr-md-2"><a class="nav-link"
-						href="${pageContext.request.contextPath }/project/create"><span
-							class="nav-link-text">프로젝트 등록</span></a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="${pageContext.request.contextPath }/project/list"><span
-							class="nav-link-text">프로젝트 찾기</span></a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="${pageContext.request.contextPath }/partners/list?member_no=${member.member_no}"><span
-							class="nav-link-text">파트너스 찾기</span></a></li>
-					<li class="nav-item"><a class="nav-link active"
-						href="${pageContext.request.contextPath }/project/project_map_manage.jsp">
-							<span class="nav-link-text">프로젝트 맵</span>
-					</a></li>
-					<li class="nav-item"><a class="nav-link" href="#"><span
-							class="nav-link-text">공지사항</span></a></li>
-					<li class="nav-item">
-						<sec:authorize access="isAuthenticated()">
-							<a class="dropdown-item"
-							   href="/customlogout"><i class="ni ni-user-run"></i> <span>로그아웃</span> </a>
-						</sec:authorize>
-						<sec:authorize access="isAnonymous()">
-							<a class="dropdown-item"
-							   href="/member/customlogin"><i class="ni ni-user-run"></i> <span>로그인</span> </a>
-						</sec:authorize>
-					</li>
-=======
     <!-- Topnav -->
     <nav
             class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
@@ -223,7 +183,6 @@
                                href="/member/customlogin"><i class="ni ni-user-run"></i> <span>로그인</span> </a>
                         </sec:authorize>
                     </li>
->>>>>>> e6e4121daf83de5e57d567b4db746192d6b21d17
 
                     <li class="nav-item d-xl-none">
                         <!-- Sidenav toggler -->
@@ -415,57 +374,6 @@
                                         alt="Image placeholder"
                                         src="/resources/template/assets/img/theme/team-4.jpg">
 								</span>
-<<<<<<< HEAD
-								<div class="media-body  ml-2  d-none d-lg-block">
-									<span class="mb-0 text-sm  font-weight-bold">${member.real_name }</span>
-								</div>
-							</div>
-					</a>
-						<div class="dropdown-menu dropdown-menu-right">
-							<div class="dropdown-header noti-title">
-								<h6 class="text-overflow m-0">Welcome!</h6>
-							</div>
-							<c:if test="${member.auth == 'ROLE_CLIENT' }">
-								<a
-									href="${pageContext.request.contextPath }/client/dashboard_client.jsp"
-									class="dropdown-item"> <i class="ni ni-single-02"></i> <span>My
-										dashboard</span>
-								</a>
-							</c:if>
-							<c:if test="${member.auth == 'ROLE_PARTNERS' }">
-								<a
-									href="${pageContext.request.contextPath }/partners/dashboard_partners.jsp"
-									class="dropdown-item"> <i class="ni ni-single-02"></i> <span>My
-										dashboard</span>
-								</a>
-							</c:if>
-							<a href="#!" class="dropdown-item"> <i
-								class="ni ni-settings-gear-65"></i> <span>Settings</span>
-							</a> <a href="#!" class="dropdown-item"> <i
-								class="ni ni-calendar-grid-58"></i> <span>Activity</span>
-							</a> <a href="#!" class="dropdown-item"> <i
-								class="ni ni-support-16"></i> <span>Support</span>
-							</a>
-							<div class="dropdown-divider"></div>
-							<sec:authorize access="isAuthenticated()">
-								<a class="dropdown-item"
-								   href="/customlogout"><i class="ni ni-user-run"></i> <span>로그아웃</span> </a>
-							</sec:authorize>
-							<sec:authorize access="isAnonymous()">
-								<a class="dropdown-item"
-								   href="/member/customlogin"><i class="ni ni-user-run"></i> <span>로그인</span> </a>
-							</sec:authorize>
-						</div>
-						<!-- .dropdown-menu dropdown-menu-right --></li>
-				</ul>
-				
-			</div>
-			<!-- .collapse navbar-collapse -->
-		</div>
-		<!-- .container-fluid -->
-	</nav>
-</div>
-=======
                             <div class="media-body  ml-2  d-none d-lg-block">
                                 <span class="mb-0 text-sm  font-weight-bold">${member.real_name }</span>
                             </div>
@@ -482,7 +390,7 @@
                                 </a>
                             </c:if>
                             <c:if test="${member.auth == 'ROLE_PARTNERS' }">
-                                <a href="${pageContext.request.contextPath }/partners/dashboard_partners?member_no=${member.member_no}"
+                                <a href="${pageContext.request.contextPath }/partners/profile_info"
                                    class="dropdown-item"> <i class="ni ni-single-02"></i>
                                     <span>My meeting</span>
                                 </a>
@@ -504,12 +412,11 @@
                                    href="/member/customlogin"><i class="ni ni-user-run"></i> <span>로그인</span> </a>
                             </sec:authorize>
                         </div>
-                        <!-- .dropdown-menu dropdown-menu-right --></li>
+                        <!— .dropdown-menu dropdown-menu-right —></li>
                 </ul>
             </div>
-            <!-- .collapse navbar-collapse -->
+            <!— .collapse navbar-collapse —>
         </div>
-        <!-- .container-fluid -->
+        <!— .container-fluid —>
     </nav>
 </div>
->>>>>>> e6e4121daf83de5e57d567b4db746192d6b21d17

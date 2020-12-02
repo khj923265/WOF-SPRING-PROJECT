@@ -119,12 +119,25 @@
 	<input class="form-control" type= "hidden" name="member_no" id="member_no"	value='${member.member_no}' readonly="readonly">
 	<input class="form-control" type= "hidden" name="real_name" id="real_name"	value='${member.real_name}' readonly="readonly">
 
-				
+				<div class = "chat">
 					<div class="media mt-2">
 						<div class="media-body">
-							<div class = "chat">
-							
-											
+							<h5 class="mt-0">Jeremy Tomlinson</h5>
+							Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
+							scelerisque ante sollicitudin. Cras purus odio, vestibulum in
+							vulputate at, tempus viverra turpis. Fusce condimentum nunc ac
+							nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+
+							<div class="media mt-3">
+								<div class="media-body">
+									<h5 class="mt-0">Kathleen Thomas</h5>
+									Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
+									scelerisque ante sollicitudin. Cras purus odio, vestibulum in
+									vulputate at, tempus viverra turpis. Fusce condimentum nunc ac
+									nisi vulputate fringilla. Donec lacinia congue felis in
+									faucibus.
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -271,57 +284,39 @@
 	</div>
 
 
+	<!-- Footer -->
+	<%@ include file="../includes/footer.jsp" %>
 
 
 
-
-<!-- Modal -->
-      <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-        aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal"
-                aria-hidden="true">&times;</button>
-              <h4 class="modal-title" id="myModalLabel">REPLY MODAL</h4>
-            </div>
-            <div class="modal-body">
-              <div class="form-group">
-                <label>Reply</label> 
-                <input class="form-control" name='reply' value='New Reply!!!!'>
-              </div>      
-              <div class="form-group">
-                <label>Replyer</label> 
-                <input class="form-control" name='replyer' value='replyer'>
-              </div>
-              <div class="form-group">
-                <label>Reply Date</label> 
-                <input class="form-control" name='replyDate' value='2018-01-01 13:13'>
-              </div>
-      
-            </div>
-            
-		<div class="modal-footer">
-		        <button id='modalModBtn' type="button" class="btn btn-warning">Modify</button>
-		        <button id='modalRemoveBtn' type="button" class="btn btn-danger">Remove</button>
-		        <button id='modalRegisterBtn' type="button" class="btn btn-primary">Register</button>
-		        <button id='modalCloseBtn' type="button" class="btn btn-default">Close</button>
-		      </div>          </div>
-		          <!-- /.modal-content -->
-		        </div>
-		        <!-- /.modal-dialog -->
-		      </div>
-		      <!-- /.modal -->
-
-
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">경고창</h4>
+			</div>
+			<div class="modal-body">
+				<p>정말로 삭제하시겠습니까?</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+				<a href="/project/delete?proj_id=${project.getProj_id()}"><button
+						type="button" class="btn btn-primary">삭제</button></a>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 
 
 <script type="text/javascript" src="/resources/template/bootstrap/js/reply.js"></script>
 
-<<<<<<< HEAD
-<script>
-$(document).ready(function () {
-=======
 
 <script>
 $(document).ready(function(e) {
@@ -559,270 +554,53 @@ $(document).ready(function(e) {
 
 <script>
 	$(document).ready(function () {
->>>>>>> e6e4121daf83de5e57d567b4db746192d6b21d17
 	  
-	  var projValue = '<c:out value="${board.getProj_id}"/>';
+	  var bnoValue = '<c:out value="${project.proj_id}"/>';
 	  var replyUL = $(".chat");
 	  
 	    showList(1);
 	    
-	function showList(page){
-		
-		  console.log("show list " + page);
-	    
-	    replyService.getList({proj_id:projValue,page: page|| 1 }, function(replyCnt, list) {
-	      
-	    console.log("replyCnt: "+ replyCnt );
-	    console.log("list: " + list);
-	    console.log(list);
-	    
-	    if(page == -1){
-	      pageNum = Math.ceil(replyCnt/10.0);
-	      showList(pageNum);
-	      return;
-	    }
-	      
-	     var str="";
-	     
-	     if(list == null || list.length == 0){
-	       return;
-	     }
-	     
-	     for (var i = 0, len = list.length || 0; i < len; i++) {
-	       str +="<li class='left clearfix' data-rno='"+list[i].rno+"'>";
-	       str +="  <div><div class='header'><strong class='primary-font'>["
-	    	   +list[i].p_rno+"] "+list[i].p_rmem+"</strong>"; 
-	       str +="    <small class='pull-right text-muted'>"
-	           +replyService.displayTime(list[i].replyDate)+"</small></div>";
-	       str +="    <p>"+list[i].p_rcont+"</p></div></li>";
-	     }
-	     
-	     replyUL.html(str);
-	     
-	     showReplyPage(replyCnt);
-
-	 
-	   });//end function
-	     
-	 }//end showList
-	    
-	    var pageNum = 1;
-	    var replyPageFooter = $(".panel-footer");
-	    
-	    function showReplyPage(replyCnt){
-	      
-	      var endNum = Math.ceil(pageNum / 10.0) * 10;  
-	      var startNum = endNum - 9; 
-	      
-	      var prev = startNum != 1;
-	      var next = false;
-	      
-	      if(endNum * 10 >= replyCnt){
-	        endNum = Math.ceil(replyCnt/10.0);
-	      }
-	      
-	      if(endNum * 10 < replyCnt){
-	        next = true;
-	      }
-	      
-	      var str = "<ul class='pagination pull-right'>";
-	      
-	      if(prev){
-	        str+= "<li class='page-item'><a class='page-link' href='"+(startNum -1)+"'>Previous</a></li>";
-	      }
-	      
-	      for(var i = startNum ; i <= endNum; i++){
+	    function showList(page){
+	    	
+	    	console.log("show list " + page);
 	        
-	        var active = pageNum == i? "active":"";
+	        replyService.getList({proj_id:projValue,page: page|| 1 }, function(replyCnt, list) {
+	          
+	        console.log("replyCnt: "+ replyCnt );
+	        console.log("list: " + list);
+	        console.log(list);
 	        
-	        str+= "<li class='page-item "+active+" '><a class='page-link' href='"+i+"'>"+i+"</a></li>";
-	      }
-	      
-	      if(next){
-	        str+= "<li class='page-item'><a class='page-link' href='"+(endNum + 1)+"'>Next</a></li>";
-	      }
-	      
-	      str += "</ul></div>";
-	      
-	      console.log(str);
-	      
-	      replyPageFooter.html(str);
-	    }
-	     
-	    replyPageFooter.on("click","li a", function(e){
-	       e.preventDefault();
-	       console.log("page click");
-	       
-	       var targetPageNum = $(this).attr("href");
-	       
-	       console.log("targetPageNum: " + targetPageNum);
-	       
-	       pageNum = targetPageNum;
-	       
-	       showList(pageNum);
-	     });     
-
-	    
-	/*     function showList(page){
-	      
-	      replyService.getList({bno:bnoValue,page: page|| 1 }, function(list) {
-	        
-	        var str="";
-	       if(list == null || list.length == 0){
-	        
-	        replyUL.html("");
-	        
-	        return;
-	      }
-	       for (var i = 0, len = list.length || 0; i < len; i++) {
+	        if(page == -1){
+	          pageNum = Math.ceil(replyCnt/10.0);
+	          showList(pageNum);
+	          return;
+	        }
+	          
+	         var str="";
+	         
+	         if(list == null || list.length == 0){
+	           return;
+	         }
+	         
+	         for (var i = 0, len = list.length || 0; i < len; i++) {
 	           str +="<li class='left clearfix' data-rno='"+list[i].rno+"'>";
-	           str +="  <div><div class='header'><strong class='primary-font'>"+list[i].replyer+"</strong>"; 
-	           str +="    <small class='pull-right text-muted'>"+replyService.displayTime(list[i].replyDate)+"</small></div>";
+	           str +="  <div><div class='header'><strong class='primary-font'>["
+	        	   +list[i].rno+"] "+list[i].replyer+"</strong>"; 
+	           str +="    <small class='pull-right text-muted'>"
+	               +replyService.displayTime(list[i].replyDate)+"</small></div>";
 	           str +="    <p>"+list[i].reply+"</p></div></li>";
 	         }
+	         
+	         replyUL.html(str);
+	         
+	         showReplyPage(replyCnt);
 
+	     
+	       });//end function
+	         
+	     }//end showList
 
-	    replyUL.html(str);
-
-	      });//end function
-	      
-	   }//end showList */
-	   
-	    var modal = $(".modal");
-	    var modalInputReply = modal.find("input[name='reply']");
-	    var modalInputReplyer = modal.find("input[name='replyer']");
-	    var modalInputReplyDate = modal.find("input[name='replyDate']");
-	    
-	    var modalModBtn = $("#modalModBtn");
-	    var modalRemoveBtn = $("#modalRemoveBtn");
-	    var modalRegisterBtn = $("#modalRegisterBtn");
-	    
-	    $("#modalCloseBtn").on("click", function(e){
-	    	
-	    	modal.modal('hide');
-	    });
-	    
-	    $("#addReplyBtn").on("click", function(e){
-	      
-	      modal.find("input").val("");
-	      modalInputReplyDate.closest("div").hide();
-	      modal.find("button[id !='modalCloseBtn']").hide();
-	      
-	      modalRegisterBtn.show();
-	      
-	      $(".modal").modal("show");
-	      
-	    });
-	    
-
-	    modalRegisterBtn.on("click",function(e){
-	      
-	      var reply = {
-	            reply: modalInputReply.val(),
-	            replyer:modalInputReplyer.val(),
-	            bno:bnoValue
-	          };
-	      replyService.add(reply, function(result){
-	        
-	        alert(result);
-	        
-	        modal.find("input").val("");
-	        modal.modal("hide");
-	        
-	        //showList(1);
-	        showList(-1);
-	        
-	      });
-	      
-	    });
-
-
-	  //댓글 조회 클릭 이벤트 처리 
-	    $(".chat").on("click", "li", function(e){
-	      
-	      var rno = $(this).data("rno");
-	      
-	      replyService.get(rno, function(reply){
-	      
-	        modalInputReply.val(reply.reply);
-	        modalInputReplyer.val(reply.replyer);
-	        modalInputReplyDate.val(replyService.displayTime( reply.replyDate))
-	        .attr("readonly","readonly");
-	        modal.data("rno", reply.rno);
-	        
-	        modal.find("button[id !='modalCloseBtn']").hide();
-	        modalModBtn.show();
-	        modalRemoveBtn.show();
-	        
-	        $(".modal").modal("show");
-	            
-	      });
-	    });
+	     
 	  
-	    
-	/*     modalModBtn.on("click", function(e){
-	      
-	      var reply = {rno:modal.data("rno"), reply: modalInputReply.val()};
-	      
-	      replyService.update(reply, function(result){
-	            
-	        alert(result);
-	        modal.modal("hide");
-	        showList(1);
-	        
-	      });
-	      
-	    });
-
-	    modalRemoveBtn.on("click", function (e){
-	    	  
-	  	  var rno = modal.data("rno");
-	  	  
-	  	  replyService.remove(rno, function(result){
-	  	        
-	  	      alert(result);
-	  	      modal.modal("hide");
-	  	      showList(1);
-	  	      
-	  	  });
-	  	  
-	  	}); */
-
-	    modalModBtn.on("click", function(e){
-	    	  
-	   	  var reply = {rno:modal.data("rno"), reply: modalInputReply.val()};
-	   	  
-	   	  replyService.update(reply, function(result){
-	   	        
-	   	    alert(result);
-	   	    modal.modal("hide");
-	   	    showList(pageNum);
-	   	    
-	   	  });
-	   	  
-	   	});
-
-
-	   	modalRemoveBtn.on("click", function (e){
-	   	  
-	   	  var rno = modal.data("rno");
-	   	  
-	   	  replyService.remove(rno, function(result){
-	   	        
-	   	      alert(result);
-	   	      modal.modal("hide");
-	   	      showList(pageNum);
-	   	      
-	   	  });
-	   	  
-	   	});
-
-	 
-	});
-
-	</script>
-	
-	
-	
-	<!-- Footer -->
-	<%@ include file="../includes/footer.jsp" %>
+	     
+</script>
