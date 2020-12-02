@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%@ include file = "../includes/header.jsp"%>	
+<%@ include file = "point-charging.jsp"%>
 	<!-- 로그인한 상태에 보여줄 태그 -->
 	<%-- <sec:authorize access="isAuthenticated()">
  	 	<a href="">로그아웃</a>
@@ -61,13 +62,13 @@
 				  <th>포인트 충전/송금</th>
 				 </tr>
  <!-- ②포인트 충전/송금 -->  	
- 				  <tr> 																					
- 				  <td id="totalPoint"><b>${member.total_point }</b>&nbsp;P</form></td>	
+ 				  <tr> 	
+ 				  <td><div  id="totalpoint"><b>${member.total_point }</b>&nbsp;P</div></td>
             	  <td>              		
-            	  	<a type="button" class="btn btn-primary ml-2" name="charge" value="충전" id="popup">충전</a>
-            	  		
-            	    	<!-- href = "javascript:popup()" target = "_self" -->	
-  			  		<a type="button" class="btn btn-secondary ml-2" name="withdraw" value="인출" id="popup2">인출</a>
+            	  	<a type="button" class="btn btn-primary ml-2" name="charge" data-toggle="modal" data-target="#modal-charging-form">충전</a>
+  			  		<a type="button" class="btn btn-secondary ml-2" name="withdraw" data-toggle="modal" data-target="#modal-withdraw-form">인출</a>
+  			  		<!-- <a type="button" class="btn btn-secondary ml-2" name="withdraw" value="인출" id="popup2">인출</a> -->
+  			  		<a type="button" class="btn btn-success ml-2" name="pointTest" value="test" id="popup2">테스트</a>
   			  	  </td>
   			  	  </tr>
             	</table>
@@ -234,9 +235,7 @@
   		});
   	</script>	
   	
-
-  	
-	<script>
+	<!-- <script>
         var popup = document.getElementById('popup');
         	popup.addEventListener('click',function(){
             var url = "/point/charging";
@@ -253,12 +252,42 @@
             var option = "width = 500, height = 500, top = 100, left = 200, location = no"
             window.open(url, name, option);
         })
+    </script>   -->
+    
+    <script>
+        var popup2 = document.getElementById('popup2');
+        	popup2.addEventListener('click',function (){
+            var url = "/point/pointTest";
+            var name = "pointTest";
+            var option = "width = 500, height = 500, top = 100, left = 200, location = no"
+            window.open(url, name, option);
+        })
     </script>  
+	
+  <!--   <script>
+    function change_div(val){
+    	
+    var val2 = $("#totalpoint").val();
+
+    $.ajax({
+    type: 'post',
+    url: 'point-admin.jpg',
+    data: {
+    	넘길값1:val1,
+    	넘길값2:val2
+    },
+    success: function (response)
+    {
+      $("#div아이디").html(response);
+    }
+    });
+    }
+    </script> -->
     
 	<script>
         function pointRefresh(){
         	 $("#totalPoint").load(window.location.href + "#totalPoint");
-        }
+        };
     </script> 
   
 <%@ include file = "../includes/footer.jsp"%>
