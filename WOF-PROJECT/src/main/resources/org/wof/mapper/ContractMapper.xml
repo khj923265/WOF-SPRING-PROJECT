@@ -4,7 +4,7 @@
 
 <mapper namespace="org.wof.mapper.ContractMapper">
 
-	<select id='contractSource' resultType="org.wof.domain.ContractSourceVO">
+	<select id="contractSource" resultType="org.wof.domain.ContractSourceVO">
 		<![CDATA[
 		select
 		m.member_no, m.userid, m.real_name, m.userphone, 
@@ -20,7 +20,7 @@
 		]]>
 	</select>
 	
-	<select id='contractTarget' resultType="org.wof.domain.ContractTargetVO">
+	<select id="contractTarget" resultType="org.wof.domain.ContractTargetVO">
 		<![CDATA[
 		select 
 		m.member_no, m.userid, m.real_name, m.userphone, p.birthday
@@ -30,18 +30,25 @@
 		]]>
 	</select>
 	
-	<select id='contractCheck' resultType="org.wof.domain.ContractVO">
+	<select id="contractCheck" resultType="org.wof.domain.ContractVO">
 		
 	</select>
 	
-	<insert id='sourceRegister'>
+	<insert id="sourceRegister">
 		insert into contract (
-		CONTRACT_ID, CONTRACT_WRITE_SOURCE, 
+		CONTRACT_ID, CONTRACT_WRITE_SOURCE,
 		CONTRACT_REG_DATE, RELATED_PROJ, CONTRACT_WRITE_TARGET, source_signature
 		)
 		values('cont'||contract_seq.nextval, #{contract_write_source}, sysdate, 
 		#{related_proj}, #{contract_write_target}, #{source_signature})
 	</insert>
+	
+	<update id="targetSignature">
+		update contract set source_signature = #{source_signature}
+		where CONTRACT_WRITE_SOURCE = #{contract_write_source}
+		and RELATED_PROJ = #{related_proj}
+		and CONTRACT_WRITE_TARGET = #{contract_write_target}
+	</update>
 
 
 </mapper>
