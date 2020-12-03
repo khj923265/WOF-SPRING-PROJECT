@@ -4,19 +4,24 @@ import java.util.List;
 
 import lombok.Data;
 
+/*
+ * [2020-11-17 김태완]
+ */
+
 @Data
 public class ProjectVO {
 	
 	private String proj_id;					// 프로젝트 관리번호
 	private String proj_title;				// 제목
 	private String proj_reg_date;			// 등록일
-	private String member_no;				// 등록자
+	private String proj_reg_mem;			// 등록자
 	private String proj_apply_deadline;		// 지원 마감일
 	private String proj_start_date;			// 예상 시작일
 	private String proj_end_date;			// 예상 종료일
 	private int proj_estimate;				// 예산
 	private int proj_reqr_person;			// 필요 인원
-	private String proj_reqr_skill;			// 필요 기술
+	private String proj_category;			// 분야
+	private String proj_skill;				// 기술
 	private int proj_type;					// 0 : 아이디어, 1 : 기획, 2 : 개발
 	private String proj_career;				// 모집 요건
 	private int proj_pm;					// pm유무(0 : 유, 1 : 무)
@@ -32,10 +37,13 @@ public class ProjectVO {
 	private int proj_status;				// 현재 상태(0 : 모집중, 1 : 진행중, 2 : 완료)
 	private String proj_update_date;		// 변경일
 	private int proj_replyCnt;				// 댓글 개수
-	private int cal_date;			// 총 일수
+	private int cal_date;					// 총 일수
+	private int rn;							// rownum
 	//private List<ProjectAttachVO> proj_attachList;
 	private List<ProjectAttachVO> attachList;
 	private String followproject_no;
+	
+	
 	
 	
 }

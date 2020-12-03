@@ -49,15 +49,13 @@ public class ProjectController {
 	private ProjectAttachService service;
 
 	@GetMapping("/list")
-	public void list(Standard stand,Model model1){
-		log.info("list...."+stand);
-		model1.addAttribute("list", ps1.getlist(stand));
-		//model1.addAttribute("pageMaker", new PageDTO(stand, 123));
+	public void list(Standard standard, Model model){
+		log.info("/project/list/" + standard);
+
+		int total = ps1.getTotal(standard);
 		
-		int total = ps1.getTotal(stand);
-		log.info("total: "+total);
-		model1.addAttribute("pageDto", new PageDTO(stand, total));
-	
+		model.addAttribute("list", ps1.getListWithPaging(standard));
+		model.addAttribute("pageDto", new PageDTO(standard, total));
 	}
 	
 	@GetMapping("/create")

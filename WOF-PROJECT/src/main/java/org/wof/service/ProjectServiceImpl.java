@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.wof.domain.ApplyVO;
 import org.wof.domain.ContractTargetVO;
 import org.wof.domain.ContractVO;
 import org.wof.domain.ProjectAttachVO;
@@ -57,15 +58,33 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public List<ProjectVO> getlist(Standard stand) {
-		log.info("getList........." + stand);
-		return pm1.getListWithPaging(stand);
+	public List<ProjectVO> getListWithPaging(Standard standard) {
+
+		return pm1.getListWithPaging(standard);
 	}
 
 	@Override
-	public int getTotal(Standard stand) {
-		log.info("get total count");
-		return pm1.getTotalCount(stand);
+	public int getTotal(Standard standard) {
+
+		return pm1.getTotalCount(standard);
+	}
+	
+	@Override
+	public int getPrev(Standard standard) {
+		
+		return pm1.getPrevCount(standard);
+	}
+
+	@Override
+	public int getCurr(Standard standard) {
+		
+		return pm1.getCurrCount(standard);
+	}
+	
+	@Override
+	public void apply(ApplyVO applyvo) {
+		
+		pm1.apply(applyvo);
 	}
 
 	
