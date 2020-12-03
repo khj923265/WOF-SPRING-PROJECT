@@ -230,6 +230,13 @@ public class PointServiceImpl implements PointService {
         }
 
 	}
-	
+
+	@Override
+	public int totalPoinAjaxtService(MemberVO member) {
+		
+		return pointMapper.getTotalpointAjax(member);
+	}
+
+
 	
 }

@@ -5,21 +5,9 @@
 
 <%@ include file = "../includes/header.jsp"%>	
 <%@ include file = "point-charging.jsp"%>
-<%@ include file = "point-withdraw.jsp"%>
+<%-- <%@ include file = "point-withdraw.jsp"%> --%>
 	
-	<!-- toastr css 라이브러리 -->
-	<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
-	
-	<style>
-	.vl {
-  		border-left: 2px solid green;
-  		height: 500px;
-  		position: absolute;
-  		left: 50%;
-  		margin-left: -3px;
-  		top: 0;
-		}
-	</style>
+
 	
 	<title>포인트 관리</title>
 	<!--
@@ -56,8 +44,7 @@
 
 
 <!-- Sidenav -->
-<%-- <nav
-	class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white"
+<nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white"
 	id="sidenav-main">
 	<div class="scrollbar-inner">
 		<!-- Brand -->
@@ -132,64 +119,63 @@
 			</div>
 		</div>
 	</div>
-</nav> --%>
+</nav>
 <!-- End side nav -->
 
- 
- 
- 
- 
-
-  <div class="table-responsive">
-          <table class="table align-items-center table-flush">
     
- <!-- Body of contents  -->    
+ <!-- Body of contents  -->   
+ <div class="container-fluid">
  <!-- 포인트 관리  -->
-    <div class="container mt--6">
-      <div class="row inline" id="manage-client-point">
-        <div class="col">
-          <div class="card">
-            <div class="card-header">
+  <div class="container-fluid mt--6">
  <!-- ①잔여포인트 확인 section  -->            
  <!-- ②포인트 충전/송금 -->  	
-    <div class="table-responsive col center"id="totalpoint">
-    <table class="table align-items-center table-flush">
-    <tr>
-    <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
-    <th class="align-items-center">
-    <h3>잔여 포인트</h3>
-    </th>
-    <th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
-    <th class="align-items-center">
-    <h3>포인트 충전/송금</h3>
-    </th>
-    </tr>
-    <tr>
-    <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
-    <td class="align-items-center">
-    <b>${member.total_point }</b>&nbsp;P
-    </td>
-    <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
-    <td class="align-items-center">
-    <a type="button" class="btn btn-secondary ml-2" name="withdraw" data-toggle="modal" data-target="#modal-withdraw-form">인출</a>
-    <a type="button" class="btn btn-primary ml-2" name="charge" data-toggle="modal" data-target="#modal-charging-form">충전</a>
-			  			  		<!-- <a type="button" class="btn btn-secondary ml-2" name="withdraw" value="인출" id="popup2">인출</a> -->
-	<a type="button" class="btn btn-success ml-2" name="pointTest" value="test" id="popup2">테스트</a>		  			  		
-    </td>
-    </tr>
-    </table>
-    
- 	</div>
-    <!-- <div class="vl"></div> -->
-  			
-            </div> <!-- end of card-header -->
-             </div> <!-- end of card -->
-          </div> <!-- end of col -->
-        </div> <!-- end of row (id="manage-client-point") -->
+ 	 <div class="row inline" id="manage-client-point">
+        <div class="col">
+          <div class="card">
+          <div class="card-header border-0">
+              <h3 class="mb-0">보유 포인트</h3>
+          </div>
+            <div class="card-body row inline">
+                    <!-- ①잔여포인트 확인 section  -->
+                    <div class="col-6 inline text-center py-2" style="background-color: #E9ECEF">
+                        <h2>잔여 포인트</h2>
+                    </div>
+                    <div class="col-6 inline text-center py-2" style="background-color: #E9ECEF">
+                        <h2 class="col-12 inline">포인트 충전/송금</h2>
+                    </div>
+                    <div class="col-6 inline text-center" id="totalPoint" id="totalPoint" pointRefresh>
+                        <div class="row inline">
+                            <!-- ②포인트 충전/송금 -->
+                            <h1 class="col-12 text-center py-4" ><b>${member.total_point }</b>&nbsp;P</h1>
+                        </div>
+                    </div>
+                    <div class="col-6 inline">
+                        <div class="row inline">
+                            <div class="col-6 text-center py-4">
+                                <a type="button" class="btn btn-primary ml-2" name="charge" data-toggle="modal" 
+                                data-target="#modal-charging-form"><h1>충전</h1></a>
+                            </div>
+                            <!--  href = "javascript:popup()" target = "_self"  -->
+                            <div class="col-6 text-center py-4">
+                                <a type="button" class="btn btn-secondary ml-2" name="withdraw" data-toggle="modal" 
+                                data-target="#modal-withdraw-form"><h1>인출</h1></a>
+                            </div>
+                            <!-- <div class="col-6 text-center py-6">
+                            	<a type="button" class="btn btn-success ml-2" name="pointTest" value="test" id="popup2">테스트</a>
+                            </div> -->
+                        </div>
+    		<!-- <div class="vl"></div> -->
+	     </div> <!-- end of card-body -->
+      	</div> <!-- end of card -->
+    </div> <!-- end of col -->
+  </div> <!-- end of row (id="manage-client-point") -->
+</div> <!-- end of container -->
+
+
  <!-- 포인트  이용내역  -->
-    <div class="container mt--2">
+    <div class="container-fluid mt--2">
       <!-- ①title -->    
-      <div class="row">
+      <div class="row inline">
         <div class="col">
           <div class="card">
             <!-- Card header -->
@@ -319,6 +305,7 @@
         </div>
       </div>
 	</div>
+</div>	
   
   	<script src="/resources/template/assets/vendor/jquery/dist/jquery.min.js"></script>
   	<script>
@@ -370,25 +357,23 @@
         })
     </script>  
 	
-  <!--   <script>
-    function change_div(val){
+  	<script>
+    function change_div(){
     	
-    var val2 = $("#totalpoint").val();
+    //var val = $("#totalpoint").val();
 
     $.ajax({
-    type: 'post',
-    url: 'point-admin.jpg',
-    data: {
-    	넘길값1:val1,
-    	넘길값2:val2
-    },
+    type: 'get',
+    url: '/point/totalPoint',
+    dataType: 'json',
     success: function (response)
     {
-      $("#div아이디").html(response);
+      $("#totalPoint").html(response);
     }
     });
+    
     }
-    </script> -->
+    </script>
     
 	<script>
         function pointRefresh(){

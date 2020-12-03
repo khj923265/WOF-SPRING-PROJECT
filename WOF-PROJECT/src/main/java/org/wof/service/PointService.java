@@ -17,6 +17,8 @@ public interface PointService {
 	
 	public int WithdrawService(PointVO point, MemberVO member);
 	
+	public int totalPoinAjaxtService(MemberVO member);
+	
 	public int PaymentInService(PointVO point, ContractSourceVO contract);
 
 	public int PaymentOutService(PointVO point, MemberVO member, ContractSourceVO contract);

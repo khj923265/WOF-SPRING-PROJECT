@@ -10,6 +10,11 @@
 		where member_no = #{point_owner}
 	</select>
 	
+	<select id="getTotalpointAjax" parameterType="org.wof.domain.MemberVO" resultType="int">
+		select total_point
+		from member
+		where userid = #{userid}
+	</select>
 
 
 	<select id="getMember_no" parameterType="org.wof.domain.MemberVO" resultType="org.wof.domain.MemberVO">
@@ -25,7 +30,7 @@
   		where userid = #{userid}
   	</select>
   	
-  	
+
 
 	<insert id="ChargingList" parameterType="org.wof.domain.PointVO">
 		insert into POINT(point_id, point_no, point_type, point_owner, point_amount, point_contents, point_chg_date, point_balance)  

@@ -12,7 +12,7 @@
         	
 <div class="modal-body p-0">
             	
-<div class="card bg-secondary border-0 mb-0">
+<div class="card bg-secondary border-0 mb-0" style="width: 500px">
 
     <div class="card-header bg-transparent pb-3">
         <div class="text-muted text-center mt-2 mb-3"><large>인출하기</large></div>
@@ -53,7 +53,7 @@
                 </div>
             </div>
             
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label for="example-password-input" class="form-control-label">비밀번호 확인</label> 
                 <div class="input-group input-group-merge input-group-alternative">
                     <div class="input-group-prepend">
@@ -62,7 +62,7 @@
                     <input class="form-control" type="password" id="userpw" name="userpw" placeholder="비밀번호를 입력해주세요." required>
                     <div class="check_font" id="pwCheck" name="pwCheck"></div>
                 </div>
-            </div>
+            </div> -->
             
             <div class="form-group">
               <label for="example-password-input" class="form-control-label">본인확인</label> 
@@ -79,36 +79,10 @@
 				</div>
             </div>
             
-            
             <div class="text-center">
-                <input type="button" class="btn btn-primary my-6" data-toggle="modal" onclick="btnDisabled()"  data-target="#exampleModal" value="인출">
+                <button type="submit" class="btn btn-primary my-6" data-toggle="modal" data-target="#exampleModal" >인출</button>
             </div>
             
-            	<!-- 충전 확인 모달창 -->
-						<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  						<div class="modal-dialog modal-dialog-centered" role="document">
-    						<div class="modal-content">
-    						
-      						<div class="modal-header">
-        						<h5 class="modal-title" id="exampleModalLabel">인출</h5>
-        						<button type="button" id = "charging" class="close" data-dismiss="modal" aria-label="Close">
-          						<span aria-hidden="true">&times;</span>
-        						</button>
-      						</div>
-      						
-      						<div class="modal-body">
-        						인출하시겠습니까?
-      						</div>
-      						
-      						<div class="modal-footer">
-        						<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-        						<input type="submit" class="btn btn-primary" value="확인">
-        								
-      						</div>
-      						
-    						</div>
-  						</div>
-						</div>	
         </form>
         
     </div> <!-- end of card body -->
@@ -199,87 +173,3 @@
 	})
 	</script>
 	
-	 <script>
-    // 여기에 코드를 작성하세요.
-    btnDisabled();
-
-    //$('#email-input').on('input', setToggleEmail);
-    //$('#password-input').on('input', setTogglePwd);
-    
-    $('#input-amount').on('input', setAmount);
-    $('#input-contents').on('input', setContents);
-    $('.input-pw').on('input', setPw);
-    
-    var amount = 0;
-    var contents = 0;
-    var pw = 0;
-
-    // 토글 변수를 사용해서 입력값의 유무 상태를 기록한다.(입력값 없을 시 0)
-    // 이를 통해 입력값을 지울 경우 입력값이 없는 상태로 업데이트 가능하다.
-    // judgeBtn 함수를 호출하여 버튼 활성화 여부를 결정한다.
-    function setAmount() {
-      var input = $('input-amount').val();
-      if(input.length > 0) {
-    	  amount = 1;
-      } else {
-    	  amount = 0;
-      }
-      judgeBtn();
-    }
-
-    function setContents() {
-      var input = $('#input-contents').val();
-      if(input.length > 0) {
-    	  contents = 1;
-      } else {
-    	  contents = 0;        
-      }
-      judgeBtn();
-    }
-
-    function setPw() {
-        var input = $('#input-pw').val();
-        if(input.length > 0) {
-        	pw = 1;
-        } else {
-        	pw = 0;        
-        }
-        judgeBtn();
-      }
-    
-    // 버튼 활성화 여부를 결정하는 함수
-    function judgeBtn() {
-      if (amount === 1 && contents === 1 && pw === 1 ) {
-        btnEnabled();
-      } else {
-        btnDisabled();
-      }
-    }
-
-    function btnDisabled() {
-      $('#submit-btn').css('background-color', '#9b9b9b');
-      // 버튼이 비활성화되었을 때 마우스오버 효과를 없애기 위한 코드
-      setShadowNone();
-      $('#submit-btn').attr('disabled', true);
-      // console.log('btnDisabled');
-    }
-
-    function btnEnabled() {
-      $('#submit-btn').css('background-color', '#1bbc98');
-      // 아래 코드도 버튼 활성화가 가능하다.
-      // $('#submit-btn').attr('disabled', false);
-      $('#submit-btn').removeAttr('disabled');
-      $('#submit-btn').on('mouseover', setShadow);
-      $('#submit-btn').on('mouseleave', setShadowNone);
-    }
-
-    function setShadow() {
-      console.log('setShadow');
-      $('#submit-btn').css('box-shadow', '0 2px 4px 0 rgba(0, 0, 0, 0.50)');
-    }
-
-    function setShadowNone() {
-      $('#submit-btn').css('box-shadow', 'none');
-    }
-
-  </script>

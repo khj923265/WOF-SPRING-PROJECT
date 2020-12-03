@@ -1,6 +1,7 @@
 package org.wof.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -8,6 +9,9 @@ import java.util.Random;
 import javax.servlet.http.HttpServletRequest;
 
 import org.json.simple.JSONObject;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,7 +41,6 @@ public class PointController {
 	
     private PointService service;
 
-    
     @GetMapping("/admin")
     public String admin(Principal principal,PointVO point, MemberVO member, Model model, Standard standard){
     	
@@ -46,6 +49,8 @@ public class PointController {
     	log.info("=============member : "+member);
     	log.info("=============point : "+point);
     	
+    	service.totalPoinAjaxtService(member);
+    	
     	//model.addAttribute("admin", service.ListService(standard));
     	
     	model.addAttribute("getList", service.ListService(member, point, standard));
@@ -53,16 +58,20 @@ public class PointController {
     	int total = service.getTotalService(standard);
     	log.info(standard);
     	log.info(total);
-    	model.addAttribute("pageMaker", new PageDTO(standard, total));
+    	//model.addAttribute("pageMaker", new PageDTO(standard, total));
+    	
+    	
     	
     	return "point/point-admin";
     }
     
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/charging")
     public String getcharging(){
     	return "point/point-charging";
     }
     
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/charging")
     public String charging(PointVO point, MemberVO member, RedirectAttributes rttr){
     		log.info(point);
@@ -73,11 +82,13 @@ public class PointController {
     	return "redirect:/point/admin";
     }
     
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/withdraw")
     public String getwithdarw(){
     	return "point/point-withdraw";
     }
     
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/withdraw")
     public String withdraw(PointVO point, MemberVO member, RedirectAttributes rttr){
     		
@@ -88,6 +99,18 @@ public class PointController {
     		return "redirect:/point/admin";
     }
     
+/*    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/totalPoint")
+    public void totalPoint(PointVO point, RedirectAttributes rttr){
+    	
+    	if(service.totalPointService(point) == 1){
+    		rttr.addFlashAttribute("result", "success");
+    	}
+    	
+    }
+    */
+    
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(value="/point/pwCheck", method=RequestMethod.GET)
     @ResponseBody
     public String pwCheck(@RequestParam("userpw") String userpw ,MemberVO member, Principal principal){
@@ -99,11 +122,13 @@ public class PointController {
     	return service.pwCheckService(member);
     }
     
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/pointTest")
     public String pointTest(){
     	return "point/point-test";
     }
     
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/paymentIn")
     public String paymentIn(ContractSourceVO contract, PointVO point, Model model){
     		log.info("paymentIn 1st" + contract);
@@ -114,6 +139,7 @@ public class PointController {
     		return "point/point-admin";
     }
     
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/paymentOut")
     public String paymentOut(PointVO point, MemberVO member, ContractSourceVO contract, RedirectAttributes rttr){
     		
@@ -123,9 +149,10 @@ public class PointController {
     		return "point/point-admin";
     }
     
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/check/sendSMS")
-    public @ResponseBody
-    String sendSMS(String phoneNumber) {
+    @ResponseBody
+    public String sendSMS(String phoneNumber) {
 
         Random rand  = new Random();
         String numStr = "";

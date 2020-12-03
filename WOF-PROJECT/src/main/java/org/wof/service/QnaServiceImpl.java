@@ -63,7 +63,9 @@ public class QnaServiceImpl implements QnaService {
 	public void registerService(QuestionVO quest) {
 		log.info("======== register ========" + quest);
 		
-		qnaMapper.insertSelectKey(quest);
+		//qnaMapper.insertSelectKey(quest);
+		
+		qnaMapper.insert(quest);
 		
 		quest.setQuest_ans_check(0);
 		quest.setQuest_deleted(0);
@@ -108,14 +110,14 @@ public class QnaServiceImpl implements QnaService {
 
 //		int questionResult = qnaMapper.Question(quest);
 
-		if(quest.getAttachList() == null || quest.getAttachList().size() <= 0) {
+		/*if(quest.getAttachList() == null || quest.getAttachList().size() <= 0) {
 			return;
 		}
 		
 		quest.getAttachList().forEach(attach -> {
 			attach.setQuest_no(quest.getQuest_id());
 			attachMapper.insert(attach);
-		});
+		});*/
 	}
 
 	@Override
