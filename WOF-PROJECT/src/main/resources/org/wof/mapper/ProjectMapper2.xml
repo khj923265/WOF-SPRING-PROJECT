@@ -10,10 +10,10 @@
 	</select>
 	
 	<select id="totalProject" resultType="java.lang.Integer">
-		select count(*) from project
+			select count(*) from project
 	</select>
 	
-	<select id="listRecommendProject" parameterType="org.wof.domain.PartnersVO" resultType="org.wof.domain.ProjectVO">
+	<select id="listRecommendProjectwithpaging" parameterType="org.wof.domain.PartnersVO" resultType="org.wof.domain.ProjectVO">
 			<![CDATA[
 			SELECT p.proj_id, p.proj_title, p.proj_reg_date, p.member_no, p.proj_apply_deadline,
 					p.proj_start_date, p.proj_end_date, p.proj_estimate, p.PROJ_REQR_PERSON, p.PROJ_REQR_SKILL,
@@ -34,7 +34,7 @@
 			]]>
 	</select>
 	
-	<select id="listFollowProject1" parameterType="java.lang.String" resultType="org.wof.domain.ProjectVO">
+	<select id="listRecommendProject" parameterType="org.wof.domain.PartnersVO" resultType="org.wof.domain.ProjectVO">
 		
 		select p.proj_id, p.proj_title, p.proj_reg_date, p.member_no, p.proj_apply_deadline,
 					p.proj_start_date, p.proj_end_date, p.proj_estimate, p.PROJ_REQR_PERSON, p.PROJ_REQR_SKILL,
@@ -43,7 +43,8 @@
 					p.PROJ_UPDATE_DATE, p.PROJ_REPLYCNT, p.PROJ_TOTAL_DATE
 					,fp.followproject_no
 					from project p  full OUTER JOIN followproject fp on p.proj_id = fp.related_project 
-					and fp.related_member = #{related_member}
+					and fp.related_member = #{member_no}
+					where p.PROJ_WORK_PLACE LIKE '%'|| #{prefered_area} ||'%' OR p.PROJ_REQR_SKILL LIKE '%'|| #{skill}||'%'
 	</select>
 	   
    <!-- 관심 프로젝트 -->

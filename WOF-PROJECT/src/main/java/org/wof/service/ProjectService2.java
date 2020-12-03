@@ -10,12 +10,12 @@ public interface ProjectService2 {
 
 	public int totalList(Standard stand);
 	public ProjectVO projectDetail(String proj_id);
-	public List<ProjectVO> listRecommendProject(PartnersVO vo, Standard stand);
+	public List<ProjectVO> listRecommendProjectwithpaging(PartnersVO vo, Standard stand);
 	
 	public void RecommendSendMail(String loginUser, Standard stand);
 	public int addFollowProject(FollowProjectVO vo);
 	public int deleteFollowProject(String followproject_no);
-	public List<ProjectVO> listFollowProject1(String related_member);
+	public List<ProjectVO> listRecommendProject(PartnersVO vo);
 	public List<ProjectVO> listFollowProject(String related_member);
 	public FollowProjectVO detailFollowProject(String related_project, String related_member);
 	

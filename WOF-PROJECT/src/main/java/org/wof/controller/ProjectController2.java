@@ -35,8 +35,7 @@ public class ProjectController2 {
 		PartnersVO vo = memberMapper.partnersInfo(related_member);
 		int total = projectMapper2.totalProject(stand);
 		model.addAttribute("pageDto", new PageDTO(stand, total));
-		//model.addAttribute("projects", projectMapper2.listRecommendProject(vo, stand));
-		model.addAttribute("projects", projectMapper2.listFollowProject1(related_member));
+		model.addAttribute("projects", projectService2.listRecommendProject(vo));
 	}
 	
 	@GetMapping("followlist")
@@ -52,6 +51,12 @@ public class ProjectController2 {
 		String related_member = memberMapper.memberNo(principal.getName());
 		PartnersVO vo = memberMapper.partnersInfo(related_member);
 		session.setAttribute("partners", vo);	
+	}
+	
+	@GetMapping("qna")
+	public String pnaRegister(){
+		log.info("qna");
+		return "/qna/qustion-register";
 	}
 	
 	@GetMapping("meeting")

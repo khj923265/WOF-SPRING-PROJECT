@@ -45,8 +45,8 @@ public class ProjectServiceImpl2 implements ProjectService2 {
 	}
 	
 	@Override
-	public List<ProjectVO> listFollowProject1(String related_member) {
-		return projectMapper2.listFollowProject1(related_member);
+	public List<ProjectVO> listRecommendProject(PartnersVO vo) {
+		return projectMapper2.listRecommendProject(vo);
 	}
 
 	@Override
@@ -58,8 +58,8 @@ public class ProjectServiceImpl2 implements ProjectService2 {
 	}
 	
 	@Override
-	public List<ProjectVO> listRecommendProject(PartnersVO vo, Standard stand) {
-		return projectMapper2.listRecommendProject(vo, stand);
+	public List<ProjectVO> listRecommendProjectwithpaging(PartnersVO vo, Standard stand) {
+		return projectMapper2.listRecommendProjectwithpaging(vo, stand);
 	}
 	
 	@Override

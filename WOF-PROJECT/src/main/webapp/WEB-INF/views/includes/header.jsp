@@ -156,7 +156,8 @@
                             <a href="${pageContext.request.contextPath }/member/partners/profile_info"
                              class="dropdown-item"> <i
                                     class="ni ni-settings-gear-65"></i> <span>회원정보수정</span>
-                            </a> <a href="" class="dropdown-item"> <i
+                            </a> <a id="qnaBtn" href="${pageContext.request.contextPath }/project/qna" 
+                            class="dropdown-item"> <i
                                 class="ni ni-calendar-grid-58"></i> <span>문의사항</span></a> 
                             <div class="dropdown-divider"></div>
                             <sec:authorize access="isAuthenticated()">
@@ -176,3 +177,9 @@
         <!— .container-fluid —>
     </nav>
 </div>
+
+<script type="text/javascript">
+		$('#qnaBtn').click(function() {
+			
+		})
+</script>
