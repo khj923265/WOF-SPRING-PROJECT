@@ -426,11 +426,9 @@
                 <div class="browse-job p-5">
                     <span class="icon-search2 icon"></span> <span class="subheading">Search
 							Job</span>
-                    <h2>Browse Job by Specialism</h2>
-                    <p>Far far away, behind the word mountains, far from the
-                        countries Vokalia and Consonantia, there live the blind texts.
-                        Separated they live in Bookmarksgrove right at the coast of the
-                        Semantics, a large language ocean.</p>
+                    <h2>전문분야에서 프로젝트를 찾으세요</h2>
+                    <p>wof, wof.com, 앱 개발 외주, 앱 개발 외주 사례, 워프, 워프 성공사례, 워프 이용 후기, 워프 이용후기, 워프 프로젝트 사례,
+                     워프 프로젝트 후기, 워프 프로토 타입 제작 후기, 워프 프로토타입 후기, 워프 후기, 워프 후기 보기, 워프 후기 살펴보기</p>
                 </div>
             </div>
         </div>
@@ -920,7 +918,7 @@
         <div class="row justify-content-center mb-5 pb-3">
             <div class="col-md-7 text-center heading-section ftco-animate">
                 <span class="subheading">Testimonial</span>
-                <h2 class="mb-4">Happy Clients</h2>
+                <h2 class="mb-4">고객 후기</h2>
             </div>
         </div>
         <div class="row ftco-animate">
@@ -936,10 +934,12 @@
 									</span>
                             </div>
                             <div class="text">
-                                <p class="mb-4">Far far away, behind the word mountains,
-                                    far from the countries Vokalia and Consonantia, there live the
-                                    blind texts.</p>
-                                <p class="name">Roger Scott</p>
+                                <p class="mb-4">워프에서 상담을 도와주는 매니저분들은 IT 개발에 대한 전문지식이 있는 분이었습니다. 
+                                이번에 진행한 워드프레스 홈페이지 제작 프로젝트의 경우도 필요한 개발 공수나 비용적인 부분 등 외주에 필요한 요소들을 꼭꼭 집어서 설명해주셨어요.
+                                 외주를 진행하고 싶지만 개발에 대한 전문지식이 부족한 사람들에게는 워프가 도움이 될 수 있을 것 같습니다.
+
+</p>
+                                <p class="name">김모씨</p>
                                 <span class="position">Marketing Manager</span>
                             </div>
                         </div>
@@ -954,10 +954,10 @@
 									</span>
                             </div>
                             <div class="text">
-                                <p class="mb-4">Far far away, behind the word mountains,
-                                    far from the countries Vokalia and Consonantia, there live the
-                                    blind texts.</p>
-                                <p class="name">Roger Scott</p>
+                                <p class="mb-4">최종적으로 저희와 함께하게 된 파트너님은 일처리를 굉장히 꼼꼼하게 잘해주셔서 좋았습니다.
+                                 예를 들면, 개발방식에 대해 선택지를 주시고, 저희가 원하는 것을 이야기하면 들어주셨어요. 여태껏 만난 파트너 중에 가장 잘해주신 편이었습니다.
+			뿐만 아니라, 마지막 인수인계가 굉장히 깔끔했어요.</p>
+                                <p class="name">박모씨</p>
                                 <span class="position">Interface Designer</span>
                             </div>
                         </div>
@@ -972,10 +972,13 @@
 									</span>
                             </div>
                             <div class="text">
-                                <p class="mb-4">Far far away, behind the word mountains,
-                                    far from the countries Vokalia and Consonantia, there live the
-                                    blind texts.</p>
-                                <p class="name">Roger Scott</p>
+                                <p class="mb-4">
+많은 분들이 아시겠지만 CMS나 웹 쪽은 인하우스로 사람을 고용하기 힘듭니다. 
+간헐적으로 있는 프로젝트 때문에 사람을 채용하고, 자르고 할 수 없으니까요. 
+저희는 앞으로도 워프에 CMS나 웹 쪽 프로젝트를 더 맡길 예정입니다.
+마지막으로, 개발 프로젝트를 외주로 맡기고 싶은 분들이 계시다면 워프에서 진행되었던 유사 프로젝트를 살펴보라고 말씀드리고 싶습니다. 
+사이트를 방문하면 원하는 프로젝트의 개발 단가와 개발 내용을 가시적으로 볼 수 있기 때문에, 도움이 되리라 생각해요.</p>
+                                <p class="name">이모씨</p>
                                 <span class="position">UI Designer</span>
                             </div>
                         </div>
@@ -990,10 +993,10 @@
 									</span>
                             </div>
                             <div class="text">
-                                <p class="mb-4">Far far away, behind the word mountains,
-                                    far from the countries Vokalia and Consonantia, there live the
-                                    blind texts.</p>
-                                <p class="name">Roger Scott</p>
+                                <p class="mb-4">여러가지 프로젝트를 진행중이라 세세한 것까지 챙겨줄 수 있는 파트너가 필요했는데,
+                                 워프가 그 역할을 잘해줬다고 생각합니다. 프로토 타입 개발 프로젝트를 등록하는 순간부터 바로 담당 매니저가 매칭되고, 
+                                 꼼꼼하고 친절하게 설명해주니까 특별히 신경쓸게 없었어요. 첫 외주였음에도 불구하고, 어려움없이 프로젝트가 진행됐죠.</p>
+                                <p class="name">정모씨</p>
                                 <span class="position">Web Developer</span>
                             </div>
                         </div>
@@ -1008,10 +1011,9 @@
 									</span>
                             </div>
                             <div class="text">
-                                <p class="mb-4">Far far away, behind the word mountains,
-                                    far from the countries Vokalia and Consonantia, there live the
-                                    blind texts.</p>
-                                <p class="name">Roger Scott</p>
+                                <p class="mb-4">지원자들과 사전 미팅할 때, 매니저님이 같이 커뮤니케이션을 고민해주시는 모습도 보기 좋았습니다. 
+                                덕분에 프로젝트에 적합한 파트너를 만나 빠르게 프로토 타입 개발에 착수 할 수 있었다고 생각합니다.</p>
+                                <p class="name">최모씨</p>
                                 <span class="position">System Analyst</span>
                             </div>
                         </div>

@@ -244,10 +244,7 @@
 							</div>
 						</div>
 						<!-- end card-->
-						<div class="" align="center">
-							<input class="btn btn-default" id="chatConnect"  type="button" value="채팅하기">
-							<input class="btn btn-default" id="applyButton" type="button" value="지원하기">
-						</div>
+						
 						<%-- ${member.member_no}
 						${partners.member_no }
 						${checkAuth.member_no } --%>

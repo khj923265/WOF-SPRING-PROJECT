@@ -16,7 +16,8 @@ public class ProjectVO {
 	private String proj_end_date;			// 예상 종료일
 	private int proj_estimate;				// 예산
 	private int proj_reqr_person;			// 필요 인원
-	private String proj_reqr_skill;			// 필요 기술
+	private String proj_category;
+	private String proj_skill;			// 필요 기술
 	private int proj_type;					// 0 : 아이디어, 1 : 기획, 2 : 개발
 	private String proj_career;				// 모집 요건
 	private int proj_pm;					// pm유무(0 : 유, 1 : 무)

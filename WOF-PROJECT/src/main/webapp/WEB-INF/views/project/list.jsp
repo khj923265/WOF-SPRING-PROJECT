@@ -312,7 +312,7 @@
 
 
 
-								<fmt:parseDate value="2020-11-25" var="strPlanDate" pattern="yyyy-MM-dd"/>
+								<fmt:parseDate value="2020-12-04" var="strPlanDate" pattern="yyyy-MM-dd"/>
 								<fmt:parseNumber value="${strPlanDate.time / (1000*60*60*24)}" integerOnly="true" var="strDate"></fmt:parseNumber>
 								<fmt:parseDate value="${project.getProj_apply_deadline()}" var="endPlanDate" pattern="yyyy-MM-dd"/>
 								<fmt:parseNumber value="${endPlanDate.time / (1000*60*60*24)}" integerOnly="true" var="endDate"></fmt:parseNumber>

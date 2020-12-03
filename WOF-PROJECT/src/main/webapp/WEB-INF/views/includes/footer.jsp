@@ -13,8 +13,9 @@
             <div class="col-md">
                 <div class="ftco-footer-widget mb-4">
                     <h2 class="ftco-heading-2">About</h2>
-                    <p>Far far away, behind the word mountains, far from the
-                        countries Vokalia and Consonantia, there live the blind texts.</p>
+                    <p>We are a freelancer-client matching company, 
+                    and we have agreements with 10,000 companies 
+                	 are working on projects.</p>
                     <ul
                             class="ftco-footer-social list-unstyled float-md-left float-lft mt-3">
                         <li class="ftco-animate"><a href="#"><span
