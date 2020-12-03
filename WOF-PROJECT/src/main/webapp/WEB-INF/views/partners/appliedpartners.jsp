@@ -34,8 +34,15 @@
 				<span>
 				${Project.proj_reg_date }
 				${Project.proj_apply_deadline }
-				${Project.proj_start_date }
-				${Project.proj_end_date }
+				<fmt:parseDate var="dt"
+			value="${Project.proj_start_date }"
+			pattern="yyyy-MM-dd HH:mm:ss" /> <fmt:formatDate
+			value="${dt }" pattern="yyyy/MM/dd" />
+				<fmt:parseDate var="dt"
+			value="${Project.proj_end_date }"
+			pattern="yyyy-MM-dd HH:mm:ss" /> <fmt:formatDate
+			value="${dt }" pattern="yyyy/MM/dd" />
+				
 				</span></br>
 				
 				<span>
@@ -117,11 +124,23 @@
 							</div> --%>
 
 							<div class="col-sm-4 my-auto">
+								<c:choose>
+								  <c:when test="${Member.contract_write_target == null }">
+									<a href="${pageContext.request.contextPath }/contract/read?source_no=${Project.member_no }
+									&target_no=${Member.member_no }&proj_id=${Project.proj_id }">
+									<button type="button" class="btn btn-outline-default">계약서작성</button>
+									</a>
+								  </c:when>
+										  
+								  <c:when test="${Member.contract_write_source != null }">
+									<p class="mt-3 mb-3 text-sm">
+											<h1><span class="text-nowrap"> <i class="ni ni-single-copy-04"></i>
+												<span class="badge badge-pill badge-primary">계약이 진행중 입니다.</span>
+											</span></h1>
+										</p>
+								  </c:when>
+								</c:choose>
 								
-								<a href="${pageContext.request.contextPath }/contract/read?source_no=${Project.member_no }
-								&target_no=${Member.member_no }&proj_id=${Project.proj_id }">
-								<button type="button" class="btn btn-outline-default">계약서작성</button>
-								</a>
 								<%-- <input type="hidden" name="source_no" value="${Project.member_no }"/>
 								<input type="hidden" name="target_no" value="${Member.member_no }" />
 								<input type="hidden" name="proj_id" value="${Project.proj_id }" /> --%>
