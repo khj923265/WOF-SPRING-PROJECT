@@ -94,14 +94,16 @@
         update member set userpw=#{userpw}, userphone=#{userphone} where member_no = #{member_no}
     </update>
     <select id="projectProfileList" parameterType="string" resultType="org.wof.domain.ProjectProfileVO">
-        select * from PROJECT_PROFILE where userid = #{userid}
+        select no,userid, name, skill, field, responsibilities, startdate, enddate
+         from PROJECT_PROFILE where userid = #{userid}
     </select>
     <insert id="projectprofileinsert" parameterType="org.wof.domain.ProjectProfileVO">
         insert into project_profile (no,userid, name, skill, field, responsibilities, startdate, enddate)
          values (project_profile_seq.nextval,#{userid},#{name},#{skill},#{field},#{responsibilities},#{startdate},#{enddate})
     </insert>
     <select id="projectprofileinfo" parameterType="String" resultType="org.wof.domain.ProjectProfileVO">
-        select * from project_profile where no = #{no}
+        select no,userid, name, skill, field, responsibilities, startdate, enddate
+         from project_profile where no = #{no}
     </select>
     <update id="profileupdate" parameterType="org.wof.domain.PartnersVO">
         update partners set profile = #{profile} where member_no = #{member_no}
@@ -133,7 +135,7 @@
     </update>
     <update id="projectProfileUpdate" parameterType="org.wof.domain.ProjectProfileVO">
         update project_profile set name = #{name}, skill = #{skill}, responsibilities = #{responsibilities},
-            field = #{field}, startdate = #{startdate}, enddate = #{enddate} where userid = #{userid}
+            field = #{field}, startdate = #{startdate}, enddate = #{enddate} where no = #{no}
     </update>
     <update id="meetingupdate" parameterType="org.wof.domain.MeetVO">
         update meet set meet_contents = #{meet_contents},

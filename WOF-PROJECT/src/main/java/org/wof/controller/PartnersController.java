@@ -20,6 +20,7 @@ import org.wof.domain.FollowPartnersVO;
 import org.wof.domain.PageDTO;
 import org.wof.domain.PartnersVO;
 import org.wof.domain.Standard;
+import org.wof.mapper.MemberMapper;
 import org.wof.service.PartnersService;
 
 import lombok.AllArgsConstructor;
@@ -33,6 +34,8 @@ import lombok.extern.log4j.Log4j;
 public class PartnersController {
 
 	private PartnersService partnersService;
+	private MemberMapper memberMapper;
+	
 	
 	@GetMapping("/project_apply_detail")
 	public void project_apply_detail(Model model, Standard standard, @RequestParam("member_no") String member_no) {
@@ -47,9 +50,13 @@ public class PartnersController {
 	}
 	
 	@GetMapping("/dashboard_partners")
-	public void dashboardpartnersApplyProject(Model model, @RequestParam("member_no") String member_no) {
+	public void dashboardpartnersApplyProject(Principal principal, Model model, @RequestParam("member_no") String member_no) {
 		log.info("파트너스 대쉬보드 지원 리스트");
 		model.addAttribute("dashboardpartnersApplyProject", partnersService.dashboardpartnersApplyProject(member_no));
+		String related_member = memberMapper.memberNo(principal.getName());
+		PartnersVO vo = memberMapper.partnersInfo(related_member);
+		model.addAttribute("dashboardFollowProject", partnersService.dashboardFollowProject(related_member));
+	
 	}
 	
 	//파트너스 전체 목록

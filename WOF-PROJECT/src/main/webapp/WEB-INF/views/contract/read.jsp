@@ -57,8 +57,15 @@
 			<div class="border border-dark p-3 text-dark">
 			<h3>프로젝트 명 : ${source.proj_title }</h3>
 			<h3>총 프로젝트 기간</h3>
-			<h4>프로젝트 시작일 : ${source.proj_start_date }</h4>
-			<h4>프로젝트 종료일 : ${source.proj_end_date }</h4>
+			<h4>프로젝트 시작일 : 
+			<fmt:parseDate var="dt"	value="${source.proj_start_date }" pattern="yyyy-MM-dd HH:mm:ss" /> 
+			<fmt:formatDate	value="${dt }" pattern="yyyy/MM/dd" />
+			</h4>
+			
+			<h4>프로젝트 종료일 : 
+			<fmt:parseDate var="dt"	value="${source.proj_end_date }" pattern="yyyy-MM-dd HH:mm:ss" /> 
+			<fmt:formatDate	value="${dt }" pattern="yyyy/MM/dd" />
+			</h4>
 			</div>
 			<p class="text-center">&lt; 본문 &gt;</p>
 			<h4>제1조(목적)</h4>
@@ -122,13 +129,16 @@
 			<h3>${source.userid }</h3>
 			</div>
 			<div class="col-4 my-auto">
-			<form action="/contract/sourceregister" method="post">
+			<sec:authorize access="hasRole('ROLE_CLIENT')">
+			<form id="sourceForm" action="/contract/sourceregister" method="post">
 			<input type="hidden" name="contract_write_source" value="${source.member_no }" />
 			<input type="hidden" name="related_proj" value="${source.proj_id }" />
 			<input type="hidden" name="contract_write_target" value="${target.member_no }" />
-			<input type="text" name="source_signature">
-				<button type="submit" class="btn btn-outline-default">서명</button>
-			</form>
+			<input type="text" name="source_signature"></br>
+				<button type="button" class="btn btn-outline-default">서명</button>
+			</form>    
+			</sec:authorize>
+			
 			</div>
 			</div>
 			<hr>
@@ -146,15 +156,21 @@
 			<h3>${target.userid }</h3>
 			</div>
 			<div class="col-4 my-auto">
-				<form action="/contract/targetregister" method="post">
-				<input type="text" name="target_signature">
-				<button type="submit" class="btn btn-outline-default">서명</button>
+			<sec:authorize access="hasRole('ROLE_PARTNERS')">
+				<form id="targetForm" action="/contract/targetregister" method="post">
+				<input type="hidden" name="contract_write_source" value="${source.member_no }" />
+				<input type="hidden" name="related_proj" value="${source.proj_id }" />
+				<input type="hidden" name="contract_write_target" value="${target.member_no }" />
+				<input type="text" name="target_signature"></br>
+				<button type="button" class="btn btn-outline-default">서명</button>
 			</form>
+			</sec:authorize>
 			</div>
 			</div>
 			
 			</div>
 			</div>
+
 			</div>
 			</div>
 			
@@ -184,6 +200,54 @@
 				$(".yyyy").text(yyyy);
 				$(".MM").text(MM);
 				$(".dd").text(dd);
+				
+				var sourceForm = $("#sourceForm")
+				
+				$("#sourceForm button").on("click", function(e){
+					if(!sourceForm.find("input[name='source_signature']").val()){
+						toastr.info("서명이 입력되지 않았습니다!");
+						return false;
+					}
+					Swal.fire({
+						  title: '계약서에 서명하셨습니다!',
+						  text: "확인버튼을 누르시면 계약이 진행됩니다.",
+						  icon: 'success',
+						  showCancelButton: true,
+						  confirmButtonColor: '#11cdef',
+						  cancelButtonColor: '#172b4d',
+						  confirmButtonText: '확인',
+						  cancelButtonText: '취소'
+						}).then((result) => {
+						  if (result.isConfirmed) {
+							  sourceForm.submit();
+						  }
+						})
+					
+				})
+				
+				var targetForm = $("#targetForm")
+				
+				$("#targetForm button").on("click", function(e){
+					if(!sourceForm.find("input[name='target_signature']").val()){
+						toastr.info("서명이 입력되지 않았습니다!");
+						return false;
+					}
+					Swal.fire({
+						  title: '계약서에 서명하셨습니다!',
+						  text: "확인버튼을 누르시면 계약이 진행됩니다.",
+						  icon: 'success',
+						  showCancelButton: true,
+						  confirmButtonColor: '#11cdef',
+						  cancelButtonColor: '#172b4d',
+						  confirmButtonText: '확인',
+						  cancelButtonText: '취소'
+						}).then((result) => {
+						  if (result.isConfirmed) {
+							  targetForm.submit();
+						  }
+						})
+					
+				})
 				
 				
 			});

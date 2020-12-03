@@ -168,6 +168,8 @@
 	  }
 	  
 	  
+	  
+	  
 	  $("input[type='file']").change(function(e){
 
 		    var formData = new FormData();

@@ -24,56 +24,82 @@
 	<!-- Sub menu -->
 	<%@ include file="menu.jsp"%>
 
-	<div class="container mt-3">
-		<!-- Table -->
+	<div class="container">
+		
 		<div class="row">
-			<div class="col">
-				<div class="card shadow">
-					<div class="card-header border-0">
-						<h3 class="mb-0">관심 파트너스 목록</h3>
-					</div>
+		  <div class="col">
+		  
+		    <div class="row  mt-3 mb-3">
+		      <div class="col">
+			   <h3>관심 파트너스 관리</h3>
+			  </div>
+		     </div>
+		     
+		     <input type="hidden" value="${member.member_no}" id="source_member">
+		     
+		     <div class="row p-3">
+			  <div class="col">			  
+		     <c:forEach var="followList" items="${followList }">
 
-					<div class="table-responsive">
-						<table class="table align-items-center table-flush">
-							<thead class="thead-light">
-								<tr>
-									<th scope="col">관심파트너 아이디</th>
-									<th scope="col">생년월일</th>
-									<th scope="col">지역</th>
-									<th scope="col">경력</th>
-									<th scope="col">보유기술</th>
-									<th scope="col">해시태그</th>
-									<th scope="col"></th>
-								</tr>
-							</thead>
-							<input type="hidden" value="${member.member_no}" id="source_member"><!-- 테스트 후 변수로 변경 -->
-							<tbody>
-								<c:forEach var="followList" items="${followList }">
-									<tr>
-										<th scope="row">${followList.member_no }</th>
-										<c:choose>
-										  <c:when test="${followList.birthday == null }">
-											<td></td>
-										  </c:when>
-										  
-										  <c:when test="${followList.birthday != null }">
-											<td>${followList.birthday }년생</td>
-										  </c:when>
-										</c:choose>
-										<td>${followList.prefered_area }</td>
-										<td>${followList.career }</td>
-										<td>${followList.skill }</td>
-										<td>${followList.hashtag }</td>
-										<!-- 자세히보기  -->
-										<td class="text-right"><a class=""
-											href="partners_select.jsp">자세히보기</a></td>
-									</tr>
-								</c:forEach>
-
-							</tbody>
-						</table>
-					</div>
+			  <div class="row shadow-sm p-1 bg-white rounded mb-3 align-items-center">
+			    <div class="col-1">
+					<span
+					class="avatar avatar-lg rounded-circle justify-content-start m-3">
+					<img alt="Image placeholder"
+					src="/resources/template/assets/img/theme/team-4.jpg">
+				</span>				
 				</div>
+				<div class="col-1 text-center">				
+					<c:choose>
+					<c:when test="${followList.member_no == null }">								 
+					  <i class="ni ni-favourite-28">
+					 </c:when>
+					 <c:when test="${followList.member_no != null }">
+					  <i class="ni ni-favourite-28 color">
+					 </c:when>								
+					</c:choose>								   
+					    <input type="hidden" value="${followList.member_no }">
+					  </i>
+					<!-- fa fa-heart-o -->
+				</div>
+			  <div class="col-2">
+			    <c:if test="${followList.career != null }">
+			    <h3><i class="ni ni-badge mr-3"></i>${followList.career }</h3>
+			    </c:if>
+			  </div>
+			  <div class="col-3">
+			    <c:if test="${followList.skill != null }">
+			    <h3><i class="ni ni-chart-pie-35 mr-3"></i>${followList.skill }</h3>
+			    </c:if>
+			  </div>
+			  <div class="col-3">
+			    <c:if test="${followList.prefered_area != null }">
+			    <h3><i class="ni ni-map-big mr-3"></i>${followList.prefered_area }</h3>
+			    </c:if>
+			  </div>
+			  
+			  <div class="col-2">
+			    <c:choose>
+				  <c:when test="${followList.birthday == null }">
+					
+				  </c:when>
+				  
+				  <c:when test="${followList.birthday != null }">
+					<h3><i class="ni ni-air-baloon mr-3"></i>${followList.birthday }년생</h3>
+				  </c:when>
+				</c:choose>
+			  </div>
+			  
+			  </div> 
+			</c:forEach>
+			  </div>
+			 </div>
+			 
+			 
+		    </div>
+		  </div>
+		
+				
 				
 					<!-- 페이징 -->
 					<nav aria-label="Page navigation example">
@@ -109,9 +135,7 @@
 						<input type="hidden" name='pageNum' value = '${pageMaker.standard.pageNum}'>
 						<input type="hidden" name='amount' value = '${pageMaker.standard.amount}'>
 					</form>
-			</div>
-		</div>
-	</div>
+</div>	
 </div>
 	
 	<!-- Footer -->

@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.wof.domain.ContractTargetVO;
+import org.wof.domain.ContractVO;
 import org.wof.domain.ProjectAttachVO;
 import org.wof.domain.ProjectVO;
 import org.wof.domain.Standard;
@@ -66,6 +68,11 @@ public class ProjectServiceImpl implements ProjectService {
 		return pm1.getTotalCount(stand);
 	}
 
+	
+//	@Override
+//	public List<ContractVO> checkAuth(String contract_write_target) {
+//		return pm1.checkAuth(contract_write_target);
+//	}
 //	@Override
 //	public List<ProjectAttachVO> getAttachList(String proj_id) {
 //		

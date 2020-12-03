@@ -223,8 +223,8 @@
 								var mapContainer1 = document
 										.getElementById('map1'), // 지도를 표시할 div  
 								mapOption = {
-									center : new kakao.maps.LatLng(33.450701,
-											126.570667), // 지도의 중심좌표
+									center : new kakao.maps.LatLng(37.481607147095666,
+											126.88243543664795 ), // 지도의 중심좌표
 									level : 3
 								// 지도의 확대 레벨
 								};
@@ -235,25 +235,61 @@
 								// 마커를 표시할 위치와 title 객체 배열입니다 
 								var positions1 = [
 										{
-											title : '카카오',
+											title : '가산W센터',
 											latlng : new kakao.maps.LatLng(
-													33.450705, 126.570677)
+													37.48146323890016, 126.8804429511596 )
 										},
 										{
-											title : '생태연못',
+											title : '제이플라츠',
 											latlng : new kakao.maps.LatLng(
-													33.450936, 126.569477)
+													37.48182475200797, 126.88154473119768 )
 										},
 										{
-											title : '텃밭',
+											title : '에이스테크노타워',
 											latlng : new kakao.maps.LatLng(
-													33.450879, 126.569940)
+													37.482932803296734 , 126.88135642659641 )
 										},
 										{
-											title : '근린공원',
+											title : '한국지식재산센터',
 											latlng : new kakao.maps.LatLng(
-													33.451393, 126.570738)
-										} ];
+													37.500147520120855 , 127.03274516382882 )
+										},
+										
+										{
+											title : '가산 SK V1센터',
+											latlng : new kakao.maps.LatLng(
+													37.480668377281305  , 126.88071838911405 )
+										
+										},
+										
+										{
+											
+											title : '대륭포스트타워',
+											latlng : new kakao.maps.LatLng(
+													37.48151852194556  , 126.88392798994174  )
+										},
+										
+										{
+											title : '대성디폴리스지식산업센터',
+											latlng : new kakao.maps.LatLng(
+													37.47991673945359  , 126.87701123945565   )
+											
+										},
+										
+										{
+											title : 'LG가산 디지털센터',
+											latlng : new kakao.maps.LatLng(
+													37.4821360215498  , 126.87973241119806    )
+											
+										},
+										
+										{
+											title : '롯데정보통신',
+											latlng : new kakao.maps.LatLng(
+													37.48464586620609  , 126.87589543690869     )
+											
+										}
+										];
 
 								// 마커 이미지의 이미지 주소입니다
 								var imageSrc1 = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
@@ -278,7 +314,6 @@
 								}
 							</script>
 						</div>
-						<h1>zzzz</h1>
 					</div>
 					<div class="col-md-6">
 						<br> <b>회사 위치 검색하기</b>

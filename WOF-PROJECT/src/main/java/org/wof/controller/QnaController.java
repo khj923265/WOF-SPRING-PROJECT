@@ -39,7 +39,7 @@ public class QnaController {
 	
 	private QnaService service;
 	    
-	    @GetMapping("/question-list")
+	    /*@GetMapping("/question-list")
 	    public void getQuestionList(QuestionVO quest, Model model, Standard standard){
 		 
 	    	log.info("question-list" + standard);
@@ -51,53 +51,49 @@ public class QnaController {
 	    	log.info("total: " + total);
 	    	
 	    	model.addAttribute("pageMaker", new PageDTO(standard, total));
+	    }*/
+	    
+	    @RequestMapping("/question-register")
+	    public String questionRegister(){
+	    	return "qna/question-register";
 	    }
 	    
-	    @GetMapping("/question-register")
-	    public void questionRegister(){
-	    	
-	    }
-	    
-	    @PostMapping("/question-register")
-	    public String questionRegister(QuestionVO quest, Model model, RedirectAttributes rttr){
+	    @RequestMapping("/question-register-send")
+	    public String questionRegister(@ModelAttribute QuestionVO quest, Model model, RedirectAttributes rttr){
 		 
 	    	log.info("================ 문의사항 내역 ================");
 	    	log.info("question-register" + quest);
-			
-	    	if(quest.getAttachList() != null) {
-				quest.getAttachList().forEach(attach -> log.info(attach));
-			}   	
 	    	log.info("==========================================");
 	    	
 	    	
-	    	
 	    	  try {
-	    		  
 	    		  service.registerService(quest); //  quest(메일관련 정보)를 sendMail에 저장함
-	              model.addAttribute("message", "이메일이 발송되었습니다."); // 이메일이 발송되었다는 메시지를 출력시킨다.
+	              model.addAttribute("message", "문의사항이 접수되었습니다."); // 이메일이 발송되었다는 메시지를 출력시킨다.
+	              
+	              return "redirect:/qna/question-success";
 	   
 	          } catch (Exception e) {
 	              e.printStackTrace();
 	              model.addAttribute("message", "이메일 발송 실패..."); // 이메일 발송이 실패되었다는 메시지를 출력
 	          }
-	    	
+	    	  	
 	    	rttr.addFlashAttribute("result", quest.getQuest_no());
 	    	
 	    	
-	    	return "redirect:/qna/question-list";
+	    	return "qna/question-register";
 	    	
 	    }
 	    
-	    @GetMapping({"/question-get"})
+	    /*@GetMapping({"/question-get"})
 		public void get(@RequestParam("quest_no") Long quest_no, @ModelAttribute("standard") Standard standard, Model model) {
 			
 			log.info("/question-get");
 			
 			model.addAttribute("quest", service.getService(quest_no));
-		}
+		}*/
 	    
 	   
-		@PostMapping("/question-remove")
+		/*@PostMapping("/question-remove")
 		//@PreAuthorize("principal.username == #writer")
 	    public String questionRemove(@RequestParam("quest_no") Long quest_no, Standard standard, RedirectAttributes rttr, String writer) {
 			log.info("remove" + quest_no);
@@ -112,10 +108,10 @@ public class QnaController {
 			}
 			
 			return "redirect:/qna/question-list" + standard.getListLink();
-		}
+		}*/
 	    
 
-		@GetMapping(value="/getAttachList", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+		/*@GetMapping(value="/getAttachList", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
 		@ResponseBody
 		public ResponseEntity<List<QuestAttachVO>> getAttachList(Long quest_no) {
 			
@@ -148,18 +144,7 @@ public class QnaController {
 					log.error("=====업로드 실패=====" + e.getMessage());
 				}
 			});
-		}
+		}*/
 		
 		
-	    @GetMapping("/answer")
-	    public String answer(){
-		 
-	    	return "qna/answer-list";
-	    }
-	    
-	    @PostMapping("/answer")
-	    public String answerList(){
-	    		
-	    		return "qna/answer-list";
-	    }
 }
