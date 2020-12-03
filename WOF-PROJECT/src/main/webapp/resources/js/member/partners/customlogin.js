@@ -1,15 +1,21 @@
 var loginservice = {
 
     check: function () {
-        var id = $('#userid').val();
+        var memberVO = {
+            "userid": $('#userid').val(),
+            "userpw": $('#userpw').val()
+        }
 
         if (!document.login.userpw.value) {
             alert("비밀번호를 입력하세요");
             return false;
         }
         $.ajax({
-            url: '/member/loginIdCheck?userid=' + id,
-            type: 'get',
+            url: '/member/loginIdPwCheck',
+            type: 'POST',
+            contentType: 'application/json',
+            datatype: 'json',
+            data: JSON.stringify(memberVO),
             success: function (data) {
                 console.log(data);
                 if (data == 1) {

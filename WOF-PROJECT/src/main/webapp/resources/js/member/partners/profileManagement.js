@@ -14,6 +14,17 @@ var profileManagement = {
             }
         });
     },
+    draw: function (data) {
+        $('#nameform').val(data.name);
+        $('#skillform').val(data.skill);
+        $('#fieldform').val(data.field);
+        $('#responsibilitiesform').val(data.responsibilities);
+        $('#startdateform').val(data.startdate);
+        $('#enddateform').val(data.enddate);
+        $('#noform').val(data.no);
+
+    },
+    //프로필 수정
     profileupdate: function () {
         var partnersVO = {
             "member_no": $('#member_no').val(),
@@ -36,13 +47,27 @@ var profileManagement = {
         });
 
     },
-    draw: function (data) {
-        $('#nameform').val(data.name);
-        $('#skillform').val(data.skill);
-        $('#fieldform').val(data.field);
-        $('#responsibilitiesform').val(data.responsibilities);
-        $('#startdateform').val(data.startdate);
-        $('#enddateform').val(data.enddate);
+    //프로젝트/경력 수정
+    projectProfileUpdate:function (){
+        if (document.$('#nameform').value == null) {
+            alert("프로젝트명을 입력하세요.");
+            return false;
+        } else if (document.$('#skillform').value == null) {
+            alert("기술/역할을 입력하세요.");
+            return false;
+        } else if (document.$('#fieldform').value == null) {
+            alert("분야를 입력하세요.");
+            return false;
+        } else if (document.$('#responsibilitiesform').value == null) {
+            alert("담당업무을 입력하세요.");
+            return false;
+        } else if (document.$('#dateform').value == null) {
+            alert("시작날짜를 입력하세요.");
+            return false;
+        } else if (document.$('#date2form').value == null) {
+            alert("종료날짜를 입력하세요.");
+            return false;
+        }
 
     },
     projectProfileDelete: function (no) {
@@ -55,7 +80,7 @@ var profileManagement = {
 
     profileinsert: function () {
         if (document.$('#name').value == null) {
-            alert("프로젝트 명을 입력하세요.");
+            alert("프로젝트명을 입력하세요.");
             return false;
         } else if (document.$('#skill').value == null) {
             alert("기술/역할을 입력하세요.");
