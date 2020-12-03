@@ -43,27 +43,27 @@
 
 			  <div class="row shadow-sm p-3 bg-white rounded mb-3">
 			    <div class="col-4">
-					<h3><i class="ni ni-folder-17 mr-3"></i>프로젝트 명</h3>
+					<h3><i class="ni ni-folder-17 mr-3 text-yellow"></i>프로젝트 명</h3>
 					<h3>${completion.proj_title }</h3>
 				</div>
 				<div class="col-2">				
-					<h3><i class="ni ni-calendar-grid-58 mr-3"></i>계약 체결일</h3>
+					<h3><i class="ni ni-calendar-grid-58 mr-3 text-info"></i>계약 체결일</h3>
 					<h3><fmt:parseDate var="dt"	value="${completion.contract_reg_date }" pattern="yyyy-MM-dd HH:mm:ss" /> 
 					<fmt:formatDate	value="${dt }" pattern="yyyy/MM/dd" />
 					</h3>
 				</div>
 			  <div class="col-2">
-			    <h3><i class="ni ni-single-02 mr-3"></i>계약자</h3>
+			    <h3><i class="ni ni-single-02 mr-3 text-pink"></i>계약자</h3>
 			    <h3>${completion.sourceName }</h3>
 			    <h3>${completion.targetName }</h3>
 			  </div>
 			  <div class="col-2">
-			    <h3><i class="ni ni-caps-small mr-3"></i>연락처</h3>
+			    <h3><i class="ni ni-caps-small mr-3 text-muted"></i>연락처</h3>
 			    <h3>${completion.sourcePhone }</h3>
 			    <h3>${completion.targetPhone }</h3>
 			  </div>
 			  <div class="col-2">
-			    <h3><i class="ni ni-active-40 mr-3"></i>서명</h3>
+			    <h3><i class="ni ni-paper-diploma mr-3 text-success"></i>서명</h3>
 			    <h3>${completion.source_signature }</h3>
 			    <h3>${completion.target_signature }</h3>
 			  </div>

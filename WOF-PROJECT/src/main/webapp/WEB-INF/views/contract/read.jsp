@@ -129,7 +129,7 @@
 			<h3>${source.userid }</h3>
 			</div>
 			<div class="col-4 my-auto">
-			<%-- <sec:authorize access="hasRole('ROLE_CLIENT')"> --%>
+			<sec:authorize access="hasRole('ROLE_CLIENT')">
 			<form id="sourceForm" action="/contract/sourceregister" method="post">
 			<input type="hidden" name="contract_write_source" value="${source.member_no }" />
 			<input type="hidden" name="related_proj" value="${source.proj_id }" />
@@ -138,7 +138,7 @@
 			<input type="text" name="source_signature"></br>
 				<button type="button" class="btn btn-outline-default">서명</button>
 			</form>    
-			<%-- </sec:authorize> --%>
+			</sec:authorize>
 			
 			</div>
 			</div>
@@ -157,7 +157,7 @@
 			<h3>${target.userid }</h3>
 			</div>
 			<div class="col-4 my-auto">
-			<%-- <sec:authorize access="hasRole('ROLE_PARTNERS')"> --%>
+			<sec:authorize access="hasRole('ROLE_PARTNERS')">
 				<form id="targetForm" action="/contract/targetsignature" method="post">
 				<input type="hidden" name="contract_write_source" value="${source.member_no }" />
 				<input type="hidden" name="related_proj" value="${source.proj_id }" />
@@ -166,7 +166,7 @@
 				<input type="text" name="target_signature"></br>
 				<button type="button" class="btn btn-outline-default">서명</button>
 			</form>
-			<%-- </sec:authorize> --%>
+			</sec:authorize>
 			</div>
 			</div>
 			

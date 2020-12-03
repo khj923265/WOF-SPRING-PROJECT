@@ -58,14 +58,14 @@
 							<div class="col-6">
 								<div class="row">
 								<div class="col-12 align-items-center mt-3">
-							     <i class="ni ni-circle-08 mr-2"></i></span>${appliedpartners.userid }											
-								 <i class="ni ni-map-big ml-3 mr-2"></i> ${appliedpartners.real_name }
-								 <i class="ni ni-badge ml-3 mr-2"></i>${appliedpartners.userPhone }
+							     <i class="ni ni-email-83 mr-2 text-info"></i></span>${appliedpartners.userid }											
+								 <i class="ni ni-single-02 ml-3 mr-2 text-pink"></i> ${appliedpartners.real_name }
+								 <i class="ni ni-caps-small ml-3 mr-2 text-muted"></i>${appliedpartners.userPhone }
 								 </div>
 								</div>
 								<div class="row">
 								<div class="col-12">
-								 <i class="ni ni-folder-17 mt-3 mr-2"></i>${appliedpartners.proj_title }
+								 <i class="ni ni-folder-17 mt-3 mr-2 text-yellow"></i>${appliedpartners.proj_title }
 							  </div>
 								</div>
 							</div>
@@ -81,7 +81,7 @@
 										  
 								  <c:when test="${appliedpartners.contract_write_source != null }">
 									<p class="mt-3 mb-3 text-sm">
-											<h1><span class="text-nowrap"> <i class="ni ni-single-copy-04"></i>
+											<h1><span class="text-nowrap"> <i class="ni ni-single-copy-04 mr-2 text-primary"></i>
 												<span class="badge badge-pill badge-primary">계약이 진행중 입니다.</span>
 											</span></h1>
 										</p>

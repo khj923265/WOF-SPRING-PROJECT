@@ -173,12 +173,14 @@ public class PartnersController {
 	
 	//하나의 프로젝트에 지원한 파트너스 중 선택
 	@RequestMapping("/applyRegister")
-	public String applyRegister(String[] member_no, String proj_id, RedirectAttributes rttr) {
+	public String applyRegister(
+			String[] member_no, String proj_id,	String source_no,
+			RedirectAttributes rttr) {
 		
 		log.info("applyRegister Controller : " + member_no + proj_id);
 		
 		partnersService.applyRegister(member_no, proj_id);
-		rttr.addAttribute("proj_id", proj_id);
+		rttr.addAttribute("member_no", source_no);
 		
 		return "redirect:/partners/appliedpartners";
 	}
