@@ -190,13 +190,11 @@ public class PartnersServiceImpl implements PartnersService{
 	
 	@Override
 	public List<ContractSourceVO> appliedPartners(String proj_id, Standard standard) {
-		
 		return partnersMapper.appliedPartners(proj_id, standard);
 	}
 
 	@Override
 	public int applyStateTotal(Standard standard) {
-		
 		return partnersMapper.applyStateTotal(standard);
 	}
 
