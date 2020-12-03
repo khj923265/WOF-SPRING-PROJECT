@@ -154,22 +154,10 @@
 				<div class="card-body">
 					<h5 class="card-title mb-3">파일 목록</h5>
 					<div class="panel-body">
-				<c:choose>
-					<c:when test="${empty '.uploadResult1' }">
-						<div class="card-body">
-							<center>
-							<br>
-							<h5 data-toggle="tooltip" data-placement="top" title="파일이 없습니다.">조회 결과가 없습니다.</h5>
-							</center>
-						</div>
-					</c:when>
-					<c:when test="${!empty '.uploadResult1' }">
 						<div class='uploadResult1'>
 							<ul>
 							</ul>
 						</div>
-					</c:when>
-				</c:choose>
 					</div>	
 				</div>
 			</div>
@@ -243,6 +231,7 @@
 						</div>
 	
 						<sec:authorize access="isAuthenticated()">
+						<c:if test="${partners.member_no eq member.member_no }">
 						<div class="card" style="height:300px; margin-top: 20px; ">
 							<div class="card-body">
 								<h5 class="card-title mb-3">파일 관리</h5>
@@ -271,6 +260,7 @@
 
 							</div><!-- card body -->
 						</div><!-- card -->
+						</c:if>
 						</sec:authorize>
 
 
@@ -606,3 +596,6 @@ $(document).ready(function(e) {
 	  
 	     
 </script>
+
+
+

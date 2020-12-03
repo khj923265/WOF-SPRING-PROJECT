@@ -54,7 +54,7 @@
 										<td><a class='move'
 											href='<c:out value="${pboard.bno }"/>'> <c:out
 													value="${pboard.title }" />
-													<b>[<c:out value="${pboard.replyCnt }"/>]</b></a></td>
+										<b>[<c:out value="${pboard.replyCnt }"/>]</b></a></td>
 										<td><c:out value="${pboard.writer }" /></td>
 										<td><fmt:parseDate var="dt" value="${pboard.regdate }"
 												pattern="yyyy-MM-dd" /> <fmt:formatDate value="${dt }"
