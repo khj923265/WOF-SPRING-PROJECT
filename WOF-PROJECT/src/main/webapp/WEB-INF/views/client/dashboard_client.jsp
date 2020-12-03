@@ -61,10 +61,15 @@
 								<i class="ni ni-spaceship"></i> <span class="nav-link-text">파트너스
 									관리</span>
 						</a></li>
+						
 						<li class="nav-item"><a class="nav-link"
-							href="https://demos.creative-tim.com/argon-dashboard/docs/foundation/colors.html">
-								<i class="ni ni-money-coins"></i> <span class="nav-link-text">포인트관리</span>
+						href="${pageContext.request.contextPath}/qna/question-register">
+							<i class="ni ni-archive-2"></i> <span class="nav-link-text">1:1문의</span>
 						</a></li>
+						<li class="nav-item"><a class="nav-link"
+						href="${pageContext.request.contextPath}/point/admin">
+							<i class="ni ni-money-coins"></i> <span class="nav-link-text">포인트 관리</span>
+						</a></li>	
 						<li class="nav-item"><a class="nav-link"
 							href="${pageContext.request.contextPath}/Penalty/listPenaltyClient.do">
 								<i class="ni ni-palette"></i> <span class="nav-link-text">페널티

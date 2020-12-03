@@ -5,14 +5,21 @@
 
 <%@ include file = "../includes/header.jsp"%>	
 <%@ include file = "point-charging.jsp"%>
-	<!-- 로그인한 상태에 보여줄 태그 -->
-	<%-- <sec:authorize access="isAuthenticated()">
- 	 	<a href="">로그아웃</a>
-	</sec:authorize> --%>
-
-	<sec:authorize access="isAuthenticated()">
-		<sec:authentication property="principal.member" var="member"/>	
-	</sec:authorize>
+<%@ include file = "point-withdraw.jsp"%>
+	
+	<!-- toastr css 라이브러리 -->
+	<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+	
+	<style>
+	.vl {
+  		border-left: 2px solid green;
+  		height: 500px;
+  		position: absolute;
+  		left: 50%;
+  		margin-left: -3px;
+  		top: 0;
+		}
+	</style>
 	
 	<title>포인트 관리</title>
 	<!--
@@ -46,40 +53,171 @@
       </div>
     </div>
  <!-- end of breadcrumb -->    
-    
+
+
+<!-- Sidenav -->
+<%-- <nav
+	class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white"
+	id="sidenav-main">
+	<div class="scrollbar-inner">
+		<!-- Brand -->
+		<div class="sidenav-header  align-items-center">
+			<a href="${pageContext.request.contextPath }/main"><img
+				alt=""
+				src="${pageContext.request.contextPath }/resources/template/assets/img/brand/logo_transparent.png"
+				style="height: 50px; width: 100px; margin-left: 10px;"> </a>
+		</div>
+		<div class="navbar-inner">
+			<!-- Collapse -->
+			<div class="collapse navbar-collapse" id="sidenav-collapse-main">
+				<!-- Nav items -->
+				<br> <br>
+
+				<h3 class="nav-item">
+					<a class="nav-" href="dashboard_partners.jsp"> <i
+						class="ni ni-tv-2 text-primary"></i> <span class="nav-link-text">마이페이지</span>
+					</a>
+				</h3>
+				<br>
+				<div class="col-12">
+					<span class="avatar avatar-sm rounded-circle"> <img
+						alt="Image placeholder"
+						src="/resources/template/assets/img/theme/team-4.jpg">
+					</span>
+				</div>
+				<h4>이름</h4>
+				<br> <br>
+				<ul class="navbar-nav">
+
+					<li class="nav-item"><a class="nav-link"
+						href="project_apply_detail.jsp"> <i
+							class="ni ni-badge text-orange"></i> <span class="nav-link-text">제안
+								및 지원</span>
+					</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="project_apply_detail.jsp"> <i
+							class="ni ni-bullet-list-67 text-default"></i> <span
+							class="nav-link-text">공지사항</span>
+					</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="${pageContext.request.contextPath }/partners/profile_info.jsp">
+							<i class="ni ni-settings-gear-65"></i> <span
+							class="nav-link-text">프로필 관리</span>
+					</a></li>
+				</ul>
+				<!-- Divider -->
+				<hr class="my-3">
+				<!-- Navigation -->
+				<ul class="navbar-nav mb-md-3">
+					<li class="nav-item"><a class="nav-link"
+						href="https://demos.creative-tim.com/argon-dashboard/docs/getting-started/overview.html">
+							<i class="ni ni-archive-2"></i> <span class="nav-link-text">문의하기</span>
+					</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="${pageContext.request.contextPath}/point/admin">
+							<i class="ni ni-money-coins"></i> <span class="nav-link-text">포인트
+								관리</span>
+					</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="${pageContext.request.contextPath}/Penalty/listPenaltyPartners.do">
+							<i class="ni ni-palette"></i> <span class="nav-link-text">페널티
+								관리</span>
+					</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="${pageContext.request.contextPath}/community/partners_community_list">
+							<i class="ni ni-palette"></i> <span class="nav-link-text">커뮤니티 게시판
+								</span>
+					</a></li>					
+				</ul>
+			</div>
+		</div>
+	</div>
+</nav> --%>
+<!-- End side nav -->
+
+ 
  <!-- Body of contents  -->    
  <!-- 포인트 관리  -->
     <div class="container mt--6">
-      <div class="row" id="manage-client-point">
+      <div class="row inline" id="manage-client-point">
         <div class="col">
           <div class="card">
-            <div class="card-header">
-            <div>
- <!-- ①잔여포인트 확인 section  -->            
-            	<table class="table point-view col-lg-3 col-3">
-				 <tr>
-				  <th>잔여 포인트</th>
-				  <th>포인트 충전/송금</th>
-				 </tr>
- <!-- ②포인트 충전/송금 -->  	
- 				  <tr> 	
- 				  <td><div  id="totalpoint"><b>${member.total_point }</b>&nbsp;P</div></td>
-            	  <td>              		
-            	  	<a type="button" class="btn btn-primary ml-2" name="charge" data-toggle="modal" data-target="#modal-charging-form">충전</a>
-  			  		<a type="button" class="btn btn-secondary ml-2" name="withdraw" data-toggle="modal" data-target="#modal-withdraw-form">인출</a>
-  			  		<!-- <a type="button" class="btn btn-secondary ml-2" name="withdraw" value="인출" id="popup2">인출</a> -->
-  			  		<a type="button" class="btn btn-success ml-2" name="pointTest" value="test" id="popup2">테스트</a>
-  			  	  </td>
-  			  	  </tr>
-            	</table>
+          <div class="card-header border-0">
+              <h3 class="mb-0">보유 포인트</h3>
+           </div>
+            <div class="card-body row inline">
+                    <!-- ①잔여포인트 확인 section  -->
+                    <div class="col-6 inline text-center py-2" style="background-color: #E9ECEF">
+                        <h1>잔여 포인트</h1>
+                    </div>
+                    <div class="col-6 inline text-center py-2" style="background-color: #E9ECEF">
+                        <h1 class="col-12 inline">포인트 충전/송금</h1>
+                    </div>
+                    <div class="col-6 inline text-center">
+                        <div class="row inline">
+                            <!-- ②포인트 충전/송금 -->
+                            <h1 class="col-12 text-center py-6" id="totalPoint"><b>${member.total_point }</b>&nbsp;P</h1>
+                        </div>
+                    </div>
+                    <div class="col-6 inline">
+                        <div class="row inline">
+                            <div class="col-6 text-center py-6">
+                                <a type="button" class="btn btn-primary ml-2" name="charge" data-toggle="modal" 
+                                 data-target="#modal-charging-form"><h1>충전</h1></a>
+                            </div>
+                            <!--  href = "javascript:popup()" target = "_self"  -->
+                            <div class="col-6 text-center py-6">
+                                <a type="button" class="btn btn-secondary ml-2" name="withdraw" data-toggle="modal" 
+                                data-target="#modal-withdraw-form"><h1>인출</h1></a>
+                            </div>
+                            <!-- <div class="col-6 text-center py-5">
+                                <a type="button" class="btn btn-success ml-2" name="pointTest" value="test" id="popup2"><h1>테스트</h1></a>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
             </div>
-            </div>
+        </div>
+    </div> <!-- end of card -->
+</div>
+<!--   end of col -->
             
+ <!-- ①잔여포인트 확인 section  -->            
+ <!-- ②포인트 충전/송금 -->  	
+    <%-- <div class="table-responsive col center"id="totalpoint">
+    <table class="table align-items-center table-flush">
+    <tr>
+    <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+    <th class="align-items-center">
+    <h3>잔여 포인트</h3>
+    </th>
+    <th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
+    <th class="align-items-center">
+    <h3>포인트 충전/송금</h3>
+    </th>
+    </tr>
+    <tr>
+    <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+    <td class="align-items-center">
+    <b>${member.total_point }</b>&nbsp;P
+    </td>
+    <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+    <td class="align-items-center">
+			  			  		<!-- <a type="button" class="btn btn-secondary ml-2" name="withdraw" value="인출" id="popup2">인출</a> -->
+			  			  		
+    </td>
+    </tr>
+    </table>
+    
+ 	</div>
+    <!-- <div class="vl"></div> -->
+  			
+            </div> <!-- end of card-header -->
              </div> <!-- end of card -->
           </div> <!-- end of col -->
- 
-        </div> <!-- end of row (id="manage-client-point") -->
-
+        </div> <!-- end of row (id="manage-client-point") --> --%>
+        
+        
  <!-- 포인트  이용내역  -->
     <div class="container mt--2">
       <!-- ①title -->    
@@ -168,6 +306,7 @@
             </tbody>
           </table>
         </div>
+       </div>
    <!-- end of Body -->    
            
    <!-- Footer of 포인트 이용내역 -->
@@ -212,7 +351,6 @@
         </div>
       </div>
 	</div>
-  </div>
   
   	<script src="/resources/template/assets/vendor/jquery/dist/jquery.min.js"></script>
   	<script>
