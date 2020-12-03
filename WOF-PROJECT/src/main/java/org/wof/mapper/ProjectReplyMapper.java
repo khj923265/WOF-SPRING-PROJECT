@@ -12,4 +12,5 @@ public interface ProjectReplyMapper {
 	public int delete(String rno);
 	public int update(ProjectReplyVO reply);
 	public List<ProjectReplyVO> getListWithPaging(@Param("stand") Standard stand, @Param("pno") String pno);
+	public int getCountByPno(String pno);
 }

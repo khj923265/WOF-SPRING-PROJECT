@@ -10,7 +10,7 @@ public class ProjectReplyVO {
 	private String pno;
 	private String reply;
 	private String replyer;
-	private Date replyDate;
-	private Date updateDate;
+	private String replyDate;
+	private String updateDate;
 	
 }

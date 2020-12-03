@@ -8,7 +8,7 @@
 	<%@ include file="../includes/header.jsp" %>
 
 	<!-- Sub menu -->
-	<%-- <%@ include file="menu.jsp"%> --%>
+	<%@ include file="menu.jsp"%> 
 	
 
 	<!-- Main Content -->
@@ -20,6 +20,11 @@
 	
 	
 	<div class="container">
+	
+			<!-- 제목 -->
+			<div class="row mt-3">
+				<h3></h3>
+			</div>
 			
 		<div class="row mb-3">
 				<div class="col-lg-3 col-3"></div>
@@ -397,7 +402,12 @@
 								</form>
 								<!-- pagination -->
 
-
+					<form id='actionForm' action="/partners/list" method="get">
+						<input type="hidden" name='member_no' value='${member.member_no}'>
+						<input type="hidden" name='pageNum' value = '${pageMaker.standard.pageNum}'>
+						<input type="hidden" name='amount' value = '${pageMaker.standard.amount}'>
+						<input type="hidden" name='keyword' value = '${pageMaker.standard.keyword}'>
+					</form>
 
 
 							</div>
@@ -425,6 +435,35 @@
 				$("#findquick").stop();
 				$("#findquick").animate( { "top" : scrollTop });
 				});
+			
+			
+			var actionForm = $("#actionForm");
+			
+			$(".page-item a").on("click", function(e) {
+				e.preventDefault();
+				
+				console.log('click');
+				
+				actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+				actionForm.submit();
+			});
+			
+			var searchForm = $("#searchForm")
+			
+			$("#searchForm button").on("click", function(e){
+				if(!searchForm.find("input[name='keyword']").val()){
+					toastr.info("키워드를 입력하세요");
+					return false;
+				}
+				
+				searchForm.find("input[name='pageNum']").val("1");
+				e.preventDefault();
+				
+				searchForm.submit();
+			
+			})
+			
+			
 			
 			
 			var pagingActionForm = $("#pagingActionForm");

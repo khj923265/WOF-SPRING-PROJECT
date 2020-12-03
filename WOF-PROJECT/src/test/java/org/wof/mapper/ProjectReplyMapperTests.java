@@ -38,11 +38,10 @@ public class ProjectReplyMapperTests {
 		IntStream.rangeClosed(1, 10).forEach(i -> {
 			ProjectReplyVO vo = new ProjectReplyVO();
 			
-
-			vo.setProj_id(projArr[i%5]);
-			vo.setProj_reply_cont("이것은 댓글입니다." +i);
-			vo.setProj_reply_date("2020-11-30");
-			vo.setMember_no(memArr[i%5]);
+			vo.setPno(projArr[i%5]);
+			vo.setReply("이것은 댓글입니다." +i);
+			vo.setReplyDate("2020-11-30");
+			vo.setReplyer(memArr[i%5]);
 			
 			mapper.insert(vo);
 		});
@@ -50,30 +49,30 @@ public class ProjectReplyMapperTests {
 	
 	/*@Test
 	public void testRead(){
-		String targetRno = "p_reply1";
+		String targetRno = "rno30";
 		ProjectReplyVO vo = mapper.read(targetRno);
 		log.info(vo);
-	}
+	}*/
 
-	@Test
+	/*@Test
 	public void testDelete(){
 		String p_rno = "p_rno1";
 		mapper.delete(p_rno);
 	}*/
 	
-	@Test
+	/*@Test
 	public void testUpdate(){
 		String targetRno = "p_rno2";
 		ProjectReplyVO vo = mapper.read(targetRno);
 		vo.setReply("update reply test");
 		int count = mapper.update(vo);
 		log.info("update count : " +count);
-	}
+	}*/
 	
-	/*@Test
+	@Test
 	public void testList(){
 		Standard stand = new Standard();
 		List<ProjectReplyVO> replies = mapper.getListWithPaging(stand, projArr[0]);
 		replies.forEach(reply -> log.info(reply));
-	}*/
+	}
 }

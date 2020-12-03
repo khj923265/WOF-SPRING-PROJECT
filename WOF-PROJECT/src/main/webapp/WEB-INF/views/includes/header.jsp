@@ -11,7 +11,7 @@
     <meta charset="utf-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>WOF ver.Spring</title>
+    <title>WOF에서 프로젝트 매칭에 성공해보세요!</title>
 
     <!-- Favicon -->
     <link rel="icon" href="/resources/template/assets/img/brand/favicon.png" type="image/png">
@@ -152,7 +152,7 @@
         <a href="${pageContext.request.contextPath }/main"><img
                 alt=""
                 src="/resources/template/assets/img/brand/logo_transparent.png"
-                style="height: 50px; width: 100px; margin-left: 10px;"> </a>
+                style="height: 50px; width: 100px; margin-left: 30px;"> </a>
         <div class="container-fluid">
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
@@ -167,7 +167,7 @@
                     <li class="nav-item"><a class="nav-link"
                                             href="${pageContext.request.contextPath }/partners/list?member_no=${member.member_no}"><span
                             class="nav-link-text">파트너스 찾기</span></a></li>
-                    <li class="nav-item"><a class="nav-link active"
+                    <li class="nav-item"><a class="nav-link"
                                             href="${pageContext.request.contextPath }/map/project_map_manage">
                         <span class="nav-link-text">프로젝트 맵</span>
                     </a></li>

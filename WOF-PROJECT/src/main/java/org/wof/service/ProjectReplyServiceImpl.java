@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.wof.domain.ProjectReplyPageVO;
 import org.wof.domain.ProjectReplyVO;
 import org.wof.domain.Standard;
 import org.wof.mapper.ProjectReplyMapper;
@@ -41,6 +42,13 @@ public class ProjectReplyServiceImpl implements ProjectReplyService {
 	@Override
 	public List<ProjectReplyVO> getList(Standard stand, String pno) {
 		return mapper.getListWithPaging(stand, pno);
+	}
+
+	@Override
+	public ProjectReplyPageVO getListPage(Standard stand, String pno) {
+		return new ProjectReplyPageVO(
+				mapper.getCountByPno(pno),
+				mapper.getListWithPaging(stand, pno));
 	}
 
 }

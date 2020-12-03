@@ -28,6 +28,7 @@ import org.wof.domain.ProjectAttachVO;
 import org.wof.domain.ProjectVO;
 import org.wof.domain.Standard;
 import org.wof.service.ProjectAttachService;
+import org.wof.service.ProjectReplyService;
 import org.wof.service.ProjectService;
 
 import lombok.AllArgsConstructor;
@@ -41,6 +42,7 @@ import lombok.extern.log4j.Log4j;
 public class ProjectController {
 
 	private ProjectService ps1;
+	private ProjectReplyService prs1;
 	
 	private ProjectAttachService service;
 
@@ -75,9 +77,18 @@ public class ProjectController {
 		return "redirect:/project/create_comp";
 	}
 	
-	@GetMapping({"/read", "/update"})
+	@GetMapping("/read")
 	public void read(@RequestParam("proj_id") String proj_id, @ModelAttribute("stand") Standard stand, Model model1){
-		log.info("/read, /get");
+		log.info("/read");
+		model1.addAttribute("replylist", prs1.getList(stand, proj_id));
+		model1.addAttribute("project", ps1.read(proj_id));
+	
+	}
+	
+	
+	@GetMapping("/update")
+	public void update(@RequestParam("proj_id") String proj_id, @ModelAttribute("stand") Standard stand, Model model1){
+		log.info("/update");
 		model1.addAttribute("project", ps1.read(proj_id));
 	
 	}

@@ -22,13 +22,35 @@
 			where rno = #{rno}
 	</update>
 
-	<select id="getListWithPaging" resultType="org.wof.domain.ProjectReplyVO">
+	 <!-- <select id="getListWithPaging" resultType="org.wof.domain.ProjectReplyVO">
 		select *
 		from project_reply
 		where pno = #{pno}
 		order by replydate desc
+	</select> -->
+ 
+
+ 	<select id="getListWithPaging" resultType="org.wof.domain.ProjectReplyVO">
+
+	  <![CDATA[
+	 select  rno, pno, reply, replyer, replydate, updatedate
+	 from 
+	   (
+	    select /*+INDEX(project_reply idx_reply) */ 
+	      rownum rn,  rno, pno, reply, replyer, replyDate, updatedate
+	    from project_reply
+	    where pno =  #{pno}
+	    and rownum <= #{stand.pageNum} * #{stand.amount}
+	   ) where rn > (#{stand.pageNum} -1) * #{stand.amount}
+	]]>
+	
+	</select> 
+
+	
+	<select id="getCountByPno" resultType="int">
+	<![CDATA[
+	select count(rno) from project_reply where pno = #{pno}
+	]]>
 	</select>
-
-
 
 </mapper>

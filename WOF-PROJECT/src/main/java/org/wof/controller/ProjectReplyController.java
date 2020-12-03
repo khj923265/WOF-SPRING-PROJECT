@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.wof.domain.ProjectReplyPageVO;
 import org.wof.domain.ProjectReplyVO;
 import org.wof.domain.Standard;
 import org.wof.service.ProjectReplyService;
@@ -41,11 +42,11 @@ public class ProjectReplyController {
 	@GetMapping(value="/pages/{pno}/{page}",
 			produces={MediaType.APPLICATION_XML_VALUE,
 					  MediaType.APPLICATION_JSON_UTF8_VALUE})
-	public ResponseEntity<List<ProjectReplyVO>> getList(@PathVariable("page") int page, @PathVariable("pno") String pno){
+	public ResponseEntity<ProjectReplyPageVO> getList(@PathVariable("page") int page, @PathVariable("pno") String pno){
 		log.info("getList.....");
 		Standard stand = new Standard(page,10);
 		log.info(stand);
-		return new ResponseEntity<>(service.getList(stand, pno),HttpStatus.OK);
+		return new ResponseEntity<>(service.getListPage(stand, pno),HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{rno}",

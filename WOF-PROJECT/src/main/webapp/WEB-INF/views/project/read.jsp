@@ -115,31 +115,54 @@
 
 			<div class="card">
 				<div class="card-body">
-					<h4 class="mt-0 mb-3">Comments (258)</h4>
+					<h4 class="mt-0 mb-3">Comments <b>(<c:out value="${project.getProj_replyCnt()}" />)</b></h4>
+					<input type="checkbox" value="secret" id="secretReply">비밀글로 쓰기
 
 					<textarea class="form-control form-control-light mb-2"
-						placeholder="Write message" id="example-textarea" rows="3" name="reply_contents"></textarea>
+						placeholder="Write message" id="reply_contents" rows="3" name="reply_contents" onkeyup="val(this);"></textarea>
 						
 					<div class="text-right">
 						<div class="btn-group mb-2 ml-2">
-							<button id='modalRegisterBtn'  type="button" class="btn btn-primary btn-sm">Submit</button>
+							<button id="registerBtn"  type="button" class="btn btn-primary btn-sm">Submit</button>
 						</div>
 					</div>
 
-	<input class="form-control" type= "hidden" name="member_no" id="member_no"	value='${member.member_no}' readonly="readonly">
-	<input class="form-control" type= "hidden" name="real_name" id="real_name"	value='${member.real_name}' readonly="readonly">
-
+	<input class="form-control"  type="hidden" name="member_no" id="member_no"	value='${member.member_no}' readonly="readonly">
+	<input class="form-control" type="hidden"  name="real_name" id="real_name"	value='${member.real_name}' readonly="readonly">
+	
 				
-					<div class="media mt-2">
-						<div class="media-body">
+					
 							<ul class="chat">	
-								  <!--  <input id='modalModBtn' type="button" class="btn btn-warning" name="Modify">
-     							   <input id='modalRemoveBtn' type="button" class="btn btn-danger" name="Remove"> -->
+							
+								<c:forEach var="project_reply" items="${replylist}">
+									<div class="media mt-2">
+										<div class="media-body">
+											<h5 class="mt-0">${project_reply.getReplyer()}</h5>
+											
+											<div class="row">
+												<div class="col">
+													<span>${project_reply.getReply()}</span>
+												</div><!-- col -->
+												
+												
+											<c:if test="${member.member_no == project_reply.getReplyer()}">	
+												<div class="col" style="text-align: right;">
+														<div id="modifyBtn" type="text" class="" value="수정" style="display: inline;"><a href="/replies/{rno}">수정</a></div>
+														<div id="removeBtn" type="text" class="" value="삭제" style="display: inline;"><a href="/replies/{rno}">삭제</a></div>
+												</div><!-- col -->
+											</c:if>
+											
+											</div><!-- row -->
+										</div>
+									</div>
+								</c:forEach>
+								
+								   
 							</ul>
-						</div>
-					</div>
+					
+					
 
-					<div class="text-center mt-2">
+					<div class="panel-footer">
 						<a href="javascript:void(0);" class="text-danger">Load more </a>
 					</div>
 				</div>	<!-- end card-body-->
@@ -552,14 +575,14 @@ $(document).ready(function(e) {
 	<script>
 	$(document).ready(function () {
 		  
-		  var pnoValue = '<c:out value="${project.getProj_id}"/>';
+		  var pnoValue = '<c:out value="${project.getProj_id()}"/>';
 		  var replyUL = $(".chat");
 		  
 		    showList(1);
 		    
 		function showList(page){
 			
-			  console.log("show list " + page);
+			console.log("show list " + page);
 		    
 		    replyService.getList({pno:pnoValue,page: page|| 1 }, function(replyCnt, list) {
 		      
@@ -585,7 +608,10 @@ $(document).ready(function(e) {
 		    	   +list[i].rno+"] "+list[i].replyer+"</strong>"; 
 		       str +="    <small class='pull-right text-muted'>"
 		           +replyService.displayTime(list[i].replyDate)+"</small></div>";
-		       str +="    <p>"+list[i].reply+"</p></div></li>";
+		       str +="    <p>"+list[i].reply+"</p><c:if test='${member.member_no == project_reply.getReplyer()}'><div class='col' style='text-align: right;'>"
+		       		+"<div id='modifyBtn' type='text' class='' value='수정' style='display: inline;'><a href='/replies/{rno}'>수정</a></div>&nbsp;"
+					+"<div id='removeBtn' type='text' class='' value='삭제' style='display: inline;'><a href='/replies/{rno}'>삭제</a></div></div></li>"
+					+"</div></c:if>";
 		     }
 		     
 		     replyUL.html(str);
@@ -596,6 +622,8 @@ $(document).ready(function(e) {
 		   });//end function
 		     
 		 }//end showList
+		 
+		 
 		    
 		    var pageNum = 1;
 		    var replyPageFooter = $(".panel-footer");
@@ -654,45 +682,32 @@ $(document).ready(function(e) {
 		     });     
 		    
 		    
-		  //댓글 조회 클릭 이벤트 처리 
-		    $(".chat").on("click", "li", function(e){
-		      
-		      var rno = $(this).data("rno");
-		      
-		      replyService.get(rno, function(reply){
-		      
-		        modalInputReply.val(reply.reply);
-		        modalInputReplyer.val(reply.replyer);
-		        modalInputReplyDate.val(replyService.displayTime( reply.replyDate))
-		        .attr("readonly","readonly");
-		        modal.data("rno", reply.rno);
-		        
-		        modal.find("button[id !='modalCloseBtn']").hide();
-		        modalModBtn.show();
-		        modalRemoveBtn.show();
-		        
-		        $(".modal").modal("show");
-		            
-		      });
-		    });
+		    function val(e){
+		    	var someText = document.getElementById("reply_contents").value;
+		    	alert(someText);
+		    }
+		    
 		  
-		    var modalRegisterBtn = $("#modalRegisterBtn");	    
-		    var modalModBtn = $("#modalModBtn");
-		    var modalRemoveBtn = $("#modalRemoveBtn");
+		 	
 
-		    modalRegisterBtn.on("click",function(e){
+		    $("#registerBtn").on("click",function(e){
 		      
+		    	var text = document.getElementById("reply_contents").value;
+			 	alert(text+"를 입력하시겠습니까?");
+			 	var mem = $("#member_no").val();
+			 	
+			 	if ($('input:checkbox[id="secretReply"]').is(".checked") == true){
+			 		alert("비밀글로 입력되었습니다.");
+			 	}
+			 		
+		    	
 		      var reply = {
-		            reply: modalInputReply.val(),
-		            replyer:modalInputReplyer.val(),
-		            bno:bnoValue
+		            reply: text,
+		            replyer: mem,
+		            pno:pnoValue
 		          };
 		      replyService.add(reply, function(result){
-		        
-		        alert(result);
-		        
-		        modal.find("input").val("");
-		        modal.modal("hide");
+		    	  console.log("댓글내용 : "+text);
 		        
 		        //showList(1);
 		        showList(-1);
@@ -701,10 +716,11 @@ $(document).ready(function(e) {
 		      
 		    });
 		    
+		    
 		  
-		 /*    modalModBtn.on("click", function(e){
+		    $("#modifyBtn").on("click", function(e){
 		    	  
-		     	  var reply = {rno:modal.data("rno"), reply: modalInputReply.val()};
+		     	  var reply = {/* rno: data("rno"),  */ reply: reply_contents.val()};
 		     	  
 		     	  replyService.update(reply, function(result){
 		     	        
@@ -717,7 +733,7 @@ $(document).ready(function(e) {
 		     	});
 
 
-		     	modalRemoveBtn.on("click", function (e){
+		    $("#removeBtn").on("click", function (e){
 		     	  
 		     	  var rno = modal.data("rno");
 		     	  
@@ -729,7 +745,7 @@ $(document).ready(function(e) {
 		     	      
 		     	  });
 		     	  
-		     	}); */
+		     	}); 
 		  
 		 
 		});
