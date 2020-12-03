@@ -84,6 +84,7 @@ public class PartnersBoardController {
 		return "redirect:/community/partners_community_list";
 	}
 	
+	@PreAuthorize("hasRole('ROLE_PARTNERS')")
 	@GetMapping({"/partners_community_get", "/partners_community_modify"})
 	public void get(@RequestParam("bno") Long bno, @ModelAttribute("standard") Standard standard, Model model) {
 		
