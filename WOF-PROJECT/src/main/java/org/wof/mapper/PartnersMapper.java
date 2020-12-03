@@ -82,10 +82,12 @@ public interface PartnersMapper {
 	
 	public String applyCheck(ApplyVO applyVO);
 	
-	public int applyDelete(@Param("member_no") String[] member_no, @Param("proj_id") String proj_id);
+	public int applyDelete(
+			@Param("member_no")String member_no, 
+			@Param("proj_id") String proj_id);
 	
 	public List<ContractSourceVO> appliedPartners(
-			@Param("proj_id") String proj_id,
+			@Param("member_no") String member_no,
 			@Param("standard") Standard standard);
 	
 	public int appliedpartnersTotal(Standard standard);

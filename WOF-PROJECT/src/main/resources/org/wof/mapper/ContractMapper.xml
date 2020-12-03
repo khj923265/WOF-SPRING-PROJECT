@@ -44,7 +44,8 @@
 	</insert>
 	
 	<update id="targetSignature">
-		update contract set source_signature = #{source_signature}
+		update contract set target_signature = #{target_signature},
+		CONTRACT_REG_DATE = sysdate
 		where CONTRACT_WRITE_SOURCE = #{contract_write_source}
 		and RELATED_PROJ = #{related_proj}
 		and CONTRACT_WRITE_TARGET = #{contract_write_target}
@@ -66,10 +67,15 @@
 		on p.proj_id = c.related_proj
 		left outer join member m2
 		on c.contract_write_target = m2.member_no
+		<if test="auth == 'ROLE_CLIENT'">
 		where c.contract_write_source = #{member_no}
+		</if>
+		<if test="auth == 'ROLE_PARTNERS'">
+		where c.contract_write_target = #{member_no}
+		</if>
 		and source_signature is not null
 		and target_signature is not null
-		order by c.CONTRACT_REG_DATE desc;
+		order by c.CONTRACT_REG_DATE desc
 	</select>
 
 

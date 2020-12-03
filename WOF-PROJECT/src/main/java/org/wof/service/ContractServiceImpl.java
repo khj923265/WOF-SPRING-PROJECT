@@ -1,5 +1,7 @@
 package org.wof.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.wof.domain.ContractSourceVO;
 import org.wof.domain.ContractTargetVO;
@@ -29,6 +31,16 @@ public class ContractServiceImpl implements ContractService {
 	@Override
 	public int sourceRegister(ContractVO contract) {
 		return contractMapper.sourceRegister(contract);
+	}
+	
+	@Override
+	public int targetSignature(ContractVO contract) {
+		return contractMapper.targetSignature(contract);
+	}
+	
+	@Override
+	public List<ContractVO> contractCompletion(String member_no, String auth) {
+		return contractMapper.contractCompletion(member_no, auth);
 	}
 
 }

@@ -18,6 +18,7 @@ public class ContractVO {
 	private String sourcePhone;
 	private String targetName;
 	private String targetPhone;
+	private String auth;
 	
 	private int business_register_no; //PK
     private String proj_id; //FK 
