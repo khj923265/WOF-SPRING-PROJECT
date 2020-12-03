@@ -177,9 +177,3 @@
         <!— .container-fluid —>
     </nav>
 </div>
-
-<script type="text/javascript">
-		$('#qnaBtn').click(function() {
-			
-		})
-</script>

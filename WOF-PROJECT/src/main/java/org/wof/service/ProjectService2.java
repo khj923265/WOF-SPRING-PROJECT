@@ -13,6 +13,8 @@ public interface ProjectService2 {
 	public List<ProjectVO> listRecommendProjectwithpaging(PartnersVO vo, Standard stand);
 	
 	public void RecommendSendMail(String loginUser, Standard stand);
+	public void QnaSendMail(QuestionVO vo);
+	
 	public int addFollowProject(FollowProjectVO vo);
 	public int deleteFollowProject(String followproject_no);
 	public List<ProjectVO> listRecommendProject(PartnersVO vo);
