@@ -11,10 +11,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.wof.domain.*;
+import org.wof.domain.ClientVO;
+import org.wof.domain.MemberVO;
+import org.wof.domain.PartnersVO;
+import org.wof.domain.ProjectProfileVO;
 import org.wof.security.CustomUserDetailsService;
 import org.wof.service.MemberService;
-import org.wof.service.ProjectService2;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,7 +34,6 @@ public class memberController {
 
     private MemberService service;
     private CustomUserDetailsService customUserDetailsService;
-    private ProjectService2 projectService2;
 
     //로그인 관련 메서드//------------------------------------------------------
     //회원가입 페이지
@@ -52,14 +53,20 @@ public class memberController {
         return "/member/customlogin";
     }
     //로그인시 회원 status 체크,로그인날짜 최신화
-    @RequestMapping(value = "/member/loginIdCheck", method = {RequestMethod.GET,RequestMethod.POST})
+    @RequestMapping(value = "/member/loginIdPwCheck", method = {RequestMethod.GET,RequestMethod.POST})
     @ResponseBody
-    public ResponseEntity loginIdCheck(@RequestParam("userid") String userid){
-        String status = service.loginIdCheck(userid);
+    public ResponseEntity loginIdCheck(@RequestBody MemberVO memberVO){
+        log.info("memberVO======="+memberVO);
+        String status = service.loginIdPwCheck(memberVO);
+        log.info("controller_status : "+status);
         return ResponseEntity.ok(status);
     }
     //------------------------------------------------------------------------
     //파트너스 관련 메서드//------------------------------------------------------
+    @GetMapping("partners")
+    public String partners() {
+        return "member/partners";
+    }
     @GetMapping("partners/profile_info_update")
     public String partnersInfoUpdate(){
         return "member/partners/profile_info_update";
@@ -72,7 +79,6 @@ public class memberController {
 
         session.setAttribute("partners", partnersVO);
         model.addAttribute("profilelist",service.projectProfileList(userid));
-        model.addAttribute("meets", projectService2.listMeeting(partnersVO.getMember_no()));
         return "member/partners/profile_info";
     }
     @GetMapping("partners/profile_info_insert")
@@ -90,6 +96,17 @@ public class memberController {
         return ResponseEntity.ok(service.projectprofileinfo(userid));
     }
 
+    //파트너스 로그인시 파트너정보 세션저장컨트롤러(시큐리티 success 핸들러에서만 접근)
+    @GetMapping("success/partners")
+    public String successPartners(Principal principal, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+
+        PartnersVO partnersVO = service.partnersInfo(principal.getName());
+
+        session.setAttribute("partners", partnersVO);
+
+        return "redirect:/member/partners/profile_info";
+    }
     //파트너스 개인정보 수정
     @PostMapping("partnersinfoupdate")
     public String infoUpdate(Principal principal,MemberVO memberVO, PartnersVO partnersVO, HttpServletResponse response, HttpServletRequest request){
@@ -101,6 +118,7 @@ public class memberController {
         List<GrantedAuthority> roles = new ArrayList<>(1);
         String roleStr = "ROLE_PARTNERS";
         roles.add(new SimpleGrantedAuthority(roleStr));
+        log.info("*******memberVO : "+memberVO);
         Authentication auth = new UsernamePasswordAuthenticationToken(customUserDetailsService.loadUserByUsername(memberVO.getUserid()), null, roles);
 
         SecurityContextHolder.getContext().setAuthentication(auth);
@@ -111,6 +129,7 @@ public class memberController {
     @ResponseBody
     @RequestMapping(value = "/member/profileupdate",method = RequestMethod.POST, produces = "application/json; charset=utf8")
     public void profileupdate(@RequestBody PartnersVO partnersVO){
+        log.info("profileupdate test : "+partnersVO);
         service.profileupdate(partnersVO);
     }
     //프로젝트/경력 삭제
@@ -121,36 +140,30 @@ public class memberController {
     }
     //프로젝트/경력 수정
     @PostMapping("projectprofileupdate")
-    public String projectProfileUpdate(ProjectProfileVO projectProfileVO){
+    public String projectprofileupdate(ProjectProfileVO projectProfileVO){
         service.projectProfileUpdate(projectProfileVO);
         return "redirect:/member/partners/profile_info";
     }
-    //미팅수정
-    @PostMapping("meetingupdate")
-    public String meetingupdate(MeetVO meetVO){
-        log.info("meetVO : "+meetVO);
-        service.meetingupdate(meetVO);
-        return "redirect:/member/partners/profile_info";
-    }
-    //미팅수정버튼 이벤트
-    @RequestMapping(value = "meetingupdate",method = RequestMethod.GET)
-    @ResponseBody
-    public MeetVO meetingUpdateBtn(@RequestParam("meet_id") String meet_id){
-        return service.meetInfo(meet_id);
-    }
     //------------------------------------------------------------------------
     //클라이언트 관련 메서드-------------------------------------------------------
+    @GetMapping("client")
+    public String client() {
+        return "member/client";
+    }
     //클라이언트 로그인시 클라이언트정보 세션저장컨트롤러(시큐리티 success 핸들러에서만 접근)
     @GetMapping("success/client")
     public String clientInfoInsert(Principal principal,HttpServletRequest request){
         HttpSession session = request.getSession();
 
         ClientVO clientVO = service.clientInfo(principal.getName());
-
         session.setAttribute("client",clientVO);
 
         return "redirect:/client/dashboard_client?member_no="+clientVO.getMember_no();
     }
+    @GetMapping("client/dashboard_client")
+    public void dashboard_client(){}
+    @GetMapping("client/client_info_update")
+    public void clientInfoUpdatePage(){}
     //클라이언트 회사정보 수정
     @PostMapping("clientinfoupdate")
     public String clientInfoUpdate(Principal principal,MemberVO memberVO,ClientVO clientVO,
@@ -172,11 +185,15 @@ public class memberController {
 
 
 
-        return "redirect:/client/dashboard_client";
+        return "redirect:/client/client/dashboard_client";
     }
 
     //------------------------------------------------------------------------
     //공통메서드or기타
+    @GetMapping("admin")
+    public String admin() {
+        return "member/admin";
+    }
 
     //회원탈퇴
     @RequestMapping(value = "/member/withdrawal",method = {RequestMethod.POST, RequestMethod.GET})
@@ -198,6 +215,7 @@ public class memberController {
     @ResponseBody
     public MemberVO findIdForm(@RequestBody MemberVO memberVO){
         memberVO.setUserid(service.findIdForm(memberVO));
+        log.info(memberVO.getUserid());
         return memberVO;
     }
 
@@ -206,6 +224,7 @@ public class memberController {
     @ResponseBody
     public MemberVO findPwForm(@RequestBody MemberVO memberVO){
         memberVO.setUserpw(service.findPwForm(memberVO));
+        log.info(memberVO);
         return memberVO;
     }
 
@@ -232,6 +251,7 @@ public class memberController {
 
         String idCheck = service.checkId(memberVO.getUserid());
 
+        log.info("idcheck : "+idCheck);
         if (!idCheck.equals("1")){
         service.kakaoSignup(memberVO);
         }

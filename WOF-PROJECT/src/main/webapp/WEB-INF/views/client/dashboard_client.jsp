@@ -75,6 +75,11 @@
 								<i class="ni ni-palette"></i> <span class="nav-link-text">페널티
 									관리</span>
 						</a></li>
+						<li class="nav-item"><a class="nav-link"
+						href="${pageContext.request.contextPath}/community/partners_community_list">
+							<i class="ni ni-palette"></i> <span class="nav-link-text">커뮤니티 게시판
+						</span>
+					</a></li>	
 					</ul>
 				</div>
 			</div>

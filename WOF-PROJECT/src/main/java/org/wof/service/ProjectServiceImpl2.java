@@ -22,13 +22,7 @@ import org.wof.mapper.ProjectMapper2;
 public class ProjectServiceImpl2 implements ProjectService2 {
 
 	private ProjectMapper2 projectMapper2;
-
 	private JavaMailSender mailSender;
-
-	@Override
-	public List<ProjectVO> projectList(Standard stand) {
-		return projectMapper2.projectList(stand);
-	}
 
 	@Override
 	public ProjectVO projectDetail(String proj_id) {
@@ -49,6 +43,11 @@ public class ProjectServiceImpl2 implements ProjectService2 {
 	public List<ProjectVO> listFollowProject(String related_member) {
 		return projectMapper2.listFollowProject(related_member);
 	}
+	
+	@Override
+	public List<ProjectVO> listRecommendProject(PartnersVO vo) {
+		return projectMapper2.listRecommendProject(vo);
+	}
 
 	@Override
 	public FollowProjectVO detailFollowProject(String related_project, String related_member) {
@@ -59,8 +58,8 @@ public class ProjectServiceImpl2 implements ProjectService2 {
 	}
 	
 	@Override
-	public List<ProjectVO> listRecommendProject(PartnersVO vo) {
-		return projectMapper2.listRecommendProject(vo);
+	public List<ProjectVO> listRecommendProjectwithpaging(PartnersVO vo, Standard stand) {
+		return projectMapper2.listRecommendProjectwithpaging(vo, stand);
 	}
 	
 	@Override
@@ -76,6 +75,11 @@ public class ProjectServiceImpl2 implements ProjectService2 {
 	@Override
 	public List<MeetVO> listMeeting(String meet_req_mem) {
 		return projectMapper2.listMeeting(meet_req_mem);
+	}
+	
+	@Override
+	public int updateMeeting(MeetVO vo) {
+		return projectMapper2.updateMeeting(vo);
 	}
 	
 	@Override
@@ -116,5 +120,7 @@ public class ProjectServiceImpl2 implements ProjectService2 {
 	      }
 	       mailSender.send(message);
 	}
+
+
 
 }

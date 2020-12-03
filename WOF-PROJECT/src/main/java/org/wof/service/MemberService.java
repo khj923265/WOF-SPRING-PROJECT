@@ -13,7 +13,7 @@ public interface MemberService {
     void sginUp(MemberVO memberVO);
     String checkPw(MemberVO memberVO);
     void Withdrawal(MemberVO memberVO);
-    String loginIdCheck(String userid);
+    String loginIdPwCheck(MemberVO memberVO);
 
     //클라이언트 회원 정보 관련
     ClientVO clientInfo(String userid);

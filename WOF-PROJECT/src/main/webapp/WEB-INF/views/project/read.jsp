@@ -154,10 +154,22 @@
 				<div class="card-body">
 					<h5 class="card-title mb-3">파일 목록</h5>
 					<div class="panel-body">
+				<c:choose>
+					<c:when test="${empty '.uploadResult1' }">
+						<div class="card-body">
+							<center>
+							<br>
+							<h5 data-toggle="tooltip" data-placement="top" title="파일이 없습니다.">조회 결과가 없습니다.</h5>
+							</center>
+						</div>
+					</c:when>
+					<c:when test="${!empty '.uploadResult1' }">
 						<div class='uploadResult1'>
 							<ul>
 							</ul>
 						</div>
+					</c:when>
+				</c:choose>
 					</div>	
 				</div>
 			</div>
@@ -225,18 +237,12 @@
 							</div>
 						</div>
 						<!-- end card-->
-						${member.member_no}
-						${partners.member_no }
-						${checkAuth.member_no }
-						<c:out value="${checkAuth.member_no }"/>
-						<input type="hidden" name = "checkAuth" value="${checkAuth.member_no }">
 						<div class="" align="center">
 							<input class="btn btn-default" id="chatConnect"  type="button" value="채팅하기">
 							<input class="btn btn-default" id="applyButton" type="button" value="지원하기">
 						</div>
 	
 						<sec:authorize access="isAuthenticated()">
-						<c:if test="${partners.member_no eq member.member_no }">
 						<div class="card" style="height:300px; margin-top: 20px; ">
 							<div class="card-body">
 								<h5 class="card-title mb-3">파일 관리</h5>
@@ -265,7 +271,6 @@
 
 							</div><!-- card body -->
 						</div><!-- card -->
-						</c:if>
 						</sec:authorize>
 
 
@@ -353,15 +358,12 @@ $(document).ready(function(e) {
 	    
 	    var memau = "${partners.member_no }";
 	    
-	    var memaa = "${applyregister.member_no}";
-	   alert(memaa);
-	    
  		if(memau != "${member.member_no}") {
 			alert("본인이 진행중인 프로젝트만 파일 업로드가 가능합니다.");
 			return;
 		} else {
 		    formObj.append(str).submit();
-		    alert("파일이 업로드 완료.");
+		    alert("파일이 업로드 완료가 완료되었습니다.");
 		}
 
 	  });

@@ -136,55 +136,23 @@
 <!-- End side nav -->
 
  
+ 
+ 
+ 
+
+  <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+    
  <!-- Body of contents  -->    
  <!-- 포인트 관리  -->
     <div class="container mt--6">
       <div class="row inline" id="manage-client-point">
         <div class="col">
           <div class="card">
-          <div class="card-header border-0">
-              <h3 class="mb-0">보유 포인트</h3>
-           </div>
-            <div class="card-body row inline">
-                    <!-- ①잔여포인트 확인 section  -->
-                    <div class="col-6 inline text-center py-2" style="background-color: #E9ECEF">
-                        <h1>잔여 포인트</h1>
-                    </div>
-                    <div class="col-6 inline text-center py-2" style="background-color: #E9ECEF">
-                        <h1 class="col-12 inline">포인트 충전/송금</h1>
-                    </div>
-                    <div class="col-6 inline text-center">
-                        <div class="row inline">
-                            <!-- ②포인트 충전/송금 -->
-                            <h1 class="col-12 text-center py-6" id="totalPoint"><b>${member.total_point }</b>&nbsp;P</h1>
-                        </div>
-                    </div>
-                    <div class="col-6 inline">
-                        <div class="row inline">
-                            <div class="col-6 text-center py-6">
-                                <a type="button" class="btn btn-primary ml-2" name="charge" data-toggle="modal" 
-                                 data-target="#modal-charging-form"><h1>충전</h1></a>
-                            </div>
-                            <!--  href = "javascript:popup()" target = "_self"  -->
-                            <div class="col-6 text-center py-6">
-                                <a type="button" class="btn btn-secondary ml-2" name="withdraw" data-toggle="modal" 
-                                data-target="#modal-withdraw-form"><h1>인출</h1></a>
-                            </div>
-                            <!-- <div class="col-6 text-center py-5">
-                                <a type="button" class="btn btn-success ml-2" name="pointTest" value="test" id="popup2"><h1>테스트</h1></a>
-                            </div> -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> <!-- end of card -->
-</div>
-<!--   end of col -->
-            
+            <div class="card-header">
  <!-- ①잔여포인트 확인 section  -->            
  <!-- ②포인트 충전/송금 -->  	
-    <%-- <div class="table-responsive col center"id="totalpoint">
+    <div class="table-responsive col center"id="totalpoint">
     <table class="table align-items-center table-flush">
     <tr>
     <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
@@ -203,8 +171,10 @@
     </td>
     <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
     <td class="align-items-center">
+    <a type="button" class="btn btn-secondary ml-2" name="withdraw" data-toggle="modal" data-target="#modal-withdraw-form">인출</a>
+    <a type="button" class="btn btn-primary ml-2" name="charge" data-toggle="modal" data-target="#modal-charging-form">충전</a>
 			  			  		<!-- <a type="button" class="btn btn-secondary ml-2" name="withdraw" value="인출" id="popup2">인출</a> -->
-			  			  		
+	<a type="button" class="btn btn-success ml-2" name="pointTest" value="test" id="popup2">테스트</a>		  			  		
     </td>
     </tr>
     </table>
@@ -215,9 +185,7 @@
             </div> <!-- end of card-header -->
              </div> <!-- end of card -->
           </div> <!-- end of col -->
-        </div> <!-- end of row (id="manage-client-point") --> --%>
-        
-        
+        </div> <!-- end of row (id="manage-client-point") -->
  <!-- 포인트  이용내역  -->
     <div class="container mt--2">
       <!-- ①title -->    
