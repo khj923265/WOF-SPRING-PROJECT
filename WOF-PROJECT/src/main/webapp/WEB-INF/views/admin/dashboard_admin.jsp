@@ -28,9 +28,9 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="icons.html">
+              <a class="nav-link" href="/admin/admin_notice">
                 <i class="ni ni-planet text-orange"></i>
-                <span class="nav-link-text">Icons</span>
+                <span class="nav-link-text">공지사항</span>
               </a>
             </li>
             <li class="nav-item">
