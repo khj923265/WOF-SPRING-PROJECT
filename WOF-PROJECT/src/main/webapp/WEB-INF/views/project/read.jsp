@@ -70,14 +70,14 @@
 					<h5>Project Overview:</h5>
 
 					<p class="text-muted mb-2">${project.getProj_reqr_skill()}</p>
-					<p class="text-muted mb-2">${project.getProj_type()}</p>
+					<%-- <p class="text-muted mb-2">${project.getProj_type()}</p> --%>
 					<p class="text-muted mb-2">${project.getProj_career()}</p>
-					<p class="text-muted mb-2">${project.getProj_pm()}</p>
-					<p class="text-muted mb-2">${project.getProj_work_type()}</p>
-					<p class="text-muted mb-2">${project.getProj_work_place()}</p>
+					<%-- <p class="text-muted mb-2">${project.getProj_pm()}</p>
+					<p class="text-muted mb-2">${project.getProj_work_type()}</p> 
+					<p class="text-muted mb-2">${project.getProj_work_place()}</p>--%>
 					<p class="text-muted mb-2">${project.getProj_work_time()}</p>
-					<p class="text-muted mb-2">${project.getProj_work_equip()}</p>
-					<p class="text-muted mb-2">${project.getProj_walfare()}</p>
+					<%-- <p class="text-muted mb-2">${project.getProj_work_equip()}</p>
+					<p class="text-muted mb-2">${project.getProj_walfare()}</p> --%>
 
 					<p class="text-muted mb-4">${project.getProj_detail()}</p>
 
@@ -284,14 +284,12 @@
 				</div>
 			</div>
 		</div>
-	
-	
-	
-								
-	
-	
+
 	</div>
 	</div>
+
+
+
 
 
 	<!-- Footer -->
@@ -751,3 +749,27 @@ $(document).ready(function(e) {
 		});
 
 		</script>
+		
+		
+	<!-- 채팅api 연결 -->	
+	<!--Start of Tawk.to Script-->
+	<script type="text/javascript">
+	$(document).ready(function () {
+		 $("#chatConnect").on("click", function(e){
+		
+			var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+			(function(){
+			var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+			s1.async=true;
+			s1.src='https://embed.tawk.to/5fc83af6920fc91564ccef4d/default';
+			s1.charset='UTF-8';
+			s1.setAttribute('crossorigin','*');
+			s0.parentNode.insertBefore(s1,s0);
+			})();
+			
+		 });
+		
+		<!--End of Tawk.to Script-->
+
+	});
+	</script>
