@@ -87,7 +87,14 @@ update project set proj_title=#{proj_title},
 </update>
 
 
+<!-- <select id="checkAuth" resultType="org.wof.domain.ContractVO">
 
+	select c.contract_write_source, c.related_proj, c.contract_write_target
+	from contract c, project p, member m
+	where p.proj_id = c.related_proj and c.contract_write_target = m.member_no
+	and m.member_no = #{member_no}
+	
+</select> -->
 
 
 

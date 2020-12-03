@@ -10,7 +10,7 @@ public interface ProjectAttachService {
 
 	public void register(ProjectVO projectvo);
 	
-	public List<ContractTargetVO> checkAuth(String member_no);
+	//public List<ContractTargetVO> checkAuth(ContractTargetVO contracttargetVO);
 	
 	public ProjectVO fileupread(String proj_id);
 	

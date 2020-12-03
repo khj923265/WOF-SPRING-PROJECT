@@ -17,7 +17,7 @@ public interface PointService {
 	
 	public int WithdrawService(PointVO point, MemberVO member);
 	
-	public int PaymentInService(PointVO point, ContractVO contract);
+	public int PaymentInService(PointVO point, ContractSourceVO contract);
 
 	public int PaymentOutService(PointVO point, MemberVO member, ContractSourceVO contract);
 	
@@ -26,5 +26,7 @@ public interface PointService {
 	public int getTotalService(Standard standard);
 
 	public String pwCheckService(MemberVO member);
+	
+	public void certifiedPhoneNumber(String phoneNumber, String cerNum);
 }
 

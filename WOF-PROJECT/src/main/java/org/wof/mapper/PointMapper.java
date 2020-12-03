@@ -49,6 +49,7 @@ public interface PointMapper {
 	//public int pointBalance(PointVO point);
 	
 	public List<PointVO> getList(PointVO point);
+	//public List<PointVO> getList(Standard standard);	
 	
 	public List<PointVO> getListPaging(Standard standard);
 	

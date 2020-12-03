@@ -28,8 +28,6 @@ public class ProjectAttachServiceImpl implements ProjectAttachService {
 	@Override
 	public void register(ProjectVO projectvo) {
 
-		log.info("프로젝트 파일 등록");
-		log.info("dddddddddddd" + projectvo);
 		if (projectvo.getAttachList() == null || projectvo.getAttachList().size() <= 0) {
 			return;
 		}
@@ -69,11 +67,11 @@ public class ProjectAttachServiceImpl implements ProjectAttachService {
 		return mapper.readProject(proj_id);
 	}
 	
-	@Override
-	public List<ContractTargetVO> checkAuth(String member_no) {
-		
-		log.info("파일 권한 체크");
-		
-		return attachmapper.checkAuth(member_no);
-	}
+//	@Override
+//	public List<ContractTargetVO> checkAuth(ContractTargetVO contracttargetVO) {
+//		
+//		log.info("파일 권한 체크");
+//		
+//		return attachmapper.checkAuth(contracttargetVO);
+//	}
 }

@@ -19,10 +19,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.wof.domain.ContractTargetVO;
+import org.wof.domain.ContractVO;
 import org.wof.domain.PageDTO;
 import org.wof.domain.ProjectAttachVO;
 import org.wof.domain.ProjectVO;
@@ -94,13 +96,13 @@ public class ProjectController {
 	public void update(@RequestParam("proj_id") String proj_id, @ModelAttribute("stand") Standard stand, Model model1){
 		log.info("/update");
 		model1.addAttribute("project", ps1.read(proj_id));
-	
+		
 	}
 	
 	@PreAuthorize("hasRole('ROLE_CLIENT')")
 	@PostMapping("/fileup")
 	public String fileup(ProjectVO projectvo, RedirectAttributes rttr, Model model,  
-			@RequestParam("member_no") String member_no, ContractTargetVO targetVO) {
+			@RequestParam("member_no") String member_no) {
 		
 		
 		log.info("fileup " + projectvo);
@@ -112,12 +114,13 @@ public class ProjectController {
 		service.register(projectvo);
 		
 		
-		model.addAttribute("checkAuth", service.checkAuth(member_no));
-		log.info("checkAuth : " + targetVO);
-		rttr.addFlashAttribute("result", projectvo.getProj_id());
-		rttr.addFlashAttribute("result", projectvo.getMember_no());
 		
-		return "redirect:/partners/project_apply_detail" + "?member_no=" + projectvo.getMember_no();
+		
+		rttr.addFlashAttribute("result", projectvo.getProj_id());
+		//rttr.addFlashAttribute("result", projectvo.getMember_no());
+		
+		//return "redirect:/partners/project_apply_detail" + "?member_no=" + projectvo.getMember_no();
+		return "redirect:/project/read"+ "?proj_id=" + projectvo.getProj_id();
 	}
 	
 	@PreAuthorize("hasRole('ROLE_CLIENT')")
