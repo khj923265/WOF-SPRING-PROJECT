@@ -57,12 +57,13 @@ public class ProjectRestController {
 			return new ResponseEntity<Integer>(1, HttpStatus.OK);
 		}else return new ResponseEntity<Integer>(500, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	
+
 	@PostMapping("schedule/{meet_req_mem}")
 	public Map<Object, Object> addSchedule(@RequestBody MeetVO vo){
-		log.info("add meeting");
+		log.info("add meeting"+vo);
 		Map<Object, Object> map = new HashMap<Object, Object>();
 		projectService2.addMeeting(vo);
+		log.info("add meeting2"+vo);
 		return map;
 	}
 	

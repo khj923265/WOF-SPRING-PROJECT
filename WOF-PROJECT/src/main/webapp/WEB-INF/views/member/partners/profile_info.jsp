@@ -42,6 +42,7 @@
                                     <div class="col-6 col-md-4 text-left">${member.userid}</div>
                                     <div class="col-6 col-md-2 pr-0 text-right">경력 :</div>
                                     <div class="col-6 col-md-4 text-left">4년차</div>
+                                    <input type="hidden" id="meet_req_mem" value="${member.member_no}">
                                 </div>
                                 <div class="row my-3 pt-5">
                                     <div class="col-6 col-md-2 pr-0 text-right">전화번호 :</div>
@@ -111,8 +112,6 @@
                                 </div>
                             </div>
                         </div>
-
-
                         <!-- Description -->
                     </div>
                 </div>
@@ -124,7 +123,7 @@
 <%@ include file="./project_profile_insert_form.jsp" %>
 <%@ include file="./project_profile_update_form.jsp" %>
 <%@ include file="./profile_form.jsp" %>
-<%@ include file="./calendar_edit.jsp"%>
+<%@ include file="./calendar_edit.jsp" %>
 <!-- footer -->
 <%@ include file="../../includes/footer.jsp" %>
 <script src='/resources/js/member/partners/profileManagement.js'></script>

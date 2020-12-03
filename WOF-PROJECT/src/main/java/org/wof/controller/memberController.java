@@ -18,6 +18,7 @@ import org.wof.domain.PartnersVO;
 import org.wof.domain.ProjectProfileVO;
 import org.wof.security.CustomUserDetailsService;
 import org.wof.service.MemberService;
+import org.wof.service.ProjectService2;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,6 +36,7 @@ public class memberController {
 
     private MemberService service;
     private CustomUserDetailsService customUserDetailsService;
+    private ProjectService2 projectService2;
 
     //로그인 관련 메서드//------------------------------------------------------
     //회원가입 페이지
@@ -78,8 +80,11 @@ public class memberController {
         String userid = principal.getName();
         PartnersVO partnersVO = service.partnersInfo(userid);
 
+        log.info("partnersVO ::::::"+partnersVO);
         session.setAttribute("partners", partnersVO);
         model.addAttribute("profilelist",service.projectProfileList(userid));
+        model.addAttribute("meets",projectService2.listMeeting(partnersVO.getMember_no()));
+
         return "member/partners/profile_info";
     }
     @GetMapping("partners/profile_info_insert")
