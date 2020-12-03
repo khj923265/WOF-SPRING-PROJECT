@@ -54,9 +54,9 @@ public class ProjectController2 {
 	}
 	
 	@GetMapping("qna")
-	public String pnaRegister(){
+	public String pnaRegister(Principal principal){
 		log.info("qna");
-		return "/qna/qustion-register";
+		return "/qna/question-register";
 	}
 	
 	@GetMapping("meeting")

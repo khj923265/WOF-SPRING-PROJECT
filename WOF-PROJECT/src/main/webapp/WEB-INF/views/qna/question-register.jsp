@@ -73,11 +73,11 @@
 					</div>
 					
 					<div class="card-body">
-						<form action="/qna/question-register" method="post">
+						<form method="post">
 							<!-- <h6 class="heading-small text-muted mb-4">문의 정보</h6> -->
 							
 							<div >
-							<input type="hidden" name="QUEST_ID" value=${member.member_no }> 
+							<input type="hidden" id="QUEST_ID" value=${member.member_no }> 
 							</div>
 							
 							<div class="pl-lg-4">
@@ -93,7 +93,7 @@
 									<div class="col-lg-6">
 										<div class="form-group">
 											<label class="form-control-label" for="input-email">이름</label>
-											<div class="form-control" name="real_name" readonly="readonly">${member.real_name }</div>
+											<input class="form-control" id="real_name" value="${member.real_name}">${member.real_name}</div>
 											<%-- <input type="email" id="input-email" class="form-control"
 												value="${member.realname }"> --%>
 										</div>
@@ -156,7 +156,7 @@
 							
 							<div class="text-center">
 								<button  href="#!" class="btn btn-lg btn-secondary" style="font-size: 16px ; padding-left: 100px; padding-right: 100px">취&nbsp;&nbsp;소</button> 
-								<button	type="submit" class="btn btn-lg btn-primary" style="font-size: 16px ; padding-left: 100px; padding-right: 100px">등&nbsp;&nbsp;록</button>
+								<button	type="button" id="sedingEmail" class="btn btn-lg btn-primary" style="font-size: 16px ; padding-left: 100px; padding-right: 100px">등&nbsp;&nbsp;록</button>
 							</div>
 						</form>
 					</div>
@@ -361,6 +361,11 @@
 	  console.log(this.value);
 	  this.value = autoHypenPhone( this.value ) ;  
 	}
+	
+	$('#sedingEmail').click(function() {
+		var name = $('#real_name').val();
+		alert(name);
+	})
 
 	</script>
 	
