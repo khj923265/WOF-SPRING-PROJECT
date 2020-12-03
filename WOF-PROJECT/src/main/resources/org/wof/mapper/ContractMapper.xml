@@ -49,6 +49,28 @@
 		and RELATED_PROJ = #{related_proj}
 		and CONTRACT_WRITE_TARGET = #{contract_write_target}
 	</update>
+	
+	<select id="contractCompletion" resultType="org.wof.domain.ContractVO">
+		select 
+		c.CONTRACT_REG_DATE,
+		p.proj_title,
+		m.real_name as sourceName,
+		m.userphone as sourcePhone,
+		c.SOURCE_SIGNATURE,
+		m2.real_name as targetName,
+		m2.userphone as targetPhone,
+		c.TARGET_SIGNATURE
+		from contract c join member m 
+		on c.contract_write_source = m.member_no
+		join project p
+		on p.proj_id = c.related_proj
+		left outer join member m2
+		on c.contract_write_target = m2.member_no
+		where c.contract_write_source = 'member6'
+		and source_signature is not null
+		and target_signature is not null
+		order by c.CONTRACT_REG_DATE desc;
+	</select>
 
 
 </mapper>
