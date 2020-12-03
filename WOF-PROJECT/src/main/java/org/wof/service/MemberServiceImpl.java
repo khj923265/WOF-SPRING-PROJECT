@@ -33,6 +33,7 @@ public class MemberServiceImpl implements MemberService{
     public String checkId(String userid) {
         return mapper.checkId(userid);
     }
+
     //회원가입
     @Transactional
     @Override
@@ -98,22 +99,26 @@ public class MemberServiceImpl implements MemberService{
     }
     //로그인시 회원 상태체크,로그인날짜 최신화
     @Override
-    public String loginIdCheck(String userid) {
+    public String loginIdPwCheck(MemberVO memberVO) {
 
-        String status = mapper.loginIdCheck(userid);
+        String status = mapper.loginIdCheck(memberVO.getUserid());
         if (status != null) {
-            if (mapper.kakaoIdCheck(userid).contains("kakao")) {
+            if (mapper.kakaoIdCheck(memberVO.getUserid()).contains("kakao")) {
                 status = "4";
             }else if (status.equals("탈퇴")) {
                 status = "1";
             } else if (status.equals("휴면")) {
                 status = "2";
             } else if (status.equals("정상")){
-                mapper.loginsysdate(userid);
+                if (!passwordEncoder.matches(memberVO.getUserpw(),mapper.checkPw2(memberVO.getUserid()))){
+                    status = "6";//비밀번호 false
+                }else{
+                mapper.loginsysdate(memberVO.getUserid());
                 status = "5";
+                }
             }
         }else {
-            status = "3";
+            status = "3";//아이디없음
         }
 
         return status;
@@ -147,7 +152,9 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public ProjectProfileVO projectprofileinfo(String userid) {
-        return mapper.projectprofileinfo(userid);
+        ProjectProfileVO projectProfileVO = mapper.projectprofileinfo(userid);
+        System.out.println("=========="+projectProfileVO);
+        return projectProfileVO;
     }
     //자기소개 수정
     @Override
