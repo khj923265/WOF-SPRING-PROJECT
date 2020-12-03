@@ -94,7 +94,8 @@
         update member set userpw=#{userpw}, userphone=#{userphone} where member_no = #{member_no}
     </update>
     <select id="projectProfileList" parameterType="string" resultType="org.wof.domain.ProjectProfileVO">
-        select no,userid, name, skill, field, responsibilities, startdate, enddate
+        select no,userid, name, skill, field, responsibilities, to_char(startdate,'YYYY-MM-DD')"startdate",
+        to_char(enddate,'YYYY-MM-DD')"enddate"
          from PROJECT_PROFILE where userid = #{userid}
     </select>
     <insert id="projectprofileinsert" parameterType="org.wof.domain.ProjectProfileVO">
@@ -102,7 +103,8 @@
          values (project_profile_seq.nextval,#{userid},#{name},#{skill},#{field},#{responsibilities},#{startdate},#{enddate})
     </insert>
     <select id="projectprofileinfo" parameterType="String" resultType="org.wof.domain.ProjectProfileVO">
-        select no,userid, name, skill, field, responsibilities, startdate, enddate
+        select no,userid, name, skill, field, responsibilities, to_char(startdate,'YYYY-MM-DD')"startdate",
+        to_char(enddate,'YYYY-MM-DD')"enddate"
          from project_profile where no = #{no}
     </select>
     <update id="profileupdate" parameterType="org.wof.domain.PartnersVO">

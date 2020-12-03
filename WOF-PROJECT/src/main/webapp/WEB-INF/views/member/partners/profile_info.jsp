@@ -40,6 +40,7 @@
                                 <div class="row my-3 pt-6">
                                     <div class="col-6 col-md-2 pr-0 text-right">이메일 :</div>
                                     <div class="col-6 col-md-4 text-left">${member.userid}</div>
+                                    <input type="hidden" id="meet_req_mem" value="${member.member_no}">
                                     <div class="col-6 col-md-2 pr-0 text-right">경력 :</div>
                                     <div class="col-6 col-md-4 text-left">4년차</div>
                                 </div>

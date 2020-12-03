@@ -134,7 +134,7 @@ public class ProjectServiceImpl2 implements ProjectService2 {
 	         messageHelper = new MimeMessageHelper(message, true, "UTF-8");
 	          messageHelper.setFrom(vo.getQuest_id()); // 보내는사람 생략하거나 하면 정상작동을 안함
 	          messageHelper.setTo("wof.company.kosta@gmail.com"); // 받는사람 이메일
-	          messageHelper.setSubject(vo.getQuest_title()); // 메일제목은 생략이 가능하다
+	          messageHelper.setSubject(vo.getQuest_title() + "[문의사항"+vo.getQuest_writer()+"님]"); // 메일제목은 생략이 가능하다
 	          messageHelper.setText(contents); // 메일 내용
 
 	      } catch (MessagingException e) {
