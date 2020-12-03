@@ -691,7 +691,13 @@ $(document).ready(function(e) {
 		    	var someText = document.getElementById("reply_contents").value;
 		    	alert(someText);
 		    }
-		    
+
+
+			$('#secretReply').click(function(){
+				if($(this).is(':checked')){
+					alert("비밀글로 설정되었습니다.");
+				}
+			})
 		  
 		 	
 
