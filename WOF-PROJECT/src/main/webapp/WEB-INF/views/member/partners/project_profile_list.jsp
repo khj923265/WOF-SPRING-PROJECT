@@ -37,6 +37,7 @@
                 <td>
                     <div class="d-flex align-items-center">
                         <span>${profile.startdate}</span>
+                           -
                         <span>${profile.enddate}</span>
                     </div>
                 </td>

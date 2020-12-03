@@ -3,6 +3,7 @@ package org.wof.controller;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -96,17 +97,6 @@ public class memberController {
         return ResponseEntity.ok(service.projectprofileinfo(userid));
     }
 
-    //파트너스 로그인시 파트너정보 세션저장컨트롤러(시큐리티 success 핸들러에서만 접근)
-    @GetMapping("success/partners")
-    public String successPartners(Principal principal, HttpServletRequest request) {
-        HttpSession session = request.getSession();
-
-        PartnersVO partnersVO = service.partnersInfo(principal.getName());
-
-        session.setAttribute("partners", partnersVO);
-
-        return "redirect:/member/partners/profile_info";
-    }
     //파트너스 개인정보 수정
     @PostMapping("partnersinfoupdate")
     public String infoUpdate(Principal principal,MemberVO memberVO, PartnersVO partnersVO, HttpServletResponse response, HttpServletRequest request){
@@ -185,7 +175,7 @@ public class memberController {
 
 
 
-        return "redirect:/client/client/dashboard_client";
+        return "redirect:/client/dashboard_client";
     }
 
     //------------------------------------------------------------------------

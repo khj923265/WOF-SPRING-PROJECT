@@ -94,23 +94,26 @@
                             <div class="dropdown-header noti-title">
                                 <h6 class="text-overflow m-0">Welcome!</h6>
                             </div>
-                            <c:if test="${member.auth == 'ROLE_CLIENT' }">
-                                <a href="${pageContext.request.contextPath }/client/dashboard_client?member_no=${member.member_no}"
-                                    class="dropdown-item"> <i class="ni ni-single-02"></i> <span>My dashboard</span></a>
-                            </c:if>
-                            <c:if test="${member.auth == 'ROLE_PARTNERS' }">
-                                <a href="${pageContext.request.contextPath }/partners/profile_info"
-                                    class="dropdown-item"> <i class="ni ni-single-02"></i> <span>My dashboard</span></a>
-                            </c:if>
-                            <a href="#!" class="dropdown-item"> <i
-                                    class="ni ni-settings-gear-65"></i> <span>Settings</span>
-                            </a> <a href="#!" class="dropdown-item"> <i
-                                class="ni ni-calendar-grid-58"></i> <span>Activity</span>
-                        </a> <a href="#!" class="dropdown-item"> <i
-                                class="ni ni-support-16"></i> <span>Support</span>
-                        </a>
-                            <div class="dropdown-divider"></div>
                             <sec:authorize access="isAuthenticated()">
+                                <c:if test="${member.auth == 'ROLE_CLIENT' }">
+                                    <a href="/client/dashboard_client?member_no=${member.member_no}"
+                                       class="dropdown-item"> <i class="ni ni-single-02"></i>
+                                        <span>마이페이지</span>
+                                    </a>
+                                </c:if>
+                                <c:if test="${member.auth == 'ROLE_PARTNERS' }">
+                                    <a href="/partners/dashboard_partners?member_no=${member.member_no}"
+                                       class="dropdown-item"> <i class="ni ni-single-02"></i>
+                                        <span>마이페이지</span>
+                                    </a>
+                                    <a href="/member/partners/profile_info"
+                                    class="dropdown-item"> <i
+                                        class="ni ni-settings-gear-65"></i> <span>회원정보수정</span>
+                                </c:if>
+                                </a> <a id="qnaBtn" href="/project/qna"
+                                        class="dropdown-item"> <i
+                                    class="ni ni-calendar-grid-58"></i> <span>문의사항</span></a>
+                                <div class="dropdown-divider"></div>
                                 <a class="dropdown-item"
                                    href="/customlogout"><i class="ni ni-user-run"></i> <span>로그아웃</span> </a>
                             </sec:authorize>
@@ -186,7 +189,7 @@
                                                                 <div class="icon">
                                                                     <span class="ion-ios-arrow-down"></span>
                                                                 </div>
-                                                                <select name="" id="" class="form-control">
+                                                                <select class="form-control">
                                                                     <option value="">Category</option>
                                                                     <option value="">Full Time</option>
                                                                     <option value="">Part Time</option>
