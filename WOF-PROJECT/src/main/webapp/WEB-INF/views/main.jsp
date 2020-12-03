@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>WOF's 메인 페이지</title>
+    <title>WOF에 오신 것을 환영합니다*^^*</title>
 
     <!--main bootstrap  -->
     <link rel="icon" href="/resources/template/assets/img/brand/favicon.png" type="image/png">
