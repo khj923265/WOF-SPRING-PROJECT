@@ -210,4 +210,10 @@ public class PartnersServiceImpl implements PartnersService{
 		
 		return partnersMapper.applyProjectTotal(standard);
 	}
+	
+	@Override
+	public List<ProjectVO> dashboardFollowProject(String related_member) {
+		
+		return partnersMapper.dashboardFollowProject(related_member);
+	}
 }

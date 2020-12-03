@@ -86,4 +86,6 @@ public interface PartnersMapper {
 	public List<MemberVO> appliedPartners(String proj_id);
 	
 	public int appliedpartnersTotal(Standard standard);
+
+	public List<ProjectVO> dashboardFollowProject(String related_member);
 }

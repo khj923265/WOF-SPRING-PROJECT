@@ -67,11 +67,11 @@ public class ProjectAttachServiceImpl implements ProjectAttachService {
 		return mapper.readProject(proj_id);
 	}
 	
-	@Override
-	public List<ContractTargetVO> checkAuth(ContractTargetVO contracttargetVO) {
-		
-		log.info("파일 권한 체크");
-		
-		return attachmapper.checkAuth(contracttargetVO);
-	}
+//	@Override
+//	public List<ContractTargetVO> checkAuth(ContractTargetVO contracttargetVO) {
+//		
+//		log.info("파일 권한 체크");
+//		
+//		return attachmapper.checkAuth(contracttargetVO);
+//	}
 }

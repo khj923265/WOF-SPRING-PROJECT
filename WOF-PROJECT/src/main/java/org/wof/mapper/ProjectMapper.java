@@ -2,6 +2,8 @@ package org.wof.mapper;
 
 import java.util.List;
 
+import org.wof.domain.ContractTargetVO;
+import org.wof.domain.ContractVO;
 import org.wof.domain.ProjectVO;
 import org.wof.domain.Standard;
 
@@ -19,5 +21,7 @@ public interface ProjectMapper {
 	public int deleteProject(String proj_id);
 
 	public int updateProject(ProjectVO p1);
+	
+	public List<ContractVO> checkAuth(String contract_write_target);
 	
 }
