@@ -257,10 +257,10 @@
         left outer join applyregister ar
         on ar.member_no = p.member_no
 		where a.proj_id = #{proj_id}
+		and rownum <= #{standard.pageNum} * #{standard.amount}
 		order by available_date desc
 		)
-		where rownum <= #{standard.pageNum} * #{standard.amount}
-		
+		where rn > (#{standard.pageNum} -1) * #{standard.amount}
 		]]>
 	</select>
 	
@@ -303,18 +303,25 @@
 	</delete>
 	
 	<!-- 선택한 파트너스 -->
-	<select id="appliedPartners" resultType="org.wof.domain.MemberVO">
+	<select id="appliedPartners" resultType="org.wof.domain.ContractSourceVO">
 		<![CDATA[
-		select member_no, userid, real_name, userphone
+		
+		select member_no, userid, real_name, userPhone,
+		proj_id, contract_write_source, contract_write_target
 		from
 		(
-			select rownum rn, m.member_no, m.userid, m.real_name, m.userphone
-			from member m, applyregister a
-			where m.member_no = a.member_no and a.proj_id = #{proj_id}
+			select rownum rn, m.member_no, m.userid, m.real_name, 
+            m.userphone, a.proj_id, c.contract_write_source, c.contract_write_target
+			from member m join applyregister a 
+            on m.member_no = a.member_no
+            left outer join contract c
+            on c.related_proj = a.proj_id
+            and a.member_no = c.contract_write_target
+            where a.proj_id = #{proj_id}
 			and rownum <= #{standard.pageNum} * #{standard.amount}
-			order by m.LOGIN_DATE desc
 		)	
 		where rn > (#{standard.pageNum} -1) * #{standard.amount}
+	
 		]]>
 	</select>
 	

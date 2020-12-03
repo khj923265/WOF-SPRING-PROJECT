@@ -104,7 +104,7 @@
         select * from project_profile where no = #{no}
     </select>
     <update id="profileupdate" parameterType="org.wof.domain.PartnersVO">
-        update partners set profile=#{profile} where member_no=#{member_no}
+        update partners set profile = #{profile} where member_no = #{member_no}
     </update>
     <delete id="projectprofiledelete" parameterType="String">
         delete from project_profile where no = #{no}
@@ -131,6 +131,17 @@
     <update id="setEncodePassword" parameterType="org.wof.domain.MemberVO">
         update member set userpw = #{userpw} where userid = #{userid}
     </update>
+    <update id="projectProfileUpdate" parameterType="org.wof.domain.ProjectProfileVO">
+        update project_profile set name = #{name}, skill = #{skill}, responsibilities = #{responsibilities},
+            field = #{field}, startdate = #{startdate}, enddate = #{enddate} where userid = #{userid}
+    </update>
+    <update id="meetingupdate" parameterType="org.wof.domain.MeetVO">
+        update meet set meet_contents = #{meet_contents},
+        meet_datetime = #{meet_datetime} where meet_req_mem = #{meet_req_mem}
+    </update>
+    <select id="meetInfo" parameterType="String" resultType="org.wof.domain.MeetVO">
+        select * from meet where meet_id = #{meet_id}
+    </select>
 
 
 

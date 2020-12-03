@@ -346,13 +346,13 @@
 							<div class="card card-stats">
 
 
+								
 
 
 								<c:forEach var="project" items="${list}">
-
 									<!-- Card body -->
 									<div class="ml-3 mt-3 mb-3 card-body">
-
+									
 										<div class="row">
 											<div class="col-12 row text-center ">
 
@@ -422,9 +422,9 @@
   
     </c:choose> --%> <c:set var="TextValue"
 													value="${project.getProj_detail()}" />
-												${fn:substring(TextValue,0,60)}<br>${fn:substring(TextValue,61,120)}
-												<br>${fn:substring(TextValue,121,180)}<br>${fn:substring(TextValue,181,240)}
-												<br>${fn:substring(TextValue,241,300)} <br>${fn:substring(TextValue,301,360)}...
+												${fn:substring(TextValue,0,70)}<br>${fn:substring(TextValue,71,140)}
+												<br>${fn:substring(TextValue,141,210)}<br>${fn:substring(TextValue,211,280)}
+												<br>${fn:substring(TextValue,281,350)} <br>${fn:substring(TextValue,351,420)}...
 											</span>
 										</div>
 
@@ -445,7 +445,10 @@
 
 
 	<!-- list end -->
+	
+	<div id="frogue-container" class="position-right-bottom" data-chatbot="f397ce6d-a5db-4fc4-b8d4-4f2c9c143b34" data-user="nannanru@gmail.com" data-init-key="value"></div>
 
+	
 	<!-- Footer -->
 	<%@ include file="../includes/footer.jsp" %>
 	
@@ -472,88 +475,7 @@
 		
 </script>
 
-	<script type="text/javascript">
 	
-	$(function() {
-	
-		$(".ni-favourite-28").click(function() {
-			$(this).toggleClass("red");
-			var related_proj = $(this).find("input").val();
-			if ($(this).hasClass("red") === true) { /* if($(".ni-favourite-28").hasClass("color") === true){ */
-				alert("관심 프로젝트로 등록되었습니다.");
-				$.ajax({
-					url : "FollowProjectInsertAction.do",
-					type : "post",
-					data : {
-						"related_proj" : related_proj
-					},
-					success : function(result) {
-					},
-					error : function(error) {
-					}
-				})
-			}
-
-			else {
-				alert("관심 프로젝트에서 해제되었습니다.");
-				$.ajax({
-					url : "FollowProjectDeleteAction.do",
-					type : "related_proj",
-					data : {
-						"related_proj" : related_proj
-					},
-					success : function(result) {
-						alert(result);
-						warning.success("관심 파트너스에 삭제되었습니다!")
-					},
-					error : function(error) {
-						toastr.error("관심 파트너스가 삭제되지 않았습니다.")
-					}
-				})
-			}
-			
-		})
-		
-	});
-	function followProject() {
-
-		$('#related_proj').toggleClass("red");
-		var related_proj = $('#related').val();
-		if ($('#related_proj').hasClass("red") === true) { /* if($(".ni-favourite-28").hasClass("color") === true){ */
-			alert("관심 프로젝트로 등록되었습니다.");
-			$.ajax({
-				url : "FollowProjectInsertAction.do",
-				type : "post",
-				data : {
-					"related_proj" : related_proj
-				},
-				success : function(result) {
-				},
-				error : function(error) {
-				}
-			})
-		}
-
-		else {
-			alert("관심 프로젝트에서 해제되었습니다.");
-			$.ajax({
-				url : "FollowProjectDeleteAction.do",
-				type : "related_proj",
-				data : {
-					"related_proj" : related_proj
-				},
-				success : function(result) {
-					alert(result);
-					warning.success("관심 파트너스에 삭제되었습니다!")
-				},
-				error : function(error) {
-					toastr.error("관심 파트너스가 삭제되지 않았습니다.")
-				}
-			})
-		}
-
-	}
-	</script>
 	
 	<script type="text/javascript">
 
@@ -629,5 +551,15 @@ function cat1_change(key,sel){
 
 </script>
 
+
+<script>
+(function(d, s, id){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "https:\/\/danbee.ai/js/plugins/frogue-embed/frogue-embed.min.js";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'frogue-embed'));
+</script> 
 
 

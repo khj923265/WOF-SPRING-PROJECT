@@ -3,6 +3,7 @@ package org.wof.service;
 import java.util.List;
 
 import org.wof.domain.ApplyVO;
+import org.wof.domain.ContractSourceVO;
 import org.wof.domain.ProjectVO;
 import org.wof.domain.FollowPartnersVO;
 import org.wof.domain.MemberVO;
@@ -54,7 +55,7 @@ public interface PartnersService {
 	
 	public int applyDelete(String[] member_no, String proj_id);
 	
-	public List<MemberVO> appliedPartners(String proj_id);
+	public List<ContractSourceVO> appliedPartners(String proj_id, Standard standard);
 	
 	public int appliedpartnersTotal(Standard standard);
 

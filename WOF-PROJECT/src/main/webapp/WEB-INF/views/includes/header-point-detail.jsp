@@ -41,20 +41,5 @@
 	</sec:authorize>
 
 <!-- Main content -->
-<div class="main-content" id="panel">
+<!-- <div class="main-content" id="panel"> -->
 
-	<!-- Topnav -->
-	<nav
-		class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
-		<a href="${pageContext.request.contextPath }/Project/movemain.do"><img
-			alt=""
-			src="/resources/template/assets/img/brand/logo_transparent.png"
-			style="height: 50px; width: 100px; margin-left: 10px;"> </a>
-		<div class="container-fluid">
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			</div>
-			<!-- .collapse navbar-collapse -->
-		</div>
-		<!-- .container-fluid -->
-	</nav>
-	<!-- .navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom -->

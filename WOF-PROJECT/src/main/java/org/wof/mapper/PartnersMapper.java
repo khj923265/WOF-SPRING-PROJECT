@@ -10,6 +10,7 @@ import org.wof.domain.ProjectVO;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.wof.domain.ApplyVO;
+import org.wof.domain.ContractSourceVO;
 import org.wof.domain.FollowPartnersVO;
 import org.wof.domain.MemberVO;
 import org.wof.domain.PartnersVO;
@@ -28,7 +29,7 @@ public interface PartnersMapper {
 	public List<ProjectVO> dashboardpartnersApplyProject(@Param("member_no") String member_no);
 	
 	public List<PartnersVO> partnersList(
-			@Param("member_no")String member_no,
+			@Param("member_no") String member_no,
 			@Param("standard") Standard standard);
 	//
 	
@@ -83,7 +84,9 @@ public interface PartnersMapper {
 	
 	public int applyDelete(@Param("member_no") String[] member_no, @Param("proj_id") String proj_id);
 	
-	public List<MemberVO> appliedPartners(String proj_id);
+	public List<ContractSourceVO> appliedPartners(
+			@Param("proj_id") String proj_id,
+			@Param("standard") Standard standard);
 	
 	public int appliedpartnersTotal(Standard standard);
 

@@ -66,7 +66,7 @@
                                                         </td>
                                                         <td class="text-right">
                                                             <div>
-                                                                <button type="submit" class="btn btn-success" onsubmit="profileinsert()">등록</button>
+                                                                <button type="submit" class="btn btn-success" onsubmit="profileManagement.profileinsert()">등록</button>
                                                             </div>
                                                         </td>
                                                     </tr>

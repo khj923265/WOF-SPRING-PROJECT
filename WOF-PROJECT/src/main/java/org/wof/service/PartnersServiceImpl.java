@@ -8,6 +8,7 @@ import org.wof.domain.ProjectVO;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.wof.domain.ApplyVO;
+import org.wof.domain.ContractSourceVO;
 import org.wof.domain.FollowPartnersVO;
 import org.wof.domain.MemberVO;
 import org.wof.domain.PartnersVO;
@@ -188,9 +189,9 @@ public class PartnersServiceImpl implements PartnersService{
 	}
 	
 	@Override
-	public List<MemberVO> appliedPartners(String proj_id) {
+	public List<ContractSourceVO> appliedPartners(String proj_id, Standard standard) {
 		
-		return partnersMapper.appliedPartners(proj_id);
+		return partnersMapper.appliedPartners(proj_id, standard);
 	}
 
 	@Override

@@ -7,5 +7,6 @@
     <button type="button" class="col-2 btn btn-success" onclick="profileManagement.profileupdate()">수정하기</button>
     <input class="form-control col-10 pt-3 center"type="text" style="width: 800px;height: 300px"
         name="profile" id="profile" value="${partners.profile}">
+    <input type="hidden" id="member_no" value="${member.member_no}">
 
 </div>

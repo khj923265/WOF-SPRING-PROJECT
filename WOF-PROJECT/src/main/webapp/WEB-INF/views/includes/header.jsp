@@ -390,7 +390,7 @@
                                 </a>
                             </c:if>
                             <c:if test="${member.auth == 'ROLE_PARTNERS' }">
-                                <a href="${pageContext.request.contextPath }/partners/dashboard_partners?member_no=${member.member_no}"
+                                <a href="${pageContext.request.contextPath }/partners/profile_info"
                                    class="dropdown-item"> <i class="ni ni-single-02"></i>
                                     <span>My meeting</span>
                                 </a>
@@ -412,11 +412,11 @@
                                    href="/member/customlogin"><i class="ni ni-user-run"></i> <span>로그인</span> </a>
                             </sec:authorize>
                         </div>
-                        <!-- .dropdown-menu dropdown-menu-right --></li>
+                        <!— .dropdown-menu dropdown-menu-right —></li>
                 </ul>
             </div>
-            <!-- .collapse navbar-collapse -->
+            <!— .collapse navbar-collapse —>
         </div>
-        <!-- .container-fluid -->
+        <!— .container-fluid —>
     </nav>
 </div>

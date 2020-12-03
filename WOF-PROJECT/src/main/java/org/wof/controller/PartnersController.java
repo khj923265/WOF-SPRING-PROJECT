@@ -223,7 +223,7 @@ public class PartnersController {
 		
 		
 		model.addAttribute("Project", partnersService.applyDetailProject(proj_id));
-		model.addAttribute("Member", partnersService.appliedPartners(proj_id));
+		model.addAttribute("Member", partnersService.appliedPartners(proj_id, standard));
 		model.addAttribute("pageMaker", new PageDTO(standard, total));
 	}
 	
