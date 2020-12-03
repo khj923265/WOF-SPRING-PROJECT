@@ -8,5 +8,31 @@
 	select count(*) from project
 </select>
 	
+<select id="TotalMember" resultType="int">
+	select count(*) from member
+</select>
 	
+<select id="RegisterCompany" resultType="int">
+	select count(name) from client
+</select>
+
+<select id="CompanyList" resultType="org.wof.domain.ClientVO">
+	<![CDATA[
+	select member_no, name, tel, address1
+	from
+	(
+		select rownum rn, member_no, name, tel, address1
+		from client
+		where name is not null
+		and rownum <= #{pageNum} * #{amount}
+	)
+	
+	where rn > (#{pageNum} -1) * #{amount}
+	]]>
+</select>
+
+<select id="CompanyListTotal" resultType="int">
+	select count(name)
+	from client
+</select>
 </mapper>

@@ -23,14 +23,15 @@ public class AdminController {
 	@GetMapping("/dashboard_admin")
 	public void dashboard_admin(Standard standard, Model model) {
 		log.info("관리자 페이지 확인");
-		log.info(standard);
 		
-		int total = adminService.getTotal(standard);
+		model.addAttribute("totalProject", adminService.getTotal());
+		model.addAttribute("TotalMember", adminService.TotalMember());
+		model.addAttribute("RegisterCompany", adminService.RegisterCompany());
 		
-		log.info("total : " + total);
-		
-		model.addAttribute("totalProject", new PageDTO(standard, total));
-
+		int total = adminService.CompanyListTotal(standard);
+		log.info(total);
+		model.addAttribute("CompanyList", adminService.CompanyList(standard));
+		model.addAttribute("pageMaker", new PageDTO(standard, total));
 	}
 	
 

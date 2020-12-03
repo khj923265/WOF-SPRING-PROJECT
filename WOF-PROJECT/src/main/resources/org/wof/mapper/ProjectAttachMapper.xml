@@ -25,8 +25,8 @@ delete from projectattach where uuid = #{uuid}
 
 	select contract_write_source, related_proj, contract_write_target, m.member_no
 	from contract c, project p, member m
-	where c.related_proj = p.proj_id and c.contract_write_target and m.member_no = c.contract_write_target
-	and contract_write_target = #{member_no}
+	where c.related_proj = p.proj_id and contract_write_target = m.member_no 
+  	and contract_write_target = #{member_no}
 	
 </select>
 </mapper>
