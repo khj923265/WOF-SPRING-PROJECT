@@ -211,13 +211,13 @@
 													<i class="ni education_hat mr-2"></i>★★★☆☆
 												</div>
 												<div>
-													<i class="ni education_hat mr-2"></i>등록한 프로젝트
+													<i class="ni education_hat mr-2"></i>등록한 프로젝트  : 4
 												</div>
 												<div>
-													<i class="ni education_hat mr-2"></i>진행 중인 프로젝트
+													<i class="ni education_hat mr-2"></i>진행 중인 프로젝트  : 1
 												</div>
 												<div>
-													<i class="ni education_hat mr-2"></i>완료한 프로젝트
+													<i class="ni education_hat mr-2"></i>완료한 프로젝트  : 1
 												</div>
 											</div>
 										</div>
@@ -685,8 +685,13 @@ $(document).ready(function(e) {
 		    	alert(someText);
 		    }
 		    
+		    
+		    $('#secretReply').click(function(){
+		    	if($(this).is(':checked')){
+		    		alert("비밀글로 설정되었습니다.");
+		    	}
+		    })
 		  
-		 	
 
 		    $("#registerBtn").on("click",function(e){
 		      
@@ -694,9 +699,7 @@ $(document).ready(function(e) {
 			 	alert(text+"를 입력하시겠습니까?");
 			 	var mem = $("#member_no").val();
 			 	
-			 	if ($('input:checkbox[id="secretReply"]').is(".checked") == true){
-			 		alert("비밀글로 입력되었습니다.");
-			 	}
+			 	
 			 		
 		    	
 		      var reply = {

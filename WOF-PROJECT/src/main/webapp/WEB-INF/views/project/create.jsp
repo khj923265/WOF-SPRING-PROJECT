@@ -132,7 +132,7 @@
 					
 					<div class="col-xl-2">		
 					<div class="select-card client-input">
-					<input id="category_develop" name="proj_reqr_skill" type="checkbox"  value="개발">
+					<input id="category_develop" name="proj_category" type="checkbox"  value="개발">
 					<label class="input-replacer" for="category_develop"></label>
 					<div class="select-card-content">
 					<img class="select-card-img inherit-select-card-img" src="/resources/template/assets/img/icons/develop.png" style="height:100px; width:100px;">
@@ -144,7 +144,7 @@
 					
 					<div class="col-xl-2" style="margin-left: 80px;">	
 					<div class="select-card client-input ">
-					<input id="category_design" name="proj_reqr_skill" type="checkbox" value="디자인">
+					<input id="category_design" name="proj_category" type="checkbox" value="디자인">
 					<label class="input-replacer" for="category_design"></label>
 					<div class="select-card-content">
 					<img class="select-card-img inherit-select-card-img"  src="/resources/template/assets/img/icons/design.png" style="height:100px; width:100px;">
@@ -156,7 +156,7 @@
 					
 					<div class="col-xl-2"  style="margin-left: 80px;">
 					<div class="select-card client-input">
-					<input id="category_plan" name="proj_reqr_skill" type="checkbox" value="기획">
+					<input id="category_plan" name="proj_category" type="checkbox" value="기획">
 					<label class="input-replacer" for="category_plan"></label>
 					<div class="select-card-content">
 					<img class="select-card-img inherit-select-card-img" src="/resources/template/assets/img/icons/plan.png" style="height:100px; width:100px;">
@@ -180,62 +180,62 @@
 											<div class="form-content">
 												<span><label class="chip-choice-client"
 													style="display: none;"> <input
-														class="theme-client wishket-chip" name="proj_reqr_skill"
+														class="theme-client wishket-chip" name="proj_skill"
 														type="checkbox" value="웹">
 														 <span>#웹</span></label></span> <span><label
 													class="chip-choice-client" style="display: inline-block;">
 														<input class="theme-client wishket-chip"
-														name="proj_reqr_skill" type="checkbox" value="애플리케이션">
+														name="proj_skill" type="checkbox" value="애플리케이션">
 														<span>#애플리케이션</span>
 												</label></span> <span><label class="chip-choice-client"
 													style="display: inline-block;"> <input
-														class="theme-client wishket-chip" name="proj_reqr_skill"
+														class="theme-client wishket-chip" name="proj_skill"
 														type="checkbox" value="커머스,쇼핑몰"> <span>#커머스,
 															쇼핑몰</span></label></span> <span><label class="chip-choice-client"
 													style="display: inline-block;"> <input
-														class="theme-client wishket-chip" name="proj_reqr_skill"
+														class="theme-client wishket-chip" name="proj_skill"
 														type="checkbox" value="일반 소프트웨어"> <span>#일반
 															소프트웨어</span></label></span> <span><label class="chip-choice-client"
 													style="display: inline-block;"> <input
-														class="theme-client wishket-chip" name="proj_reqr_skill"
+														class="theme-client wishket-chip" name="proj_skill"
 														type="checkbox" value="퍼블리싱"> <span>#퍼블리싱</span></label></span>
 												<span><label class="chip-choice-client"
 													style="display: inline-block;"> <input
-														class="theme-client wishket-chip" name="proj_reqr_skill"
+														class="theme-client wishket-chip" name="proj_skill"
 														type="checkbox" value="워드프레스"> <span>#워드프레스</span></label></span>
 												<span><label class="chip-choice-client"
 													style="display: inline-block;"> <input
-														class="theme-client wishket-chip" name="proj_reqr_skill"
+														class="theme-client wishket-chip" name="proj_skill"
 														type="checkbox" value="임베디드"> <span>#임베디드</span></label></span>
 												<span><label class="chip-choice-client"
 													style="display: inline-block;"> <input
-														class="theme-client wishket-chip" name="proj_reqr_skill"
+														class="theme-client wishket-chip" name="proj_skill"
 														type="checkbox" value="제품"> <span>#제품</span></label></span>
 												<span><label class="chip-choice-client"
 													style="display: none;"> <input
-														class="theme-client wishket-chip" name="proj_reqr_skill"
+														class="theme-client wishket-chip" name="proj_skill"
 														type="checkbox" value="프레젠테이션"> <span>#프레젠테이션</span></label></span>
 												<span><label class="chip-choice-client"
 													style="display: none;"> <input
-														class="theme-client wishket-chip" name="proj_reqr_skill"
+														class="theme-client wishket-chip" name="proj_skill"
 														type="checkbox" value="그래픽"> <span>#그래픽</span></label></span>
 												<span><label class="chip-choice-client"
 													style="display: none;"> <input
-														class="theme-client wishket-chip" name="proj_reqr_skill"
+														class="theme-client wishket-chip" name="proj_skill"
 														type="checkbox" value="인쇄물"> <span>#인쇄물</span></label></span> <span><label
 													class="chip-choice-client" style="display: none;">
 														<input class="theme-client wishket-chip"
-														name="proj_reqr_skill" type="checkbox" value="로고"> <span>#로고</span>
+														name="proj_skill" type="checkbox" value="로고"> <span>#로고</span>
 												</label></span> <span><label class="chip-choice-client"
 													style="display: none;"> <input
-														class="theme-client wishket-chip" name="proj_reqr_skill"
+														class="theme-client wishket-chip" name="proj_skill"
 														type="checkbox" value="영상"> <span>#영상</span></label></span> <span><label
 													class="chip-choice-client" style="display: inline-block;">
 														<input class="theme-client wishket-chip"
-														name="proj_reqr_skill" type="checkbox" value="게임"> <span>#게임</span>
+														name="proj_skill" type="checkbox" value="게임"> <span>#게임</span>
 												</label></span> <span><label class="chip-choice-client"
 													style="display: inline-block;"> <input
-														class="theme-client wishket-chip" name="proj_reqr_skill"
+														class="theme-client wishket-chip" name="proj_skill"
 														type="checkbox" value="기타"> <span>#기타</span></label></span>
 											</div>
 										</div>
