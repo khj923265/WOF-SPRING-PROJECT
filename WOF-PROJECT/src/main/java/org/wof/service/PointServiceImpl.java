@@ -3,10 +3,14 @@ package org.wof.service;
 import java.io.Console;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
+import javax.inject.Inject;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,6 +28,8 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
+import net.nurigo.java_sdk.api.Message;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 @Service
 @Log4j
@@ -92,7 +98,7 @@ public class PointServiceImpl implements PointService {
 	}
 	
 	@Override
-	public int PaymentInService(PointVO point, ContractVO contract) {
+	public int PaymentInService(PointVO point, ContractSourceVO contract) {
 		
 		log.info("포인트 결제" + point);
 		
@@ -100,10 +106,13 @@ public class PointServiceImpl implements PointService {
 
 		//contract.setBusiness_register_no(contract.getBusiness_register_no());
 		
-		point.setPoint_owner(contract.getClient());
+		/*point.setPoint_owner(contract.getContract_write_source());	//Client(사업주)
 		point.setPoint_amount(contract.getProj_estimate());
-		point.setPoint_contents(contract.getProj_title());
-		point.setPoint_chg_date(contract.getProj_start_date());
+		point.setPoint_contents(contract.getProj_title());*/
+
+		point.setPoint_owner(contract.getContract_write_source());	//Client(사업주)
+		point.setPoint_amount(point.getPoint_amount());
+		point.setPoint_contents(point.getPoint_contents());
 		
 		log.error("-------------확인------------"+point);
 		//포인트 누적
@@ -198,4 +207,29 @@ public class PointServiceImpl implements PointService {
 		return data;
 	}
 
+	@Override
+	public void certifiedPhoneNumber(String phoneNumber, String cerNum) {
+		String api_key = "NCSBVLIC1XCP0K66"; //위에서 받은 api key를 추가
+        String api_secret = "QQHS8GSBLPKRHPYZLHQB9HIDLCSNHEW8";  //위에서 받은 api secret를 추가
+        Message coolsms = new Message(api_key, api_secret);
+        
+        // 4 params(to, from, type, text) are mandatory. must be filled
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("to", phoneNumber);    // 수신전화번호
+        params.put("from", "01074721644");    // 발신전화번호. 테스트시에는 발신,수신 둘다 본인 번호로 하면 됨
+        params.put("type", "SMS");
+        params.put("text", "[WOF] 인증번호는" + "["+cerNum+"]" + "입니다.");
+        params.put("app_version", "test app 2.2"); // application name and version
+
+        try {
+            JSONObject obj = (JSONObject) coolsms.send(params);
+            System.out.println(obj.toString());
+        } catch (CoolsmsException e) {
+            System.out.println(e.getMessage());
+            System.out.println(e.getCode());
+        }
+
+	}
+	
+	
 }

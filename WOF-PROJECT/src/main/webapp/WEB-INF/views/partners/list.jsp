@@ -26,7 +26,9 @@
 		<div class="container">
 			<!-- 제목 -->
 			<div class="row mt-3">
+			<div class="col">
 				<h3>파트너스 찾기</h3>
+			</div>
 			</div>
 			<div class="row mb-3">
 				<div class="col-lg-3 col-3"></div>

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 		 pageEncoding="UTF-8"%>
-<%@include file="../includes/header-point-detail.jsp"%>
+<%@ include file="../includes/header-point-detail.jsp"%>
 
 <div class="row">
   <div class="col-md-6">
@@ -24,6 +24,8 @@
         </div>
         
         <form role="form" action="charging" method="post" name="charging" >
+        
+          <div id="input_text">
         	<div>
 				<input type="hidden" name="point_owner" value=${member.member_no }> 
 			</div>
@@ -32,7 +34,7 @@
               <label for="example-text-input" class="form-control-label">충전 금액</label>
                 <div class="input-group input-group-merge input-group-alternative">
                     <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="ni ni-money-coins""></i></span>
+                        <span class="input-group-text"><i class="ni ni-money-coins"></i></span>
                     </div>
                     <input class="form-control" type="text" id="input-amount" name="point_amount" placeholder="금액을 입력해주세요." required>
                 </div>
@@ -59,12 +61,28 @@
                 </div>
             </div>
             
+          	<div class="form-group">
+              <label for="example-password-input" class="form-control-label">본인확인</label> 
+                <div class="input-group input-group-merge input-group-alternative">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                    </div>
+                    <input class="form-control" type="password" id="inputCertifiedNumber" name="userpw" placeholder="인증번호 입력	" required>
+                    <button id="sendPhoneNumber">인증번호 전송</button>
+                    <button id="checkBtn" disabled="">인증번호 확인</button>
+                </div>
+            </div>
+           </div> 
+            
+            
+            
             <div class="text-center">
-                <input type="button" class="btn btn-primary my-6" data-toggle="modal" onclick="btnDisabled()"  data-target="#exampleModal" value="충전">
+                <input type="submit" class="btn btn-primary my-6" data-toggle="modal" 
+                	   id="TestBtn" disabled="true"  data-target="#exampleModal" value="충전">
             </div>
             
             	<!-- 충전 확인 모달창 -->
-						<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   						<div class="modal-dialog modal-dialog-centered" role="document">
     						<div class="modal-content">
     						
@@ -87,8 +105,9 @@
       						
     						</div>
   						</div>
-						</div>	
+						</div>	 -->
         </form>
+        
         
     </div> <!-- end of card body -->
 </div> <!-- end of card -->
@@ -105,6 +124,8 @@
 </div> <!-- end of row -->	
 
 <script src="/resources/template/assets/vendor/jquery/dist/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
 
 <script>
 		//<충전 금액>입력 => 숫자만 가능, 천단위 콤마
@@ -130,6 +151,17 @@
 			str = String(str);
 			return str.replace(/[^\d]+/g, "");
 		}
+	</script>
+	
+	<script>
+	 $(function () {
+		$("#input_text").on('input',function(){
+			if($("input_text").val()=='')
+				$("#TestBtn").attr("disabled",true);
+			else
+				$("#TestBtn").attr("disabled",false);
+		});
+	})
 	</script>
 	
 	<script>
@@ -178,100 +210,133 @@
 	})
 	</script>
 	
-	 <script>
-    // 여기에 코드를 작성하세요.
-    btnDisabled();
+	<script>
+        $('#sendPhoneNumber').click(function(){
+            let phoneNumber = $('#inputPhoneNumber').val();
+            Swal.fire('인증번호 발송 완료!')
 
-    //$('#email-input').on('input', setToggleEmail);
-    //$('#password-input').on('input', setTogglePwd);
-    
-    $('#input-amount').on('input', setAmount);
-    $('#input-contents').on('input', setContents);
-    $('.input-pw').on('input', setPw);
-    
-    var amount = 0;
-    var contents = 0;
-    var pw = 0;
+            $.ajax({
+                type: "GET",
+                url: "/check/sendSMS",
+                data: {
+                    "phoneNumber" : phoneNumber
+                },
+                success: function(res){
+                    $('#checkBtn').click(function(){
+                        if($.trim(res) ==$('#inputCertifiedNumber').val()){
+                            Swal.fire(
+                                '인증성공!',
+                                '휴대폰 인증이 정상적으로 완료되었습니다.',
+                                'success'
+                            )
 
-    // 토글 변수를 사용해서 입력값의 유무 상태를 기록한다.(입력값 없을 시 0)
-    // 이를 통해 입력값을 지울 경우 입력값이 없는 상태로 업데이트 가능하다.
-    // judgeBtn 함수를 호출하여 버튼 활성화 여부를 결정한다.
-    function setAmount() {
-      var input = $('input-amount').val();
-      if(input.length > 0) {
-    	  amount = 1;
-      } else {
-    	  amount = 0;
-      }
-      judgeBtn();
+                            $.ajax({
+                                type: "GET",
+                                url: "/update/phone",
+                                data: {
+                                    "phoneNumber" : $('#inputPhoneNumber').val()
+                                }
+                            })
+                            document.location.href="/point/point-charging";
+                        }else{
+                            Swal.fire({
+                                icon: 'error',
+                                title: '인증오류',
+                                text: '인증번호가 올바르지 않습니다!',
+                                footer: '<a href="/point/point-charging">다음에 인증하기</a>'
+                            })
+                        }
+                    })
+
+
+                }
+            })
+        });
+</script>
+
+ <!--  <script>
+    function sendSMS(pageName){
+ 
+        console.log("문자를 전송합니다.");
+        $("#smsForm").attr("action", pageName + ".do"); //위에 있는 폼태그를 컨트롤러로 전송한다.
+        $("#smsForm").submit();
     }
-
-    function setContents() {
-      var input = $('#input-contents').val();
-      if(input.length > 0) {
-    	  contents = 1;
-      } else {
-    	  contents = 0;        
-      }
-      judgeBtn();
-    }
-
-    function setPw() {
-        var input = $('#input-pw').val();
-        if(input.length > 0) {
-        	pw = 1;
-        } else {
-        	pw = 0;        
-        }
-        judgeBtn();
-      }
-    
-    // 버튼 활성화 여부를 결정하는 함수
-    function judgeBtn() {
-      if (amount === 1 && contents === 1 && pw === 1 ) {
-        btnEnabled();
-      } else {
-        btnDisabled();
-      }
-    }
-
-    function btnDisabled() {
-      $('#submit-btn').css('background-color', '#9b9b9b');
-      // 버튼이 비활성화되었을 때 마우스오버 효과를 없애기 위한 코드
-      setShadowNone();
-      $('#submit-btn').attr('disabled', true);
-      // console.log('btnDisabled');
-    }
-
-    function btnEnabled() {
-      $('#submit-btn').css('background-color', '#1bbc98');
-      // 아래 코드도 버튼 활성화가 가능하다.
-      // $('#submit-btn').attr('disabled', false);
-      $('#submit-btn').removeAttr('disabled');
-      $('#submit-btn').on('mouseover', setShadow);
-      $('#submit-btn').on('mouseleave', setShadowNone);
-    }
-
-    function setShadow() {
-      console.log('setShadow');
-      $('#submit-btn').css('box-shadow', '0 2px 4px 0 rgba(0, 0, 0, 0.50)');
-    }
-
-    function setShadowNone() {
-      $('#submit-btn').css('box-shadow', 'none');
-    }
-
   </script>
+	 -->
 
+ <!--  <script>
+  var count = 0; /* 문자 중복을 막기 위한 인증번호 */
+   
+ $(document).ready(function() {
 
+    $("#send").click(function() {
+       
+       var number = Math.floor(Math.random() * 100000) + 100000;
+          if(number>100000){
+             number = number - 10000;
+          }
 
-
-
-
-
-
-
-
-
+          $("#text").val(number);      /* 난수로 생성된 인증번호를 hidden name : text 에 숨긴다 */
+       
+       var to = $("#to").val();
+       
+       if(to == "" || to == null){
+          alert("빈칸이나 공백을 채워주세요");
+       }
+       
+       else {
+       var con_test = confirm("해당번호로 인증문자를 발송하시겠습니까?");   /* 문자를 보낼껀지 물어본다 */
+          
+          if(con_test == true){
+               
+             if(count < 3){      /* 추후 데이터베이스에 컬럼 값을 확인하여 count 값을 비교 할 예정 */
+                 
+               $.ajax({
+                   url:"sendSms.do",
+                   type:"post",
+                   data:{to: $("#to").val(),
+                        text: $("#text").val()
+                        },
+                 success:function(){
+                   alert("해당 휴대폰으로 인증번호를 발송했습니다");
+                   count++;
+                   
+                   alert(count);
+                   },
+                   error(){
+                      
+                   }
+                   
+                });
+             } else {
+                alert("인증번호가 이미 발송되었습니다.")
+             }
+          
+          }
+             else if(con_test == false){
+                
+             }
+         }   
+    })
+    $("#enterBtn").click(function() {   /* 내가 작성한 번호와 인증번호를 비교한다 */
+       alert($("#text").val());
+       var userNum = $("#userNum").val();
+       
+       var sysNum = $("#text").val();         
+       
+       if(userNum == null || userNum == ""){
+          alert("휴대폰으로 발송된 인증번호를 입력해주세요");
+       }     
+       else{     
+          if(userNum.trim() == sysNum.trim()){
+              alert("성공");
+           }
+           else {
+              alert("실패");
+           }          
+       }
+    });
+  });
+  </script> -->
 
 

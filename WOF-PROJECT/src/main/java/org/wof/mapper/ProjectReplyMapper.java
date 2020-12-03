@@ -8,8 +8,9 @@ import org.wof.domain.Standard;
 
 public interface ProjectReplyMapper {
 	public int insert(ProjectReplyVO vo);
-	public ProjectReplyVO read(String p_rno);
-	public int delete(String p_rno);
+	public ProjectReplyVO read(String rno);
+	public int delete(String rno);
 	public int update(ProjectReplyVO reply);
-	public List<ProjectReplyVO> getListWithPaging(@Param("stand") Standard stand, @Param("proj_id") String proj_id);
+	public List<ProjectReplyVO> getListWithPaging(@Param("stand") Standard stand, @Param("pno") String pno);
+	public int getCountByPno(String pno);
 }

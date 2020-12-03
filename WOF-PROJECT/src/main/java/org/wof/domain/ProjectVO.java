@@ -35,6 +35,7 @@ public class ProjectVO {
 	private int cal_date;			// 총 일수
 	//private List<ProjectAttachVO> proj_attachList;
 	private List<ProjectAttachVO> attachList;
+	private String followproject_no;
 	
 	
 }

@@ -3,6 +3,21 @@
 	
 	<!-- Header & Menu -->
 	<%@ include file="../includes/header.jsp" %>
+	
+<style>
+.uploadResult1 ul {
+	display: flex;
+	flex-flow: row;
+	justify-content: center;
+		align-items: center;
+}
+.uploadResult1 ul li {
+	list-style: none;
+	padding: 10px;
+	align-content: center;
+	text-align: center;
+}
+</style>
 
 <sec:authorize access="isAuthenticated()">
       <sec:authentication property="principal.member" var="member"/>   
@@ -55,14 +70,14 @@
 					<h5>Project Overview:</h5>
 
 					<p class="text-muted mb-2">${project.getProj_reqr_skill()}</p>
-					<p class="text-muted mb-2">${project.getProj_type()}</p>
+					<%-- <p class="text-muted mb-2">${project.getProj_type()}</p> --%>
 					<p class="text-muted mb-2">${project.getProj_career()}</p>
-					<p class="text-muted mb-2">${project.getProj_pm()}</p>
-					<p class="text-muted mb-2">${project.getProj_work_type()}</p>
-					<p class="text-muted mb-2">${project.getProj_work_place()}</p>
+					<%-- <p class="text-muted mb-2">${project.getProj_pm()}</p>
+					<p class="text-muted mb-2">${project.getProj_work_type()}</p> 
+					<p class="text-muted mb-2">${project.getProj_work_place()}</p>--%>
 					<p class="text-muted mb-2">${project.getProj_work_time()}</p>
-					<p class="text-muted mb-2">${project.getProj_work_equip()}</p>
-					<p class="text-muted mb-2">${project.getProj_walfare()}</p>
+					<%-- <p class="text-muted mb-2">${project.getProj_work_equip()}</p>
+					<p class="text-muted mb-2">${project.getProj_walfare()}</p> --%>
 
 					<p class="text-muted mb-4">${project.getProj_detail()}</p>
 
@@ -100,55 +115,60 @@
 
 			<div class="card">
 				<div class="card-body">
-					<h4 class="mt-0 mb-3">Comments (258)</h4>
+					<h4 class="mt-0 mb-3">Comments <b>(<c:out value="${project.getProj_replyCnt()}" />)</b></h4>
+					<input type="checkbox" value="secret" id="secretReply">비밀글로 쓰기
 
 					<textarea class="form-control form-control-light mb-2"
-						placeholder="Write message" id="example-textarea" rows="3"></textarea>
+						placeholder="Write message" id="reply_contents" rows="3" name="reply_contents" onkeyup="val(this);"></textarea>
+						
 					<div class="text-right">
-						<div class="btn-group mb-2">
-							<button type="button"
-								class="btn btn-link btn-sm text-muted font-18">
-								<i class="dripicons-paperclip"></i>
-							</button>
-						</div>
 						<div class="btn-group mb-2 ml-2">
-							<button type="button" class="btn btn-primary btn-sm">Submit</button>
+							<button id="registerBtn"  type="button" class="btn btn-primary btn-sm">Submit</button>
 						</div>
 					</div>
 
-	<input class="form-control" type= "hidden" name="member_no" id="member_no"	value='${member.member_no}' readonly="readonly">
-	<input class="form-control" type= "hidden" name="real_name" id="real_name"	value='${member.real_name}' readonly="readonly">
+	<input class="form-control"  type="hidden" name="member_no" id="member_no"	value='${member.member_no}' readonly="readonly">
+	<input class="form-control" type="hidden"  name="real_name" id="real_name"	value='${member.real_name}' readonly="readonly">
+	
+				
+					
+							<ul class="chat">	
+							
+								<c:forEach var="project_reply" items="${replylist}">
+									<div class="media mt-2">
+										<div class="media-body">
+											<h5 class="mt-0">${project_reply.getReplyer()}</h5>
+											
+											<div class="row">
+												<div class="col">
+													<span>${project_reply.getReply()}</span>
+												</div><!-- col -->
+												
+												
+											<c:if test="${member.member_no == project_reply.getReplyer()}">	
+												<div class="col" style="text-align: right;">
+														<div id="modifyBtn" type="text" class="" value="수정" style="display: inline;"><a href="/replies/{rno}">수정</a></div>
+														<div id="removeBtn" type="text" class="" value="삭제" style="display: inline;"><a href="/replies/{rno}">삭제</a></div>
+												</div><!-- col -->
+											</c:if>
+											
+											</div><!-- row -->
+										</div>
+									</div>
+								</c:forEach>
+								
+								   
+							</ul>
+					
+					
 
-				<div class = "chat">
-					<div class="media mt-2">
-						<div class="media-body">
-							<h5 class="mt-0">Jeremy Tomlinson</h5>
-							Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
-							scelerisque ante sollicitudin. Cras purus odio, vestibulum in
-							vulputate at, tempus viverra turpis. Fusce condimentum nunc ac
-							nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-
-							<div class="media mt-3">
-								<div class="media-body">
-									<h5 class="mt-0">Kathleen Thomas</h5>
-									Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
-									scelerisque ante sollicitudin. Cras purus odio, vestibulum in
-									vulputate at, tempus viverra turpis. Fusce condimentum nunc ac
-									nisi vulputate fringilla. Donec lacinia congue felis in
-									faucibus.
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-					<div class="text-center mt-2">
+					<div class="panel-footer">
 						<a href="javascript:void(0);" class="text-danger">Load more </a>
 					</div>
-				</div>
-				<!-- end card-body-->
-			</div>
-			<!-- end card-->
+				</div>	<!-- end card-body-->
+				
+				
+			</div><!-- end card-->
 			<sec:authorize access="isAuthenticated()">
 			<div class="card">
 				<div class="card-body">
@@ -163,20 +183,7 @@
 			</div>
 			</sec:authorize>
 						
-<style>
-.uploadResult1 ul {
-	display: flex;
-	flex-flow: row;
-	justify-content: center;
-		align-items: center;
-}
-.uploadResult1 ul li {
-	list-style: none;
-	padding: 10px;
-	align-content: center;
-	text-align: center;
-}
-</style>
+
 		</div>
 		<!-- end col -->
 
@@ -229,7 +236,9 @@
 							<input class="btn btn-default" id="chatConnect"  type="button" value="채팅하기">
 							<input class="btn btn-default" id="applyButton" type="button" value="지원하기">
 						</div>
-	
+						<%-- ${member.member_no}
+						${partners.member_no }
+						${checkAuth.member_no } --%>
 						<sec:authorize access="isAuthenticated()">
 						<c:if test="${partners.member_no eq member.member_no }">
 						<div class="card" style="height:300px; margin-top: 20px; ">
@@ -251,69 +260,77 @@
 								
 								
 								<form role="form" action="/project/fileup" method="post">
-									<button type="submit" class="btn btn-default">파일 올리기</button>
+									<button type="submit" class="">파일 올리기</button>
 									<input type="hidden" name='proj_id' value='${project.getProj_id()}'>
 									<input class="form-control" type= "hidden" name="member_no" id="member_no"	value='${member.member_no}'>
 								</form>
 							<br>
 							
-
+						
+						
+						
 							</div><!-- card body -->
 						</div><!-- card -->
 						</c:if>
 						</sec:authorize>
 
 
+						<div class="" align="center">
+							<input class="btn btn-default" id="chatConnect"  type="button" value="채팅하기">
+							<input class="btn btn-default" id="applyButton" type="button" value="지원하기">
+						</div>
 					
 					</div>
 				</div>
 			</div>
 		</div>
-	
-	
-	
-								
-	
-	
+
 	</div>
 	</div>
+
+
+
 
 
 	<!-- Footer -->
 	<%@ include file="../includes/footer.jsp" %>
 
-
-
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-				<h4 class="modal-title">경고창</h4>
+			<!-- 프로젝트 삭제 모달 -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title">경고창</h4>
+						</div>
+						<div class="modal-body">
+							<p>정말로 삭제하시겠습니까?</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">취소</button>
+							<a href="/project/delete?proj_id=${project.getProj_id()}"><button
+									type="button" class="btn btn-primary">삭제</button></a>
+						</div>
+					</div>
+					<!-- /.modal-content -->
+				</div>
+				<!-- /.modal-dialog -->
 			</div>
-			<div class="modal-body">
-				<p>정말로 삭제하시겠습니까?</p>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-				<a href="/project/delete?proj_id=${project.getProj_id()}"><button
-						type="button" class="btn btn-primary">삭제</button></a>
-			</div>
-		</div>
-		<!-- /.modal-content -->
-	</div>
-	<!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
+			<!-- /.modal -->
 
 
-<script type="text/javascript" src="/resources/template/bootstrap/js/reply.js"></script>
 
 
-<script>
+
+			<script type="text/javascript"
+				src="/resources/template/bootstrap/js/reply.js"></script>
+
+
+			<script>
 $(document).ready(function(e) {
 
 	  var formObj = $("form[role='form']");
@@ -490,7 +507,7 @@ $(document).ready(function(e) {
 			   });
 });  
 		  
-</script> <!-- 파일업로드 -->
+</script><!-- 파일업로드 -->
 
 
 <script>
@@ -544,7 +561,13 @@ $(document).ready(function(e) {
 	});
 </script>
 
-<script>
+
+
+
+	<!--프로젝트 댓글달기-->
+	<script type="text/javascript" src="/resources/js/reply.js"></script>
+
+	<script>
 	$(document).ready(function () {
 	  
 	  var bnoValue = '<c:out value="${project.proj_id}"/>';
@@ -597,5 +620,210 @@ $(document).ready(function(e) {
 	     
 </script>
 
+<script>
+		  var pnoValue = '<c:out value="${project.getProj_id()}"/>';
+		  var replyUL = $(".chat");
+		  
+		    showList(1);
+		    
+		function showList(page){
+			
+			console.log("show list " + page);
+		    
+		    replyService.getList({pno:pnoValue,page: page|| 1 }, function(replyCnt, list) {
+		      
+		    console.log("replyCnt: "+ replyCnt );
+		    console.log("list: " + list);
+		    console.log(list);
+		    
+		    if(page == -1){
+		      pageNum = Math.ceil(replyCnt/10.0);
+		      showList(pageNum);
+		      return;
+		    }
+		      
+		     var str="";
+		     
+		     if(list == null || list.length == 0){
+		       return;
+		     }
+		     
+		     for (var i = 0, len = list.length || 0; i < len; i++) {
+		       str +="<li class='left clearfix' data-rno='"+list[i].rno+"'>";
+		       str +="  <div><div class='header'><strong class='primary-font'>["
+		    	   +list[i].rno+"] "+list[i].replyer+"</strong>"; 
+		       str +="    <small class='pull-right text-muted'>"
+		           +replyService.displayTime(list[i].replyDate)+"</small></div>";
+		       str +="    <p>"+list[i].reply+"</p><c:if test='${member.member_no == project_reply.getReplyer()}'><div class='col' style='text-align: right;'>"
+		       		+"<div id='modifyBtn' type='text' class='' value='수정' style='display: inline;'><a href='/replies/{rno}'>수정</a></div>&nbsp;"
+					+"<div id='removeBtn' type='text' class='' value='삭제' style='display: inline;'><a href='/replies/{rno}'>삭제</a></div></div></li>"
+					+"</div></c:if>";
+		     }
+		     
+		     replyUL.html(str);
+		     
+		     showReplyPage(replyCnt);
+
+		 
+		   });//end function
+		     
+		 }//end showList
+		 
+		 
+		    
+		    var pageNum = 1;
+		    var replyPageFooter = $(".panel-footer");
+		    
+		    function showReplyPage(replyCnt){
+		      
+		      var endNum = Math.ceil(pageNum / 10.0) * 10;  
+		      var startNum = endNum - 9; 
+		      
+		      var prev = startNum != 1;
+		      var next = false;
+		      
+		      if(endNum * 10 >= replyCnt){
+		        endNum = Math.ceil(replyCnt/10.0);
+		      }
+		      
+		      if(endNum * 10 < replyCnt){
+		        next = true;
+		      }
+		      
+		      var str = "<ul class='pagination pull-right'>";
+		      
+		      if(prev){
+		        str+= "<li class='page-item'><a class='page-link' href='"+(startNum -1)+"'>Previous</a></li>";
+		      }
+		      
+		      for(var i = startNum ; i <= endNum; i++){
+		        
+		        var active = pageNum == i? "active":"";
+		        
+		        str+= "<li class='page-item "+active+" '><a class='page-link' href='"+i+"'>"+i+"</a></li>";
+		      }
+		      
+		      if(next){
+		        str+= "<li class='page-item'><a class='page-link' href='"+(endNum + 1)+"'>Next</a></li>";
+		      }
+		      
+		      str += "</ul></div>";
+		      
+		      console.log(str);
+		      
+		      replyPageFooter.html(str);
+		    }
+		     
+		    replyPageFooter.on("click","li a", function(e){
+		       e.preventDefault();
+		       console.log("page click");
+		       
+		       var targetPageNum = $(this).attr("href");
+		       
+		       console.log("targetPageNum: " + targetPageNum);
+		       
+		       pageNum = targetPageNum;
+		       
+		       showList(pageNum);
+		     });     
+		    
+		    
+		    function val(e){
+		    	var someText = document.getElementById("reply_contents").value;
+		    	alert(someText);
+		    }
 
 
+			$('#secretReply').click(function(){
+				if($(this).is(':checked')){
+					alert("비밀글로 설정되었습니다.");
+				}
+			})
+		  
+		 	
+
+		    $("#registerBtn").on("click",function(e){
+		      
+		    	var text = document.getElementById("reply_contents").value;
+			 	alert(text+"를 입력하시겠습니까?");
+			 	var mem = $("#member_no").val();
+			 	
+			 	if ($('input:checkbox[id="secretReply"]').is(".checked") == true){
+			 		alert("비밀글로 입력되었습니다.");
+			 	}
+			 		
+		    	
+		      var reply = {
+		            reply: text,
+		            replyer: mem,
+		            pno:pnoValue
+		          };
+		      replyService.add(reply, function(result){
+		    	  console.log("댓글내용 : "+text);
+		        
+		        //showList(1);
+		        showList(-1);
+		        
+		      });
+		      
+		    });
+		    
+		    
+		  
+		    $("#modifyBtn").on("click", function(e){
+		    	  
+		     	  var reply = {/* rno: data("rno"),  */ reply: reply_contents.val()};
+		     	  
+		     	  replyService.update(reply, function(result){
+		     	        
+		     	    alert(result);
+		     	    modal.modal("hide");
+		     	    showList(pageNum);
+		     	    
+		     	  });
+		     	  
+		     	});
+
+
+		    $("#removeBtn").on("click", function (e){
+		     	  
+		     	  var rno = modal.data("rno");
+		     	  
+		     	  replyService.remove(rno, function(result){
+		     	        
+		     	      alert(result);
+		     	      modal.modal("hide");
+		     	      showList(pageNum);
+		     	      
+		     	  });
+		     	  
+		     	}); 
+		  
+		 
+		});
+
+		</script>
+		
+		
+	<!-- 채팅api 연결 -->	
+	<!--Start of Tawk.to Script-->
+	<script type="text/javascript">
+	$(document).ready(function () {
+		 $("#chatConnect").on("click", function(e){
+		
+			var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+			(function(){
+			var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+			s1.async=true;
+			s1.src='https://embed.tawk.to/5fc83af6920fc91564ccef4d/default';
+			s1.charset='UTF-8';
+			s1.setAttribute('crossorigin','*');
+			s0.parentNode.insertBefore(s1,s0);
+			})();
+			
+		 });
+		
+		<!--End of Tawk.to Script-->
+
+	});
+	</script>
