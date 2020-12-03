@@ -66,7 +66,7 @@
 		on p.proj_id = c.related_proj
 		left outer join member m2
 		on c.contract_write_target = m2.member_no
-		where c.contract_write_source = 'member6'
+		where c.contract_write_source = #{member_no}
 		and source_signature is not null
 		and target_signature is not null
 		order by c.CONTRACT_REG_DATE desc;
