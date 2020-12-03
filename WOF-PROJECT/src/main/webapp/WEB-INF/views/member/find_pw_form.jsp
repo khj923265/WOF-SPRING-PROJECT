@@ -34,7 +34,7 @@
                             </div>
                             <div class="row pt-3 inline">
                                 <div class="col-6 text-center">
-                                    <input type="submit" class="btn btn-success" onclick="return findPwForm()"
+                                    <input type="submit" class="btn btn-success" onclick="return loginservice.findPwForm()"
                                            value="비밀번호 찾기"/>
                                 </div>
                                 <div class="col-4 text-center">

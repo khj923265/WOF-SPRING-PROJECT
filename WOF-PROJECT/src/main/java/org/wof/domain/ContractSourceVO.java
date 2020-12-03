@@ -17,6 +17,9 @@ public class ContractSourceVO {
 	private String proj_id;
 	private String proj_title;
 	private String proj_start_date;
-	private String proj_end_date; 
+	private String proj_end_date;
+	
+	private String contract_write_source;
+	private String contract_write_target;
 
 }

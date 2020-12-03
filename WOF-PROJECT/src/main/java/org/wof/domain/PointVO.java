@@ -17,4 +17,6 @@ public class PointVO implements Serializable {
 	private Date point_chg_date;
 	private String point_owner;
 	
+	private String real_name;
+	
 }
