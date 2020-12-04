@@ -9,7 +9,7 @@ public class ContractSourceVO {
 	private String userid;
 	private String real_name;
 	private String userPhone;
-	private int business_register_no;
+	private String business_register_no;
 	private String name;
 	private String tel;
 	private String address1;

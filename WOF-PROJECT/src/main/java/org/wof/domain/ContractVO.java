@@ -20,7 +20,7 @@ public class ContractVO {
 	private String targetPhone;
 	private String auth;
 	
-	private int business_register_no; //PK
+	private String business_register_no; //PK
     private String proj_id; //FK 
     private String client;
     private String partner;

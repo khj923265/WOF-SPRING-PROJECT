@@ -112,43 +112,62 @@
 				
 					<c:forEach var="partnersList" items="${partnersList }">
 						<div class="row shadow-sm p-1 bg-white rounded mb-3">
-							<div class="col-sm-7">
-								<div class="row align-items-center">
-
+							
+								<div class="col-1 my-auto">
 									<span
 										class="avatar avatar-lg rounded-circle justify-content-start m-3">
 										<img alt="Image placeholder"
 										src="/resources/template/assets/img/theme/team-4.jpg">
-									</span> <span class="justify-content-center">
-										<p class="mt-3 mb-0 text-sm">
-											<span class="text-nowrap"> <i class="ni ni-circle-08"></i>
-												${partnersList.real_name } 
-												<i class="ni ni-air-baloon ml-1"></i>
-																								
-												<c:if test="${partnersList.birthday != null }">
-												${partnersList.birthday }년생 
-												</c:if>												
-												
-												<i class="ni ni-map-big ml-1"></i> ${partnersList.prefered_area }
-											</span>
-										</p>
-										<p class="mt-3 mb-0 text-sm">
-											<span class="text-nowrap"> <i class="ni ni-badge ml-1"></i>
-												${partnersList.career } <i
-												class="ni ni-chart-pie-35 ml-1"></i>
-												${partnersList.skill }
-											</span>
-										</p>
-										<p class="mt-3 mb-3 text-sm">
-											<span class="text-nowrap"> <i class="ni ni-tag ml-1"></i>
-												<span class="badge badge-primary">${partnersList.hashtag }</span>
-											</span>
-										</p>
 									</span>
 								</div>
-							</div>
-
-							<div class="col-sm-1 text-center">
+								
+								
+								<div class="col-5 ml-3">
+															
+								  <div class="row mt-3 mb-0 text-sm text-nowrap">								  
+								    <div class="col-4">										
+										<c:if test="${partnersList.birthday != null }">
+										<i class="ni ni-air-baloon ml-1 mr-1"></i>${partnersList.birthday }년생 
+										</c:if>
+									</div>
+									<div class="col-8">
+									    <c:if test="${partnersList.prefered_area != null }">
+										<i class="ni ni-map-big ml-1 mr-1"></i> ${partnersList.prefered_area }
+										</c:if>
+									</div>
+								  </div>
+									
+								  <div class="row mt-3 mb-0 text-sm text-nowrap">
+									<div class="col-4">
+										<c:if test="${partnersList.career != null }">
+										<i class="ni ni-badge ml-1 mr-1"></i>${partnersList.career }
+										</c:if>
+									</div>
+									<div class="col-8">
+										<c:if test="${partnersList.skill != null }">
+										<i class="ni ni-chart-pie-35 ml-1 mr-1"></i>${partnersList.skill }
+										</c:if>
+									</div>
+								  </div>
+									
+									<div class="row">
+									<div class="col-12">
+									
+										<p class="mt-3 mb-3 text-sm">
+											<span class="text-nowrap"> 
+											<c:if test="${partnersList.hashtag != null }">
+											<i class="ni ni-tag ml-1 mr-1"></i>
+												<span class="badge badge-primary">${partnersList.hashtag }</span>
+											</c:if>
+											</span>
+										</p>
+									</div>	
+									</div>
+									
+									</div>
+								  
+								  
+							<div class="col-1 text-center">
 								<span class="justify-content-center">
 								<c:choose>
 								<c:when test="${partnersList.target_member == null }">								 
@@ -163,8 +182,8 @@
 								<!-- fa fa-heart-o -->
 								</span>
 							</div>
-
-							<div class="col-sm-4">
+							
+							<div class="col-4">
 								<div class="progress-wrapper mt-4">
 									<div class="progress-info">
 										<div class="progress-label">
@@ -181,9 +200,13 @@
 									</div>
 								</div>
 							</div>
-
-						</div>
+							
+							
+								
+							</div>
 					</c:forEach>
+							
+						
 					
 					<!-- 페이징 -->
 					<nav aria-label="Page navigation example">
@@ -220,7 +243,8 @@
 						<input type="hidden" name='amount' value = '${pageMaker.standard.amount}'>
 						<input type="hidden" name='keyword' value = '${pageMaker.standard.keyword}'>
 					</form>
-
+				
+				</div>
 				</div>
 				
 			</div>

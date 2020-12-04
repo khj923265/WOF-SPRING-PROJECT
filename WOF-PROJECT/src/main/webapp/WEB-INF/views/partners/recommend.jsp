@@ -28,20 +28,16 @@
 						<table class="table align-items-center table-flush">
 							<thead class="thead-light">
 								<tr>
-									<th scope="col">관심파트너 아이디</th>
 									<th scope="col">생년월일</th>
 									<th scope="col">선호지역</th>
 									<th scope="col">경력</th>
 									<th scope="col">보유기술</th>
-									<th scope="col">해시태그</th>
-									<th scope="col"></th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:forEach var="recommendList"
 									items="${recommendList }">
 									<tr>
-										<th scope="row">${recommendList.member_no }</th>
 										<c:choose>
 										  <c:when test="${recommendList.birthday == null }">
 											<td></td>
@@ -53,11 +49,6 @@
 										<td>${recommendList.prefered_area }</td>
 										<td>${recommendList.career }</td>
 										<td>${recommendList.skill }</td>
-										<td>${recommendList.hashtag }</td>
-										<!-- 자세히보기  -->
-										<td class="text-right"><a class=""
-											href="${pageContext.request.contextPath}/partners/applydetail?member_no=${member.member_no}">자세히보기</a></td>
-									</tr>
 								</c:forEach>
 
 							</tbody>
