@@ -107,14 +107,17 @@
 							<div>
 								<h4>클라이언트</h4>
 								<h2>프로젝트 관리</h2>
-								<span class="nav-link-text">보유 포인트 : 000원</span>
 							</div>
 							<button type="button" class="btn btn-secondary">제안한 요청</button>
-							<button type="button"
-								onclick="location.href='../Client/registerProjectListAction.do'"
-								class="btn btn-secondary">등록 프로젝트</button>
-							<button type="button" class="btn btn-secondary">관심 파트너스</button>
-							<button type="button" class="btn btn-secondary">계약된 파트너스</button>
+							<a type="button"
+								href="/partners/applystate?member_no=${member.member_no}"
+								class="btn btn-primary">등록 프로젝트</a>
+							<a type="button"
+							   href="/partners/followlist?member_no=${member.member_no}"
+							   class="btn btn-primary">관심 파트너스</a>
+							<a type="button"
+							   href="/contract/completion?member_no=${member.member_no}&auth=${member.auth}"
+							   class="btn btn-primary">계약된 파트너스</a>
 							<br> <br>
 							<div class="row">
 								<div class="col-md-11 column ui-sortable">

@@ -63,8 +63,12 @@ public class MemberServiceImpl implements MemberService{
     //클라이언트 정보
     @Override
     public ClientVO clientInfo(String userid) {
+        System.out.println("userid"+userid);
         String member_no = mapper.memberNo(userid);
-        return mapper.clientInfo(member_no);
+        System.out.println("member_no"+member_no);
+        ClientVO clientVO = mapper.clientInfo(member_no);
+        System.out.println(clientVO);
+        return clientVO;
     }
     //비밀번호 확인
     @Override

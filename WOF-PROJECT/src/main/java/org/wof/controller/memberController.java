@@ -141,22 +141,17 @@ public class memberController {
     }
     //------------------------------------------------------------------------
     //클라이언트 관련 메서드-------------------------------------------------------
-    @GetMapping("client")
-    public String client() {
-        return "member/client";
-    }
     //클라이언트 로그인시 클라이언트정보 세션저장컨트롤러(시큐리티 success 핸들러에서만 접근)
     @GetMapping("success/client")
     public String clientInfoInsert(Principal principal,HttpServletRequest request){
         HttpSession session = request.getSession();
-
+        log.info(principal.getName());
         ClientVO clientVO = service.clientInfo(principal.getName());
+        log.info(clientVO);
         session.setAttribute("client",clientVO);
 
         return "redirect:/client/dashboard_client?member_no="+clientVO.getMember_no();
     }
-    @GetMapping("client/dashboard_client")
-    public void dashboard_client(){}
     @GetMapping("client/client_info_update")
     public void clientInfoUpdatePage(){}
     //클라이언트 회사정보 수정
