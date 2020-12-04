@@ -48,6 +48,7 @@ public class ProjectController {
 	
 	private ProjectAttachService service;
 
+	
 	@GetMapping("/list")
 	public void list(Standard standard, Model model){
 		log.info("/project/list/" + standard);
@@ -58,16 +59,18 @@ public class ProjectController {
 		model.addAttribute("pageDto", new PageDTO(standard, total));
 	}
 	
+	@PreAuthorize("hasRole('ROLE_CLIENT')")
 	@GetMapping("/create")
 	//@PreAuthorize("isAuthenticated()")
 	public void create(){
 	}
 	
+	@PreAuthorize("hasRole('ROLE_CLIENT')")
 	@GetMapping("/create_comp")
 	public void create_comp(){
 	}
 	
-	
+	@PreAuthorize("hasRole('ROLE_CLIENT')")
 	@PostMapping("/create")
 	//@PreAuthorize("isAuthenticated()")
 	public String create(ProjectVO p1, RedirectAttributes rttr1){
@@ -77,6 +80,7 @@ public class ProjectController {
 		return "redirect:/project/create_comp";
 	}
 	
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/read")
 	public void read(@RequestParam("proj_id") String proj_id, @ModelAttribute("stand") Standard stand, Model model1){
 		log.info("/read");
@@ -85,7 +89,7 @@ public class ProjectController {
 	
 	}
 	
-	
+	@PreAuthorize("hasRole('ROLE_CLIENT')")
 	@GetMapping("/update")
 	public void update(@RequestParam("proj_id") String proj_id, @ModelAttribute("stand") Standard stand, Model model1){
 		log.info("/update");
@@ -93,7 +97,7 @@ public class ProjectController {
 		
 	}
 	
-
+	@PreAuthorize("hasRole('ROLE_CLIENT')")
 	@PostMapping("/fileup")
 	public String fileup(ProjectVO projectvo, RedirectAttributes rttr, Model model,  
 			@RequestParam("member_no") String member_no) {
@@ -117,6 +121,7 @@ public class ProjectController {
 		return "redirect:/project/read"+ "?proj_id=" + projectvo.getProj_id();
 	}
 	
+	@PreAuthorize("hasRole('ROLE_CLIENT')")
 	@PostMapping("/update")
 	public String update(ProjectVO p1,@ModelAttribute("stand") Standard stand, RedirectAttributes rttr1){
 		log.info("update : " + p1);
@@ -129,6 +134,8 @@ public class ProjectController {
 		
 		return "redirect:/project/list";
 	}
+	
+	@PreAuthorize("hasRole('ROLE_CLIENT')")
 	@GetMapping("/delete")
 	public String delete(@RequestParam("proj_id") String proj_id, @ModelAttribute("stand") Standard stand, RedirectAttributes rttr1){
 		log.info("delete...." + proj_id);

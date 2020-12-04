@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +31,7 @@ import lombok.extern.log4j.Log4j;
 public class ProjectReplyController {
 	private ProjectReplyService service;
 	
+	@PreAuthorize("isAuthenticated()")
 	@PostMapping(value = "/new", consumes="application/json",produces={MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> create(@RequestBody ProjectReplyVO vo){
 		log.info("ProjectReplyVO: "+vo);
@@ -56,12 +58,14 @@ public class ProjectReplyController {
 		return new ResponseEntity<>(service.get(rno), HttpStatus.OK);
 	}
 	
+	@PreAuthorize("isAuthenticated()")
 	@DeleteMapping(value= "/{rno}", produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> remove(@PathVariable("rno") String rno){
 		log.info("remove: "+rno);
 		return service.remove(rno)==1? new ResponseEntity<>("success",HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH}, value ="/{rno}", 
 			consumes ="application/json", produces={MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> modify(@RequestBody ProjectReplyVO vo, @PathVariable("rno") String rno){

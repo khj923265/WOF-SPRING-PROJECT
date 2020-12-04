@@ -35,11 +35,13 @@ select * from project order by proj_reg_date desc
 			<![CDATA[
 			SELECT * 
 			FROM
-		 		(SELECT rownum rn, proj_id, proj_title, proj_reg_date, proj_reg_mem, proj_apply_deadline,
-					proj_start_date, proj_end_date, proj_estimate, proj_reqr_person, proj_category, proj_skill,
+
+		 		(SELECT rownum rn, proj_id, proj_title, proj_reg_date, member_no, proj_apply_deadline,
+					proj_start_date, proj_end_date, proj_estimate, proj_reqr_person, proj_reqr_skill,
 					proj_type, proj_career, proj_pm, proj_work_type, proj_work_place, proj_work_time,
 					proj_work_equip, proj_walfare, proj_detail, proj_finish_date, apply_mem, proj_status,
 					proj_update_date, proj_replycnt, proj_total_date
+
 				FROM
 					(SELECT * 
 					FROM project
@@ -87,11 +89,11 @@ select * from project order by proj_reg_date desc
 
 
 <insert id="insertProject" parameterType="org.wof.domain.ProjectVO">
-insert into project(proj_id, proj_title, proj_reg_date, member_no, proj_apply_deadline, proj_start_date, proj_end_date,
+insert into project(proj_id, proj_title, proj_reg_date,member_no, proj_apply_deadline, proj_start_date, proj_end_date,
 proj_estimate, proj_reqr_person, proj_reqr_skill, proj_type, proj_career, proj_pm, proj_work_type, proj_work_place,
 proj_work_time, proj_work_equip, proj_walfare, proj_detail, proj_status,  proj_total_date) 
 values('project'|| seq_project.nextval, #{proj_title}, sysdate ,#{member_no}, TO_DATE(#{proj_apply_deadline}, 'yyyy-MM-dd'), TO_DATE(#{proj_start_date}, 'yyyy-MM-dd'), TO_DATE(#{proj_end_date}, 'yyyy-MM-dd'),
-#{proj_estimate}, #{proj_reqr_person}, #{proj_reqr_skill}, #{proj_type}, #{proj_career}, #{proj_pm}, #{proj_work_type}, #{proj_work_place}|| ' ' || #{proj_work_place1} , 
+#{proj_estimate}, #{proj_reqr_person},#{proj_reqr_skill}, #{proj_type}, #{proj_career}, #{proj_pm}, #{proj_work_type}, #{proj_work_place} , 
 #{proj_work_time}, #{proj_work_equip}, #{proj_walfare}, #{proj_detail}, 0, #{cal_date})
 </insert>
 
@@ -106,7 +108,7 @@ delete from project where proj_id = #{proj_id}
 
 <update id="updateProject" parameterType="org.wof.domain.ProjectVO">
 update project set proj_title=#{proj_title},		
-		 proj_estimate=#{proj_estimate}, proj_reqr_person=#{proj_reqr_person},proj_reqr_skill=#{proj_reqr_skill}, proj_type=#{proj_type}, proj_career=#{proj_career},
+		 proj_estimate=#{proj_estimate}, proj_reqr_person=#{proj_reqr_person}, proj_reqr_skill=#{proj_reqr_skill}, proj_type=#{proj_type}, proj_career=#{proj_career},
 		proj_work_type=#{proj_work_type}, proj_work_place=#{proj_work_place}, proj_work_time=#{proj_work_time}, proj_work_equip=#{proj_work_equip}, proj_pm=#{proj_pm},
 		proj_walfare=#{proj_walfare},
 		 proj_detail=#{proj_detail}
