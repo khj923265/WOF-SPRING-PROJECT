@@ -267,8 +267,6 @@
           	   </c:when>
           	 </c:choose>
             </tbody>
-            <tr id='addbtn'><td colspan='5'><div class='btns'><a href='javascript:moreList();' class='btn'>더보기</a></div>  </td></tr>
-            
           </table>
         </div>
        </div>

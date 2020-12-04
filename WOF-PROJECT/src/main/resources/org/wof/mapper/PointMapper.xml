@@ -127,7 +127,7 @@
 		FROM
 		POINT p, member m
 		WHERE p.point_owner = m.member_no 
-    	and point_owner = 'member95'
+    	and point_owner = #{point_owner}
     	order by point_chg_date desc
 		]]>
 	</select>
