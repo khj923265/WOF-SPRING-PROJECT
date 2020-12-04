@@ -179,7 +179,7 @@
 							<br> <br>
 							<div class="row">
 								<div class="col-md-11 column ui-sortable">
-									<b>제안 및 지원자현황</b>${member.member_no } ${client.member_no }
+									<b>제안 및 지원자현황</b>
 									<div class="card bg-light text-dark">
 									<c:choose>
 										<c:when test="${empty dashboardclientProject }">
@@ -275,8 +275,7 @@
 								
 								<div class="col-md-1 column ui-sortable"></div>
 								<div class="col-md-5 column ui-sortable">
-									<b>관심 파트너스</b>${member.member_no} 
-									${client.member_no }
+									<b>관심 파트너스</b>
 									<div class="card bg-light text-dark">
 										<c:choose>
 										<c:when test="${empty dashboardFallowPartners }">

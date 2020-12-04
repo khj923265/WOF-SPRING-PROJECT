@@ -25,7 +25,7 @@
 				<br> <br>
 
 				<h3 class="nav-item">
-					<a class="nav-" href="dashboard_partners.jsp"> <i
+					<a class="nav-" href="/partners/dashboard_partners?=member_no=${member.member_no }"> <i
 						class="ni ni-tv-2 text-primary"></i> <span class="nav-link-text">마이페이지</span>
 					</a>
 				</h3>
@@ -50,11 +50,10 @@
 							class="ni ni-bullet-list-67 text-default"></i> <span
 							class="nav-link-text">공지사항</span>
 					</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="${pageContext.request.contextPath }/partners/profile_info.jsp">
-							<i class="ni ni-settings-gear-65"></i> <span
-							class="nav-link-text">프로필 관리</span>
-					</a></li>
+						<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath }/partners/profile_info.jsp">
+								<i class="ni ni-planet text-orange"></i> <span
+								class="nav-link-text">프로필 관리</span>
+						</a></li>
 				</ul>
 				<!-- Divider -->
 				<hr class="my-3">
@@ -109,7 +108,7 @@
 							<h2>내 프로젝트 현황</h2>
 						</div>
 						<a class="btn btn-primary"
-						   href="/partners/project_apply_detail">지원 프로젝트</a>
+						   href="/partners/project_apply_detail?member_no=${member.member_no }">지원 프로젝트</a>
 						<a class="btn btn-primary" href="/partners/appliedpartners?member_no=${member.member_no }">계약현황</a>
 						<button type="button" class="btn btn-secondary">진행중인
 							프로젝트</button>
