@@ -384,6 +384,9 @@
 				}
 		
 				})//end click
+				
+				var ran = Math.random();
+				var num = Math.floor(ran * 8)+1;
 			})
 		</script>
 </body>
