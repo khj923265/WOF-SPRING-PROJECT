@@ -67,6 +67,7 @@
 	$(document).ready(function(e) {
 
 		  var formObj = $("form[role='form']");
+		  var str = "";
 		  
 		  $("button[type='submit']").on("click", function(e){
 		    

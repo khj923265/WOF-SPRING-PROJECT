@@ -2,6 +2,7 @@ package org.wof.controller;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -56,12 +57,12 @@ public class AdminController {
 		
 		
 	}
-	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/notice_register")
 	public void register() {
 		
 	}
-	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping("/notice_register")
 	public String register(NoticeVO noticeVO, RedirectAttributes rttr) {
 		
@@ -73,12 +74,14 @@ public class AdminController {
 		
 	}
 	
+	
 	@GetMapping({"/notice_get", "/notice_modify"})
 	public void get(Model model, @RequestParam("nno") int nno, @ModelAttribute("standard") Standard standard) {
 		log.info("get/////modify");
 		model.addAttribute("noticeVO", adminService.get(nno));
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping("/notice_remove")
 	public String remove(@RequestParam("nno") int nno, @ModelAttribute("standard") Standard standard, RedirectAttributes rttr, String nwriter) {
 		
@@ -93,6 +96,7 @@ public class AdminController {
 		return "redirect:/admin/admin_notice";
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping("/notice_modify")
 	public String modify(NoticeVO noticeVO, @ModelAttribute("standard") Standard standard, RedirectAttributes rttr) {
 		

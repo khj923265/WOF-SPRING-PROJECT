@@ -21,6 +21,7 @@
 				<div class="card shadow">
 					<div class="card-header border-0">
 						<h3 class="mb-0"></h3>
+						
 						<div align="right">
 						<button id="regBtn" type="button" class="btn btn-default">공지사항 등록하기</button>
 						</div>
@@ -152,13 +153,13 @@
 								.on(
 										"click",
 										function() {
-											
-											/* console.log("auth: " + au);
+											var au = "${member.auth}";
+											 console.log("auth: " + au);
 											
 									 		if(au != "ROLE_ADMIN") {
 												alert("죄송하지만, 관리자만 작성이 가능한 게시판입니다.");
 												return;
-											}  */
+											}  
 											self.location = "/admin/notice_register";
 										});
 						var actionForm = $("#actionForm");
