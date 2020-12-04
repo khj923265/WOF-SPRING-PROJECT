@@ -2,11 +2,9 @@
 	pageEncoding="UTF-8"%>
 
 
-
-
-
 <!-- Footer -->
-<footer class="ftco-footer ftco-bg-dark ftco-section" style="margin-top: 300px;">
+<footer class="footer navbar-fixed-bottom" style="margin-top: 100px;">
+<!-- <footer class="ftco-footer ftco-bg-dark ftco-section" style="margin-top: 300px;"> -->
 <hr>
     <div class="container">
         <div class="row mb-5">
@@ -90,11 +88,13 @@
 
 
 
+
 <!-- <footer class="footer navbar-fixed-bottom">
 	<div class="row align-items-center justify-content-lg-between">
 		<div class="col-lg-6">
 			<div class="copyright text-center  text-lg-left  text-muted">
-				&copy; 2020 <a href="https://www.creative-tim.com"
+				&copy; <script>document.write(new Date().getFullYear());</script>
+                    All rights reserved <a href="https://www.creative-tim.com"
 					class="font-weight-bold ml-1" target="_blank">Creative Tim</a>
 					
 			</div>
@@ -114,10 +114,8 @@
 					class="nav-link" target="_blank">MIT License</a></li>
 			</ul>
 		</div>
-		.col-lg-6
 
 	</div>
-	row align-items-center justify-content-lg-between
 
 </footer> -->
 

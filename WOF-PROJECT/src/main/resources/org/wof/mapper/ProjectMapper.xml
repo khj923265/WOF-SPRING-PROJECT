@@ -15,7 +15,7 @@ select * from project order by proj_reg_date desc
 </select>
 
 
-<select id="getListWithPaging"	resultType="org.wof.domain.ProjectVO">
+<select id="getListWithPaging" resultType="org.wof.domain.ProjectVO">
 		<!-- 쿼리문 -->
 		<!-- SELECT * 
 			FROM
@@ -35,36 +35,65 @@ select * from project order by proj_reg_date desc
 			<![CDATA[
 			SELECT * 
 			FROM
+
 		 		(SELECT rownum rn, proj_id, proj_title, proj_reg_date, member_no, proj_apply_deadline,
-					proj_start_date, proj_end_date, proj_estimate, PROJ_REQR_PERSON, PROJ_CATEGORY, PROJ_SKILL,
-					PROJ_TYPE, PROJ_CAREER, PROJ_PM, PROJ_WORK_TYPE, PROJ_WORK_PLACE, PROJ_WORK_TIME,
-					proj_work_equip, proj_walfare, proj_detail, PROJ_FINISH_DATE, apply_mem, proj_status,
-					PROJ_UPDATE_DATE, PROJ_REPLYCNT, PROJ_TOTAL_DATE
+					proj_start_date, proj_end_date, proj_estimate, proj_reqr_person, proj_reqr_skill,
+					proj_type, proj_career, proj_pm, proj_work_type, proj_work_place, proj_work_time,
+					proj_work_equip, proj_walfare, proj_detail, proj_finish_date, apply_mem, proj_status,
+					proj_update_date, proj_replycnt, proj_total_date
+
 				FROM
 					(SELECT * 
-					FROM PROJECT
+					FROM project
+					]]>
+<!-- 					WHERE proj_category IN -->
+					
+					<![CDATA[
 					ORDER BY lpad(proj_id, 10, '0') DESC
 					)
 				WHERE rownum <= #{pageNum} * #{amount}
+				]]>
+				<!-- AND proj_skill IN -->
+						
+				<![CDATA[
 				)
 			WHERE rn > (#{pageNum} - 1) * #{amount}
 			]]>
-</select>
-
-
-<select id="getTotalCount" resultType="int">
-	select count(*) from project 
-</select>
-
+	</select>
+	
+	<select id="getTotalCount" resultType="int">
+		SELECT count(*)
+		FROM project
+		<!-- WHERE proj_category IN
+		<foreach collection="chkArray" item="item" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+		AND proj_skill IN
+		<foreach collection="chkArray" item="item" open="(" close=")" separator=",">
+			#{item}
+		</foreach> -->	
+	</select>
+	
+	<select id="getPrevCount" resultType="int">
+		SELECT count(*)
+		FROM project
+		WHERE to_char(proj_reg_date, 'mm') = to_char(add_months(sysdate, -2), 'mm')
+	</select>
+	
+	<select id="getCurrCount" resultType="int">
+		SELECT count(*)
+		FROM project
+		WHERE to_char(proj_reg_date, 'mm') = to_char(add_months(sysdate, -1), 'mm')
+	</select>
 
 
 
 <insert id="insertProject" parameterType="org.wof.domain.ProjectVO">
-insert into project(proj_id, proj_title, proj_reg_date, member_no, proj_apply_deadline, proj_start_date, proj_end_date,
-proj_estimate, proj_reqr_person, proj_category, proj_skill, proj_type, proj_career, proj_pm, proj_work_type, proj_work_place,
+insert into project(proj_id, proj_title, proj_reg_date,member_no, proj_apply_deadline, proj_start_date, proj_end_date,
+proj_estimate, proj_reqr_person, proj_reqr_skill, proj_type, proj_career, proj_pm, proj_work_type, proj_work_place,
 proj_work_time, proj_work_equip, proj_walfare, proj_detail, proj_status,  proj_total_date) 
 values('project'|| seq_project.nextval, #{proj_title}, sysdate ,#{member_no}, TO_DATE(#{proj_apply_deadline}, 'yyyy-MM-dd'), TO_DATE(#{proj_start_date}, 'yyyy-MM-dd'), TO_DATE(#{proj_end_date}, 'yyyy-MM-dd'),
-#{proj_estimate}, #{proj_reqr_person},#{proj_category} #{proj_skill}, #{proj_type}, #{proj_career}, #{proj_pm}, #{proj_work_type}, #{proj_work_place}|| ' ' || #{proj_work_place1} , 
+#{proj_estimate}, #{proj_reqr_person},#{proj_reqr_skill}, #{proj_type}, #{proj_career}, #{proj_pm}, #{proj_work_type}, #{proj_work_place} , 
 #{proj_work_time}, #{proj_work_equip}, #{proj_walfare}, #{proj_detail}, 0, #{cal_date})
 </insert>
 
@@ -79,7 +108,7 @@ delete from project where proj_id = #{proj_id}
 
 <update id="updateProject" parameterType="org.wof.domain.ProjectVO">
 update project set proj_title=#{proj_title},		
-		 proj_estimate=#{proj_estimate}, proj_reqr_person=#{proj_reqr_person},proj_category=#{proj_category}, proj_skill=#{proj_skill}, proj_type=#{proj_type}, proj_career=#{proj_career},
+		 proj_estimate=#{proj_estimate}, proj_reqr_person=#{proj_reqr_person}, proj_reqr_skill=#{proj_reqr_skill}, proj_type=#{proj_type}, proj_career=#{proj_career},
 		proj_work_type=#{proj_work_type}, proj_work_place=#{proj_work_place}, proj_work_time=#{proj_work_time}, proj_work_equip=#{proj_work_equip}, proj_pm=#{proj_pm},
 		proj_walfare=#{proj_walfare},
 		 proj_detail=#{proj_detail}

@@ -16,13 +16,13 @@
 	<select id="listRecommendProjectwithpaging" parameterType="org.wof.domain.PartnersVO" resultType="org.wof.domain.ProjectVO">
 			<![CDATA[
 			SELECT p.proj_id, p.proj_title, p.proj_reg_date, p.member_no, p.proj_apply_deadline,
-					p.proj_start_date, p.proj_end_date, p.proj_estimate, p.PROJ_REQR_PERSON, p.PROJ_CATEGORY, p.PROJ_SKILL,
+					p.proj_start_date, p.proj_end_date, p.proj_estimate, p.PROJ_REQR_PERSON, p.PROJ_REQR_SKILL,
 					p.PROJ_TYPE, p.PROJ_CAREER, p.PROJ_PM, p.PROJ_WORK_TYPE, p.PROJ_WORK_PLACE, p.PROJ_WORK_TIME,
 					p.proj_work_equip, p.proj_walfare, p.proj_detail, p.PROJ_FINISH_DATE, p.apply_mem, p.proj_status,
 					p.PROJ_UPDATE_DATE, p.PROJ_REPLYCNT, p.PROJ_TOTAL_DATE, fp.followproject_no, fp.related_member  
 			FROM
 		 		(SELECT rownum rn, proj_id, proj_title, proj_reg_date, member_no, proj_apply_deadline,
-					proj_start_date, proj_end_date, proj_estimate, PROJ_REQR_PERSON, PROJ_CATEGORY, PROJ_SKILL,
+					proj_start_date, proj_end_date, proj_estimate, PROJ_REQR_PERSON, PROJ_REQR_SKILL,
 					PROJ_TYPE, PROJ_CAREER, PROJ_PM, PROJ_WORK_TYPE, PROJ_WORK_PLACE, PROJ_WORK_TIME,
 					proj_work_equip, proj_walfare, proj_detail, PROJ_FINISH_DATE, apply_mem, proj_status,
 					PROJ_UPDATE_DATE, PROJ_REPLYCNT, PROJ_TOTAL_DATE, fp.related_project, fp.related_member
@@ -37,14 +37,14 @@
 	<select id="listRecommendProject" parameterType="org.wof.domain.PartnersVO" resultType="org.wof.domain.ProjectVO">
 		
 		select p.proj_id, p.proj_title, p.proj_reg_date, p.member_no, p.proj_apply_deadline,
-					p.proj_start_date, p.proj_end_date, p.proj_estimate, p.PROJ_REQR_PERSON, p.PROJ_CATEGORY, p.PROJ_SKILL,
+					p.proj_start_date, p.proj_end_date, p.proj_estimate, p.PROJ_REQR_PERSON, p.PROJ_REQR_SKILL,
 					p.PROJ_TYPE, p.PROJ_CAREER, p.PROJ_PM, p.PROJ_WORK_TYPE, p.PROJ_WORK_PLACE, p.PROJ_WORK_TIME,
 					p.proj_work_equip, p.proj_walfare, p.proj_detail, p.PROJ_FINISH_DATE, p.apply_mem, p.proj_status,
 					p.PROJ_UPDATE_DATE, p.PROJ_REPLYCNT, p.PROJ_TOTAL_DATE
 					,fp.followproject_no
 					from project p  full OUTER JOIN followproject fp on p.proj_id = fp.related_project 
 					and fp.related_member = #{member_no}
-					where p.PROJ_WORK_PLACE LIKE '%'|| #{prefered_area} ||'%' OR p.PROJ_SKILL LIKE '%'|| #{skill}||'%'
+					where p.PROJ_WORK_PLACE LIKE '%'|| #{prefered_area} ||'%' OR p.PROJ_REQR_SKILL LIKE '%'|| #{skill}||'%'
 	</select>
 	   
    <!-- 관심 프로젝트 -->

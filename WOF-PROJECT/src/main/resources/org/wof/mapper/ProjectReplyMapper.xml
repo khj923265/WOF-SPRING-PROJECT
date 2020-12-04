@@ -42,6 +42,7 @@
 	    where pno =  #{pno}
 	    and rownum <= #{stand.pageNum} * #{stand.amount}
 	   ) where rn > (#{stand.pageNum} -1) * #{stand.amount}
+	   order by replydate desc
 	]]>
 	
 	</select> 

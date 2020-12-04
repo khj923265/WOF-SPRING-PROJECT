@@ -12,7 +12,7 @@
 <select id="dashboardclientProject" resultType="org.wof.domain.ProjectVO">
 	<![CDATA[
 		select p.proj_title, p.proj_estimate, p.apply_mem, p.proj_work_place,
-			p.proj_skill, p.proj_start_date
+			p.proj_reqr_skill, p.proj_start_date
 		from project p, apply a
 		where p.proj_id = a.proj_id and p.member_no = #{member_no}
 	]]>

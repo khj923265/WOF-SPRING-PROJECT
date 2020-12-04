@@ -6,10 +6,10 @@
 
 <select id="applyProject" resultType="org.wof.domain.ProjectVO">
 	<![CDATA[
-	select proj_id, proj_title, proj_start_date, proj_skill, proj_estimate, proj_reqr_person, proj_work_place
+	select proj_id, proj_title, proj_start_date, proj_reqr_skill, proj_estimate, proj_reqr_person, proj_work_place
 	from
 	(
-		select rownum rn, p.proj_id, p.proj_title, p.proj_start_date, p.proj_skill, 
+		select rownum rn, p.proj_id, p.proj_title, p.proj_start_date, p.proj_reqr_skill, 
 			p.proj_estimate, p.proj_reqr_person, p.proj_work_place
 		from project p, apply a
 		where p.proj_id = a.proj_id and a.member_no = #{member_no}
@@ -27,18 +27,18 @@
 
 <select id="partnersSupport" resultType="org.wof.domain.ProjectVO">
 	<![CDATA[
-		select p.proj_title, p.proj_skill, p.proj_career,
+		select p.proj_title, p.proj_reqr_skill, p.proj_career,
 			p.proj_start_date, p.proj_end_date, 
 			count(p.proj_reqr_person) as proj_reqr_person
 		from project p, apply a
 		where p.proj_id = a.proj_id 
-		group by p.proj_title, p.proj_skill, p.proj_career, p.proj_start_date, p.proj_end_date
+		group by p.proj_title, p.proj_reqr_skill, p.proj_career, p.proj_start_date, p.proj_end_date
 	]]>
 </select>
 
 <select id="dashboardpartnersApplyProject" resultType="org.wof.domain.ProjectVO">
 	<![CDATA[
-		select p.proj_id, p.proj_title, p.proj_work_place, p.proj_skill, p.proj_start_date
+		select p.proj_id, p.proj_title, p.proj_work_place, p.proj_reqr_skill, p.proj_start_date
 	from project p, apply a
 	where p.proj_id = a.proj_id and a.member_no = #{member_no}
 		

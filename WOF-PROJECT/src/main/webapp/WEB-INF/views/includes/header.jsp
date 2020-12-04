@@ -141,26 +141,26 @@
                             <div class="dropdown-header noti-title">
                                 <h6 class="text-overflow m-0">Welcome!</h6>
                             </div>
+                            <sec:authorize access="isAuthenticated()">
                             <c:if test="${member.auth == 'ROLE_CLIENT' }">
-                                <a href="${pageContext.request.contextPath }/client/dashboard_client?member_no=${member.member_no}"
+                                <a href="/client/dashboard_client?member_no=${member.member_no}"
                                     class="dropdown-item"> <i class="ni ni-single-02"></i>
                                     <span>마이페이지</span>
                                 </a>
                             </c:if>
                             <c:if test="${member.auth == 'ROLE_PARTNERS' }">
-                                <a href="${pageContext.request.contextPath }/partners/profile_info"
+                                <a href="/partners/dashboard_partners?member_no=${member.member_no}"
                                    class="dropdown-item"> <i class="ni ni-single-02"></i>
                                     <span>마이페이지</span>
                                 </a>
-                            </c:if>
-                            <a href="${pageContext.request.contextPath }/member/partners/profile_info"
+                            <a href="/member/partners/profile_info"
                              class="dropdown-item"> <i
                                     class="ni ni-settings-gear-65"></i> <span>회원정보수정</span>
-                            </a> <a id="qnaBtn" href="${pageContext.request.contextPath }/project/qna" 
+                            </c:if>
+                            </a> <a id="qnaBtn" href="/project/qna"
                             class="dropdown-item"> <i
-                                class="ni ni-calendar-grid-58"></i> <span>문의사항</span></a> 
+                                class="ni ni-calendar-grid-58"></i> <span>문의사항</span></a>
                             <div class="dropdown-divider"></div>
-                            <sec:authorize access="isAuthenticated()">
                                 <a class="dropdown-item"
                                    href="/customlogout"><i class="ni ni-user-run"></i> <span>로그아웃</span> </a>
                             </sec:authorize>
