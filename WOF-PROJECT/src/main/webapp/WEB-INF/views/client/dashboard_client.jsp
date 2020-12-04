@@ -41,11 +41,11 @@
 								class="ni ni-bullet-list-67 text-default"></i> <span
 								class="nav-link-text">공지사항</span>
 						</a></li>
-						<li class="nav-item"><a class="nav-link"
+						<!-- <li class="nav-item"><a class="nav-link"
 							href="#"> <i
 								class="ni ni-archive-2 text-default"></i> <span
 								class="nav-link-text">문의하기</span>
-						</a></li>
+						</a></li> -->
 						<li class="nav-item"><a class="nav-link"
 							href="../member/client/client_info_update"> <i
 								class="ni ni-settings-gear-65 text-default"></i> <span
@@ -63,11 +63,11 @@
 						</a></li>
 						
 						<li class="nav-item"><a class="nav-link"
-						href="${pageContext.request.contextPath}/qna/question-register">
+						href="${pageContext.request.contextPath}/qna/question-register-client">
 							<i class="ni ni-archive-2"></i> <span class="nav-link-text">1:1문의</span>
 						</a></li>
 						<li class="nav-item"><a class="nav-link"
-						href="${pageContext.request.contextPath}/point/admin">
+						href="${pageContext.request.contextPath}/point/point_client">
 							<i class="ni ni-money-coins"></i> <span class="nav-link-text">포인트 관리</span>
 						</a></li>	
 						<li class="nav-item"><a class="nav-link"

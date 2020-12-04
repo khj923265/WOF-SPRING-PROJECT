@@ -4,22 +4,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%@ include file = "../includes/header.jsp"%>	
-<%@ include file = "point-charging.jsp"%>
+<%@ include file = "point-charging-partners.jsp"%>
 <%@ include file = "point-withdraw.jsp"%>
 	
-	<!-- toastr css 라이브러리 -->
-	<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
-	
-	<style>
-	.vl {
-  		border-left: 2px solid green;
-  		height: 500px;
-  		position: absolute;
-  		left: 50%;
-  		margin-left: -3px;
-  		top: 0;
-		}
-	</style>
+
 	
 	<title>포인트 관리</title>
 	<!--
@@ -33,30 +21,11 @@
 	<!-- Side nav [나중에 이어붙이기]-->
 
     
- <!-- breadcrumb [포인트 관리] -->
-	 <div class="header bg-primary pb-6">
-      <div class="container-fluid">
-        <div class="header-body">
-          <div class="row align-items-center py-4">
-            <div class="col-lg-6 col-7">
-              <h6 class="h2 text-white d-inline-block mb-0">포인트 관리</h6>
-              <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
-                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                  <li class="breadcrumb-item"><a href="dashboard.html"><i class="fas fa-home"></i></a></li>
-                  <li class="breadcrumb-item"><a href="#">마이페이지</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">포인트 관리</li>
-                </ol>
-              </nav>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
- <!-- end of breadcrumb -->    
+  
 
 
 <!-- Sidenav -->
-<%-- <nav
+<nav
 	class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white"
 	id="sidenav-main">
 	<div class="scrollbar-inner">
@@ -110,11 +79,11 @@
 				<!-- Navigation -->
 				<ul class="navbar-nav mb-md-3">
 					<li class="nav-item"><a class="nav-link"
-						href="https://demos.creative-tim.com/argon-dashboard/docs/getting-started/overview.html">
-							<i class="ni ni-archive-2"></i> <span class="nav-link-text">문의하기</span>
+						href="${pageContext.request.contextPath}/qna/question-register-partners">
+							<i class="ni ni-archive-2"></i> <span class="nav-link-text">1:1문의</span>
 					</a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="${pageContext.request.contextPath}/point/admin">
+						href="${pageContext.request.contextPath}/point/point_partners">
 							<i class="ni ni-money-coins"></i> <span class="nav-link-text">포인트
 								관리</span>
 					</a></li>
@@ -132,64 +101,90 @@
 			</div>
 		</div>
 	</div>
-</nav> --%>
+</nav>
 <!-- End side nav -->
 
- 
- 
- 
- 
+<div class="main-content" id="panel">   
 
-  <div class="table-responsive">
-          <table class="table align-items-center table-flush">
-    
- <!-- Body of contents  -->    
+<!-- breadcrumb [포인트 관리] -->
+	 <div class="header bg-primary pb-6">
+      <div class="container-fluid">
+        <div class="header-body">
+          <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+              <h6 class="h2 text-white d-inline-block mb-0">포인트 관리</h6>
+              <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                  <li class="breadcrumb-item"><a href="dashboard.html"><i class="fas fa-home"></i></a></li>
+                  <li class="breadcrumb-item"><a href="#">마이페이지</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">포인트 관리</li>
+                </ol>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+ <!-- end of breadcrumb -->   
+
+ <!-- Body of contents  -->   
  <!-- 포인트 관리  -->
-    <div class="container mt--6">
-      <div class="row inline" id="manage-client-point">
+  <div class="container-fluid mt--6">
+ <!-- ①잔여포인트 확인 section  -->            
+ <!-- ②포인트 충전/송금 --> 
+ 	 <div class="row inline" id="manage-client-point">
         <div class="col">
           <div class="card">
-            <div class="card-header">
- <!-- ①잔여포인트 확인 section  -->            
- <!-- ②포인트 충전/송금 -->  	
-    <div class="table-responsive col center"id="totalpoint">
-    <table class="table align-items-center table-flush">
-    <tr>
-    <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
-    <th class="align-items-center">
-    <h3>잔여 포인트</h3>
-    </th>
-    <th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
-    <th class="align-items-center">
-    <h3>포인트 충전/송금</h3>
-    </th>
-    </tr>
-    <tr>
-    <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
-    <td class="align-items-center">
-    <b>${member.total_point }</b>&nbsp;P
-    </td>
-    <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
-    <td class="align-items-center">
-    <a type="button" class="btn btn-secondary ml-2" name="withdraw" data-toggle="modal" data-target="#modal-withdraw-form">인출</a>
-    <a type="button" class="btn btn-primary ml-2" name="charge" data-toggle="modal" data-target="#modal-charging-form">충전</a>
-			  			  		<!-- <a type="button" class="btn btn-secondary ml-2" name="withdraw" value="인출" id="popup2">인출</a> -->
-	<a type="button" class="btn btn-success ml-2" name="pointTest" value="test" id="popup2">테스트</a>		  			  		
-    </td>
-    </tr>
-    </table>
-    
- 	</div>
-    <!-- <div class="vl"></div> -->
-  			
-            </div> <!-- end of card-header -->
-             </div> <!-- end of card -->
-          </div> <!-- end of col -->
-        </div> <!-- end of row (id="manage-client-point") -->
+          <div class="card-header border-0">
+              <h3 class="mb-0">보유 포인트</h3>
+          </div>
+            <div class="card-body row inline mt--2">
+                    <!-- ①잔여포인트 확인 section  -->
+                    <div class="col-6 inline text-center py-2" style="background-color: #D1D4D8">
+                        <h2 style="color: #444D58;">잔여 포인트</h2>
+                    </div>
+                    <div class="col-6 inline text-center py-2" 
+                    		style="background-color: #D1D4D8; border-left-style:dotted; 
+                    		border-left-color: gray; border-left-width: 1px;">
+                        <h2 class="col-12 inline" style="color: #444D58;">충전 / 인출</h2>
+                    </div>
+                    <div class="col-6 inline text-center" id="totalPoint">
+                        <div class="row inline" style="background-color: #EDEFF2;" >
+                            <!-- ②포인트 충전/송금 -->
+                            <div class="col-12 text-center py-4">
+                            <b style="color:green; font-size: 30px"><fmt:formatNumber value="${totalpoint }" pattern="#,###" /></b>&nbsp;<b style="font-size: 20px">P</b>
+                        	</div>
+                        </div>
+                    </div>
+                    <div class="col-6 inline">
+                        <div class="row inline" style="background-color: #EDEFF2; border-left-style:dotted;  
+                    		border-left-color: gray; border-left-width: 1px;">
+                            <div class="col-6 text-center py-3">
+                                <a type="button" class="btn ml-2 pl-6 pr-6" name="charge" data-toggle="modal" 
+                                data-target="#modal-charging-form" style="background-color: #86A6D1" ><h2 style="color: white;">충&nbsp;전</h2></a>
+                            </div>
+                            <!--  href = "javascript:popup()" target = "_self"  -->
+                            <div class="col-6 text-center py-3">
+                                <a type="button" class="btn btn-secondary ml-1 pl-6 pr-6" name="withdraw" data-toggle="modal" 
+                                data-target="#modal-withdraw-form"><h2>인&nbsp;출</h2></a>
+                            </div>
+                            <!-- <div class="col-6 text-center py-6">
+                            	<a type="button" class="btn btn-success ml-2" name="pointTest" value="test" id="popup2">테스트</a>
+                            </div> -->
+    				<!-- <div class="vl"></div> -->
+    					</div>
+    				</div>	
+	     </div> <!-- end of card-body -->
+      	</div> <!-- end of card -->
+    </div> <!-- end of col -->
+  </div> <!-- end of row (id="manage-client-point") -->
+</div> <!-- end of container -->
+
+
  <!-- 포인트  이용내역  -->
-    <div class="container mt--2">
+    <div class="container-fluid mt--2">
       <!-- ①title -->    
-      <div class="row">
+      <div class="row inline">
         <div class="col">
           <div class="card">
             <!-- Card header -->
@@ -213,7 +208,7 @@
 	 </div>
       
         <div class="table-responsive">
-          <table class="table align-items-center table-flush">
+          <table class="table align-items-center table-flush" id="table">
             <thead class="thead-light">
                   <tr>
                     <th scope="col" class="sort" data-sort="status">일자</th>
@@ -224,7 +219,7 @@
                     <th scope="col"></th>
                   </tr>
             </thead>
-            <tbody class="list">
+            <tbody class="list" id="listBody">
               <c:choose>
                <c:when test="${empty getList }">
                		<tr><td colspan="5" align="center">포인트 사용내역이 없습니다.</td></tr>
@@ -232,13 +227,13 @@
                <c:when test="${!empty getList }">
              	<c:forEach items="${getList }" var="point">
                   <tr>
-                    <th scope="row">
+                    <td scope="row">
                       <div class="media align-items-center">
                         <div class="media-body">
                           <span class="name mb-0 text-sm"><fmt:formatDate value="${point.point_chg_date }" pattern="yyyy-MM-dd"/></span>
                         </div>
                       </div>
-                    </th>
+                    </td>
                     <td class="name1">
                     	<c:out value="${member.real_name }"/> 
                     </td>
@@ -249,12 +244,12 @@
                     </td>
                     <td>
                       <div class="d-flex align-items-center">
-                        <span class="입출금  mr-2 text-info"><c:out value="${point.point_amount }"/></span>
+                        <span class="입출금  mr-2 text-info"><fmt:formatNumber  value="${point.point_amount }" pattern="#,###" /></span>
                       </div>
                     </td>
                     <td>
                       <div class="d-flex align-items-center">
-                        <span class="remaining mr-2"><b><c:out value="${point.point_balance }"/></b></span>
+                        <span class="remaining mr-2"><b><fmt:formatNumber value="${point.point_balance }" pattern="#,###" /></b></span>
                       </div>
                     </td>
                     <td class="text-right">
@@ -270,7 +265,7 @@
                   </tr>
           		</c:forEach>      
           	   </c:when>
-          	 </c:choose>	  
+          	 </c:choose>
             </tbody>
           </table>
         </div>
@@ -278,7 +273,7 @@
    <!-- end of Body -->    
            
    <!-- Footer of 포인트 이용내역 -->
-            <div class="card-footer py-4">
+   <%--          <div class="card-footer py-4">
               <nav aria-label="...">
                 <ul class="pagination justify-content-end mb-0">
                  <c:if test="${pageMaker.prev }">
@@ -310,19 +305,59 @@
                 </ul>
               </nav>
             </div>
-            <form action="/point/admin" id="actionForm" method="get">
+            <form action="/point/point_partners" id="actionForm" method="get">
             	<input type="hidden" name="pageNum" value="${pageMaker.standard.pageNum }">
             	<input type="hidden" name="amount" value="${pageMaker.standard.amount }">            	
-            </form>
+            </form> --%>
    <!-- end of footer -->
           </div>
         </div>
       </div>
 	</div>
-  
+</div>	
+</div> 
   	<script src="/resources/template/assets/vendor/jquery/dist/jquery.min.js"></script>
-  	<script>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   	
+  	
+  	<script>
+  	<script >
+  	function moreList(){
+  	    $.ajax({
+  	        url :"/point/point_partners",
+  	        type :"POST",
+  	        cache : false,
+  	        dataType:'json',
+  	        data :"conectType="+conectType +"&eDate="+eDate+"&sDate="+sDate+"&codeId="+codeId+"&limit="+limit,
+  	        success :function(data){
+  	            //console.log(data);
+  	            var content="";
+  	            for(var i=0; i<data.hashMapList.length; i++){
+  	                content +=
+  	                "<tr>"+
+  	                    "<td>"+data.hashMapList[i].point_reg_date+"</td>"+
+  	                    "<td>"+data.hashMapList[i].real_name+"</td>"+
+  	                    "<td>"+data.hashMapList[i].point_contents+"</td>"+
+  	                    "<td>"+data.hashMapList[i].point_amount+"</td>"+
+  	                  	"<td>"+data.hashMapList[i].point_balance+"</td>"+
+  	                "</tr>";
+  	            }
+  	            content+="<tr id='addbtn'><td colspan='5'><div class='btns'><a href='javascript:moreList();' class='btn'>더보기</a></div>  </td></tr>";
+  	            $('#addbtn').remove();//remove btn
+  	            $(content).appendTo("#table");
+  	        }, error:function(request,status,error){
+  	            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+  	           }
+  	    });
+  	};
+  	</script>
+
+  	
+  	
+  	
+  	
+  	<script>
   		var actionForm = $("#actionForm");
   		
   		$(document).ready(function() {
@@ -335,30 +370,10 @@
   	  			actionForm.find("input[name='pageNum']").val($(this).attr("href"));
   	  			
   	  			actionForm.submit();
-  	  			
   			});
-
   		});
   	</script>	
   	
-	<!-- <script>
-        var popup = document.getElementById('popup');
-        	popup.addEventListener('click',function(){
-            var url = "/point/charging";
-            var name = "popup test";
-            var option = "width = 500, height = 500, top = 100, left = 200, location = no"
-            window.open(url, name, option);
-        })
-    </script>
-	<script>
-        var popup2 = document.getElementById('popup2');
-        	popup2.addEventListener('click',function (){
-            var url = "/point/withdraw";
-            var name = "popup test2";
-            var option = "width = 500, height = 500, top = 100, left = 200, location = no"
-            window.open(url, name, option);
-        })
-    </script>   -->
     
     <script>
         var popup2 = document.getElementById('popup2');
@@ -369,31 +384,31 @@
             window.open(url, name, option);
         })
     </script>  
-	
-  <!--   <script>
-    function change_div(val){
-    	
-    var val2 = $("#totalpoint").val();
 
-    $.ajax({
-    type: 'post',
-    url: 'point-admin.jpg',
-    data: {
-    	넘길값1:val1,
-    	넘길값2:val2
-    },
-    success: function (response)
-    {
-      $("#div아이디").html(response);
-    }
-    });
-    }
-    </script> -->
-    
 	<script>
-        function pointRefresh(){
-        	 $("#totalPoint").load(window.location.href + "#totalPoint");
-        };
-    </script> 
-  
+		//<충전 금액>입력 => 숫자만 가능, 천단위 콤마
+		function inputNumberAutoComma(obj) {
+			// 콤마( , )의 경우도 문자로 인식되기때문에 콤마를 따로 제거한다.
+			var deleteComma = obj.value.replace(/\,/g, "");
+			// 콤마( , )를 제외하고 문자가 입력되었는지를 확인한다.
+			if (isFinite(deleteComma) == false) {
+				alert("문자는 입력하실 수 없습니다.");
+				obj.value = "";
+				return false;
+			}
+			// 기존에 들어가있던 콤마( , )를 제거한 이 후의 입력값에 다시 콤마( , )를 삽입한다.
+			obj.value = inputNumberWithComma(inputNumberRemoveComma(obj.value));
+		}
+		// 천단위 이상의 숫자에 콤마( , )를 삽입하는 함수
+		function inputNumberWithComma(str) {
+			str = String(str);
+			return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+		}
+		// 콤마( , )가 들어간 값에 콤마를 제거하는 함수
+		function inputNumberRemoveComma(str) {
+			str = String(str);
+			return str.replace(/[^\d]+/g, "");
+		}
+	</script>
+	
 <%@ include file = "../includes/footer.jsp"%>

@@ -12,6 +12,8 @@ public interface PointMapper {
 
 	public int getTotalpoint(PointVO point);
 	
+	public int getTotalpointAjax(MemberVO member);
+	
 	public MemberVO getMember_no(MemberVO member);
 	
 	public String pwCheck(String pwcheck);

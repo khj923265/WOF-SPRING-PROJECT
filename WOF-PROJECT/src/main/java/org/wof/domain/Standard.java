@@ -23,6 +23,8 @@ public class Standard {
 	private String type;
 	private String keyword;
 	
+	private String point_owner;
+	
 	/*
 	 * constructor
 	 */
