@@ -295,29 +295,34 @@
 	
 	
 	<!-- 파트너스 삭제 -->
-	<delete id="applyDelete" parameterType="map">
-	delete from applyregister where 
-		<foreach collection="member_no" item="member_no" index="index"  separator=" OR "> 
-        member_no = #{member_no} and proj_id = #{proj_id}
-        </foreach>
+	<delete id="applyDelete">
+	delete from applyregister where  
+        member_no = #{member_no} and proj_id in #{proj_id}
+        
 	</delete>
 	
 	<!-- 선택한 파트너스 -->
 	<select id="appliedPartners" resultType="org.wof.domain.ContractSourceVO">
 		<![CDATA[
 		
-		select member_no, userid, real_name, userPhone,
-		proj_id, contract_write_source, contract_write_target
+		select member_no, userid, real_name,
+			userphone, PROJ_TITLE, proj_id, contract_write_source, contract_write_target
 		from
 		(
-			select rownum rn, m.member_no, m.userid, m.real_name, 
-            m.userphone, a.proj_id, c.contract_write_source, c.contract_write_target
-			from member m join applyregister a 
-            on m.member_no = a.member_no
-            left outer join contract c
-            on c.related_proj = a.proj_id
-            and a.member_no = c.contract_write_target
-            where a.proj_id = #{proj_id}
+			select
+			rownum rn, m2.member_no, m2.userid, m2.real_name,
+			m2.userphone, p.PROJ_TITLE, p.proj_id, c.contract_write_source, c.contract_write_target
+			from
+			member m left outer join project p
+			on m.member_no = p.member_no
+			left outer join applyregister a
+			on a.proj_id = p.proj_id
+			left outer join member m2
+			on a.member_no = m2.member_no
+			left outer join contract c
+			on m.member_no = c.CONTRACT_WRITE_SOURCE
+			and m2.member_no = c.CONTRACT_WRITE_TARGET
+			where m.member_no = #{member_no}
 			and rownum <= #{standard.pageNum} * #{standard.amount}
 		)	
 		where rn > (#{standard.pageNum} -1) * #{standard.amount}

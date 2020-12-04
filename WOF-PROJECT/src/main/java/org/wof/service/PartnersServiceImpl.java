@@ -183,14 +183,16 @@ public class PartnersServiceImpl implements PartnersService{
 	}
 
 	@Override
-	public int applyDelete(String[] member_no, String proj_id) {
-		
-		return partnersMapper.applyDelete(member_no, proj_id);
+	public int applyDelete(String[] member_no, String[] proj_id) {
+		for(int i=0; i<member_no.length; i++){
+			partnersMapper.applyDelete(member_no[i], proj_id[i]);
+		}
+		return 0;
 	}
 	
 	@Override
-	public List<ContractSourceVO> appliedPartners(String proj_id, Standard standard) {
-		return partnersMapper.appliedPartners(proj_id, standard);
+	public List<ContractSourceVO> appliedPartners(String member_no, Standard standard) {
+		return partnersMapper.appliedPartners(member_no, standard);
 	}
 
 	@Override

@@ -27,33 +27,81 @@
 			
 			<!-- 프로젝트 내용 -->
 			<div class="row">
-			<div class="col-sm-12 shadow p-3 mb-5 bg-white rounded ">
-				<h3>프로젝트명 : ${Project.proj_title }</h3>
+			<div class="col-sm-12 shadow-lg p-4 pl-5 mb-5 bg-white rounded ">
+			<div class="row mb-4">
+			  <div class="col-12">			  	
+				<h2><i class="ni ni-folder-17 mr-3 text-yellow"></i>${Project.proj_title }</h2>
+			  </div>
+			</div>
+				<input type="hidden" value="${Project.member_no }">
 				
-				<span>${Project.member_no }</span></br>
-				<span>
-				${Project.proj_reg_date }
-				${Project.proj_apply_deadline }
-				${Project.proj_start_date }
-				${Project.proj_end_date }
-				</span></br>
-				
-				<span>
-				${Project.proj_estimate }
-				${Project.proj_reqr_person }
-				</span></br>
-				
-				<span>
-				${Project.proj_reqr_skill }
-				${Project.proj_career }
-				</span></br>
-				
-				<span>
-				${Project.proj_work_type }
-				${Project.proj_work_place }
-				${Project.proj_work_time }
-				${Project.proj_work_equip }
-				</span></br>
+			<div class="row mb-4">
+			<div class="col-3">			
+				<h3><i class="ni ni-calendar-grid-58 mr-3 text-info"></i>프로젝트 등록일</h3>
+				<h3 class="ml-4 pl-2"><fmt:parseDate var="dt"	value="${Project.proj_reg_date }" pattern="yyyy-MM-dd HH:mm:ss" /> 
+				<fmt:formatDate	value="${dt }" pattern="yyyy/MM/dd" />
+				</h3>
+			</div>
+			<div class="col-3">	
+				<h3><i class="ni ni-calendar-grid-58 mr-3 text-info"></i>지원 마감일</h3>
+				<h3 class="ml-4 pl-2">
+				<fmt:parseDate var="dt"	value="${Project.proj_apply_deadline }" pattern="yyyy-MM-dd HH:mm:ss" /> 
+				<fmt:formatDate	value="${dt }" pattern="yyyy/MM/dd" />
+				</h3>
+			</div>
+			<div class="col-3">
+				<h3><i class="ni ni-calendar-grid-58 mr-3 text-info"></i>프로젝트 시작일</h3>
+				<h3 class="ml-4 pl-2">
+				<fmt:parseDate var="dt"	value="${Project.proj_start_date }" pattern="yyyy-MM-dd HH:mm:ss" /> 
+				<fmt:formatDate	value="${dt }" pattern="yyyy/MM/dd" />
+				</h3>
+			</div>
+			<div class="col-3">
+				<h3><i class="ni ni-calendar-grid-58 mr-3 text-info"></i>프로젝트 종료일</h3>
+				<h3 class="ml-4 pl-2">
+				<fmt:parseDate var="dt"	value="${Project.proj_end_date }" pattern="yyyy-MM-dd HH:mm:ss" /> 
+				<fmt:formatDate	value="${dt }" pattern="yyyy/MM/dd" />
+				</h3>
+			</div>
+			</div>
+			
+			<div class="row mb-4">
+			  <div class="col-3">
+			    <h3><i class="ni ni-money-coins mr-3 text-success"></i>프로젝트 예산</h3>
+			    <h3 class="ml-4 pl-2">${Project.proj_estimate }</h3>
+			  </div>
+			  <div class="col-3">
+			    <h3><i class="ni ni-single-02 mr-3 text-success"></i>필요인원</h3>
+			    <h3 class="ml-4 pl-2">${Project.proj_reqr_person }</h3>
+			  </div>
+			  <div class="col-3">
+			    <h3><i class="ni ni-settings-gear-65 mr-3 text-success"></i>필요기술</h3>
+			    <h3 class="ml-4 pl-2">${Project.proj_reqr_skill }</h3>
+			  </div>
+			  <div class="col-3">
+			    <h3><i class="ni ni-notification-70 mr-3 text-success"></i>모집요건</h3>
+			    <h3 class="ml-4 pl-2">${Project.proj_career }</h3>
+			  </div>			  
+			</div>
+			
+			<div class="row">
+			  <div class="col-3">
+			    <h3><i class="ni ni-briefcase-24 mr-3 text-primary"></i>근무형태</h3>
+			    <h3 class="ml-4 pl-2">${Project.proj_work_type }</h3>
+			  </div>
+			  <div class="col-3">
+			    <h3><i class="ni ni-square-pin mr-3 text-primary"></i>근무장소</h3>
+			    <h3 class="ml-4 pl-2">${Project.proj_work_place }</h3>
+			  </div>
+			  <div class="col-3">
+			    <h3><i class="ni ni-watch-time mr-3 text-primary"></i>근무시간</h3>
+			    <h3 class="ml-4 pl-2">${Project.proj_work_time }</h3>
+			  </div>
+			  <div class="col-3">
+			    <h3><i class="ni ni-laptop mr-3 text-primary"></i>장비제공</h3>
+			    <h3 class="ml-4 pl-2">${Project.proj_work_equip }</h3>
+			  </div>			
+			</div>
 			
 			</div>
 			</div>
@@ -68,6 +116,7 @@
 					
 					<form id="checkForm" action="applyRegister" method="post">
 					<input type="hidden" name='proj_id' value='${Project.proj_id}'>
+					<input type="hidden" name="source_no" value="${member.member_no }">
 					<c:forEach var="Partners" items="${Partners }">
 						<div class="row shadow p-1 mb-3 bg-white rounded ">
 						<div class="col-sm-1 my-auto">

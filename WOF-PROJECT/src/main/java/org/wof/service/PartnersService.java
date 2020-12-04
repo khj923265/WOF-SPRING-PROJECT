@@ -53,9 +53,9 @@ public interface PartnersService {
 	
 	public String applyCheck(ApplyVO applyVO);
 	
-	public int applyDelete(String[] member_no, String proj_id);
+	public int applyDelete(String[] member_no, String[] proj_id);
 	
-	public List<ContractSourceVO> appliedPartners(String proj_id, Standard standard);
+	public List<ContractSourceVO> appliedPartners(String member_no, Standard standard);
 	
 	public int appliedpartnersTotal(Standard standard);
 

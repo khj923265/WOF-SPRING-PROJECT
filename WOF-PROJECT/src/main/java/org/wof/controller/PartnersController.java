@@ -180,12 +180,14 @@ public class PartnersController {
 	
 	//하나의 프로젝트에 지원한 파트너스 중 선택
 	@RequestMapping("/applyRegister")
-	public String applyRegister(String[] member_no, String proj_id, RedirectAttributes rttr) {
+	public String applyRegister(
+			String[] member_no, String proj_id,	String source_no,
+			RedirectAttributes rttr) {
 		
 		log.info("applyRegister Controller : " + member_no + proj_id);
 		
 		partnersService.applyRegister(member_no, proj_id);
-		rttr.addAttribute("proj_id", proj_id);
+		rttr.addAttribute("member_no", source_no);
 		
 		return "redirect:/partners/appliedpartners";
 	}
@@ -203,27 +205,27 @@ public class PartnersController {
 	
 	//하나의 프로젝트에 지원한 파트너스 삭제
 	@RequestMapping("/applyDelete")
-	public String applyDelete(String[] member_no, String proj_id, RedirectAttributes rttr) {
+	public String applyDelete(
+			String[] member_no, String proj_id, String source_no, RedirectAttributes rttr) {
 		
 		log.info("apply delete : " + member_no + "/" + proj_id);
 		
-		partnersService.applyDelete(member_no, proj_id);
+		String proj_idArr[] = proj_id.split(",");
+		partnersService.applyDelete(member_no, proj_idArr);
 		
-		rttr.addAttribute("proj_id", proj_id);
+		rttr.addAttribute("member_no", source_no);
 		
 		return "redirect:/partners/appliedpartners";
 	}
 	
 	@RequestMapping("/appliedpartners")
-	public void appliedPartners(Model model, @RequestParam("proj_id") String proj_id, Standard standard) {
+	public void appliedPartners(Model model, @RequestParam("member_no") String member_no, Standard standard) {
 		
 		log.info("applied partners=============================");
 		
 		int total = partnersService.appliedpartnersTotal(standard);
 		
-		
-		model.addAttribute("Project", partnersService.applyDetailProject(proj_id));
-		model.addAttribute("Member", partnersService.appliedPartners(proj_id, standard));
+		model.addAttribute("appliedpartners", partnersService.appliedPartners(member_no, standard));
 		model.addAttribute("pageMaker", new PageDTO(standard, total));
 	}
 	
