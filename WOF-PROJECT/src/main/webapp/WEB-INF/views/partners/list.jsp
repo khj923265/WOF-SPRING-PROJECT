@@ -122,9 +122,9 @@
 								</div>
 								
 								
-								<div class="col-5 ml-3">
+								<div class="col-6 ml-3">
 															
-								  <div class="row mt-3 mb-0 text-sm text-nowrap">								  
+								  <div class="row mt-3 mb-0 text-sm">								  
 								    <div class="col-4">										
 										<c:if test="${partnersList.birthday != null }">
 										<i class="ni ni-air-baloon ml-1 mr-1"></i>${partnersList.birthday }년생 
@@ -137,7 +137,7 @@
 									</div>
 								  </div>
 									
-								  <div class="row mt-3 mb-0 text-sm text-nowrap">
+								  <div class="row mt-3 mb-0 text-sm">
 									<div class="col-4">
 										<c:if test="${partnersList.career != null }">
 										<i class="ni ni-badge ml-1 mr-1"></i>${partnersList.career }
@@ -183,7 +183,7 @@
 								</span>
 							</div>
 							
-							<div class="col-4">
+							<div class="col-3">
 								<div class="progress-wrapper mt-4">
 									<div class="progress-info">
 										<div class="progress-label">
