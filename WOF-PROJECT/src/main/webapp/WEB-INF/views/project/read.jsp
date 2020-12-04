@@ -174,22 +174,10 @@
 				<div class="card-body">
 					<h5 class="card-title mb-3">파일 목록</h5>
 					<div class="panel-body">
-				<c:choose>
-					<c:when test="${empty '.uploadResult1' }">
-						<div class="card-body">
-							<center>
-							<br>
-							<h5 data-toggle="tooltip" data-placement="top" title="파일이 없습니다.">조회 결과가 없습니다.</h5>
-							</center>
-						</div>
-					</c:when>
-					<c:when test="${!empty '.uploadResult1' }">
 						<div class='uploadResult1'>
 							<ul>
 							</ul>
 						</div>
-					</c:when>
-				</c:choose>
 					</div>	
 				</div>
 			</div>
@@ -249,6 +237,7 @@
 						${partners.member_no }
 						${checkAuth.member_no } --%>
 						<sec:authorize access="isAuthenticated()">
+						<c:if test="${partners.member_no eq member.member_no }">
 						<div class="card" style="height:300px; margin-top: 20px; ">
 							<div class="card-body">
 								<h5 class="card-title mb-3">파일 관리</h5>
@@ -279,6 +268,7 @@
 						
 							</div><!-- card body -->
 						</div><!-- card -->
+						</c:if>
 						</sec:authorize>
 
 
@@ -576,7 +566,58 @@ $(document).ready(function(e) {
 
 	<script>
 	$(document).ready(function () {
-		  
+	  
+	  var bnoValue = '<c:out value="${project.proj_id}"/>';
+	  var replyUL = $(".chat");
+	  
+	    showList(1);
+	    
+	    function showList(page){
+	    	
+	    	console.log("show list " + page);
+	        
+	        replyService.getList({proj_id:projValue,page: page|| 1 }, function(replyCnt, list) {
+	          
+	        console.log("replyCnt: "+ replyCnt );
+	        console.log("list: " + list);
+	        console.log(list);
+	        
+	        if(page == -1){
+	          pageNum = Math.ceil(replyCnt/10.0);
+	          showList(pageNum);
+	          return;
+	        }
+	          
+	         var str="";
+	         
+	         if(list == null || list.length == 0){
+	           return;
+	         }
+	         
+	         for (var i = 0, len = list.length || 0; i < len; i++) {
+	           str +="<li class='left clearfix' data-rno='"+list[i].rno+"'>";
+	           str +="  <div><div class='header'><strong class='primary-font'>["
+	        	   +list[i].rno+"] "+list[i].replyer+"</strong>"; 
+	           str +="    <small class='pull-right text-muted'>"
+	               +replyService.displayTime(list[i].replyDate)+"</small></div>";
+	           str +="    <p>"+list[i].reply+"</p></div></li>";
+	         }
+	         
+	         replyUL.html(str);
+	         
+	         showReplyPage(replyCnt);
+
+	     
+	       });//end function
+	         
+	     }//end showList
+
+	     
+	  
+	     
+</script>
+
+<script>
 		  var pnoValue = '<c:out value="${project.getProj_id()}"/>';
 		  var replyUL = $(".chat");
 		  

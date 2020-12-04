@@ -61,7 +61,7 @@
                                             href="${pageContext.request.contextPath }/map/project_map_manage">
                         <span class="nav-link-text">프로젝트 맵</span>
                     </a></li>
-                    <li class="nav-item"><a class="nav-link" href="#"><span
+                    <li class="nav-item"><a class="nav-link" href="/admin/admin_notice"><span
                             class="nav-link-text">공지사항</span></a></li>
                     <li class="nav-item">
                         <sec:authorize access="isAuthenticated()">
@@ -94,6 +94,12 @@
                             <div class="dropdown-header noti-title">
                                 <h6 class="text-overflow m-0">Welcome!</h6>
                             </div>
+                            <sec:authorize access="hasRole('ROLE_ADMIN')">
+                                <a href="/admin/dashboard_admin"
+                                   class="dropdown-item"> <i class="ni ni-single-02"></i>
+                                    <span>관리자페이지</span>
+                                </a>
+                            </sec:authorize>
                             <sec:authorize access="isAuthenticated()">
                             <c:if test="${member.auth == 'ROLE_CLIENT' }">
                                 <a href="/client/dashboard_client?member_no=${member.member_no}"

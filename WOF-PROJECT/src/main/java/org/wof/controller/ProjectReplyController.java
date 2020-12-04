@@ -41,6 +41,7 @@ public class ProjectReplyController {
 		return insertCount ==1? new ResponseEntity<>("success",HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_PARTNERS')")
 	@GetMapping(value="/pages/{pno}/{page}",
 			produces={MediaType.APPLICATION_XML_VALUE,
 					  MediaType.APPLICATION_JSON_UTF8_VALUE})
@@ -51,6 +52,7 @@ public class ProjectReplyController {
 		return new ResponseEntity<>(service.getListPage(stand, pno),HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_PARTNERS')")
 	@GetMapping(value = "/{rno}",
 			produces={ MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<ProjectReplyVO> get(@PathVariable("rno") String rno){
@@ -66,7 +68,7 @@ public class ProjectReplyController {
 	}
 	
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH}, value ="/{rno}", 
+	@RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH}, value ="/{rno}",
 			consumes ="application/json", produces={MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> modify(@RequestBody ProjectReplyVO vo, @PathVariable("rno") String rno){
 		vo.setRno(rno);

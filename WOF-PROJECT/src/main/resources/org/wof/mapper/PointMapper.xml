@@ -4,199 +4,232 @@
 
 <mapper namespace="org.wof.mapper.PointMapper">
 
-	<select id="getTotalpoint" parameterType="org.wof.domain.PointVO" resultType="int">
-		select total_point
-		from member
-		where member_no = #{point_owner}
-	</select>
-	
+   <select id="getTotalpoint" parameterType="org.wof.domain.PointVO" resultType="int">
+      select total_point
+      from member
+      where member_no = #{point_owner}
+   </select>
+   
+   <select id="getTotalpointAjax" parameterType="org.wof.domain.MemberVO" resultType="int">
+      select total_point
+      from member
+      where userid = #{userid}
+   </select>
 
 
-	<select id="getMember_no" parameterType="org.wof.domain.MemberVO" resultType="org.wof.domain.MemberVO">
-		select *
-		from member
-		where userid = #{userid}
-	</select>
-	
-	
+   <select id="getMember_no" parameterType="org.wof.domain.MemberVO" resultType="org.wof.domain.MemberVO">
+      select *
+      from member
+      where userid = #{userid}
+   </select>
+   
+   
 
-  	<select id="pwCheck" parameterType="String" resultType="String">
-  		select userpw from MEMBER
-  		where userid = #{userid}
-  	</select>
-  	
-  	
+     <select id="pwCheck" parameterType="String" resultType="String">
+        select userpw from MEMBER
+        where userid = #{userid}
+     </select>
+     
 
-	<insert id="ChargingList" parameterType="org.wof.domain.PointVO">
-		insert into POINT(point_id, point_no, point_type, point_owner, point_amount, point_contents, point_chg_date, point_balance)  
-		values ('point'||point_id_seq.nextval, point_no_seq.nextval, #{point_type}, #{point_owner}, #{point_amount}, #{point_contents}, sysdate, #{point_balance})<!-- point_total = #{point_total} -->
-	</insert>
-	
-	<!-- <select id="pointBalance" parameterType="org.wof.domain.PointVO" resultType="int">
-		select point_balance 
-		FROM POINT p, MEMBER m
-		WHERE p.point_owner = m.member_no
-		and m.member_no = #{point_onwer}
-	</select> -->
-	
-	<update id="Charging" parameterType="org.wof.domain.PointVO">
-		update MEMBER 
-		set total_point = total_point + #{point_amount}
-		where member_no = #{point_owner}
-	</update>
-	
-	
-	
-	<insert id="WithdrawList" parameterType="org.wof.domain.PointVO">
-		insert into POINT(point_id, point_no, point_type, point_owner, point_amount, point_contents, point_chg_date, point_balance)  
-		values ('point'||point_id_seq.nextval, point_id_seq.nextval, #{point_type}, #{point_owner}, -1*#{point_amount}, #{point_contents}, sysdate, #{point_balance}) <!-- point_balance = #{point_balance} -->
-	</insert>
-	
-	<update id="Withdraw" parameterType="org.wof.domain.PointVO">
-		update MEMBER 
-		set total_point = total_point - #{point_amount}
-		where member_no = #{point_owner}
-	</update>
-	
-	
-	
-	<select id="getContract" parameterType="org.wof.domain.ContractSourceVO" resultType="org.wof.domain.ContractSourceVO">
-		select *
-		from contract
-		where BUSINESS_REGISTER_NO = #{BUSINESS_REGISTER_NO}
-	</select>
-	
-	<!-- point_type => 0:충전, 1:인출, "2:결제", 3:보관, 4:전송, (5:입금, 6:환불) -->
-	<insert id="PaymentFromList" parameterType="org.wof.domain.PointVO">
-		insert into POINT(point_id, point_no, point_type, point_owner, point_amount, point_contents, point_chg_date, point_balance)  
-		values ('point'||point_id_seq.nextval, point_id_seq.nextval, 2, #{point_owner}, -1*#{point_amount}, #{point_contents}, sysdate, #{point_balance})
-	</insert>
-	
-	<update id="PaymentFrom" parameterType="org.wof.domain.PointVO">
-		update MEMBER 
-		set total_point = total_point - #{point_amount}
-		where member_no = #{point_owner}
-	</update>
-	
-	<!-- point_type => 0:충전, 1:인출, 2:결제, "3:보관", 4:전송, (5:입금, 6:환불) -->
-	<insert id="HoldFromList" parameterType="org.wof.domain.PointVO">
-		insert into POINT(point_id, point_no, point_type, point_owner, point_amount, point_contents, point_chg_date, point_balance)  
-		values ('point'||point_id_seq.nextval, point_id_seq.nextval, 3, #{point_owner}, #{point_amount}, #{point_contents}, sysdate, #{point_balance})
-	</insert>
-	
-	<update id="HoldFrom" parameterType="org.wof.domain.PointVO">
-		update MEMBER 
-		set total_point = total_point + #{point_amount}
-		where member_no = #{point_owner}
-	</update>
-	
-	<!-- point_type => 0:충전, 1:인출, 2:결제, 3:보관, "4:전송", (5:입금, 6:환불) -->
-	<insert id="HoldToList" parameterType="org.wof.domain.PointVO">
-		insert into POINT(point_id, point_no, point_type, point_owner, point_amount, point_contents, point_chg_date, point_balance)  
-		values ('point'||point_id_seq.nextval, point_id_seq.nextval, 4, #{point_owner}, -1*#{point_amount}, #{point_contents}, sysdate, #{point_balance})
-	</insert>
-	
-	<update id="HoldTo" parameterType="org.wof.domain.PointVO">
-		update MEMBER 
-		set total_point = total_point - #{point_amount}
-		where member_no = #{point_owner}
-	</update>	
-	
-	<!-- point_type => 0:충전, 1:인출, 2:결제, 3:보관, 4:전송, ("5:입금", 6:환불) -->
-	<insert id="PaymentToList" parameterType="org.wof.domain.PointVO">
-		insert into POINT(point_id, point_no, point_type, point_owner, point_amount, point_contents, point_chg_date, point_balance)  
-		values ('point'||point_id_seq.nextval, point_id_seq.nextval, 5, #{point_owner}, #{point_amount}, #{point_contents}, sysdate, #{point_balance})
-	</insert>
-	
-	<update id="PaymentTo" parameterType="org.wof.domain.PointVO">
-		update MEMBER 
-		set total_point = total_point + #{point_amount}
-		where member_no = #{point_owner}
-	</update>
-	
-	
-	
-	<select id="getList" resultType="org.wof.domain.PointVO">
-	<![CDATA[
-		SELECT p.point_chg_date, m.real_name, p.point_contents, p.point_amount, p.point_balance
-		FROM
-		POINT p, member m
-		WHERE p.point_owner = m.member_no 
-    	and point_owner = #{point_owner}
-    	order by p.point_chg_date desc
-		]]>
-		
-		
-	</select>
-	
 
-	
-	<!-- order by point_id desc -->
-	<!-- bno > 0 and rownum <= 100 -->
+   <insert id="ChargingList" parameterType="org.wof.domain.PointVO">
+      insert into POINT(point_id, point_no, point_type, point_owner, point_amount, point_contents, point_chg_date, point_balance)  
+      values ('point'||point_id_seq.nextval, point_no_seq.nextval, #{point_type}, #{point_owner}, #{point_amount}, #{point_contents}, sysdate, #{point_balance})<!-- point_total = #{point_total} -->
+   </insert>
+   
+   <!-- <select id="pointBalance" parameterType="org.wof.domain.PointVO" resultType="int">
+      select point_balance 
+      FROM POINT p, MEMBER m
+      WHERE p.point_owner = m.member_no
+      and m.member_no = #{point_onwer}
+   </select> -->
+   
+   <update id="Charging" parameterType="org.wof.domain.PointVO">
+      update MEMBER 
+      set total_point = total_point + #{point_amount}
+      where member_no = #{point_owner}
+   </update>
+   
+   
+   
+   <insert id="WithdrawList" parameterType="org.wof.domain.PointVO">
+      insert into POINT(point_id, point_no, point_type, point_owner, point_amount, point_contents, point_chg_date, point_balance)  
+      values ('point'||point_id_seq.nextval, point_id_seq.nextval, #{point_type}, #{point_owner}, -1*#{point_amount}, #{point_contents}, sysdate, #{point_balance}) <!-- point_balance = #{point_balance} -->
+   </insert>
+   
+   <update id="Withdraw" parameterType="org.wof.domain.PointVO">
+      update MEMBER 
+      set total_point = total_point - #{point_amount}
+      where member_no = #{point_owner}
+   </update>
+   
+   
+   
+   <select id="getContract" parameterType="org.wof.domain.ContractSourceVO" resultType="org.wof.domain.ContractSourceVO">
+      select *
+      from contract
+      where BUSINESS_REGISTER_NO = #{BUSINESS_REGISTER_NO}
+   </select>
+   
+   <!-- point_type => 0:충전, 1:인출, "2:결제", 3:보관, 4:전송, (5:입금, 6:환불) -->
+   <insert id="PaymentFromList" parameterType="org.wof.domain.PointVO">
+      insert into POINT(point_id, point_no, point_type, point_owner, point_amount, point_contents, point_chg_date, point_balance)  
+      values ('point'||point_id_seq.nextval, point_id_seq.nextval, 2, #{point_owner}, -1*#{point_amount}, #{point_contents}, sysdate, #{point_balance})
+   </insert>
+   
+   <update id="PaymentFrom" parameterType="org.wof.domain.PointVO">
+      update MEMBER 
+      set total_point = total_point - #{point_amount}
+      where member_no = #{point_owner}
+   </update>
+   
+   <!-- point_type => 0:충전, 1:인출, 2:결제, "3:보관", 4:전송, (5:입금, 6:환불) -->
+   <insert id="HoldFromList" parameterType="org.wof.domain.PointVO">
+      insert into POINT(point_id, point_no, point_type, point_owner, point_amount, point_contents, point_chg_date, point_balance)  
+      values ('point'||point_id_seq.nextval, point_id_seq.nextval, 3, #{point_owner}, #{point_amount}, #{point_contents}, sysdate, #{point_balance})
+   </insert>
+   
+   <update id="HoldFrom" parameterType="org.wof.domain.PointVO">
+      update MEMBER 
+      set total_point = total_point + #{point_amount}
+      where member_no = #{point_owner}
+   </update>
+   
+   <!-- point_type => 0:충전, 1:인출, 2:결제, 3:보관, "4:전송", (5:입금, 6:환불) -->
+   <insert id="HoldToList" parameterType="org.wof.domain.PointVO">
+      insert into POINT(point_id, point_no, point_type, point_owner, point_amount, point_contents, point_chg_date, point_balance)  
+      values ('point'||point_id_seq.nextval, point_id_seq.nextval, 4, #{point_owner}, -1*#{point_amount}, #{point_contents}, sysdate, #{point_balance})
+   </insert>
+   
+   <update id="HoldTo" parameterType="org.wof.domain.PointVO">
+      update MEMBER 
+      set total_point = total_point - #{point_amount}
+      where member_no = #{point_owner}
+   </update>   
+   
+   <!-- point_type => 0:충전, 1:인출, 2:결제, 3:보관, 4:전송, ("5:입금", 6:환불) -->
+   <insert id="PaymentToList" parameterType="org.wof.domain.PointVO">
+      insert into POINT(point_id, point_no, point_type, point_owner, point_amount, point_contents, point_chg_date, point_balance)  
+      values ('point'||point_id_seq.nextval, point_id_seq.nextval, 5, #{point_owner}, #{point_amount}, #{point_contents}, sysdate, #{point_balance})
+   </insert>
+   
+   <update id="PaymentTo" parameterType="org.wof.domain.PointVO">
+      update MEMBER 
+      set total_point = total_point + #{point_amount}
+      where member_no = #{point_owner}
+   </update>
+   
+   
+   
+   <select id="getList" parameterType="org.wof.domain.PointVO" resultType="org.wof.domain.PointVO">
+   <![CDATA[
+   select point_chg_date, real_name, point_contents, point_amount, point_balance
+   from (
+      SELECT rownum rn, p.point_chg_date, m.real_name, p.point_contents, p.point_amount, p.point_balance
+      FROM
+      POINT p, member m
+      WHERE p.point_owner = m.member_no 
+       and p.point_owner = 'member95'
+       and rownum <= #{standard.pageNum} * #{standard.amount}
+       order by lpad('point_id', 10, '0') desc
+      
+      )
+      
+      where rn > (#{standard.pageNum} -1) * #{standard.amount}
+      
+      ]]>
+   </select>
+   
+<!--    <select id="getListTotal" resultType="int">
+   	<![CDATA[
+   		select count(*)
+   		from point p, member m
+   		where p.point_owner = m.member_no
+      and m.member_no = #{member_no}
+   	]]>
+   </select> -->
+   
+   <!-- <select id="getList" parameterType="org.wof.domain.Standard" resultType="org.wof.domain.PointVO">
+   <![CDATA[
+      select * from
+      (SELECT rownum rn, p.point_chg_date, m.real_name, p.point_contents, p.point_amount, p.point_balance
+      FROM
+      POINT p, member m
+      WHERE p.point_owner = m.member_no 
+       and point_owner = #{point_owner}
+         and rownum <= #{pageNum} * #{amount})
+       order by lpad(point_id, 10, '0') desc) 
+       where rn> (#{pageNum} -1) * #{amount} 
+       order by rn desc
+      ]]>
+   </select> -->
+   
 
-	
-	<!-- <sql id="PointSearch">
-		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
-			<foreach item='type' collection="typeArr">
-				<trim prefix="OR">
-					<choose>
-						<when test="type == 'T'.toString()">
-							title like '%'||#{keyword}||'%'
-						</when>
-						<when test="type == 'C'.toString()">
-							content like '%'||#{keyword}||'%'
-						</when>
-						<when test="type == 'W'.toString()">
-							writer like '%'||#{keyword}||'%'
-						</when>
-					</choose>
-				</trim>
-			</foreach>
-		</trim>
-	</sql> -->
-	
-	<select id="getListPaging" resultType="org.wof.domain.PointVO">
-  	<![CDATA[
-  	select *
-		from
-		(select rownum rn, point_id, point_type, point_amount, point_contents, point_chg_date, point_balance
-			from
-  			(select * from point
-  				order by lpad(point_id, 10, '0') desc)       
-				where rownum <= #{pageNum} * #{amount})
-					where rn > (#{pageNum} -1) * #{amount}
-      	]]>
-  	</select>
-  	<!-- 
-  	select 
-    	point_id, point_balance, point_type, point_amount, point_contents, point_chg_date, point_owner
-  	from 
-      	(
-      	select /*+INDEX_DESC(POINT SYS_C004144) */
-        	rownum rn, point_id, point_balance, point_type, point_amount, point_contents, point_chg_date, point_owner
-      	from 
-     	POINT
-      	where rownum <= #{pageNum} * #{amount}
-      	)
-      	where rn > (#{pageNum} -1) * #{amount}
-      	]]>
-     -->	 
-	
-		<!-- <include refid="PointSearch"></include> 
+   
+   <!-- order by point_id desc -->
+   <!-- bno > 0 and rownum <= 100 -->
+
+   
+   <!-- <sql id="PointSearch">
+      <trim prefix="(" suffix=") AND " prefixOverrides="OR">
+         <foreach item='type' collection="typeArr">
+            <trim prefix="OR">
+               <choose>
+                  <when test="type == 'T'.toString()">
+                     title like '%'||#{keyword}||'%'
+                  </when>
+                  <when test="type == 'C'.toString()">
+                     content like '%'||#{keyword}||'%'
+                  </when>
+                  <when test="type == 'W'.toString()">
+                     writer like '%'||#{keyword}||'%'
+                  </when>
+               </choose>
+            </trim>
+         </foreach>
+      </trim>
+   </sql> -->
+   
+   <select id="getListPaging" resultType="org.wof.domain.PointVO">
+     <![CDATA[
+     select *
+      from
+      (select rownum rn, point_id, point_type, point_amount, point_contents, point_chg_date, point_balance
+         from
+           (select * from point
+              order by lpad(point_id, 10, '0') desc)       
+            where rownum <= #{pageNum} * #{amount})
+               where rn > (#{pageNum} -1) * #{amount}
+         ]]>
+     </select>
+     <!-- 
+     select 
+       point_id, point_balance, point_type, point_amount, point_contents, point_chg_date, point_owner
+     from 
+         (
+         select /*+INDEX_DESC(POINT SYS_C004144) */
+           rownum rn, point_id, point_balance, point_type, point_amount, point_contents, point_chg_date, point_owner
+         from 
+        POINT
+         where rownum <= #{pageNum} * #{amount}
+         )
+         where rn > (#{pageNum} -1) * #{amount}
+         ]]>
+     -->    
+   
+      <!-- <include refid="PointSearch"></include> 
       
       
-  	<![CDATA[    
-      	rownum <= #{pageNum} * #{amount}
-      	)
-  	where rn > (#{pageNum} -1) * #{amount} 
-  	]]>  -->  
-  	
-  	<select id="getTotalCount" resultType="int">
-  	<![CDATA[
-  		select count(*) from POINT
-  	]]>	
-  	</select>
-	
+     <![CDATA[    
+         rownum <= #{pageNum} * #{amount}
+         )
+     where rn > (#{pageNum} -1) * #{amount} 
+     ]]>  -->  
+     
+     <select id="getTotalCount" resultType="int">
+     <![CDATA[
+        select count(*) from POINT
+     ]]>   
+     </select>
+   
 </mapper>
-
-

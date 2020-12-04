@@ -50,6 +50,7 @@ public class PointController {
     	
     	model.addAttribute("getList", service.ListService(member, point, standard));
     	
+    	
     	int total = service.getTotalService(standard);
     	log.info(standard);
     	log.info(total);
