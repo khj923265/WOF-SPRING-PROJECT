@@ -46,7 +46,14 @@
 				<h3><i class="ni ni-calendar-grid-58 mr-3 text-info"></i>지원 마감일</h3>
 				<h3 class="ml-4 pl-2">
 				<fmt:parseDate var="dt"	value="${Project.proj_apply_deadline }" pattern="yyyy-MM-dd HH:mm:ss" /> 
-				<fmt:formatDate	value="${dt }" pattern="yyyy/MM/dd" />
+				<fmt:formatDate	value="${dt }" pattern="yyyy/MM/dd" />				
+				</h3>
+				<h3>
+				<fmt:parseDate value="2020-12-04" var="strPlanDate" pattern="yyyy-MM-dd"/>
+                <fmt:parseNumber value="${strPlanDate.time / (1000*60*60*24)}" integerOnly="true" var="strDate"></fmt:parseNumber>
+                <fmt:parseDate value="${project.getProj_apply_deadline()}" var="endPlanDate" pattern="yyyy-MM-dd"/>
+                <fmt:parseNumber value="${endPlanDate.time / (1000*60*60*24)}" integerOnly="true" var="endDate"></fmt:parseNumber>
+				<span class="text-red">마감  ${endDate - strDate}일 전</span>
 				</h3>
 			</div>
 			<div class="col-3">
@@ -68,7 +75,7 @@
 			<div class="row mb-4">
 			  <div class="col-3">
 			    <h3><i class="ni ni-money-coins mr-3 text-success"></i>프로젝트 예산</h3>
-			    <h3 class="ml-4 pl-2">${Project.proj_estimate }</h3>
+			    <h3 class="ml-4 pl-2">${Project.proj_estimate }원</h3>
 			  </div>
 			  <div class="col-3">
 			    <h3><i class="ni ni-single-02 mr-3 text-success"></i>필요인원</h3>
@@ -119,7 +126,8 @@
 					<input type="hidden" name="source_no" value="${member.member_no }">
 					<c:forEach var="Partners" items="${Partners }">
 						<div class="row shadow p-1 mb-3 bg-white rounded ">
-						<div class="col-sm-1 my-auto">
+						
+						<div class="col-1 my-auto">
 						<div class="custom-control custom-checkbox">
 						<c:choose>
 						<c:when test="${Partners.applied_member == null }">
@@ -133,79 +141,68 @@
 						</c:choose>
 						</div>
 						</div>
-							<div class="col-sm-7">
-								<div class="row align-items-center">
-
+						
+						
+							<div class="col-1 my-auto">
 									<span
 										class="avatar avatar-lg rounded-circle justify-content-start m-3">
 										<img alt="Image placeholder"
 										src="/resources/template/assets/img/theme/team-4.jpg">
-									</span> <span class="justify-content-center">
-										<p class="mt-3 mb-0 text-sm">
-											<span class="text-nowrap"> <i class="ni ni-circle-08"></i>
-												${Partners.userid } 
-												<i class="ni ni-air-baloon ml-1"></i>
-																								
-												<c:if test="${Partners.birthday != null }">
-												${Partners.birthday }년생 
-												</c:if>												
-												
-												<i class="ni ni-map-big ml-1"></i> ${Partners.prefered_area }
-											</span>
-										</p>
-										<p class="mt-3 mb-0 text-sm">
-											<span class="text-nowrap"> <i class="ni ni-badge ml-1"></i>
-												${Partners.career } <i
-												class="ni ni-chart-pie-35 ml-1"></i>
-												${Partners.skill }
-											</span>
-										</p>
-										<p class="mt-3 mb-3 text-sm">
-											<span class="text-nowrap"> <i class="ni ni-tag ml-1"></i>
-												<span class="badge badge-primary">${Partners.hashtag }</span>
-											</span>
-										</p>
-									
-									<c:if test="${Partners.applied_member != null }">
-										<p class="mt-3 mb-3 text-sm">
-											<span class="text-nowrap"> <i class="ni ni-check-bold"></i>
-												<span class="badge badge-pill badge-info">이미 선택한 파트너스 입니다.</span>
-											</span>
-										</p>
-									</c:if>
-						
 									</span>
 								</div>
-							</div>
-
-<%-- 							<div class="col-sm-1 text-center">
-								<span class="justify-content-center">
-								<c:choose>
-								<c:when test="${Partners.target_member == null }">								 
-								  <i class="ni ni-favourite-28 mt-2">
-								 </c:when>
-								 <c:when test="${Partners.target_member != null }">
-								  <i class="ni ni-favourite-28 mt-2 color">
-								 </c:when>								
-								</c:choose>								   
-								    <input type="hidden" value="${Partners.member_no }">
-								  </i>
-								<!-- fa fa-heart-o -->
-								</span>
-							</div> --%>
-
-							<%-- <div class="col-sm-4">
-								<c:choose>
-								<c:when test="${Partners.applied_member == null }">
-									<input type="checkbox" name="member_no" value="${Partners.member_no }" style="width: 25px; height: 25px;">
-								</c:when>
-								<c:when test="${Partners.applied_member != null }">
-									<input type="checkbox" name="member_no" value="${Partners.member_no }"   disabled="disabled"
-									style="width: 25px; height: 25px;">
-								</c:when>
-								</c:choose>
-							</div> --%>
-
+								
+								
+								<div class="col-5 ml-3">
+															
+								  <div class="row mt-3 mb-0 text-sm text-nowrap">								  
+								    <div class="col-4">
+										<c:if test="${Partners.birthday != null }">
+										<i class="ni ni-air-baloon ml-1 mr-1"></i>${Partners.birthday }년생 
+										</c:if>
+									</div>
+									<div class="col-8">
+									    <c:if test="${Partners.prefered_area != null }">
+										<i class="ni ni-map-big ml-1 mr-1"></i> ${Partners.prefered_area }
+										</c:if>
+									</div>
+								  </div>
+									
+									<div class="row mt-3 mb-0 text-sm text-nowrap">
+									  <div class="col-4">
+										<c:if test="${Partners.career != null }">
+										<i class="ni ni-badge ml-1 mr-1"></i>${Partners.career }
+										</c:if>
+									  </div>
+									  <div class="col-8">
+										<c:if test="${Partners.skill != null }">
+										<i class="ni ni-chart-pie-35 ml-1 mr-1"></i>${Partners.skill }
+										</c:if>
+									  </div>
+									</div>
+									
+									<div class="row">
+									<div class="col-12">
+									
+										<p class="mt-3 mb-3 text-sm">
+											<span class="text-nowrap"> 
+											<c:if test="${Partners.hashtag != null }">
+											<i class="ni ni-tag ml-1 mr-1"></i>
+												<span class="badge badge-primary">${Partners.hashtag }</span>
+											</c:if>
+											</span>
+										</p>
+									</div>	
+									</div>
+									
+									</div>
+									
+									<div class="col-4 my-auto">
+									<c:if test="${Partners.applied_member != null }">
+										<h3><i class="ni ni-check-bold"></i>
+											<span class="badge badge-pill badge-info">이미 선택한 파트너스 입니다.</span>
+										</h3>
+									</c:if>
+									</div>
 						</div>
 					</c:forEach>
 					
@@ -328,10 +325,6 @@
 						return false;
 					}
 				});
-				
-				function success(){
-					
-				}
 				
 			});
 		</script>
