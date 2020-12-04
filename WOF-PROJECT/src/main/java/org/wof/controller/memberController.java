@@ -180,7 +180,7 @@ public class memberController {
 
 
 
-        return "redirect:/client/dashboard_client";
+        return "redirect:/client/dashboard_client?member_no="+clientVO.getMember_no();
     }
 
     //------------------------------------------------------------------------
