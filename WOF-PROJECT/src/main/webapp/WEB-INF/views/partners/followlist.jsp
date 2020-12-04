@@ -64,17 +64,17 @@
 				</div>
 			  <div class="col-2">
 			    <c:if test="${followList.career != null }">
-			    <h3><i class="ni ni-badge mr-3"></i>${followList.career }</h3>
+			    <h3><i class="ni ni-badge mr-3 text-muted"></i>${followList.career }</h3>
 			    </c:if>
 			  </div>
 			  <div class="col-3">
 			    <c:if test="${followList.skill != null }">
-			    <h3><i class="ni ni-chart-pie-35 mr-3"></i>${followList.skill }</h3>
+			    <h3><i class="ni ni-chart-pie-35 mr-3 text-muted"></i>${followList.skill }</h3>
 			    </c:if>
 			  </div>
 			  <div class="col-3">
 			    <c:if test="${followList.prefered_area != null }">
-			    <h3><i class="ni ni-map-big mr-3"></i>${followList.prefered_area }</h3>
+			    <h3><i class="ni ni-map-big mr-3 text-muted"></i>${followList.prefered_area }</h3>
 			    </c:if>
 			  </div>
 			  
@@ -85,7 +85,7 @@
 				  </c:when>
 				  
 				  <c:when test="${followList.birthday != null }">
-					<h3><i class="ni ni-air-baloon mr-3"></i>${followList.birthday }년생</h3>
+					<h3><i class="ni ni-air-baloon mr-3 text-muted"></i>${followList.birthday }년생</h3>
 				  </c:when>
 				</c:choose>
 			  </div>

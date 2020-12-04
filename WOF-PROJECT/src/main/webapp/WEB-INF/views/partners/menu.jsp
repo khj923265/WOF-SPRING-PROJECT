@@ -14,10 +14,9 @@
 							 <a class="btn btn-secondary bg-white"
 							href="${pageContext.request.contextPath}/partners/applystate?member_no=${member.member_no }">파트너스 지원현황 및 선택</a>
 							<a class="btn btn-secondary bg-white"
-							href="${pageContext.request.contextPath}/partners/appliedpartners?member_no=${member.member_no }&proj_id=${ProjectVO.proj_id}">파트너스 선택</a>
+							href="${pageContext.request.contextPath}/partners/appliedpartners?member_no=${member.member_no }">계약현황</a>
 							<a class="btn btn-secondary bg-white"
-							   href="${pageContext.request.contextPath}/partners/appliedpartners?member_no=${member.member_no }&proj_id=${ProjectVO.proj_id}">계약현황</a>
-						<button type="button" class="btn btn-secondary bg-white">계약완료</button>
+							href="${pageContext.request.contextPath}/contract/completion?member_no=${member.member_no }&auth=${member.auth}">계약완료</a>
 					</div>
 				</div>
 			</div>

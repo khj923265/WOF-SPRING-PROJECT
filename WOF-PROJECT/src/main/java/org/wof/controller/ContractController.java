@@ -33,9 +33,25 @@ public class ContractController {
 	public String sourceRegister(ContractVO contract, RedirectAttributes attr){
 		
 		contractService.sourceRegister(contract);
-		attr.addAttribute("proj_id", contract.getRelated_proj());
+		attr.addAttribute("member_no", contract.getContract_write_source());
 		
 		return "redirect:/partners/appliedpartners";
+	}
+	
+	@RequestMapping("/targetsignature")
+	public String targetSignature(ContractVO contract, RedirectAttributes attr){
+		
+		contractService.targetSignature(contract);
+		attr.addAttribute("member_no", contract.getContract_write_target());
+		
+		return "redirect:/partners/appliedpartners";
+	}
+	
+	@RequestMapping("/completion")
+	public void contractCompletion(
+			@RequestParam("member_no") String member_no, 
+			@RequestParam("auth") String auth, Model model){
+		model.addAttribute("completion", contractService.contractCompletion(member_no, auth));
 	}
 
 }

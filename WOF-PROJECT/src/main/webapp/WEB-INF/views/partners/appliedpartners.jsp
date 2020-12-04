@@ -18,52 +18,12 @@
 		<div class="container">
 			<!-- 제목 -->
 			<div class="row mt-3">
-				<h3>파트너스 선택</h3>
+				<h3>계약현황</h3>
 			</div>
 
-			<!-- 프로젝트내용 및 지원 파트너스 리스트 -->
+			<!-- 프로젝트별 계약현황 -->
 			<div class="row">
 			<div class="col-sm-12">
-			
-			<!-- 프로젝트 내용 -->
-			<div class="row">
-			<div class="col-sm-12 shadow p-3 mb-5 bg-white rounded ">
-				<h3>프로젝트명 : ${Project.proj_title }</h3>
-				
-				<span>${Project.member_no }</span></br>
-				<span>
-				${Project.proj_reg_date }
-				${Project.proj_apply_deadline }
-				<fmt:parseDate var="dt"
-			value="${Project.proj_start_date }"
-			pattern="yyyy-MM-dd HH:mm:ss" /> <fmt:formatDate
-			value="${dt }" pattern="yyyy/MM/dd" />
-				<fmt:parseDate var="dt"
-			value="${Project.proj_end_date }"
-			pattern="yyyy-MM-dd HH:mm:ss" /> <fmt:formatDate
-			value="${dt }" pattern="yyyy/MM/dd" />
-				
-				</span></br>
-				
-				<span>
-				${Project.proj_estimate }
-				${Project.proj_reqr_person }
-				</span></br>
-				
-				<span>
-				${Project.proj_reqr_skill }
-				${Project.proj_career }
-				</span></br>
-				
-				<span>
-				${Project.proj_work_type }
-				${Project.proj_work_place }
-				${Project.proj_work_time }
-				${Project.proj_work_equip }
-				</span></br>
-			
-			</div>
-			</div>
 			
 
 				<!-- 파트너스리스트 -->
@@ -74,67 +34,54 @@
 					<button id="chkBtn" class="btn btn-default mb-3">선택한 파트너스 삭제</button>
 				
 					<form id="checkForm" action="applyDelete" method="post">
-					<input type="hidden" name="proj_id" value="${Project.proj_id }">
-					<c:forEach var="Member" items="${Member }">
+					<input type="hidden" name="source_no" value="${member.member_no }">
+					<c:forEach var="appliedpartners" items="${appliedpartners }">
+					<c:if test="${appliedpartners.member_no != null }">
 						<div class="row shadow p-1 mb-3 bg-white rounded ">
 						<div class="col-sm-1 my-auto">
 						<div class="custom-control custom-checkbox">
-							<input type="checkbox" name="member_no" value="${Member.member_no }" style="width: 25px; height: 25px;">
+							<input type="checkbox" name="member_no" value="${appliedpartners.member_no }" style="width: 25px; height: 25px;">
+							<input type="hidden" name="proj_idArr" value="${appliedpartners.proj_id }">
+							<input type="hidden" name="proj_id" id="proj_id">
 						</div>
 						</div>
-							<div class="col-sm-7">
+							<div class="col-sm-1">
 								<div class="row align-items-center">
-
+								
 									<span
 										class="avatar avatar-lg rounded-circle justify-content-start m-3">
 										<img alt="Image placeholder"
 										src="/resources/template/assets/img/theme/team-4.jpg">
-									</span> <span class="justify-content-center">
-										<p class="mt-3 mb-0 text-sm">
-											<span class="text-nowrap"> <i class="ni ni-circle-08"></i>
-												${Member.userid } 
-												<i class="ni ni-air-baloon ml-1"></i>
-																								
-												<i class="ni ni-map-big ml-1"></i> ${Member.real_name }
-											</span>
-										</p>
-										<p class="mt-3 mb-0 text-sm">
-											<span class="text-nowrap"> <i class="ni ni-badge ml-1"></i>
-												${Member.userPhone }
-											</span>
-										</p>
-									</span>
+									</span> 
+								</div>	 
+							</div>
+							<div class="col-6">
+								<div class="row">
+								<div class="col-12 align-items-center mt-3">
+							     <i class="ni ni-email-83 mr-2 text-info"></i></span>${appliedpartners.userid }											
+								 <i class="ni ni-single-02 ml-3 mr-2 text-pink"></i> ${appliedpartners.real_name }
+								 <i class="ni ni-caps-small ml-3 mr-2 text-muted"></i>${appliedpartners.userPhone }
+								 </div>
+								</div>
+								<div class="row">
+								<div class="col-12">
+								 <i class="ni ni-folder-17 mt-3 mr-2 text-yellow"></i>${appliedpartners.proj_title }
+							  </div>
 								</div>
 							</div>
 
-<%-- 							<div class="col-sm-1 text-center">
-								<span class="justify-content-center">
-								<c:choose>
-								<c:when test="${Partners.target_member == null }">								 
-								  <i class="ni ni-favourite-28 mt-2">
-								 </c:when>
-								 <c:when test="${Partners.target_member != null }">
-								  <i class="ni ni-favourite-28 mt-2 color">
-								 </c:when>								
-								</c:choose>								   
-								    <input type="hidden" value="${Partners.member_no }">
-								  </i>
-								<!-- fa fa-heart-o -->
-								</span>
-							</div> --%>
-
 							<div class="col-sm-4 my-auto">
 								<c:choose>
-								  <c:when test="${Member.contract_write_target == null }">
-									<a href="${pageContext.request.contextPath }/contract/read?source_no=${Project.member_no }
-									&target_no=${Member.member_no }&proj_id=${Project.proj_id }">
+								  <c:when test="${appliedpartners.contract_write_target == null }">
+									<a href="${pageContext.request.contextPath }/contract/read?source_no=${member.member_no }
+									&target_no=${appliedpartners.member_no }&proj_id=${appliedpartners.proj_id }">
 									<button type="button" class="btn btn-outline-default">계약서작성</button>
 									</a>
 								  </c:when>
 										  
-								  <c:when test="${Member.contract_write_source != null }">
+								  <c:when test="${appliedpartners.contract_write_source != null }">
 									<p class="mt-3 mb-3 text-sm">
-											<h1><span class="text-nowrap"> <i class="ni ni-single-copy-04"></i>
+											<h1><span class="text-nowrap"> <i class="ni ni-single-copy-04 mr-2 text-primary"></i>
 												<span class="badge badge-pill badge-primary">계약이 진행중 입니다.</span>
 											</span></h1>
 										</p>
@@ -148,6 +95,7 @@
 							</div>
 
 						</div>
+					</c:if>
 					</c:forEach>
 					
 					</form>
@@ -182,7 +130,6 @@
 					</nav>
 					
 					<form id='actionForm' action="/partners/appliedpartners" method="get">
-						<input type="hidden" name='proj_id' value='${Project.proj_id}'>
 						<input type="hidden" name='member_no' value='${Project.member_no}'>
 						<input type="hidden" name='pageNum' value = '${pageMaker.standard.pageNum}'>
 						<input type="hidden" name='amount' value = '${pageMaker.standard.amount}'>
@@ -248,9 +195,9 @@
 				$("#chkBtn").click(function() {
 					if($("input[name='member_no']").is(":checked") == true){
 					
-						$("input[name='member_no']:checked").each(function() { 
+						$("input[name='member_no']:checked").each(function(index) { 
 						
-							checkArray.push($(this).val());						
+							checkArray.push($(this).next().val());
 						
 						});
 						Swal.fire({
@@ -264,6 +211,7 @@
 							  cancelButtonText: '취소'
 							}).then((result) => {
 							  if (result.isConfirmed) {
+								  $("#proj_id").val(checkArray);
 								  checkForm.submit();
 							  }
 							})
