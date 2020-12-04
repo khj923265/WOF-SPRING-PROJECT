@@ -59,4 +59,5 @@ public interface PartnersService {
 	
 	public int appliedpartnersTotal(Standard standard);
 
+	public List<ProjectVO> dashboardFollowProject(String related_member);
 }

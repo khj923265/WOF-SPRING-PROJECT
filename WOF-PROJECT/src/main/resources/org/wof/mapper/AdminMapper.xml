@@ -4,9 +4,92 @@
 
 <mapper namespace="org.wof.mapper.AdminMapper">
 
-<select id="getTotalCount" resultType="int">
+<select id="getTotalCount2" resultType="int">
 	select count(*) from project
 </select>
 	
+<select id="TotalMember" resultType="int">
+	select count(*) from member
+</select>
 	
+<select id="RegisterCompany" resultType="int">
+	select count(name) from client
+</select>
+
+<select id="CompanyList" resultType="org.wof.domain.ClientVO">
+	<![CDATA[
+	select member_no, name, tel, address1
+	from
+	(
+		select rownum rn, member_no, name, tel, address1
+		from client
+		where name is not null
+		and rownum <= #{pageNum} * #{amount}
+	)
+	
+	where rn > (#{pageNum} -1) * #{amount}
+	]]>
+</select>
+
+<select id="CompanyListTotal" resultType="int">
+	select count(name)
+	from client
+</select>
+
+<select id="noticeList" resultType="org.wof.domain.NoticeVO">
+	<![CDATA[
+	select * from notice where nno > 0
+	]]>
+</select>
+
+<select id="getListWithPaging" resultType="org.wof.domain.NoticeVO">
+<![CDATA[
+	select nno, title, ncontent, nwriter, nrdate
+	from
+	(
+		select /*+INDEX_DESC(notice pk_notice) */
+		rownum rn, nno, title, ncontent, nwriter, nrdate
+		from notice
+		where rownum <= #{pageNum} * #{amount}
+	)
+	where rn > (#{pageNum} -1) * #{amount}
+	
+]]>
+</select>
+
+<select id="getTotalCount" resultType="int">
+	select count(*) from notice where nno > 0
+</select>
+
+<insert id="insert">
+	insert into notice(nno, title, ncontent, nwriter)
+	values (seq_notice.nextval, #{title}, #{ncontent}, #{nwriter})
+</insert>
+
+<insert id="insertSelectKey">
+	<selectKey keyProperty="nno" order="BEFORE" resultType="int">
+		select seq_notice.nextval from dual
+	</selectKey>
+	
+	insert into notice (nno, title, nwriter, ncontent) 
+	values (#{nno}, #{title}, #{nwriter}, #{ncontent})
+</insert>
+
+<select id="read" resultType="org.wof.domain.NoticeVO">
+	select * from notice where nno = #{nno}
+</select>
+
+<delete id="delete">
+	delete from notice where nno = #{nno}
+</delete>
+
+
+<update id="update">
+	update notice
+	set title = #{title},
+	nwriter = #{nwriter},
+	ncontent = #{ncontent},
+	updatedate = sysdate
+	where nno = #{nno}
+</update>
 </mapper>

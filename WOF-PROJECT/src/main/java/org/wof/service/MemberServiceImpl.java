@@ -33,6 +33,7 @@ public class MemberServiceImpl implements MemberService{
     public String checkId(String userid) {
         return mapper.checkId(userid);
     }
+
     //회원가입
     @Transactional
     @Override
@@ -62,8 +63,12 @@ public class MemberServiceImpl implements MemberService{
     //클라이언트 정보
     @Override
     public ClientVO clientInfo(String userid) {
+        System.out.println("userid"+userid);
         String member_no = mapper.memberNo(userid);
-        return mapper.clientInfo(member_no);
+        System.out.println("member_no"+member_no);
+        ClientVO clientVO = mapper.clientInfo(member_no);
+        System.out.println(clientVO);
+        return clientVO;
     }
     //비밀번호 확인
     @Override
@@ -98,24 +103,26 @@ public class MemberServiceImpl implements MemberService{
     }
     //로그인시 회원 상태체크,로그인날짜 최신화
     @Override
-    public String loginIdCheck(String userid) {
+    public String loginIdPwCheck(MemberVO memberVO) {
 
-        String status = mapper.loginIdCheck(userid);
-        System.out.println("service_status : "+status);
+        String status = mapper.loginIdCheck(memberVO.getUserid());
         if (status != null) {
-            if (mapper.kakaoIdCheck(userid).contains("kakao")) {
+            if (mapper.kakaoIdCheck(memberVO.getUserid()).contains("kakao")) {
                 status = "4";
             }else if (status.equals("탈퇴")) {
                 status = "1";
             } else if (status.equals("휴면")) {
                 status = "2";
             } else if (status.equals("정상")){
-                mapper.loginsysdate(userid);
+                if (!passwordEncoder.matches(memberVO.getUserpw(),mapper.checkPw2(memberVO.getUserid()))){
+                    status = "6";//비밀번호 false
+                }else{
+                mapper.loginsysdate(memberVO.getUserid());
                 status = "5";
-                System.out.println(status);
+                }
             }
         }else {
-            status = "3";
+            status = "3";//아이디없음
         }
 
         return status;
@@ -149,9 +156,11 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public ProjectProfileVO projectprofileinfo(String userid) {
-        return mapper.projectprofileinfo(userid);
+        ProjectProfileVO projectProfileVO = mapper.projectprofileinfo(userid);
+        System.out.println("=========="+projectProfileVO);
+        return projectProfileVO;
     }
-
+    //자기소개 수정
     @Override
     public void profileupdate(PartnersVO partnersVO) {
         mapper.profileupdate(partnersVO);
@@ -160,6 +169,21 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public void projectprofiledelete(String no) {
         mapper.projectprofiledelete(no);
+    }
+    //프로젝트 프로파일 수정
+    @Override
+    public void projectProfileUpdate(ProjectProfileVO projectProfileVO) {
+        mapper.projectProfileUpdate(projectProfileVO);
+    }
+    //미팅 수정
+    @Override
+    public void meetingupdate(MeetVO meetVO) {
+        mapper.meetingupdate(meetVO);
+    }
+
+    @Override
+    public MeetVO meetInfo(String meet_id) {
+        return mapper.meetInfo(meet_id);
     }
 
 
@@ -192,7 +216,6 @@ public class MemberServiceImpl implements MemberService{
 
             //    결과 코드가 200이라면 성공
             int responseCode = conn.getResponseCode();
-            System.out.println("responseCode : " + responseCode);
 
             //    요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -202,7 +225,6 @@ public class MemberServiceImpl implements MemberService{
             while ((line = br.readLine()) != null) {
                 result += line;
             }
-            System.out.println("response body : " + result);
 
             //    Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
             JsonParser parser = new JsonParser();
@@ -210,9 +232,6 @@ public class MemberServiceImpl implements MemberService{
 
             access_Token = element.getAsJsonObject().get("access_token").getAsString();
             refresh_Token = element.getAsJsonObject().get("refresh_token").getAsString();
-
-            System.out.println("access_token : " + access_Token);
-            System.out.println("refresh_token : " + refresh_Token);
 
             br.close();
             bw.close();
@@ -239,7 +258,6 @@ public class MemberServiceImpl implements MemberService{
             conn.setRequestProperty("Authorization", "Bearer " + access_Token);
 
             int responseCode = conn.getResponseCode();
-            System.out.println("responseCode : " + responseCode);
 
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
@@ -249,7 +267,6 @@ public class MemberServiceImpl implements MemberService{
             while ((line = br.readLine()) != null) {
                 result += line;
             }
-            System.out.println("response body : " + result);
 
             JsonParser parser = new JsonParser();
             JsonElement element = parser.parse(result);
@@ -273,6 +290,7 @@ public class MemberServiceImpl implements MemberService{
         return userInfo;
     }
 
+    //카카오회원가입
     @Transactional
     @Override
     public void kakaoSignup(MemberVO memberVO) {
@@ -286,6 +304,7 @@ public class MemberServiceImpl implements MemberService{
         mapper.signUpPartners(memberVO);
     }
 
+    //아이디 찾기
     @Override
     public String findIdForm(MemberVO memberVO) {
         String userid;
@@ -315,6 +334,7 @@ public class MemberServiceImpl implements MemberService{
         }
     }
 
+    //비밀번호 찾기
     @Transactional
     @Override
     public String findPwForm(MemberVO memberVO) {

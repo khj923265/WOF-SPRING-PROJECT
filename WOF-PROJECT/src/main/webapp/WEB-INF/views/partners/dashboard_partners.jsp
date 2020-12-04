@@ -61,11 +61,11 @@
 				<!-- Navigation -->
 				<ul class="navbar-nav mb-md-3">
 					<li class="nav-item"><a class="nav-link"
-						href="https://demos.creative-tim.com/argon-dashboard/docs/getting-started/overview.html">
-							<i class="ni ni-archive-2"></i> <span class="nav-link-text">문의하기</span>
+						href="${pageContext.request.contextPath}/qna/question-register-partners">
+							<i class="ni ni-archive-2"></i> <span class="nav-link-text">1:1문의</span>
 					</a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="https://demos.creative-tim.com/argon-dashboard/docs/foundation/colors.html">
+						href="${pageContext.request.contextPath}/point/point_partners">
 							<i class="ni ni-money-coins"></i> <span class="nav-link-text">포인트
 								관리</span>
 					</a></li>
@@ -107,14 +107,12 @@
 						<div>
 							<h4>파트너스</h4>
 							<h2>내 프로젝트 현황</h2>
-							<span class="nav-link-text">누적완료 포인트 : 000원</span>
 						</div>
-						<button type="button" class="btn btn-secondary">제안받은 요청</button>
 						<a class="btn btn-primary"
-							href="/partners/project_apply_detail?member_no=${member.member_no}">지원
-							프로젝트</a>
-						<button type="button" class="btn btn-secondary">계약요청</button>
-						<button type="button" class="btn btn-secondary">진행중인 프로젝트</button>
+						   href="/partners/project_apply_detail">지원 프로젝트</a>
+						<a class="btn btn-primary" href="/partners/appliedpartners?member_no=${member.member_no }">계약현황</a>
+						<button type="button" class="btn btn-secondary">진행중인
+							프로젝트</button>
 						<button type="button" class="btn btn-secondary">완료 프로젝트</button>
 						<br> <br>
 						<h2>나의 타임라인</h2>
@@ -127,9 +125,45 @@
 								</div>
 							</div>
 							<div class="col-md-6 column ui-sortable">
-								<b>일정 캘린더</b>
+								<b>찜한 프로젝트</b>
 								<div class="card bg-light text-dark">
-									<div class="card-body">아아아아아</div>
+									<c:choose>
+										<c:when test="${empty dashboardFollowProject }">
+										<div class="card-body">
+										<center>
+										<br>
+										<h5 data-toggle="tooltip" data-placement="top" title="찜한 프로젝트가 없습니다.">조회 결과가 없습니다.</h5>
+										</center>
+										</div>
+										</c:when>
+									<c:when test="${!empty dashboardFollowProject }">
+									<div class="card-body">
+										<table class="table align-items-center table-flush">
+											<thead class="thead-light">
+												<tr>
+													<th scope="col"><i class="ni ni-chart-pie-35 ml-1"></i>
+														#프로젝트명</th>
+													<th scope="col"><i class="ni ni-square-pin"></i> 경력</th>
+													<th scope="col"><i class="ni ni-badge ml-1"></i> 지원마감</th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach var="dashboardFollowProject"
+													items="${dashboardFollowProject }">
+													<tr>
+														<td>${dashboardFollowProject.proj_title }</td>
+														<td>${dashboardFollowProject.proj_career }</td>
+														<td><fmt:parseDate var="dt"
+																value="${dashboardFollowProject.proj_apply_deadline }"
+																pattern="yyyy-MM-dd HH:mm:ss" /> <fmt:formatDate
+																value="${dt }" pattern="yyyy/MM/dd" /></td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
+									</c:when>
+									</c:choose>
 								</div>
 							</div>
 						</div>
@@ -179,7 +213,7 @@
 																value="${ProjectVO.proj_start_date }"
 																pattern="yyyy-MM-dd HH:mm:ss" /> <fmt:formatDate
 																value="${dt }" pattern="yyyy/MM/dd" /></td>
-														<td class="text-right"><a class="" href="#">자세히보기</a>
+														<td class="text-right"><a class="" href="/project/read?proj_id=${ProjectVO.proj_id }">자세히보기</a>
 														</td>
 													</tr>
 												</c:forEach>

@@ -139,11 +139,9 @@
 								<h2>내 프로젝트 현황</h2>
 								<span class="nav-link-text">누적완료 포인트 : 000원</span>
 							</div>
-							<button type="button" class="btn btn-secondary">제안받은 요청</button>
 							<a class="btn btn-primary"
-								href="/kosta202-project/Partners/listApplyProjectAction.do"
-								>지원 프로젝트</a>
-							<button type="button" class="btn btn-secondary">계약요청</button>
+								href="/partners/project_apply_detail">지원 프로젝트</a>
+							<a class="btn btn-primary" href="/partners/appliedpartners?member_no=${member.member_no }">계약현황</a>
 							<button type="button" class="btn btn-secondary">진행중인
 								프로젝트</button>
 							<button type="button" class="btn btn-secondary">완료 프로젝트</button>

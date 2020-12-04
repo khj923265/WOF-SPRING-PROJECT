@@ -47,7 +47,7 @@ public class QnaServiceImpl implements QnaService {
 		
 		return qnaMapper.getListPaging(standard);
 	}
-
+	
 	@Override
 	public int getTotalService(Standard standard) {
 		
@@ -61,38 +61,31 @@ public class QnaServiceImpl implements QnaService {
 	//@Transactional
 	@Override
 	public void registerService(QuestionVO quest) {
-		log.info("��������1:1���Ǣ������� question..." + quest);
-
 		log.info("======== register ========" + quest);
-		
-		qnaMapper.insertSelectKey(quest);
-		
-		quest.setQuest_ans_check(0);
-		quest.setQuest_deleted(0);
+		qnaMapper.insert(quest);
 		log.info("==========================");
 		
-		
 		 try {
-	            // �̸��� ��ü
 	            MimeMessage msg = mailSender.createMimeMessage();
 	 
-	            // �޴� ����� ���� (������, �޴»���� �̸��� �ּ� ��ü�� �����ؼ� ������ �̸����ּҸ� ����)
+	            // 받는 사람을 설정 (수신자, 받는사람의 이메일 주소 객체를 생성해서 수신자 이메일주소를 담음)
 	            msg.addRecipient(RecipientType.TO, new InternetAddress(quest.getReceiveMail()));
 	 
 	            /*
-	             * createMimeMessage() : MimeMessage��ü�� ������Ŵ (�̰��� �̿��ؼ� �޽����� ������ �� ���� �߼�)
-	             * addRecipient() : �޽����� �߽��ڸ� ���� InternetAddress() : �̸��� �ּ� getReceiveMail() :
-	             * ������ �̸��� �ּ�
+	             * createMimeMessage() : MimeMessage객체를 생성시킴 (이것을 이용해서 메시지를 구성한 뒤 메일 발송)
+	             * addRecipient() : 메시지의 발신자를 설정 
+	             * InternetAddress() : 이메일 주소 
+	             * getReceiveMail() :수신자 이메일 주소
 	             */
 	 
-	            // ������ ���(�̸����ּ�+�̸�)
-	            // (�߽���, ������ ����� �̸��� �ּҿ� �̸��� ����)
-	            // �̸��� �߽���
+	            // 보내는 사람(이메일주소+이름)
+	            // (발신자, 보내는 사람의 이메일 주소와 이름을 담음)
+	            // 이메일 발신자
 	            msg.addFrom(new InternetAddress[] { new InternetAddress(quest.getSenderMail(), quest.getQuest_writer()) });
 	 
-	            // �̸��� ���� (���ڵ��� �ؾ� �ѱ��� ������ ����)
+	            // 이메일 제목 (인코딩을 해야 한글이 깨지지 않음)
 	            msg.setSubject(quest.getQuest_title(), "utf-8");
-	            // �̸��� ���� (���ڵ��� �ؾ� �ѱ��� ������ ����)
+	            // 이메일 본문 (인코딩을 해야 한글이 깨지지 않음)
 	            msg.setText(quest.getQuest_contents(), "utf-8");
 	 
 //	            html�� ���� ���            
@@ -102,6 +95,7 @@ public class QnaServiceImpl implements QnaService {
 //	            helper.setTo("test@host.com");
 //	            helper.setText("<html><body><img src='cid:identifier1234'></body></html>", true);
 	 
+	            // 이메일 보내기
 	            // �̸��� ������
 	            mailSender.send(msg);
 	        } catch (Exception e) {
@@ -109,15 +103,6 @@ public class QnaServiceImpl implements QnaService {
 	        }
 
 //		int questionResult = qnaMapper.Question(quest);
-
-		if(quest.getAttachList() == null || quest.getAttachList().size() <= 0) {
-			return;
-		}
-		
-		quest.getAttachList().forEach(attach -> {
-			attach.setQuest_no(quest.getQuest_id());
-			attachMapper.insert(attach);
-		});
 	}
 
 	@Override
@@ -144,7 +129,7 @@ public class QnaServiceImpl implements QnaService {
 	@Override
 	public List<QuestAttachVO> getAttachListService(Long quest_no) {
 		
-			log.info("====���� ���ε� ====" + quest_no);
+			log.info("====파일 업로드 ====" + quest_no);
 			
 		return attachMapper.findByQuest_no(quest_no);
 	}

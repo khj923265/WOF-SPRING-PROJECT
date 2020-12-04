@@ -27,7 +27,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
         });
 
         if (roleNames.contains("ROLE_ADMIN")){
-            httpServletResponse.sendRedirect("/member/admin");
+            httpServletResponse.sendRedirect("/admin/dashboard_admin");
             return;
         }
         if (roleNames.contains("ROLE_CLIENT")){

@@ -71,8 +71,9 @@
                                                         </td>
                                                         <td class="text-right">
                                                             <div>
+                                                                <input type="hidden" name="no" id="noform">
                                                                 <button type="submit" class="btn btn-success"
-                                                                        onsubmit="profileUpdate()">수정
+                                                                        onsubmit="profileManagement.projectProfileUpdate()">수정
                                                                 </button>
                                                             </div>
                                                         </td>

@@ -41,11 +41,11 @@
 								class="ni ni-bullet-list-67 text-default"></i> <span
 								class="nav-link-text">공지사항</span>
 						</a></li>
-						<li class="nav-item"><a class="nav-link"
+						<!-- <li class="nav-item"><a class="nav-link"
 							href="#"> <i
 								class="ni ni-archive-2 text-default"></i> <span
 								class="nav-link-text">문의하기</span>
-						</a></li>
+						</a></li> -->
 						<li class="nav-item"><a class="nav-link"
 							href="../member/client/client_info_update"> <i
 								class="ni ni-settings-gear-65 text-default"></i> <span
@@ -61,15 +61,25 @@
 								<i class="ni ni-spaceship"></i> <span class="nav-link-text">파트너스
 									관리</span>
 						</a></li>
+						
 						<li class="nav-item"><a class="nav-link"
-							href="https://demos.creative-tim.com/argon-dashboard/docs/foundation/colors.html">
-								<i class="ni ni-money-coins"></i> <span class="nav-link-text">포인트관리</span>
+						href="${pageContext.request.contextPath}/qna/question-register-client">
+							<i class="ni ni-archive-2"></i> <span class="nav-link-text">1:1문의</span>
 						</a></li>
+						<li class="nav-item"><a class="nav-link"
+						href="${pageContext.request.contextPath}/point/point_client">
+							<i class="ni ni-money-coins"></i> <span class="nav-link-text">포인트 관리</span>
+						</a></li>	
 						<li class="nav-item"><a class="nav-link"
 							href="${pageContext.request.contextPath}/Penalty/listPenaltyClient.do">
 								<i class="ni ni-palette"></i> <span class="nav-link-text">페널티
 									관리</span>
 						</a></li>
+						<li class="nav-item"><a class="nav-link"
+						href="${pageContext.request.contextPath}/community/partners_community_list">
+							<i class="ni ni-palette"></i> <span class="nav-link-text">커뮤니티 게시판
+						</span>
+					</a></li>	
 					</ul>
 				</div>
 			</div>
@@ -97,14 +107,17 @@
 							<div>
 								<h4>클라이언트</h4>
 								<h2>프로젝트 관리</h2>
-								<span class="nav-link-text">보유 포인트 : 000원</span>
 							</div>
 							<button type="button" class="btn btn-secondary">제안한 요청</button>
-							<button type="button"
-								onclick="location.href='../Client/registerProjectListAction.do'"
-								class="btn btn-secondary">등록 프로젝트</button>
-							<button type="button" class="btn btn-secondary">관심 파트너스</button>
-							<button type="button" class="btn btn-secondary">계약된 파트너스</button>
+							<a type="button"
+								href="/partners/applystate?member_no=${member.member_no}"
+								class="btn btn-primary">등록 프로젝트</a>
+							<a type="button"
+							   href="/partners/followlist?member_no=${member.member_no}"
+							   class="btn btn-primary">관심 파트너스</a>
+							<a type="button"
+							   href="/contract/completion?member_no=${member.member_no}&auth=${member.auth}"
+							   class="btn btn-primary">계약된 파트너스</a>
 							<br> <br>
 							<div class="row">
 								<div class="col-md-11 column ui-sortable">

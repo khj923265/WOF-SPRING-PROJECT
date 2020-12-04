@@ -18,11 +18,15 @@
 
     <security:http auto-config="true" use-expressions="true">
         <security:csrf disabled="true"/>
-        <security:intercept-url pattern="/**" access="permitAll"/>
-        <!--        <security:intercept-url pattern="/member/partners" access="hasRole('ROLE_PARTNERS')"/>-->
-        <!--        <security:intercept-url pattern="/member/admin" access="hasRole('ROLE_ADMIN')"/>-->
-        <!--        <security:intercept-url pattern="/sample/client" access="hasRole('ROLE_CLIENT')"/>-->
-        <!--        <security:intercept-url pattern="/sample/partners" access="hasRole('ROLE_PARTNERS')"/>-->
+
+        <security:intercept-url pattern="/main" access="permitAll()"/>
+        <security:intercept-url pattern="/member/partners/*" access="hasRole('ROLE_PARTNERS')"/>
+        <security:intercept-url pattern="/member/client/*" access="hasRole('ROLE_CLIENT')"/>
+<!--            <security:intercept-url pattern="/member/partners" access="hasRole('ROLE_PARTNERS')"/>-->
+<!--            <security:intercept-url pattern="/member/admin" access="hasRole('ROLE_ADMIN')"/>-->
+<!--            <security:intercept-url pattern="/sample/client" access="hasRole('ROLE_CLIENT')"/>-->
+<!--            <security:intercept-url pattern="/sample/partners" access="hasRole('ROLE_PARTNERS')"/>-->
+
         <security:access-denied-handler ref="customeAccessDenied"/>
         <security:form-login login-page="/member/customlogin" authentication-success-handler-ref="customLoginSuccess"
                              username-parameter="userid" password-parameter="userpw" login-processing-url="/login"/>

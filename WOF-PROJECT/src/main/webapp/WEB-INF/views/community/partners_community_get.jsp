@@ -227,8 +227,7 @@
 						value='replyer'>
 				</div>
 				<div class="form-group">
-					<label>작성일</label> <input class="form-control" name='replyDate'
-						value='1995-04-22 00:00:13'>
+					<label>작성일</label> <input class="form-control" name='replyDate' value=''>
 				</div>
 
 			</div>
@@ -310,11 +309,10 @@
 												}
 
 												replyUL.html(str);
-
 												showReplyPage(replyCnt);
 
 											});
-						} // end showList
+										} // end showList
 
 						var pageNum = 1;
 						var replyPageFooter = $(".panel-footer");
@@ -396,7 +394,9 @@
 						replyer = '<sec:authentication property = "principal.username"/>';
 						
 						</sec:authorize>
-						
+/* 						
+						var csrfHeaderName = "${_csrf.headerName}";
+						var csrfTokenValue = "${_csrf.token}"; */
 						
 						$("#addReplyBtn").on("click", function(e) {
 							modal.find("input").val("");
@@ -410,7 +410,11 @@
 
 						});
 
-
+						
+/* 						$(document).ajaxSend(function(e, xhr, options) {
+							xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+						}); */
+						
 						modalRegisterBtn.on("click", function(e) {
 							var reply = {
 								reply : modalInputReply.val(),
@@ -450,10 +454,9 @@
 																modalInputReplyDate
 																		.val(
 																				replyService
-																						.displayTime(reply.replyDate))
+																						.displayTime( reply.replyDate))
 																		.attr(
-																				"readonly",
-																				"readonly");
+																				"readonly","readonly");
 																modal
 																		.data(
 																				"rno",

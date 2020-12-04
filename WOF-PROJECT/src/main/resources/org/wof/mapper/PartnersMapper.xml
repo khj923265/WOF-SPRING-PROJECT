@@ -13,8 +13,9 @@
 			p.proj_estimate, p.proj_reqr_person, p.proj_work_place
 		from project p, apply a
 		where p.proj_id = a.proj_id and a.member_no = #{member_no}
+		and rownum <= #{standard.pageNum} * #{standard.amount}
 	)
-	where rownum <= #{standard.pageNum} * #{standard.amount}
+		where rn > (#{standard.pageNum} -1) * #{standard.amount}
 	]]>
 </select>
 
@@ -37,7 +38,7 @@
 
 <select id="dashboardpartnersApplyProject" resultType="org.wof.domain.ProjectVO">
 	<![CDATA[
-		select p.proj_title, p.proj_work_place, p.proj_reqr_skill, p.proj_start_date
+		select p.proj_id, p.proj_title, p.proj_work_place, p.proj_reqr_skill, p.proj_start_date
 	from project p, apply a
 	where p.proj_id = a.proj_id and a.member_no = #{member_no}
 		
@@ -333,5 +334,11 @@
 		select count(*)
 		from applyregister a, member m
         where a.member_no = m.member_no
+	</select>
+	
+	<select id="dashboardFollowProject" parameterType="java.lang.String"  resultType="org.wof.domain.ProjectVO">
+		select p.proj_title,p.proj_career, p.proj_apply_deadline
+		from project p , followproject f
+		where f.related_member = #{related_member} and 	p.proj_id = f.related_project
 	</select>
 </mapper>

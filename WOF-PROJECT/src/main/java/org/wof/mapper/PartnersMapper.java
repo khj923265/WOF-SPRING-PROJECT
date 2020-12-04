@@ -91,4 +91,6 @@ public interface PartnersMapper {
 			@Param("standard") Standard standard);
 	
 	public int appliedpartnersTotal(Standard standard);
+
+	public List<ProjectVO> dashboardFollowProject(String related_member);
 }

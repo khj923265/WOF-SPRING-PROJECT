@@ -14,6 +14,7 @@ import org.wof.domain.FollowProjectVO;
 import org.wof.domain.MeetVO;
 import org.wof.domain.PartnersVO;
 import org.wof.domain.ProjectVO;
+import org.wof.domain.QuestionVO;
 import org.wof.domain.Standard;
 import org.wof.mapper.ProjectMapper2;
 
@@ -22,13 +23,7 @@ import org.wof.mapper.ProjectMapper2;
 public class ProjectServiceImpl2 implements ProjectService2 {
 
 	private ProjectMapper2 projectMapper2;
-
 	private JavaMailSender mailSender;
-
-	@Override
-	public List<ProjectVO> projectList(Standard stand) {
-		return projectMapper2.projectList(stand);
-	}
 
 	@Override
 	public ProjectVO projectDetail(String proj_id) {
@@ -49,6 +44,11 @@ public class ProjectServiceImpl2 implements ProjectService2 {
 	public List<ProjectVO> listFollowProject(String related_member) {
 		return projectMapper2.listFollowProject(related_member);
 	}
+	
+	@Override
+	public List<ProjectVO> listRecommendProject(PartnersVO vo) {
+		return projectMapper2.listRecommendProject(vo);
+	}
 
 	@Override
 	public FollowProjectVO detailFollowProject(String related_project, String related_member) {
@@ -59,8 +59,8 @@ public class ProjectServiceImpl2 implements ProjectService2 {
 	}
 	
 	@Override
-	public List<ProjectVO> listRecommendProject(PartnersVO vo) {
-		return projectMapper2.listRecommendProject(vo);
+	public List<ProjectVO> listRecommendProjectwithpaging(PartnersVO vo, Standard stand) {
+		return projectMapper2.listRecommendProjectwithpaging(vo, stand);
 	}
 	
 	@Override
@@ -79,6 +79,11 @@ public class ProjectServiceImpl2 implements ProjectService2 {
 	}
 	
 	@Override
+	public int updateMeeting(MeetVO vo) {
+		return projectMapper2.updateMeeting(vo);
+	}
+	
+	@Override
 	public int totalList(Standard stand) {
 		return projectMapper2.totalProject(stand);
 	}
@@ -86,7 +91,6 @@ public class ProjectServiceImpl2 implements ProjectService2 {
 	@Override
 	public void RecommendSendMail(String loginUser, Standard stand) {
 		
-
 			Random rm = new Random();
 			int total = projectMapper2.totalProject(stand);
 			String project_id = "project" + (rm.nextInt(total)+1);
@@ -108,7 +112,7 @@ public class ProjectServiceImpl2 implements ProjectService2 {
 	          messageHelper.setFrom("wof@wof.com"); // 보내는사람 생략하거나 하면 정상작동을 안함
 	          messageHelper.setTo(loginUser); // 받는사람 이메일
 	          messageHelper.setSubject("[WOF] 고객님에게 알맞은 프로젝트를 추천해드립니다."); // 메일제목은 생략이 가능하다
-	          messageHelper.setText(contents.toString(), "html"); // 메일 내용
+	          messageHelper.setText(contents.toString()); // 메일 내용
 
 	      } catch (MessagingException e) {
 	         // TODO Auto-generated catch block
@@ -116,5 +120,30 @@ public class ProjectServiceImpl2 implements ProjectService2 {
 	      }
 	       mailSender.send(message);
 	}
+	
+	@Override
+	public void QnaSendMail(QuestionVO vo) {
+	       MimeMessage message = mailSender.createMimeMessage();
+	       MimeMessageHelper messageHelper;
+	       String contents = vo.getQuest_writer()+"님 의 문의내용입니다.";
+	       contents += "[" + vo.getQuest_contents() + "]";
+	       contents += " phone :" + vo.getQuest_userphone() + "문의하신 고객님의 연락처입니다.";
+	       
+	      try {
+	    	  
+	         messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+	          messageHelper.setFrom(vo.getQuest_id()); // 보내는사람 생략하거나 하면 정상작동을 안함
+	          messageHelper.setTo("wof.company.kosta@gmail.com"); // 받는사람 이메일
+	          messageHelper.setSubject(vo.getQuest_title() + "[문의사항"+vo.getQuest_writer()+"님]"); // 메일제목은 생략이 가능하다
+	          messageHelper.setText(contents); // 메일 내용
+
+	      } catch (MessagingException e) {
+	         e.printStackTrace();
+	      }
+	       mailSender.send(message);
+		
+	}
+
+
 
 }

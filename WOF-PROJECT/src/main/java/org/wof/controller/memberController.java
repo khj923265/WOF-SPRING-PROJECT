@@ -3,6 +3,7 @@ package org.wof.controller;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,6 +18,7 @@ import org.wof.domain.PartnersVO;
 import org.wof.domain.ProjectProfileVO;
 import org.wof.security.CustomUserDetailsService;
 import org.wof.service.MemberService;
+import org.wof.service.ProjectService2;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,6 +36,7 @@ public class memberController {
 
     private MemberService service;
     private CustomUserDetailsService customUserDetailsService;
+    private ProjectService2 projectService2;
 
     //로그인 관련 메서드//------------------------------------------------------
     //회원가입 페이지
@@ -53,10 +56,11 @@ public class memberController {
         return "/member/customlogin";
     }
     //로그인시 회원 status 체크,로그인날짜 최신화
-    @RequestMapping(value = "/member/loginIdCheck", method = {RequestMethod.GET,RequestMethod.POST})
+    @RequestMapping(value = "/member/loginIdPwCheck", method = {RequestMethod.GET,RequestMethod.POST})
     @ResponseBody
-    public ResponseEntity loginIdCheck(@RequestParam("userid") String userid){
-        String status = service.loginIdCheck(userid);
+    public ResponseEntity loginIdCheck(@RequestBody MemberVO memberVO){
+        log.info("memberVO======="+memberVO);
+        String status = service.loginIdPwCheck(memberVO);
         log.info("controller_status : "+status);
         return ResponseEntity.ok(status);
     }
@@ -76,8 +80,11 @@ public class memberController {
         String userid = principal.getName();
         PartnersVO partnersVO = service.partnersInfo(userid);
 
+        log.info("partnersVO ::::::"+partnersVO);
         session.setAttribute("partners", partnersVO);
         model.addAttribute("profilelist",service.projectProfileList(userid));
+        model.addAttribute("meets",projectService2.listMeeting(partnersVO.getMember_no()));
+
         return "member/partners/profile_info";
     }
     @GetMapping("partners/profile_info_insert")
@@ -95,17 +102,6 @@ public class memberController {
         return ResponseEntity.ok(service.projectprofileinfo(userid));
     }
 
-    //파트너스 로그인시 파트너정보 세션저장컨트롤러(시큐리티 success 핸들러에서만 접근)
-    @GetMapping("success/partners")
-    public String successPartners(Principal principal, HttpServletRequest request) {
-        HttpSession session = request.getSession();
-
-        PartnersVO partnersVO = service.partnersInfo(principal.getName());
-
-        session.setAttribute("partners", partnersVO);
-
-        return "redirect:/member/partners/profile_info";
-    }
     //파트너스 개인정보 수정
     @PostMapping("partnersinfoupdate")
     public String infoUpdate(Principal principal,MemberVO memberVO, PartnersVO partnersVO, HttpServletResponse response, HttpServletRequest request){
@@ -137,25 +133,25 @@ public class memberController {
         service.projectprofiledelete(no);
         return "redirect:/member/partners/profile_info";
     }
+    //프로젝트/경력 수정
+    @PostMapping("projectprofileupdate")
+    public String projectprofileupdate(ProjectProfileVO projectProfileVO){
+        service.projectProfileUpdate(projectProfileVO);
+        return "redirect:/member/partners/profile_info";
+    }
     //------------------------------------------------------------------------
     //클라이언트 관련 메서드-------------------------------------------------------
-    @GetMapping("client")
-    public String client() {
-        return "member/client";
-    }
     //클라이언트 로그인시 클라이언트정보 세션저장컨트롤러(시큐리티 success 핸들러에서만 접근)
     @GetMapping("success/client")
     public String clientInfoInsert(Principal principal,HttpServletRequest request){
         HttpSession session = request.getSession();
-
+        log.info(principal.getName());
         ClientVO clientVO = service.clientInfo(principal.getName());
-
+        log.info(clientVO);
         session.setAttribute("client",clientVO);
 
         return "redirect:/client/dashboard_client?member_no="+clientVO.getMember_no();
     }
-    @GetMapping("client/dashboard_client")
-    public void dashboard_client(){}
     @GetMapping("client/client_info_update")
     public void clientInfoUpdatePage(){}
     //클라이언트 회사정보 수정
@@ -179,7 +175,7 @@ public class memberController {
 
 
 
-        return "redirect:/client/client/dashboard_client";
+        return "redirect:/client/dashboard_client?member_no="+clientVO.getMember_no();
     }
 
     //------------------------------------------------------------------------
@@ -243,6 +239,7 @@ public class memberController {
         memberVO.setAuth("ROLE_PARTNERS");
         memberVO.setUserpw("1234");
 
+        log.info(memberVO);
         String idCheck = service.checkId(memberVO.getUserid());
 
         log.info("idcheck : "+idCheck);

@@ -1096,7 +1096,7 @@
 			<div class="row justify-content-center mb-5 pb-3">
 				<div class="col-md-7 text-center heading-section ftco-animate">
 					<span class="subheading">Testimonial</span>
-					<h2 class="mb-4">Happy Clients</h2>
+					<h2 class="mb-4">고객 만족도 후기</h2>
 				</div>
 			</div>
 			<div class="row ftco-animate">
@@ -1112,11 +1112,9 @@
 									</span>
 								</div>
 								<div class="text">
-									<p class="mb-4">Far far away, behind the word mountains,
-										far from the countries Vokalia and Consonantia, there live the
-										blind texts.</p>
-									<p class="name">Roger Scott</p>
-									<span class="position">Marketing Manager</span>
+									<p class="mb-4">개발지식이 부족했던 저희를 알기 쉽게 설명도 해주시고 개발 도중 생기는 이슈들을 공유하면서 해결해주셔서 감사했습니다. Ios 개발도 함께 하고싶습니다.</p>
+									<p class="name">hongbum27</p>
+									<span class="position">파트너스 rocateer2015</span>
 								</div>
 							</div>
 						</div>
@@ -1130,11 +1128,9 @@
 									</span>
 								</div>
 								<div class="text">
-									<p class="mb-4">Far far away, behind the word mountains,
-										far from the countries Vokalia and Consonantia, there live the
-										blind texts.</p>
-									<p class="name">Roger Scott</p>
-									<span class="position">Interface Designer</span>
+									<p class="mb-4">외주파트너와 일하는건 처음이라 계약전에 이것저것 조항을 명시했었는데 기우였습니다. 의도만 잘 전달하면 나머진 꼼꼼하게 잘 해주셨습니다. 심플한게 가장어려운법인데 ...</p>
+									<p class="name">ginsu2018</p>
+									<span class="position">클라이언트 nm00mn</span>
 								</div>
 							</div>
 						</div>
@@ -1148,11 +1144,9 @@
 									</span>
 								</div>
 								<div class="text">
-									<p class="mb-4">Far far away, behind the word mountains,
-										far from the countries Vokalia and Consonantia, there live the
-										blind texts.</p>
-									<p class="name">Roger Scott</p>
-									<span class="position">UI Designer</span>
+									<p class="mb-4">제안 드린 양식에 맞게 최단 시간내에 프로그램을 완성해주셨습니다. 다음에도 작업요청 드리고 싶네요^^</p>
+									<p class="name">civitan95</p>
+									<span class="position">클라이언트 kangsoftware</span>
 								</div>
 							</div>
 						</div>
@@ -1166,11 +1160,9 @@
 									</span>
 								</div>
 								<div class="text">
-									<p class="mb-4">Far far away, behind the word mountains,
-										far from the countries Vokalia and Consonantia, there live the
-										blind texts.</p>
-									<p class="name">Roger Scott</p>
-									<span class="position">Web Developer</span>
+									<p class="mb-4">쇼핑몰 솔루션 구입,서버관리까지 같은 회사에서 구입해 사용중이었습니다. 당연히 그렇게 하면 잘 관리해 줄거라 믿었는데 이게 그게 아니더군요. 얼마전부터 쇼핑몰이 계속 ...</p>
+									<p class="name">hi7979</p>
+									<span class="position">파트너스 creduo</span>
 								</div>
 							</div>
 						</div>
@@ -1184,11 +1176,9 @@
 									</span>
 								</div>
 								<div class="text">
-									<p class="mb-4">Far far away, behind the word mountains,
-										far from the countries Vokalia and Consonantia, there live the
-										blind texts.</p>
-									<p class="name">Roger Scott</p>
-									<span class="position">System Analyst</span>
+									<p class="mb-4">적극적인 자세로 프로젝트에 임해주시고.. 빠르게 처리해주셔서 감사합니다. 기술적인 부분이나 업무 협조는 아주 잘되었습니다. 향후 관련한 프로젝트가 있다면 다시한번 ...</p>
+									<p class="name">xtopable</p>
+									<span class="position">클라이언트 alicerabbit</span>
 								</div>
 							</div>
 						</div>

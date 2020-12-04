@@ -56,12 +56,12 @@ public class PartnersBoardController {
 	}
 	
 	@GetMapping("/partners_community_register")
-	@Secured({"ROLE_PARTNERS"})
+	@PreAuthorize("hasAnyRole('ROLE_PARTNERS', 'ROLE_ADMIN')")
 	public void register() {
 		
 	}
 	
-	@PreAuthorize("hasRole('ROLE_PARTNERS')")
+	@PreAuthorize("hasAnyRole('ROLE_PARTNERS', 'ROLE_ADMIN')")
 	@PostMapping("/partners_community_register")
 	public String register(PartnersBoardVO pboard, RedirectAttributes rttr) {
 		
@@ -84,6 +84,7 @@ public class PartnersBoardController {
 		return "redirect:/community/partners_community_list";
 	}
 	
+	@PreAuthorize("hasAnyRole('ROLE_PARTNERS', 'ROLE_ADMIN')")
 	@GetMapping({"/partners_community_get", "/partners_community_modify"})
 	public void get(@RequestParam("bno") Long bno, @ModelAttribute("standard") Standard standard, Model model) {
 		
@@ -107,6 +108,8 @@ public class PartnersBoardController {
 		
 		return "redirect:/community/partners_community_list" + standard.getListLink();
 	}
+	
+	
 	
 	@PreAuthorize("principal.username == #writer")
 	@PostMapping("/partners_community_remove")

@@ -19,15 +19,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.wof.domain.ContractTargetVO;
+import org.wof.domain.ContractVO;
 import org.wof.domain.PageDTO;
 import org.wof.domain.ProjectAttachVO;
 import org.wof.domain.ProjectVO;
 import org.wof.domain.Standard;
 import org.wof.service.ProjectAttachService;
+import org.wof.service.ProjectReplyService;
 import org.wof.service.ProjectService;
 
 import lombok.AllArgsConstructor;
@@ -41,31 +44,33 @@ import lombok.extern.log4j.Log4j;
 public class ProjectController {
 
 	private ProjectService ps1;
+	private ProjectReplyService prs1;
 	
 	private ProjectAttachService service;
 
-	@GetMapping("/list")
-	public void list(Standard stand,Model model1){
-		log.info("list...."+stand);
-		model1.addAttribute("list", ps1.getlist(stand));
-		//model1.addAttribute("pageMaker", new PageDTO(stand, 123));
-		
-		int total = ps1.getTotal(stand);
-		log.info("total: "+total);
-		model1.addAttribute("pageDto", new PageDTO(stand, total));
 	
+	@GetMapping("/list")
+	public void list(Standard standard, Model model){
+		log.info("/project/list/" + standard);
+
+		int total = ps1.getTotal(standard);
+		
+		model.addAttribute("list", ps1.getListWithPaging(standard));
+		model.addAttribute("pageDto", new PageDTO(standard, total));
 	}
 	
+	@PreAuthorize("hasRole('ROLE_CLIENT')")
 	@GetMapping("/create")
 	//@PreAuthorize("isAuthenticated()")
 	public void create(){
 	}
 	
+	@PreAuthorize("hasRole('ROLE_CLIENT')")
 	@GetMapping("/create_comp")
 	public void create_comp(){
 	}
 	
-	
+	@PreAuthorize("hasRole('ROLE_CLIENT')")
 	@PostMapping("/create")
 	//@PreAuthorize("isAuthenticated()")
 	public String create(ProjectVO p1, RedirectAttributes rttr1){
@@ -75,17 +80,27 @@ public class ProjectController {
 		return "redirect:/project/create_comp";
 	}
 	
-	@GetMapping({"/read", "/update"})
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("/read")
 	public void read(@RequestParam("proj_id") String proj_id, @ModelAttribute("stand") Standard stand, Model model1){
-		log.info("/read, /get");
+		log.info("/read");
+		model1.addAttribute("replylist", prs1.getList(stand, proj_id));
 		model1.addAttribute("project", ps1.read(proj_id));
 	
 	}
 	
-
+	@PreAuthorize("hasRole('ROLE_CLIENT')")
+	@GetMapping("/update")
+	public void update(@RequestParam("proj_id") String proj_id, @ModelAttribute("stand") Standard stand, Model model1){
+		log.info("/update");
+		model1.addAttribute("project", ps1.read(proj_id));
+		
+	}
+	
+	@PreAuthorize("hasRole('ROLE_CLIENT')")
 	@PostMapping("/fileup")
 	public String fileup(ProjectVO projectvo, RedirectAttributes rttr, Model model,  
-			@RequestParam("member_no") String member_no, ContractTargetVO targetVO) {
+			@RequestParam("member_no") String member_no) {
 		
 		
 		log.info("fileup " + projectvo);
@@ -97,14 +112,16 @@ public class ProjectController {
 		service.register(projectvo);
 		
 		
-		model.addAttribute("checkAuth", service.checkAuth(member_no));
-		log.info("checkAuth : " + targetVO);
-		rttr.addFlashAttribute("result", projectvo.getProj_id());
-		rttr.addFlashAttribute("result", projectvo.getMember_no());
 		
-		return "redirect:/partners/project_apply_detail" + "?member_no=" + projectvo.getMember_no();
+		
+		rttr.addFlashAttribute("result", projectvo.getProj_id());
+		//rttr.addFlashAttribute("result", projectvo.getMember_no());
+		
+		//return "redirect:/partners/project_apply_detail" + "?member_no=" + projectvo.getMember_no();
+		return "redirect:/project/read"+ "?proj_id=" + projectvo.getProj_id();
 	}
 	
+	@PreAuthorize("hasRole('ROLE_CLIENT')")
 	@PostMapping("/update")
 	public String update(ProjectVO p1,@ModelAttribute("stand") Standard stand, RedirectAttributes rttr1){
 		log.info("update : " + p1);
@@ -117,6 +134,8 @@ public class ProjectController {
 		
 		return "redirect:/project/list";
 	}
+	
+	@PreAuthorize("hasRole('ROLE_CLIENT')")
 	@GetMapping("/delete")
 	public String delete(@RequestParam("proj_id") String proj_id, @ModelAttribute("stand") Standard stand, RedirectAttributes rttr1){
 		log.info("delete...." + proj_id);

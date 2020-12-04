@@ -1,14 +1,24 @@
 package org.wof.service;
 
+import java.io.Console;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.inject.Inject;
 
+import org.apache.ibatis.session.SqlSession;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.wof.domain.ContractSourceVO;
+import org.wof.domain.ContractVO;
 import org.wof.domain.MemberVO;
 import org.wof.domain.PointSearch;
 import org.wof.domain.PointVO;
@@ -20,152 +30,227 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
+import net.nurigo.java_sdk.api.Message;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 @Service
 @Log4j
 public class PointServiceImpl implements PointService {
 
+
+
 	@Setter(onMethod_= @Autowired)
 	private PointMapper pointMapper;
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	Date date = new Date();
 	String currentDate = new SimpleDateFormat("yy-MM-dd").format(date);
-	
-	
+
+	@Transactional
 	@Override
 	public int ChargingService(PointVO point, MemberVO member){
-		
-		
-		log.info("Æ÷ÀÎÆ® ÃæÀü" + point);
-		
-		//Æ÷ÀÎÆ® ´©Àû
+
+		log.info("í¬ì¸íŠ¸ ì¶©ì „" + point);
+
+		//í¬ì¸íŠ¸ ëˆ„ì 
 		pointMapper.Charging(point);
-		
-		//point_type => "0:ÃæÀü", 1:ÀÎÃâ, 2:°áÁ¦
-		point.setPoint_type(0);
-		
+
+		//memberì—ì„œ total_pointê°€ì ¸ì˜¤ê¸°
+		int balance = pointMapper.getTotalpoint(point);
+
+		//point_type => "0:ì¶©ì „", 1:ì¸ì¶œ, 2:ê²°ì œ, 3:ë³´ê´€, 4:ì „ì†¡, (5:ì…ê¸ˆ, 6:í™˜ë¶ˆ)
+		point.setPoint_type("ì¶©ì „");
+
 		//point_balance
-		//String userId = member.getMember_no();
-		
-		int balance = pointMapper.pointBalance(point);
-		
-		point.setPoint_balance(member.getTotal_point());
-		
-		
-		//log.info("point type:" + point.getPoint_type());
-		
-		//ÃæÀü¿©ºÎ È®ÀÎ (ÃæÀü ³»¿ª)
+		System.out.println("service point : "+point);
+		point.setPoint_balance(balance);
+
+		//ì¶©ì „ ì—¬ë¶€ í™•ì¸
 		int chargingResult = pointMapper.ChargingList(point);
-		
+
 		return chargingResult;
 	}
-	
+
 	@Override
 	public int WithdrawService(PointVO point, MemberVO member) {
-		
-		log.info("Æ÷ÀÎÆ® ÀÎÃâ" + point);
-		
-		
-		//Æ÷ÀÎÆ® ´©Àû
+
+		log.info("í¬ì¸íŠ¸ ì¸ì¶œ" + point);
+
+		//í¬ì¸íŠ¸ ëˆ„ì 
 		pointMapper.Withdraw(point);
-		
-		//point_type => 0:ÃæÀü, "1:ÀÎÃâ", 2:°áÁ¦
-		point.setPoint_type(1);
-		
+
+		//memberì—ì„œ total_pointê°€ì ¸ì˜¤ê¸°
+		int balance = pointMapper.getTotalpoint(point);
+
+		//point_type => 0:ì¶©ì „, "1:ì¸ì¶œ", 2:ê²°ì œ, 3:ë³´ê´€, 4:ì „ì†¡, (5:ì…ê¸ˆ, 6:í™˜ë¶ˆ)
+		point.setPoint_type("ì¸ì¶œ");
+
 		//point_balance
-		
-		/*if(member.getTotal_point() < point.getPoint_amount()){
-			throw new BalanceInsufficientException("ÀÜ°í ºÎÁ· :"+(point.getPoint_amount()-member.getTotal_point())+"ÀÌ ¸ğÀÚ¶ø´Ï´Ù.");
-		}*/
-		point.setPoint_balance(member.getTotal_point());
-		
-		//ÀÎÃâ¿©ºÎ È®ÀÎ (ÀÎÃâ ³»¿ª)
+		System.out.println("service point : "+point);
+		point.setPoint_balance(balance);
+
+      /*if(member.getTotal_point() < point.getPoint_amount()){
+         throw new BalanceInsufficientException("ì”ê³  ë¶€ì¡± :"+(point.getPoint_amount()-member.getTotal_point())+"ì´ ëª¨ìëë‹ˆë‹¤.");
+      }*/
+
+		//ì¸ì¶œì—¬ë¶€ í™•ì¸ (ì¸ì¶œ ë‚´ì—­)
 		int withdrawResult = pointMapper.WithdrawList(point);
-		
+
 		return withdrawResult;
 	}
-	
-	
 
 	@Override
-	public int PaymentFromService(PointVO point, MemberVO member, ProjectVO project) {
-	
-		
-	if(project.getProj_status() == 2){
-		//Æ÷ÀÎÆ® °áÁ¦
+	public int PaymentInService(PointVO point, ContractSourceVO contract) {
+
+		log.info("í¬ì¸íŠ¸ ê²°ì œ" + point);
+
+		//pointMapper.getContract(contract);
+
+		//contract.setBusiness_register_no(contract.getBusiness_register_no());
+
+      /*point.setPoint_owner(contract.getContract_write_source());   //Client(ì‚¬ì—…ì£¼)
+      point.setPoint_amount(contract.getProj_estimate());
+      point.setPoint_contents(contract.getProj_title());*/
+
+		point.setPoint_owner(contract.getContract_write_source());   //Client(ì‚¬ì—…ì£¼)
+		point.setPoint_amount(point.getPoint_amount());
+		point.setPoint_contents(point.getPoint_contents());
+
+		log.error("-------------í™•ì¸------------"+point);
+		//í¬ì¸íŠ¸ ëˆ„ì 
 		pointMapper.PaymentFrom(point);
-		//point_type => 0:ÃæÀü, 1:ÀÎÃâ, "2:°áÁ¦", 3:ÀÔ±İ
-		point.setPoint_type(2);
-	}
-	
-	log.info("Æ÷ÀÎÆ®  °áÁ¦" + point);
+
+		//memberì—ì„œ total_pointê°€ì ¸ì˜¤ê¸°
+		int balance = pointMapper.getTotalpoint(point);
+
 		//point_balance
-		
-		//point.setPoint_balance(member.getTotal_point());
-		
-		//°áÁ¦¿©ºÎ È®ÀÎ (°áÁ¨ ³»¿ª)
-		int paymentResult = pointMapper.PaymentList(point);
-		
-		return paymentResult;
+		System.out.println("memberì—ì„œ total_pointê°€ì ¸ì˜¨ í›„ : " + point);
+		point.setPoint_balance(balance);
+
+		//ê²°ì œ (ì¸ì¶œ )
+		pointMapper.PaymentFromList(point);
+
+
+		//í¬ì¸íŠ¸ ëˆ„ì 
+		pointMapper.HoldFrom(point);
+
+		//memberì—ì„œ total_pointê°€ì ¸ì˜¤ê¸°
+		int balance2 = pointMapper.getTotalpoint(point);
+
+		//point_balance
+		System.out.println("memberì—ì„œ total_pointê°€ì ¸ì˜¨ í›„ : " + point);
+		point.setPoint_balance(balance2);
+
+		//ê²°ì œ (ì¸ì¶œ )
+		pointMapper.PaymentFromList(point);
+
+		//ê²°ì œì—¬ë¶€ í™•ì¸ (ì¸ì¶œ ë‚´ì—­)
+		int result = pointMapper.PaymentFrom(point);
+
+		return result;
+
 	}
 
 	@Override
-	public int PaymentToService(PointVO point, MemberVO member) {
-		
-		
+	public int PaymentOutService(PointVO point, MemberVO member, ContractSourceVO contract) {
+
+		log.info("í¬ì¸íŠ¸ ì „ì†¡" + point);
+
+		//í¬ì¸íŠ¸ ëˆ„ì 
 		pointMapper.PaymentTo(point);
-		//point_type => 0:ÃæÀü, "1:ÀÎÃâ", 2:°áÁ¦, "3:ÀÔ±İ"
-		point.setPoint_type(3);
-		
+
+		//memberì—ì„œ total_pointê°€ì ¸ì˜¤ê¸°
+		int balance = pointMapper.getTotalpoint(point);
+
+		//point_type => 0:ì¶©ì „, 1:ì¸ì¶œ, 2:ê²°ì œ, 3:ë³´ê´€, "4:ì „ì†¡", (5:ì…ê¸ˆ, 6:í™˜ë¶ˆ)
+		point.setPoint_type("ì „ì†¡");
+
 		//point_balance
-		
-		//point.setPoint_balance(member.getTotal_point());
-		
-		//°áÁ¦¿©ºÎ È®ÀÎ (°áÁ¨ ³»¿ª)
-		int paymentResult = pointMapper.PaymentList(point);
-		
-		return paymentResult;
+		System.out.println("memberì—ì„œ total_pointê°€ì ¸ì˜¨ í›„ : " + point);
+		point.setPoint_balance(balance);
+
+		//ê²°ì œì—¬ë¶€ í™•ì¸ (ì¸ì¶œ ë‚´ì—­)
+		int paymentOutResult = pointMapper.PaymentToList(point);
+
+		return paymentOutResult;
 	}
-	
-	
+
 	@Override
-	public List<PointVO> ListService(Standard standard) {
-			
-		return pointMapper.getListPaging(standard);
+	public List<PointVO> ListService(MemberVO member, PointVO point, Standard standard) {
+
+		member = pointMapper.getMember_no(member);
+
+		member.getReal_name();
+
+		System.out.println("member-----------------"+member);
+
+		point.setPoint_owner(member.getMember_no());
+
+		standard.setPoint_owner(member.getMember_no());
+
+		System.out.println("member-----------------"+member);
+
+		List<PointVO> pointlist = pointMapper.getList(point);
+
+		return pointlist;
 	}
-	
+
+
 	@Override
 	public int getTotalService(Standard standard) {
-		
+
 		return pointMapper.getTotalCount(standard);
 	}
-	
+
 	@Override
 	public String pwCheckService(MemberVO member) {
-		
+
 		String data = "0";
-		
-		//Member¿¡ mapper¿¡¼­ °¡Á®¿Â°´Ã¼ °¡Á®¿À±â
-		String pw = pointMapper.pwCheck(member.getUserid());
-		
-		if(passwordEncoder.matches(member.getUserpw(), pw)){
-			//¼º°ø ½Ã
+
+		//Memberì— mapperì—ì„œ ê°€ì ¸ì˜¨ê°ì²´ ê°€ì ¸ì˜¤ê¸°
+		String encodepw = pointMapper.pwCheck(member.getUserid());
+		String pw = member.getUserpw();
+		System.out.println(encodepw);
+		System.out.println(pw);
+		if(passwordEncoder.matches(pw, encodepw)){
+			//ì„±ê³µ ì‹œ
 			data = "1";
 		}
-		
+
 		return data;
 	}
 
+	@Override
+	public void certifiedPhoneNumber(String phoneNumber, String cerNum) {
+		String api_key = "NCSBVLIC1XCP0K66"; //ìœ„ì—ì„œ ë°›ì€ api keyë¥¼ ì¶”ê°€
+		String api_secret = "QQHS8GSBLPKRHPYZLHQB9HIDLCSNHEW8";  //ìœ„ì—ì„œ ë°›ì€ api secretë¥¼ ì¶”ê°€
+		Message coolsms = new Message(api_key, api_secret);
 
+		// 4 params(to, from, type, text) are mandatory. must be filled
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("to", phoneNumber);    // ìˆ˜ì‹ ì „í™”ë²ˆí˜¸
+		params.put("from", "01074721644");    // ë°œì‹ ì „í™”ë²ˆí˜¸. í…ŒìŠ¤íŠ¸ì‹œì—ëŠ” ë°œì‹ ,ìˆ˜ì‹  ë‘˜ë‹¤ ë³¸ì¸ ë²ˆí˜¸ë¡œ í•˜ë©´ ë¨
+		params.put("type", "SMS");
+		params.put("text", "[WOF] ì¸ì¦ë²ˆí˜¸ëŠ”" + "["+cerNum+"]" + "ì…ë‹ˆë‹¤.");
+		params.put("app_version", "test app 2.2"); // application name and version
 
+		try {
+			JSONObject obj = (JSONObject) coolsms.send(params);
+			System.out.println(obj.toString());
+		} catch (CoolsmsException e) {
+			System.out.println(e.getMessage());
+			System.out.println(e.getCode());
+		}
 
+	}
 
+	@Override
+	public int totalPoinAjaxtService(MemberVO member) {
 
-	
-
+		return pointMapper.getTotalpointAjax(member);
+	}
 
 
 
