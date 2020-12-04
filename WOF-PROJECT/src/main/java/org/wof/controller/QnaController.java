@@ -15,7 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -65,20 +67,32 @@ public class QnaController {
 	    	return "qna/question-register-client";
 	    }
 	    
+		@PreAuthorize("hasRole('ROLE_PARTNERS')")
+	    @RequestMapping("/question-success-partners")
+	    public String questionSuccessPartners(){
+	    	return "qna/question-success-partners";
+	    }
+		
+		@PreAuthorize("hasRole('ROLE_PARTNERS')")
+	    @RequestMapping("/question-fail-partners")
+	    public String questionFailPartners(){
+	    	return "qna/question-fail-partners";
+	    }
+		
+		
 		@PreAuthorize("isAuthenticated()")
-	    @RequestMapping("/question-send")
-	    public String questionRegister(@ModelAttribute QuestionVO quest, Model model, RedirectAttributes rttr){
+	    @RequestMapping(value = "/question-send", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+	    public String questionRegister(@RequestBody QuestionVO quest, Model model, RedirectAttributes rttr){
 		 
 	    	log.info("================ 문의사항 내역 ================");
 	    	log.info("question-register" + quest);
 	    	log.info("==========================================");
 	    	
-	    	
 	    	  try {
 	    		  service.registerService(quest); //  quest(메일관련 정보)를 sendMail에 저장함
 	              model.addAttribute("message", "문의내역이 접수되었습니다."); // 이메일이 발송되었다는 메시지를 출력시킨다.
 	              
-	              return "redirect:/qna/question-success";
+	              return "redirect:/qna/question-success-partners";
 	   
 	          } catch (Exception e) {
 	              e.printStackTrace();
@@ -87,7 +101,7 @@ public class QnaController {
 	    	  	
 	    	rttr.addFlashAttribute("result", quest.getQuest_id());
 	    	
-	    	return "qna/question-register-partners";
+	    	return "qna/question-fail-partners";
 	    	
 	    }
 	    

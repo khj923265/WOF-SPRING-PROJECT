@@ -46,7 +46,8 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="ni ni-money-coins"></i></span>
                     </div>
-                    <input class="form-control" type="text" id="mem_id" name="point_amount" placeholder="금액을 입력해주세요." required>
+                    <input class="form-control" type="text" id="mem_id" 
+                    	   onkeyup="commaCheck(this)" name="point_amount" placeholder="금액을 입력해주세요." required>
                 </div>
                 <div class="check_font" id="id_check"></div>
             </div>
@@ -103,7 +104,16 @@
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   	
+  	
+  	
 
+	<script>
+	function commaCheck(value){
+        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return value; 
+    }
+	</script>
+	
 	<script>
 		//<충전 금액>입력 => 숫자만 가능, 천단위 콤마
 		function inputNumberAutoComma(obj) {
@@ -139,7 +149,7 @@ var idJ = /^[0-9]{4,19}$/;
 // 비밀번호 정규식
 var pwJ = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/;
 // 메모 정규식
-var nameJ = /^\S{1,20}$/;
+var nameJ = /^\S{1,50}$/;
  
 
  $(document).ready(function() { 

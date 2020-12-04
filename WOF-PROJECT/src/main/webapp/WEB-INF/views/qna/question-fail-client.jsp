@@ -40,13 +40,13 @@
 				<div class="card">
 					<!-- Card header -->
 					<div class="card-header border-0">
-						<h3 class="mb-0">이메일 전송 완료</h3>
-						<h2 class="mb-0"><small>빠른 시일 내에 답변드리겠습니다.</small></h2>
+						<h3 class="mb-0">이메일 전송 실패</h3>
+						<h2 class="mb-0"><small>재시도 부탁드립니다..</small></h2>
 					</div>
 					
 					<div class="card-body border-0">
 						<input type="button" id = "backtoPage" value="미이페이지로 돌아가기" 
-								onClick="location.href='/point/point-admin"> 
+								onClick="moving()"> 
 					</div>	
 				</div>
 			</div>
@@ -56,5 +56,11 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script>
+function moving() {
+	location.href= "dashboard_client.jsp";
+}
+</script>
 
 <%@ include file = "../includes/footer.jsp"%>		

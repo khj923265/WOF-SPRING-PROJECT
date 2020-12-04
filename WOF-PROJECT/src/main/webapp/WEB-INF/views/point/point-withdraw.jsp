@@ -140,7 +140,7 @@ var idJ = /^[0-9]{4,19}$/
 //비밀번호 정규식
 var pwJ = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/
 //메모 정규식
-var nameJ = /^\S{1,20}$/
+var nameJ = /^\S{1,50}$/
 
 
 $(document).ready(function() { 

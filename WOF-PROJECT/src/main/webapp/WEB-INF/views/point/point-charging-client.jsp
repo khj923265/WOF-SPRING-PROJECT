@@ -139,7 +139,7 @@ var idJ = /^[0-9]{4,19}$/;
 // 비밀번호 정규식
 //var pwJ = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/;
 // 메모 정규식
-var nameJ = /^\S{1,20}$/;
+var nameJ = /^\S{1,50}$/;
  
 
 $(document).ready(function() { 
@@ -189,7 +189,7 @@ $(document).ready(function() {
 			 } else{ 
 			 alert('입력정보를 다시 확인하세요.') 
 			 }
-		 });  */
+		 });  
 	
 	 $('#mem_id1').blur(function() {
 		 if (idJ.test($('#mem_id1').val())) {

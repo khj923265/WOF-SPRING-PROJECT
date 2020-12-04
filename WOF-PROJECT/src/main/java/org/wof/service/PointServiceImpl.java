@@ -61,7 +61,7 @@ public class PointServiceImpl implements PointService {
 		int balance = pointMapper.getTotalpoint(point);
 		
 		//point_type => "0:충전", 1:인출, 2:결제, 3:보관, 4:전송, (5:입금, 6:환불)
-		point.setPoint_type(0);
+		point.setPoint_type("충전");
 		
 		//point_balance
 		System.out.println("service point : "+point);
@@ -85,7 +85,7 @@ public class PointServiceImpl implements PointService {
 		int balance = pointMapper.getTotalpoint(point);
 		
 		//point_type => 0:충전, "1:인출", 2:결제, 3:보관, 4:전송, (5:입금, 6:환불)
-		point.setPoint_type(1);
+		point.setPoint_type("인출");
 		
 		//point_balance
 		System.out.println("service point : "+point);
@@ -165,7 +165,7 @@ public class PointServiceImpl implements PointService {
 		int balance = pointMapper.getTotalpoint(point);
 		
 		//point_type => 0:충전, 1:인출, 2:결제, 3:보관, "4:전송", (5:입금, 6:환불)
-		point.setPoint_type(4);
+		point.setPoint_type("전송");
 		
 		//point_balance
 		System.out.println("member에서 total_point가져온 후 : " + point);

@@ -148,7 +148,7 @@
                     		border-left-color: gray; border-left-width: 1px;">
                         <h2 class="col-12 inline" style="color: #444D58;">충전 / 인출</h2>
                     </div>
-                    <div class="col-6 inline text-center" id="totalPoint" id="totalPoint">
+                    <div class="col-6 inline text-center" id="totalPoint">
                         <div class="row inline" style="background-color: #EDEFF2;" >
                             <!-- ②포인트 충전/송금 -->
                             <div class="col-12 text-center py-4">

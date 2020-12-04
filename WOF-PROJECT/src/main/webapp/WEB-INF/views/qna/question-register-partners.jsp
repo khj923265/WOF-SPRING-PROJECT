@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file = "../includes/header.jsp"%>	
 <!--
@@ -34,29 +34,6 @@
 
 </style>
 
-
-
-	<!-- Q&A -->
-	<div class="header bg-primary pb-6">
-		<div class="container-fluid">
-			<div class="header-body">
-				<div class="row align-items-center py-4">
-					<div class="col-lg-6 col-7">
-						<h6 class="h2 text-white d-inline-block mb-0">문의하기</h6>
-						<nav aria-label="breadcrumb"
-							class="d-none d-md-inline-block ml-md-4">
-							<ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-								<li class="breadcrumb-item"><a href="dashboard.html"><i
-										class="fas fa-home"></i></a></li>
-								<li class="breadcrumb-item"><a href="#">마이페이지</a></li>
-								<li class="breadcrumb-item active" aria-current="page">1:1문의</li>
-							</ol>
-						</nav>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 
 <!-- Sidenav -->
 <nav
@@ -139,6 +116,28 @@
 
 <div class="main-content" id="panel"> 
 
+	<!-- Q&A -->
+	<div class="header bg-primary pb-6">
+		<div class="container-fluid">
+			<div class="header-body">
+				<div class="row align-items-center py-4">
+					<div class="col-lg-6 col-7">
+						<h6 class="h2 text-white d-inline-block mb-0">문의하기</h6>
+						<nav aria-label="breadcrumb"
+							class="d-none d-md-inline-block ml-md-4">
+							<ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+								<li class="breadcrumb-item"><a href="dashboard.html"><i
+										class="fas fa-home"></i></a></li>
+								<li class="breadcrumb-item"><a href="#">마이페이지</a></li>
+								<li class="breadcrumb-item active" aria-current="page">1:1문의</li>
+							</ol>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<!-- Q&A 질문 폼 -->
 	<div class="container-fluid mt--6">
 		<div class="row">
@@ -156,9 +155,8 @@
 					<div class="card-body">
 						<form >
 							<!-- <h6 class="heading-small text-muted mb-4">문의 정보</h6> -->
-							
-							<div >
-							<input type="hidden" name="quest_id" id="quest_id" value=${member.member_no }> 
+							<div>
+								<input type="hidden" id="quest_member_no" name="quest_member_no" value="${member.member_no }">
 							</div>
 							
 							<div class="pl-lg-4">
@@ -166,16 +164,16 @@
 									<div class="col-lg-6">
 										<div class="form-group">
 											<label class="form-control-label" for="input-last-name">이메일주소</label>
-											<div class="form-control" name="userid" readonly="readonly">
+											<div class="form-control" id="usersenderMail" name="userid" readonly="readonly">
 											${member.userid }
+											<input type="hidden" name="senderMail" id="senderMail" value=${member.userid }> 
 											</div>
-											<input type="hidden" name="senderMail">
 										</div>
 									</div>
 									<div class="col-lg-6">
 										<div class="form-group">
 											<label class="form-control-label" for="input-first-name">휴대폰 번호</label>
-											<input type="text" id = "phoneNum" class="form-control" name="quest_userphone"
+											<input type="text" id ="quest_userphone" class="form-control quest_userphone" name="quest_userphone"
 												maxlength="13" pattern="^01([0|1|6|7|8|9])-([0-9]{3,4})-([0-9]{4})$"  placeholder="000-0000-0000" >
 												<!-- id="input-first-name" -->
 										</div>
@@ -185,15 +183,16 @@
 									<div class="col-lg-12">
 										<div class="form-group">
 											<label class="form-control-label" for="input-first-name">문의 제목</label>
-											<input type="text" id = "phoneNum" class="form-control" name="quest_title"
+											<input type="text" id ="quest_title" class="form-control" name="quest_title"
 													placeholder="제목을 입력해주세요." >
 										</div>
 									</div>
 									<div>
-										<input type="hidden" name="quest_writer" value="${member.real_name }">
+										<input type="hidden" id="quest_writer" name="quest_writer" value="${member.real_name }">
 									</div>
+									
 									<div>
-										<input type="hidden" name="quest_receiveMail" value="woflala@gmail.com">
+										<input type="hidden" name="receiveMail" id="receiveMail" value="moonjisd5@gmail.com">
 									</div>	
 								</div>
 								
@@ -204,7 +203,7 @@
 							<div class="pl-lg-4">
 								<div class="form-group">
 									<label class="form-control-label">문의 내용</label>
-									<textarea rows="10" class="form-control" name="quest_contents"
+									<textarea rows="10" class="form-control" id="quest_contents" name="quest_contents"
 										placeholder="문의내용을 선택 후 문의내용을 자세하게 작성해주세요.&#13;&#10;자세한 내용을 함께 보내주시면 더욱 신속히 답변드릴 수 있습니다."></textarea>
 								</div>
 							</div>
@@ -212,7 +211,7 @@
 							
 							<div class="text-center">
 								<button  href="#!" class="btn btn-lg btn-secondary" style="font-size: 16px ; padding-left: 100px; padding-right: 100px">취&nbsp;&nbsp;소</button> 
-								<button	type="submit" id="quest_send" class="btn btn-lg btn-primary" style="font-size: 16px ; padding-left: 100px; padding-right: 100px">등&nbsp;&nbsp;록</button>
+								<button	type="button" onclick="questSend()" id="quest_send" class="btn btn-lg btn-primary" style="font-size: 16px ; padding-left: 100px; padding-right: 100px">등&nbsp;&nbsp;록</button>
 							</div>
 						</form>
 						<span style="color:red;">${message}</span>
@@ -230,27 +229,32 @@
 
 	<script>
 		
+	function questSend(){
 		var quest = {
-				quest_id : $("#quest_id").val(), //member_no
-				quest_userphone : $("#quest_userphone").val(), //직접입력(연락처)
-				quest_title : $("#quest_title").val(), //직접입력(제목)
-				quest_contents :$("#quest_contents").val(), //직접입력(내용)
-				quest_receiveMail : $("#quest_receiveMail").val(), //(hidden)고정 : 관리자Email
-				quest_writer : $("quest_writer").val() //(hidden) real_name
-		}
-		
-		$('#quest_send').click(function(){
-			$.ajax({
-				url : '/qna/question-send',
-				type : 'POST',
-				data : quest,
-				success : function(data) {
+			//quest_id : $("#quest_id").val(), //member_no
+			quest_userphone : $("#quest_userphone").val(), //직접입력(연락처)
+			quest_title : $("#quest_title").val(), //직접입력(제목)
+			quest_contents :$("#quest_contents").val(), //직접입력(내용)
+			receiveMail : $("#receiveMail").val(), //(hidden)고정 : 관리자Email
+			senderMail : $("#senderMail").val(),
+			quest_writer : $("#quest_writer").val(),//(hidden) real_name
+			quest_member_no : $("#quest_member_no").val()
+		};
+
+		$.ajax({
+			url : '/qna/question-send',
+			type : 'POST',
+			data : JSON.stringify(quest),
+			datatype : 'json',
+			contentType: 'application/json',
+			success : function() {
 				console.log("1 = 일치 / 0 = 불일치 : "+ quest);
-				}
-				,error:function(request,status,error){
+			}
+			,error:function(request,status,error){
 				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);}
-			});	
 		});
+
+	}
 			
 	</script>
 
@@ -286,9 +290,9 @@
 	      return str;
 	}
 
-	var phoneNum = document.getElementById('phoneNum');
+	var quest_userphone = document.getElementById('quest_userphone');
 
-	phoneNum.onkeyup = function(){
+	quest_userphone.onkeyup = function(){
 	  console.log(this.value);
 	  this.value = autoHypenPhone( this.value ) ;  
 	}

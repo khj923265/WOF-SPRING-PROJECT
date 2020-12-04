@@ -54,7 +54,7 @@
 	
 	<insert id="WithdrawList" parameterType="org.wof.domain.PointVO">
 		insert into POINT(point_id, point_no, point_type, point_owner, point_amount, point_contents, point_chg_date, point_balance)  
-		values ('point'||point_id_seq.nextval, point_id_seq.nextval, #{point_type}, #{point_owner}, -1*#{point_amount}, #{point_contents}, sysdate, #{point_balance}) <!-- point_balance = #{point_balance} -->
+		values ('point'||point_id_seq.nextval, point_id_seq.nextval, #{point_type} , #{point_owner}, -1*#{point_amount}, #{point_contents}, sysdate, #{point_balance}) <!-- point_balance = #{point_balance} -->
 	</insert>
 	
 	<update id="Withdraw" parameterType="org.wof.domain.PointVO">
@@ -74,7 +74,7 @@
 	<!-- point_type => 0:충전, 1:인출, "2:결제", 3:보관, 4:전송, (5:입금, 6:환불) -->
 	<insert id="PaymentFromList" parameterType="org.wof.domain.PointVO">
 		insert into POINT(point_id, point_no, point_type, point_owner, point_amount, point_contents, point_chg_date, point_balance)  
-		values ('point'||point_id_seq.nextval, point_id_seq.nextval, 2, #{point_owner}, -1*#{point_amount}, #{point_contents}, sysdate, #{point_balance})
+		values ('point'||point_id_seq.nextval, point_id_seq.nextval, #{point_type}, #{point_owner}, -1*#{point_amount}, #{point_contents}, sysdate, #{point_balance})
 	</insert>
 	
 	<update id="PaymentFrom" parameterType="org.wof.domain.PointVO">
@@ -86,7 +86,7 @@
 	<!-- point_type => 0:충전, 1:인출, 2:결제, "3:보관", 4:전송, (5:입금, 6:환불) -->
 	<insert id="HoldFromList" parameterType="org.wof.domain.PointVO">
 		insert into POINT(point_id, point_no, point_type, point_owner, point_amount, point_contents, point_chg_date, point_balance)  
-		values ('point'||point_id_seq.nextval, point_id_seq.nextval, 3, #{point_owner}, #{point_amount}, #{point_contents}, sysdate, #{point_balance})
+		values ('point'||point_id_seq.nextval, point_id_seq.nextval, #{point_type}, #{point_owner}, #{point_amount}, #{point_contents}, sysdate, #{point_balance})
 	</insert>
 	
 	<update id="HoldFrom" parameterType="org.wof.domain.PointVO">
@@ -98,7 +98,7 @@
 	<!-- point_type => 0:충전, 1:인출, 2:결제, 3:보관, "4:전송", (5:입금, 6:환불) -->
 	<insert id="HoldToList" parameterType="org.wof.domain.PointVO">
 		insert into POINT(point_id, point_no, point_type, point_owner, point_amount, point_contents, point_chg_date, point_balance)  
-		values ('point'||point_id_seq.nextval, point_id_seq.nextval, 4, #{point_owner}, -1*#{point_amount}, #{point_contents}, sysdate, #{point_balance})
+		values ('point'||point_id_seq.nextval, point_id_seq.nextval, #{point_type}, #{point_owner}, -1*#{point_amount}, #{point_contents}, sysdate, #{point_balance})
 	</insert>
 	
 	<update id="HoldTo" parameterType="org.wof.domain.PointVO">
@@ -110,7 +110,7 @@
 	<!-- point_type => 0:충전, 1:인출, 2:결제, 3:보관, 4:전송, ("5:입금", 6:환불) -->
 	<insert id="PaymentToList" parameterType="org.wof.domain.PointVO">
 		insert into POINT(point_id, point_no, point_type, point_owner, point_amount, point_contents, point_chg_date, point_balance)  
-		values ('point'||point_id_seq.nextval, point_id_seq.nextval, 5, #{point_owner}, #{point_amount}, #{point_contents}, sysdate, #{point_balance})
+		values ('point'||point_id_seq.nextval, point_id_seq.nextval, #{point_type}, #{point_owner}, #{point_amount}, #{point_contents}, sysdate, #{point_balance})
 	</insert>
 	
 	<update id="PaymentTo" parameterType="org.wof.domain.PointVO">
@@ -128,7 +128,7 @@
 		POINT p, member m
 		WHERE p.point_owner = m.member_no 
     	and point_owner = 'member95'
-    	order by lpad('point_id', 10, '0') desc
+    	order by point_chg_date desc
 		]]>
 	</select>
 	

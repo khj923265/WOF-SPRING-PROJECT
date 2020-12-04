@@ -64,9 +64,9 @@
 
 	<insert id="insert" parameterType="org.wof.domain.QuestionVO">
 		insert into QUESTION(quest_id, quest_title, quest_writer, 
-							 quest_contents, quest_userphone, sendermail, receivemail)  
+							 quest_contents, quest_userphone, sendermail, receivemail, quest_member_no)  
 		values ('quest'||quest_id_seq.nextval, #{quest_title}, #{quest_writer}, 
-					#{quest_contents}, #{quest_userphone}, #{senderMail}, #{receiveMail})
+					#{quest_contents}, #{quest_userphone}, #{senderMail}, #{receiveMail}, #{quest_member_no})
 	</insert>
 	
 	<insert id="insertSelectKey">

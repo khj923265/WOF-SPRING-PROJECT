@@ -21,6 +21,7 @@ public class QuestionVO implements Serializable {
 	//private int quest_deleted;
 	
 	private String quest_userphone;
+	private String quest_member_no;
 	
 	private String senderMail;    //발신자 이메일 주소
 	private String receiveMail;    //수신자 이메일 주소
