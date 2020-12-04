@@ -10,6 +10,7 @@ public interface ProjectMapper2 {
 	public List<ProjectVO> listRecommendProjectwithpaging(PartnersVO vo, Standard stand);
 	public List<ProjectVO> pageWithProject(Standard standard);
 	public List<ProjectVO> listRecommendProject(PartnersVO vo);
+	public int totalrecommendProject(PartnersVO vo);
 	
 	//일정관리
 	public List<MeetVO> listMeeting(String meet_req_mem);

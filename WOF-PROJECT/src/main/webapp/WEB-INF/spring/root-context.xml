@@ -13,14 +13,13 @@
 		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd ">
 
-	<!-- HikariCP configuration -->
+	<!-- HikariCP configuration -->	
   	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-  		<property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
-  		<property name="jdbcUrl" value="jdbc:oracle:thin:@//spring-wof-project-db.cilcfkcmzk7r.ap-northeast-2.rds.amazonaws.com/orcl"/>
-  		<property name="username" value="project" />
-  		<property name="password" value="kosta202" />
-
-  	</bean>
+        <property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
+        <property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"/>
+        <property name="username" value="wof"/>
+        <property name="password" value="1234"/>
+    </bean>
 
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
 		<constructor-arg ref="hikariConfig"/>
