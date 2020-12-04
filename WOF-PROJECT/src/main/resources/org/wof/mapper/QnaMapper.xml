@@ -66,7 +66,7 @@
 		insert into QUESTION(quest_id, quest_title, quest_writer, 
 							 quest_contents, quest_userphone, sendermail, receivemail)  
 		values ('quest'||quest_id_seq.nextval, #{quest_title}, #{quest_writer}, 
-					#{quest_contents}, #{quest_userphone}, #{sendermail}, #{receivemail})
+					#{quest_contents}, #{quest_userphone}, #{senderMail}, #{receiveMail})
 	</insert>
 	
 	<insert id="insertSelectKey">

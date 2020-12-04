@@ -46,7 +46,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="ni ni-money-coins"></i></span>
                     </div>
-                    <input class="form-control" type="text" id="mem_id" name="point_amount" placeholder="금액을 입력해주세요." required>
+                    <input class="form-control" type="text" id="mem_id1" name="point_amount" placeholder="금액을 입력해주세요." required>
                 </div>
                 <div class="check_font" id="id_check"></div>
             </div>
@@ -58,7 +58,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="ni ni-align-center"></i></span>
                     </div>
-                    <input class="form-control" type="text" id="mem_name" name="point_contents" placeholder="ex) 충전" required>
+                    <input class="form-control" type="text" id="mem_name1" name="point_contents" placeholder="ex) 충전" required>
                 </div>
                 <div class="check_font" id="name_check"></div>
             </div>
@@ -144,20 +144,20 @@ var nameJ = /^\S{1,20}$/;
 
 $(document).ready(function() { 
 	 						
-	 $('form').on('submit',function(){
+	  $('form').on('submit',function(){
 		 var inval_Arr = new Array(3).fill(false);
 		 
 		 // 금액 정규식
-		/*  if (idJ.test($('#mem_id').val())) {
+		 if (idJ.test($('#mem_id1').val())) {
 			 inval_Arr[0] = true; 
 			 } else {
 			 inval_Arr[0] = false;
 			 alert('1,000원 이상 충전가능합니다.'); 
 			 return false; 
-			 }  */
+			 }  
 		 
 		 // 이름 정규식 
-		 if (nameJ.test($('#mem_name').val())) {
+		 if (nameJ.test($('#mem_name1').val())) {
 			 inval_Arr[1] = true; 
 			 }  else {
 			 inval_Arr[1] = false;
@@ -189,10 +189,10 @@ $(document).ready(function() {
 			 } else{ 
 			 alert('입력정보를 다시 확인하세요.') 
 			 }
-		 }); 
+		 });  */
 	
-	 $('#mem_id').blur(function() {
-		 if (idJ.test($('#mem_id').val())) {
+	 $('#mem_id1').blur(function() {
+		 if (idJ.test($('#mem_id1').val())) {
 			 console.log('true'); 
 			 $('#id_check').text(''); 
 			 }else {
@@ -231,7 +231,7 @@ $(document).ready(function() {
 		
 	 
 		 //이름에 특수문자 들어가지 않도록 설정
-		 $("#mem_name").blur(function() {
+		 $("#mem_name1").blur(function() {
 			 if (nameJ.test($(this).val())) {
 				 console.log(nameJ.test($(this).val()));
 				 $("#name_check").text(''); 

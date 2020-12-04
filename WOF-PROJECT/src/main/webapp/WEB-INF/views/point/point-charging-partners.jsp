@@ -137,18 +137,18 @@ var empJ = /\s/g;
 //금액 정규식 
 var idJ = /^[0-9]{4,19}$/; 
 // 비밀번호 정규식
-//var pwJ = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/;
+var pwJ = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/;
 // 메모 정규식
 var nameJ = /^\S{1,20}$/;
  
 
-$(document).ready(function() { 
+ $(document).ready(function() { 
 	 						
 	 $('form').on('submit',function(){
 		 var inval_Arr = new Array(3).fill(false);
 		 
 		 // 금액 정규식
-		  if (idJ.test($('#mem_id').val())) {
+		 if (idJ.test($('#mem_id').val())) {
 			 inval_Arr[0] = true; 
 			 } else {
 			 inval_Arr[0] = false;
@@ -157,13 +157,13 @@ $(document).ready(function() {
 			 }  
 		 
 		 // 이름 정규식 
-		 if (nameJ.test($('#mem_name').val())) {
+		if (nameJ.test($('#mem_name').val())) {
 			 inval_Arr[1] = true; 
 			 }  else {
 			 inval_Arr[1] = false;
 			 alert('메모를 입력해주세요.');
 			 return false; 
-			 } 
+			 }  
 		 
 		 
 		 // 비밀번호가 같은 경우 && 비밀번호 정규식 
@@ -189,7 +189,7 @@ $(document).ready(function() {
 			 } else{ 
 			 alert('입력정보를 다시 확인하세요.') 
 			 }
-		 }); 
+		 });  
 	
 	 $('#mem_id').blur(function() {
 		 if (idJ.test($('#mem_id').val())) {

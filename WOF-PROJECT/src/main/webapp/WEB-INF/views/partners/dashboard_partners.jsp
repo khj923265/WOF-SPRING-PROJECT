@@ -61,11 +61,11 @@
 				<!-- Navigation -->
 				<ul class="navbar-nav mb-md-3">
 					<li class="nav-item"><a class="nav-link"
-						href="${pageContext.request.contextPath}/qna/question-register">
+						href="${pageContext.request.contextPath}/qna/question-register-partners">
 							<i class="ni ni-archive-2"></i> <span class="nav-link-text">1:1문의</span>
 					</a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="${pageContext.request.contextPath}/point/admin">
+						href="${pageContext.request.contextPath}/point/point_partners">
 							<i class="ni ni-money-coins"></i> <span class="nav-link-text">포인트
 								관리</span>
 					</a></li>

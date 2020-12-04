@@ -145,11 +145,11 @@ var nameJ = /^\S{1,20}$/
 
 $(document).ready(function() { 
 	 						
-	 $('#withdarwForm').on('submit',function(){
+	  $('#withdarwForm').on('submit',function(){
 		 var inval_Arr = new Array(3).fill(false);
 		 
 		 // 금액 정규식
-		  /* if (idJ.test($('#mem_id2').val())) {
+		   if (idJ.test($('#mem_id2').val())) {
 			 console.log($('#mem_id2').val());
 			 inval_Arr[0] = true;
 			 return true;
@@ -157,7 +157,7 @@ $(document).ready(function() {
 			 inval_Arr[0] = false;
 			 alert('1,000원 이상 인출가능합니다.'); 
 			 return false; 
-			 }   */
+			 }   
 		 
 		 // 이름 정규식 
 		 if (nameJ.test($('#mem_name2').val())) {
@@ -196,7 +196,7 @@ $(document).ready(function() {
 			 } else{ 
 			 alert('입력정보를 다시 확인하세요.') 
 			 }
-		 }); 
+		 });  
 	
 	 $('#mem_id2').blur(function() {
 		 if (idJ.test($('#mem_id2').val())) {

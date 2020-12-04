@@ -59,7 +59,7 @@
 	</div>
 
 <!-- Sidenav -->
-<%-- <nav
+<nav
 	class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white"
 	id="sidenav-main">
 	<div class="scrollbar-inner">
@@ -113,11 +113,11 @@
 				<!-- Navigation -->
 				<ul class="navbar-nav mb-md-3">
 					<li class="nav-item"><a class="nav-link"
-						href="https://demos.creative-tim.com/argon-dashboard/docs/getting-started/overview.html">
-							<i class="ni ni-archive-2"></i> <span class="nav-link-text">문의하기</span>
+						href="${pageContext.request.contextPath}/qna/question-register-partners">
+							<i class="ni ni-archive-2"></i> <span class="nav-link-text">1:1문의</span>
 					</a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="${pageContext.request.contextPath}/point/admin">
+						href="${pageContext.request.contextPath}/point/point-partners">
 							<i class="ni ni-money-coins"></i> <span class="nav-link-text">포인트
 								관리</span>
 					</a></li>
@@ -135,10 +135,9 @@
 			</div>
 		</div>
 	</div>
-</nav> --%>
-<!-- End side nav -->
+</nav>
 
-
+<div class="main-content" id="panel"> 
 
 	<!-- Q&A 질문 폼 -->
 	<div class="container-fluid mt--6">
@@ -224,7 +223,7 @@
 			</div>
 		</div>
 	</div>
-	
+</div>	
 	
 	<script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

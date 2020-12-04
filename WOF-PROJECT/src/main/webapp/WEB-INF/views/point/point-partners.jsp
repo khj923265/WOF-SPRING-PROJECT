@@ -25,7 +25,8 @@
 
 
 <!-- Sidenav -->
-<nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white"
+<nav
+	class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white"
 	id="sidenav-main">
 	<div class="scrollbar-inner">
 		<!-- Brand -->
@@ -79,7 +80,7 @@
 				<ul class="navbar-nav mb-md-3">
 					<li class="nav-item"><a class="nav-link"
 						href="${pageContext.request.contextPath}/qna/question-register-partners">
-							<i class="ni ni-archive-2"></i> <span class="nav-link-text">문의하기</span>
+							<i class="ni ni-archive-2"></i> <span class="nav-link-text">1:1문의</span>
 					</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="${pageContext.request.contextPath}/point/point_partners">
