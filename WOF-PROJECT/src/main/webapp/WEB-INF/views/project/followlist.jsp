@@ -28,7 +28,7 @@
 									<th scope="col">프로젝트 시작일</th>
 									<th scope="col">지역</th>
 									<th scope="col">경력</th>
-									<th scope="col">필요기술</th>
+									<!-- <th scope="col">필요기술</th> -->
 									<th scope="col">프로젝트 금액</th>
 								</tr>
 							</thead>
@@ -41,7 +41,7 @@
 										<td>${follow.proj_apply_deadline}</td>
 										<td>${follow.proj_work_place}</td>
 										<td>${follow.proj_career}</td>
-										<td>${follow.proj_reqr_skill}</td>
+										<%-- <td>${follow.proj_reqr_skill}</td> --%>
 										<td>${follow.proj_estimate}원</td>
 									</tr>
 								</c:forEach>

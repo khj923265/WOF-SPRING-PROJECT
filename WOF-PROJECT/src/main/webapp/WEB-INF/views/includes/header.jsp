@@ -27,7 +27,6 @@
     <link href='/resources/calendar/fullcalendar-5.4.0/lib/main.css' rel='stylesheet'/>
     <script src='/resources/calendar/fullcalendar-5.4.0/lib/main.js'></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
 </head>
 
 <body>
@@ -131,9 +130,3 @@
         <!— .container-fluid —>
     </nav>
 </div>
-
-<script type="text/javascript">
-		$('#qnaBtn').click(function() {
-			
-		})
-</script>

@@ -9,9 +9,9 @@
 			select * from project where proj_id = #{proj_id}
 	</select>
 	
-	<select id="totalProject" resultType="java.lang.Integer">
+ 	<select id="totalProject" resultType="java.lang.Integer">
 			select count(*) from project
-	</select>
+	</select> 
 	
 	<select id="listRecommendProjectwithpaging" parameterType="org.wof.domain.PartnersVO" resultType="org.wof.domain.ProjectVO">
 			<![CDATA[
@@ -26,7 +26,7 @@
 					PROJ_TYPE, PROJ_CAREER, PROJ_PM, PROJ_WORK_TYPE, PROJ_WORK_PLACE, PROJ_WORK_TIME,
 					proj_work_equip, proj_walfare, proj_detail, PROJ_FINISH_DATE, apply_mem, proj_status,
 					PROJ_UPDATE_DATE, PROJ_REPLYCNT, PROJ_TOTAL_DATE, fp.related_project, fp.related_member
-				) p full OUTER JOIN followproject fp on p.proj_id = fp.related_project and fp.related_member = 'member89'
+				) p full OUTER JOIN followproject fp on p.proj_id = fp.related_project and fp.related_member = #{member_no}
 			WHERE rownum <= #{pageNum} * #{amount} 
 			) 
 			WHERE rn > (#{pageNum} - 1) * #{amount}
