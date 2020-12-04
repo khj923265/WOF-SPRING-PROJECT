@@ -34,7 +34,7 @@
             	아래 내용을 입력 후, '충전' 버튼을 클릭 해 주세요.
         </div>
         
-        <form role="form" action="charging2" method="post" name="charging2" id="usercheck">
+        <form role="form" action="charging2" method="post" name="charging2" id="chargingForm">
           <div>
         	<div>
 				<input type="hidden" name="point_owner" value=${member.member_no }> 
@@ -154,7 +154,7 @@ var nameJ = /^\S{1,50}$/;
 
  $(document).ready(function() { 
 	 						
-	 $('form').on('submit',function(){
+	 $('#chargingForm').on('submit',function(){
 		 var inval_Arr = new Array(3).fill(false);
 		 
 		 // 금액 정규식

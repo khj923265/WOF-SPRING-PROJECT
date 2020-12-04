@@ -34,7 +34,7 @@ td{ border:1px solid #000000;
            		 아래 내용을 입력 후, '인출' 버튼을 클릭 해 주세요.
         </div>
         
-        <form role="form" action="withdraw" method="post" name="withdraw" id="withdarwForm" >
+        <form role="form" action="/point/withdraw2" method="post" name="withdraw" id="withdarwForm" >
         	<div>
 				<input type="hidden" name="point_owner" value=${member.member_no }> 
 			</div>
@@ -146,7 +146,7 @@ var nameJ = /^\S{1,50}$/
 $(document).ready(function() { 
 	 						
 	  $('#withdarwForm').on('submit',function(){
-		 var inval_Arr = new Array(3).fill(false);
+		 var inval_Arr = new Array(2).fill(false);
 		 
 		 // 금액 정규식
 		   if (idJ.test($('#mem_id2').val())) {
@@ -157,7 +157,7 @@ $(document).ready(function() {
 			 inval_Arr[0] = false;
 			 alert('1,000원 이상 인출가능합니다.'); 
 			 return false; 
-			 }   
+			 }    
 		 
 		 // 이름 정규식 
 		 if (nameJ.test($('#mem_name2').val())) {
