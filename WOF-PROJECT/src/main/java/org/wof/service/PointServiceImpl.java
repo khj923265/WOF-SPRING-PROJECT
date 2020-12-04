@@ -5,9 +5,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.apache.ibatis.session.SqlSession;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -34,6 +36,8 @@ import net.nurigo.java_sdk.exceptions.CoolsmsException;
 @Service
 @Log4j
 public class PointServiceImpl implements PointService {
+
+	
 
 	@Setter(onMethod_= @Autowired)
 	private PointMapper pointMapper;
@@ -180,10 +184,19 @@ public class PointServiceImpl implements PointService {
 		
 		member.getReal_name();
 		
+		System.out.println("member-----------------"+member);
+		
 		point.setPoint_owner(member.getMember_no());
 		
-		return pointMapper.getList(point);
+		standard.setPoint_owner(member.getMember_no());
+		
+		System.out.println("member-----------------"+member);
+		
+		List<PointVO> pointlist = pointMapper.getList(point);
+		
+		return pointlist;
 	}
+	
 	
 	@Override
 	public int getTotalService(Standard standard) {
@@ -197,9 +210,11 @@ public class PointServiceImpl implements PointService {
 		String data = "0";
 		
 		//Member에 mapper에서 가져온객체 가져오기
-		String pw = pointMapper.pwCheck(member.getUserid());
-		
-		if(passwordEncoder.matches(member.getUserpw(), pw)){
+		String encodepw = pointMapper.pwCheck(member.getUserid());
+		String pw = member.getUserpw();
+		System.out.println(encodepw);
+		System.out.println(pw);
+		if(passwordEncoder.matches(pw, encodepw)){
 			//성공 시
 			data = "1";
 		}

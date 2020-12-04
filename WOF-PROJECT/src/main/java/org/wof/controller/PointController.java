@@ -40,29 +40,56 @@ import lombok.extern.log4j.Log4j;
 public class PointController {
 	
     private PointService service;
-
-    @GetMapping("/admin")
-    public String admin(Principal principal,PointVO point, MemberVO member, Model model, Standard standard){
+    
+    @PreAuthorize("hasRole('ROLE_CLIENT')")
+    @GetMapping("/point_client")
+    public String point_client(Principal principal,PointVO point, MemberVO member, Model model, Standard standard){
     	
     	member.setUserid(principal.getName());
     	log.info("포인트 관리 페이지(충전/인출/조회)");
     	log.info("=============member : "+member);
     	log.info("=============point : "+point);
     	
-    	service.totalPoinAjaxtService(member);
+    	int totalpoint = service.totalPoinAjaxtService(member);
     	
     	//model.addAttribute("admin", service.ListService(standard));
-    	
-    	model.addAttribute("getList", service.ListService(member, point, standard));
-    	
+    	log.info("stnadard!!!!!!!!!!!!!!!!!!!!!"+standard);
+    	//model.addAttribute("getList", service.ListService(member, point, standard));
+    	log.info("stnadard!!!!!!!!!!!!!!!!!!!!!"+standard);
     	int total = service.getTotalService(standard);
     	log.info(standard);
     	log.info(total);
     	//model.addAttribute("pageMaker", new PageDTO(standard, total));
+    	model.addAttribute("totalpoint",totalpoint);
     	
     	
+    	return "point/point-client";
+    }
+    
+    
+    @PreAuthorize("hasRole('ROLE_PARTNERS')")
+    @GetMapping("/point_partners")
+    public String point_partners(Principal principal,PointVO point, MemberVO member, Model model, Standard standard){
     	
-    	return "point/point-admin";
+    	member.setUserid(principal.getName());
+    	log.info("포인트 관리 페이지(충전/인출/조회)");
+    	log.info("=============member : "+member);
+    	log.info("=============point : "+point);
+    	
+    	int totalpoint = service.totalPoinAjaxtService(member);
+    	
+    	//model.addAttribute("admin", service.ListService(standard));
+    	log.info("stnadard!!!!!!!!!!!!!!!!!!!!!"+standard);
+    	model.addAttribute("getList", service.ListService(member, point, standard));
+    	log.info("stnadard!!!!!!!!!!!!!!!!!!!!!"+standard);
+    	int total = service.getTotalService(standard);
+    	log.info(standard);
+    	log.info(total);
+    	//model.addAttribute("pageMaker", new PageDTO(standard, total));
+    	model.addAttribute("totalpoint",totalpoint);
+    	
+    	
+    	return "point/point-partners";
     }
     
     @PreAuthorize("isAuthenticated()")
@@ -71,7 +98,7 @@ public class PointController {
     	return "point/point-charging";
     }
     
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasRole('ROLE_CLIENT')")
     @PostMapping("/charging")
     public String charging(PointVO point, MemberVO member, RedirectAttributes rttr){
     		log.info(point);
@@ -79,7 +106,18 @@ public class PointController {
         		rttr.addFlashAttribute("result", "success");
         	}
     		
-    	return "redirect:/point/admin";
+    	return "redirect:/point/point_client";
+    }
+    
+    @PreAuthorize("hasRole('ROLE_PARTNERS')")
+    @PostMapping("/charging2")
+    public String charging2(PointVO point, MemberVO member, RedirectAttributes rttr){
+    		log.info(point);
+    		if(service.ChargingService(point, member) == 1){
+        		rttr.addFlashAttribute("result", "success");
+        	}
+    		
+    	return "redirect:/point/point_partners";
     }
     
     @PreAuthorize("isAuthenticated()")
@@ -88,7 +126,7 @@ public class PointController {
     	return "point/point-withdraw";
     }
     
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasRole('ROLE_CLIENT')")
     @PostMapping("/withdraw")
     public String withdraw(PointVO point, MemberVO member, RedirectAttributes rttr){
     		
@@ -96,7 +134,18 @@ public class PointController {
     		rttr.addFlashAttribute("result", "success");
     	}
     	
-    		return "redirect:/point/admin";
+    		return "redirect:/point/point_client";
+    }
+    
+    @PreAuthorize("hasRole('ROLE_PARTNERS')")
+    @PostMapping("/withdraw2")
+    public String withdraw2(PointVO point, MemberVO member, RedirectAttributes rttr){
+    		
+    	if(service.WithdrawService(point, member) == 1){
+    		rttr.addFlashAttribute("result", "success");
+    	}
+    	
+    		return "redirect:/point/point_partners";
     }
     
 /*    @PreAuthorize("isAuthenticated()")
@@ -113,13 +162,15 @@ public class PointController {
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value="/point/pwCheck", method=RequestMethod.GET)
     @ResponseBody
-    public String pwCheck(@RequestParam("userpw") String userpw ,MemberVO member, Principal principal){
+    public MemberVO pwCheck(@RequestParam("userpw") String userpw ,MemberVO member, Principal principal){
+    	
+    	log.info("--------------------!!!" + userpw);
     	
     	log.info("======== principal.getName() : ========" + principal.getName());
     	member.setUserid(principal.getName());
     	member.setUserpw(userpw);
-    	
-    	return service.pwCheckService(member);
+    	member.setUserpw(service.pwCheckService(member));
+    	return member;
     }
     
     @PreAuthorize("isAuthenticated()")
@@ -139,7 +190,7 @@ public class PointController {
     		return "point/point-admin";
     }
     
-    @PreAuthorize("isAuthenticated()")
+  /* @PreAuthorize("isAuthenticated()")
     @PostMapping("/paymentOut")
     public String paymentOut(PointVO point, MemberVO member, ContractSourceVO contract, RedirectAttributes rttr){
     		
@@ -147,65 +198,6 @@ public class PointController {
     		rttr.addFlashAttribute("result", "success");
     	}
     		return "point/point-admin";
-    }
-    
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/check/sendSMS")
-    @ResponseBody
-    public String sendSMS(String phoneNumber) {
-
-        Random rand  = new Random();
-        String numStr = "";
-        for(int i=0; i<4; i++) {
-            String ran = Integer.toString(rand.nextInt(10));
-            numStr+=ran;
-        }
-
-        System.out.println("수신자 번호 : " + phoneNumber);
-        System.out.println("인증번호 : " + numStr);
-        service.certifiedPhoneNumber(phoneNumber,numStr);
-        return numStr;
-    }
-    
-    
-  //문자를 보낼때 맵핑되는 메소드
-    /*@RequestMapping(value = "/sendSms.do")
-      public void sendSms(HttpServletRequest request) throws Exception {
-
-        String api_key = "NCSBVLIC1XCP0K66"; //위에서 받은 api key를 추가
-        String api_secret = "QQHS8GSBLPKRHPYZLHQB9HIDLCSNHEW8";  //위에서 받은 api secret를 추가
-        
-        Coolsms coolsms = new Coolsms(api_key, api_secret);
-        
-        HashMap<String, String> set = new HashMap<String, String>();
-        set.put("to", "01074721644"); // 수신번호
-
-        set.put("from", (String)request.getParameter("from")); // 발신번호, jsp에서 전송한 발신번호를 받아 map에 저장한다.
-        set.put("text", (String)request.getParameter("text")); // 문자내용, jsp에서 전송한 문자내용을 받아 map에 저장한다.
-        set.put("type", "sms"); // 문자 타입
-
-        System.out.println(set);
-
-		JSONObject result = coolsms.send(set); // 보내기&전송결과받기
-
-        if ((boolean)result.get("status") == true) {
-
-          // 메시지 보내기 성공 및 전송결과 출력
-          System.out.println("성공");
-          System.out.println(result.get("group_id")); // 그룹아이디
-          System.out.println(result.get("result_code")); // 결과코드
-          System.out.println(result.get("result_message")); // 결과 메시지
-          System.out.println(result.get("success_count")); // 메시지아이디
-          System.out.println(result.get("error_count")); // 여러개 보낼시 오류난 메시지 수
-        } else {
-
-          // 메시지 보내기 실패
-          System.out.println("실패");
-          System.out.println(result.get("code")); // REST API 에러코드
-          System.out.println(result.get("message")); // 에러메시지
-        }
-
-        //return "member/number"; //문자 메시지 발송 성공했을때 number페이지로 이동함
-      }*/
+    }*/
     
 }

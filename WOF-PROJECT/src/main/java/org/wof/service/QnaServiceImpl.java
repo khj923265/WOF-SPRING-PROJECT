@@ -47,7 +47,7 @@ public class QnaServiceImpl implements QnaService {
 		
 		return qnaMapper.getListPaging(standard);
 	}
-
+	
 	@Override
 	public int getTotalService(Standard standard) {
 		
@@ -62,15 +62,8 @@ public class QnaServiceImpl implements QnaService {
 	@Override
 	public void registerService(QuestionVO quest) {
 		log.info("======== register ========" + quest);
-		
-		//qnaMapper.insertSelectKey(quest);
-		
 		qnaMapper.insert(quest);
-		
-		quest.setQuest_ans_check(0);
-		quest.setQuest_deleted(0);
 		log.info("==========================");
-		
 		
 		 try {
 	            MimeMessage msg = mailSender.createMimeMessage();
@@ -80,8 +73,9 @@ public class QnaServiceImpl implements QnaService {
 	 
 	            /*
 	             * createMimeMessage() : MimeMessage객체를 생성시킴 (이것을 이용해서 메시지를 구성한 뒤 메일 발송)
-	             * addRecipient() : 메시지의 발신자를 설정 InternetAddress() : 이메일 주소 getReceiveMail() :
-	             * 수신자 이메일 주소
+	             * addRecipient() : 메시지의 발신자를 설정 
+	             * InternetAddress() : 이메일 주소 
+	             * getReceiveMail() :수신자 이메일 주소
 	             */
 	 
 	            // 보내는 사람(이메일주소+이름)
@@ -109,15 +103,6 @@ public class QnaServiceImpl implements QnaService {
 	        }
 
 //		int questionResult = qnaMapper.Question(quest);
-
-		/*if(quest.getAttachList() == null || quest.getAttachList().size() <= 0) {
-			return;
-		}
-		
-		quest.getAttachList().forEach(attach -> {
-			attach.setQuest_no(quest.getQuest_id());
-			attachMapper.insert(attach);
-		});*/
 	}
 
 	@Override

@@ -121,18 +121,31 @@
 	
 	
 	
-	<select id="getList" resultType="org.wof.domain.PointVO">
+	<select id="getList" parameterType="org.wof.domain.PointVO" resultType="org.wof.domain.PointVO">
 	<![CDATA[
-		SELECT p.point_chg_date, m.real_name, p.point_contents, p.point_amount, p.point_balance
+		SELECT rownum rn, p.point_chg_date, m.real_name, p.point_contents, p.point_amount, p.point_balance
+		FROM
+		POINT p, member m
+		WHERE p.point_owner = m.member_no 
+    	and point_owner = 'member95'
+    	order by lpad('point_id', 10, '0') desc
+		]]>
+	</select>
+	
+	<!-- <select id="getList" parameterType="org.wof.domain.Standard" resultType="org.wof.domain.PointVO">
+	<![CDATA[
+		select * from
+		(SELECT rownum rn, p.point_chg_date, m.real_name, p.point_contents, p.point_amount, p.point_balance
 		FROM
 		POINT p, member m
 		WHERE p.point_owner = m.member_no 
     	and point_owner = #{point_owner}
-    	order by p.point_chg_date desc
+      	and rownum <= #{pageNum} * #{amount})
+    	order by lpad(point_id, 10, '0') desc) 
+    	where rn> (#{pageNum} -1) * #{amount} 
+    	order by rn desc
 		]]>
-		
-		
-	</select>
+	</select> -->
 	
 
 	

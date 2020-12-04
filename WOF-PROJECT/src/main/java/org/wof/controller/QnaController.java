@@ -53,12 +53,20 @@ public class QnaController {
 	    	model.addAttribute("pageMaker", new PageDTO(standard, total));
 	    }*/
 	    
-	    @RequestMapping("/question-register")
-	    public String questionRegister(){
-	    	return "qna/question-register";
+		@PreAuthorize("hasRole('ROLE_PARTNERS')")
+	    @RequestMapping("/question-register-partners")
+	    public String questionRegisterPartners(){
+	    	return "qna/question-register-partners";
 	    }
 	    
-	    @RequestMapping("/question-register-send")
+		@PreAuthorize("hasRole('ROLE_CLIENT')")
+	    @RequestMapping("/question-register-client")
+	    public String questionRegisterClient(){
+	    	return "qna/question-register-client";
+	    }
+	    
+		@PreAuthorize("isAuthenticated()")
+	    @RequestMapping("/question-send")
 	    public String questionRegister(@ModelAttribute QuestionVO quest, Model model, RedirectAttributes rttr){
 		 
 	    	log.info("================ 문의사항 내역 ================");
@@ -68,19 +76,18 @@ public class QnaController {
 	    	
 	    	  try {
 	    		  service.registerService(quest); //  quest(메일관련 정보)를 sendMail에 저장함
-	              model.addAttribute("message", "문의사항이 접수되었습니다."); // 이메일이 발송되었다는 메시지를 출력시킨다.
+	              model.addAttribute("message", "문의내역이 접수되었습니다."); // 이메일이 발송되었다는 메시지를 출력시킨다.
 	              
 	              return "redirect:/qna/question-success";
 	   
 	          } catch (Exception e) {
 	              e.printStackTrace();
-	              model.addAttribute("message", "이메일 발송 실패..."); // 이메일 발송이 실패되었다는 메시지를 출력
+	              model.addAttribute("message", "문의내역 발송 실패"); // 이메일 발송이 실패되었다는 메시지를 출력
 	          }
 	    	  	
-	    	rttr.addFlashAttribute("result", quest.getQuest_no());
+	    	rttr.addFlashAttribute("result", quest.getQuest_id());
 	    	
-	    	
-	    	return "qna/question-register";
+	    	return "qna/question-register-partners";
 	    	
 	    }
 	    

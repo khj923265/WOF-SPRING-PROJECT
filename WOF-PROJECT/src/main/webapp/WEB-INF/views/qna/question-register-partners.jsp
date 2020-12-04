@@ -155,35 +155,24 @@
 					</div>
 					
 					<div class="card-body">
-						<form action="/qna/question-register-send" method="post">
+						<form >
 							<!-- <h6 class="heading-small text-muted mb-4">문의 정보</h6> -->
 							
-							<%-- <div >
-							<input type="hidden" name="QUEST_ID" value=${member.member_no }> 
-							</div> --%>
+							<div >
+							<input type="hidden" name="quest_id" id="quest_id" value=${member.member_no }> 
+							</div>
 							
 							<div class="pl-lg-4">
 								<div class="row">
 									<div class="col-lg-6">
-										<!-- <div class="form-group">
-											<label class="form-control-label" for="input-username">문의유형</label>
-											//quest_type => "0:, 1:, 2:, 3:"
-											<input id="input-username" class="form-control"
-												placeholder="선택" name="quest_type" value="문의유형">
-										</div> -->
-									</div>
-									<div class="col-lg-6">
 										<div class="form-group">
-											<label class="form-control-label" for="input-email">이름</label>
-											<div class="form-control" name="real_name" readonly="readonly">
-												<input name="quest_writer" value="${member.real_name }">
+											<label class="form-control-label" for="input-last-name">이메일주소</label>
+											<div class="form-control" name="userid" readonly="readonly">
+											${member.userid }
 											</div>
-											<%-- <input type="email" id="input-email" class="form-control"
-												value="${member.realname }"> --%>
+											<input type="hidden" name="senderMail">
 										</div>
 									</div>
-								</div>
-								<div class="row">
 									<div class="col-lg-6">
 										<div class="form-group">
 											<label class="form-control-label" for="input-first-name">휴대폰 번호</label>
@@ -192,17 +181,20 @@
 												<!-- id="input-first-name" -->
 										</div>
 									</div>
-									<div class="col-lg-6">
+								</div>
+								<div class="row">
+									<div class="col-lg-12">
 										<div class="form-group">
-											<label class="form-control-label" for="input-last-name">이메일주소</label>
-											<div class="form-control" name="userid" readonly="readonly">
-											<input name="senderMail" value="${member.userid }">
-											</div>
-											<input type="hidden" name="senderMail">
+											<label class="form-control-label" for="input-first-name">문의 제목</label>
+											<input type="text" id = "phoneNum" class="form-control" name="quest_title"
+													placeholder="제목을 입력해주세요." >
 										</div>
 									</div>
 									<div>
-										<input type="hidden" name="receiveMail" value="better1009@gmail.com">
+										<input type="hidden" name="quest_writer" value="${member.real_name }">
+									</div>
+									<div>
+										<input type="hidden" name="quest_receiveMail" value="woflala@gmail.com">
 									</div>	
 								</div>
 								
@@ -221,7 +213,7 @@
 							
 							<div class="text-center">
 								<button  href="#!" class="btn btn-lg btn-secondary" style="font-size: 16px ; padding-left: 100px; padding-right: 100px">취&nbsp;&nbsp;소</button> 
-								<button	type="submit" class="btn btn-lg btn-primary" style="font-size: 16px ; padding-left: 100px; padding-right: 100px">등&nbsp;&nbsp;록</button>
+								<button	type="submit" id="quest_send" class="btn btn-lg btn-primary" style="font-size: 16px ; padding-left: 100px; padding-right: 100px">등&nbsp;&nbsp;록</button>
 							</div>
 						</form>
 						<span style="color:red;">${message}</span>
@@ -234,82 +226,36 @@
 	</div>
 	
 	
-	<!-- <div>
-          <form method="post" id="smsForm">
-				<span style="color: green; font-weight: bold;">SMS 전송 (문자보내기)</span>
-    		<ul>
-      			<li>보낼사람 : <input type="text" name="from" placeholder=" 전화번호 입력 ( '-' 포함 )"/></li>
-      			<li>내용 : <textarea name="text" placeholder=" 보낼 내용 입력 "></textarea></li>
-    		</ul>
-    			<input type="button" onclick="sendSMS('sendSms')" value="전송하기">
-  		  </form>
-     </div> -->
-	
-	
-	
 	<script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 	<script>
-	$(document).ready(function(e) {
-
-		  var formObj = $("form[role='form']");
-		  
-		  $("button[type='submit']").on("click", function(e){
-		    
-		    e.preventDefault();
-		    
-		    console.log("submit clicked");
-		    
-		    var str = "";
-		    
-		    $(".uploadResult ul li").each(function(i, obj){
-		      
-		      var jobj = $(obj);
-		      
-		      console.dir(jobj);
-		      console.log("-------------------------");
-		      console.log(jobj.data("filename"));
-		      
-		      
-		      str += "<input type='hidden' name='attachList["+i+"].fileName' value='"+jobj.data("filename")+"'>";
-		      str += "<input type='hidden' name='attachList["+i+"].uuid' value='"+jobj.data("uuid")+"'>";
-		      str += "<input type='hidden' name='attachList["+i+"].uploadPath' value='"+jobj.data("path")+"'>";
-		      str += "<input type='hidden' name='attachList["+i+"].fileType' value='"+ jobj.data("type")+"'>";
-		      
-		    });
-		    
-		    console.log(str);
-		    
-		    formObj.append(str).submit();
-		    
-		  });
-	
-	  
-	  $(".uploadResult").on("click", "button", function(e){
-		    
-		    console.log("delete file");
-		      
-		    var targetFile = $(this).data("file");
-		    var type = $(this).data("type");
-		    
-		    var targetLi = $(this).closest("li");
-		    
-		    $.ajax({
-		      url: '/deleteFile',
-		      data: {fileName: targetFile, type:type},
-		      dataType:'text',
-		      type: 'POST',
-		        success: function(result){
-		           alert(result);
-		           
-		           targetLi.remove();
-		         }
-		    }); //$.ajax
-		   });
-	  
-	});
+		
+		var quest = {
+				quest_id : $("#quest_id").val(), //member_no
+				quest_userphone : $("#quest_userphone").val(), //직접입력(연락처)
+				quest_title : $("#quest_title").val(), //직접입력(제목)
+				quest_contents :$("#quest_contents").val(), //직접입력(내용)
+				quest_receiveMail : $("#quest_receiveMail").val(), //(hidden)고정 : 관리자Email
+				quest_writer : $("quest_writer").val() //(hidden) real_name
+		}
+		
+		$('#quest_send').click(function(){
+			$.ajax({
+				url : '/qna/question-send',
+				type : 'POST',
+				data : quest,
+				success : function(data) {
+				console.log("1 = 일치 / 0 = 불일치 : "+ quest);
+				}
+				,error:function(request,status,error){
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);}
+			});	
+		});
+			
 	</script>
+
+
 	
 	<script>
 	var autoHypenPhone = function(str){
@@ -347,9 +293,7 @@
 	  console.log(this.value);
 	  this.value = autoHypenPhone( this.value ) ;  
 	}
-
 	</script>
-	
 	
 	
 <%@ include file = "../includes/footer.jsp"%>
