@@ -29,13 +29,13 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/main/*")
 @AllArgsConstructor
 public class MainController {
-	
+
 	private ProjectService ps;
-	
+
 	@GetMapping("/countProject")
 	public ResponseEntity<Integer> countProject(Standard standard) {
-	
-		return new ResponseEntity<>(ps.getTotal(standard), HttpStatus.OK); 
+
+		return new ResponseEntity<>(ps.getTotal(standard), HttpStatus.OK);
 
 	}//END countProject
 
@@ -43,46 +43,46 @@ public class MainController {
 	public ResponseEntity<Integer> countPrevProject(Standard standard) {
 		int prev = ps.getPrev(standard);
 		int curr = ps.getCurr(standard);
-		
+
 		int diff = (((curr + prev)-prev)/prev) * 100;
-		
+
 		return new ResponseEntity<>(diff, HttpStatus.OK);
-		
+
 	}//END countProject
-	
+
 	@CrossOrigin
 	@GetMapping(value="/publicDB", produces="application/text;charset=utf8")
 	public String callApi() {
 		StringBuffer sb = new StringBuffer();
-		
+
 		try {
 			String str = "http://apis.data.go.kr/1230000/BidPublicInfoService/getBidPblancListInfoCnstwk?";
 			str += "ServiceKey=pImNxEehlp%2Bh6MdzBPQj%2BIsEM%2FzzJ9dubnVfrEOJGlvt%2FCc659UVl1Ke4DoMXirDwgrPsaqm3bVUvq1KUbrR5w%3D%3D";
-			str += "&type=xml&numOfRows=10&pageNo=1";
+			str += "&type=json&numOfRows=10&pageNo=1";
 			str += "&inqryDiv=1&inqryBgnDt=202011010000&inqryEndDt=202012012359";
-			
+
 			URL url = new URL(str);
 			HttpURLConnection urlconn = (HttpURLConnection) url.openConnection();
 			urlconn.setRequestMethod("GET");
-			
+
 			BufferedReader br = new BufferedReader(new InputStreamReader(urlconn.getInputStream()));
-			
+
 			String returnLine;
-			sb.append("<xmp>");
+
 			while((returnLine = br.readLine()) != null) {
-				sb.append(returnLine + "\n");
+				sb.append(returnLine);
 			}
-			
+
 			urlconn.disconnect();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		return sb + "</xmp>";
-		
-	}//END callApi()
-	
 
-	
+		return sb.toString();
+
+	}//END callApi()
+
+
+
 }//END MainController

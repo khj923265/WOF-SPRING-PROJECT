@@ -15,7 +15,7 @@ select * from project order by proj_reg_date desc
 </select>
 
 
-<select id="getListWithPaging" resultType="org.wof.domain.ProjectVO">
+	<select id="getListWithPaging" resultType="org.wof.domain.ProjectVO">
 		<!-- 쿼리문 -->
 		<!-- SELECT * 
 			FROM
@@ -31,49 +31,54 @@ select * from project order by proj_reg_date desc
 					)
 				WHERE rownum <= 20
 				)
-			WHERE rn > 10; --> 
-			<![CDATA[
+			WHERE rn > 10; -->
+		<![CDATA[
 			SELECT * 
 			FROM
-
 		 		(SELECT rownum rn, proj_id, proj_title, proj_reg_date, member_no, proj_apply_deadline,
 					proj_start_date, proj_end_date, proj_estimate, proj_reqr_person, proj_reqr_skill,
 					proj_type, proj_career, proj_pm, proj_work_type, proj_work_place, proj_work_time,
 					proj_work_equip, proj_walfare, proj_detail, proj_finish_date, apply_mem, proj_status,
 					proj_update_date, proj_replycnt, proj_total_date
-
 				FROM
-					(SELECT * 
+					(SELECT *
 					FROM project
 					]]>
-<!-- 					WHERE proj_category IN -->
-					
-					<![CDATA[
+		<include refid="standard"></include>
+		<![CDATA[
 					ORDER BY lpad(proj_id, 10, '0') DESC
 					)
 				WHERE rownum <= #{pageNum} * #{amount}
 				]]>
-				<!-- AND proj_skill IN -->
-						
-				<![CDATA[
+
+		<![CDATA[
 				)
 			WHERE rn > (#{pageNum} - 1) * #{amount}
 			]]>
 	</select>
-	
+
 	<select id="getTotalCount" resultType="int">
 		SELECT count(*)
 		FROM project
-		<!-- WHERE proj_category IN
-		<foreach collection="chkArray" item="item" open="(" close=")" separator=",">
-			#{item}
-		</foreach>
-		AND proj_skill IN
-		<foreach collection="chkArray" item="item" open="(" close=")" separator=",">
-			#{item}
-		</foreach> -->	
+		<include refid="standard"></include>
 	</select>
-	
+
+	<sql id="standard">
+		<trim prefix="where" prefixOverrides="OR">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'S'.toString()">
+							proj_reqr_skill like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+
+
+
 	<select id="getPrevCount" resultType="int">
 		SELECT count(*)
 		FROM project
@@ -86,12 +91,15 @@ select * from project order by proj_reg_date desc
 		WHERE to_char(proj_reg_date, 'mm') = to_char(add_months(sysdate, -1), 'mm')
 	</select>
 
-
+	<insert id="apply">
+		insert into apply
+		values(#{member_no}, #{proj_id})
+	</insert>
 
 <insert id="insertProject" parameterType="org.wof.domain.ProjectVO">
 insert into project(proj_id, proj_title, proj_reg_date,member_no, proj_apply_deadline, proj_start_date, proj_end_date,
 proj_estimate, proj_reqr_person, proj_reqr_skill, proj_type, proj_career, proj_pm, proj_work_type, proj_work_place,
-proj_work_time, proj_work_equip, proj_walfare, proj_detail, proj_status,  proj_total_date) 
+proj_work_time, proj_work_equip, proj_walfare, proj_detail, proj_status,  proj_total_date)
 values('project'|| seq_project.nextval, #{proj_title}, sysdate ,#{member_no}, TO_DATE(#{proj_apply_deadline}, 'yyyy-MM-dd'), TO_DATE(#{proj_start_date}, 'yyyy-MM-dd'), TO_DATE(#{proj_end_date}, 'yyyy-MM-dd'),
 #{proj_estimate}, #{proj_reqr_person},#{proj_reqr_skill}, #{proj_type}, #{proj_career}, #{proj_pm}, #{proj_work_type}, #{proj_work_place} , 
 #{proj_work_time}, #{proj_work_equip}, #{proj_walfare}, #{proj_detail}, 0, #{cal_date})
