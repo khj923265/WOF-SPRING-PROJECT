@@ -42,13 +42,14 @@ public class PointController {
     public String admin(Principal principal,PointVO point, MemberVO member, Model model, Standard standard){
     	
     	member.setUserid(principal.getName());
-    	log.info("Æ÷ÀÎÆ® °ü¸® ÆäÀÌÁö(ÃæÀü/ÀÎÃâ/Á¶È¸)");
+    	log.info("ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½È¸)");
     	log.info("=============member : "+member);
     	log.info("=============point : "+point);
     	
     	//model.addAttribute("admin", service.ListService(standard));
     	
     	model.addAttribute("getList", service.ListService(member, point, standard));
+    	
     	
     	int total = service.getTotalService(standard);
     	log.info(standard);
@@ -134,51 +135,51 @@ public class PointController {
             numStr+=ran;
         }
 
-        System.out.println("¼ö½ÅÀÚ ¹øÈ£ : " + phoneNumber);
-        System.out.println("ÀÎÁõ¹øÈ£ : " + numStr);
+        System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ : " + phoneNumber);
+        System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£ : " + numStr);
         service.certifiedPhoneNumber(phoneNumber,numStr);
         return numStr;
     }
     
     
-  //¹®ÀÚ¸¦ º¸³¾¶§ ¸ÊÇÎµÇ´Â ¸Þ¼Òµå
+  //ï¿½ï¿½ï¿½Ú¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ÎµÇ´ï¿½ ï¿½Þ¼Òµï¿½
     /*@RequestMapping(value = "/sendSms.do")
       public void sendSms(HttpServletRequest request) throws Exception {
 
-        String api_key = "NCSBVLIC1XCP0K66"; //À§¿¡¼­ ¹ÞÀº api key¸¦ Ãß°¡
-        String api_secret = "QQHS8GSBLPKRHPYZLHQB9HIDLCSNHEW8";  //À§¿¡¼­ ¹ÞÀº api secret¸¦ Ãß°¡
+        String api_key = "NCSBVLIC1XCP0K66"; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ api keyï¿½ï¿½ ï¿½ß°ï¿½
+        String api_secret = "QQHS8GSBLPKRHPYZLHQB9HIDLCSNHEW8";  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ api secretï¿½ï¿½ ï¿½ß°ï¿½
         
         Coolsms coolsms = new Coolsms(api_key, api_secret);
         
         HashMap<String, String> set = new HashMap<String, String>();
-        set.put("to", "01074721644"); // ¼ö½Å¹øÈ£
+        set.put("to", "01074721644"); // ï¿½ï¿½ï¿½Å¹ï¿½È£
 
-        set.put("from", (String)request.getParameter("from")); // ¹ß½Å¹øÈ£, jsp¿¡¼­ Àü¼ÛÇÑ ¹ß½Å¹øÈ£¸¦ ¹Þ¾Æ map¿¡ ÀúÀåÇÑ´Ù.
-        set.put("text", (String)request.getParameter("text")); // ¹®ÀÚ³»¿ë, jsp¿¡¼­ Àü¼ÛÇÑ ¹®ÀÚ³»¿ëÀ» ¹Þ¾Æ map¿¡ ÀúÀåÇÑ´Ù.
-        set.put("type", "sms"); // ¹®ÀÚ Å¸ÀÔ
+        set.put("from", (String)request.getParameter("from")); // ï¿½ß½Å¹ï¿½È£, jspï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß½Å¹ï¿½È£ï¿½ï¿½ ï¿½Þ¾ï¿½ mapï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
+        set.put("text", (String)request.getParameter("text")); // ï¿½ï¿½ï¿½Ú³ï¿½ï¿½ï¿½, jspï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú³ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾ï¿½ mapï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
+        set.put("type", "sms"); // ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½
 
         System.out.println(set);
 
-		JSONObject result = coolsms.send(set); // º¸³»±â&Àü¼Û°á°ú¹Þ±â
+		JSONObject result = coolsms.send(set); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½&ï¿½ï¿½ï¿½Û°ï¿½ï¿½ï¿½Þ±ï¿½
 
         if ((boolean)result.get("status") == true) {
 
-          // ¸Þ½ÃÁö º¸³»±â ¼º°ø ¹× Àü¼Û°á°ú Ãâ·Â
-          System.out.println("¼º°ø");
-          System.out.println(result.get("group_id")); // ±×·ì¾ÆÀÌµð
-          System.out.println(result.get("result_code")); // °á°úÄÚµå
-          System.out.println(result.get("result_message")); // °á°ú ¸Þ½ÃÁö
-          System.out.println(result.get("success_count")); // ¸Þ½ÃÁö¾ÆÀÌµð
-          System.out.println(result.get("error_count")); // ¿©·¯°³ º¸³¾½Ã ¿À·ù³­ ¸Þ½ÃÁö ¼ö
+          // ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Û°ï¿½ï¿½ ï¿½ï¿½ï¿½
+          System.out.println("ï¿½ï¿½ï¿½ï¿½");
+          System.out.println(result.get("group_id")); // ï¿½×·ï¿½ï¿½ï¿½Ìµï¿½
+          System.out.println(result.get("result_code")); // ï¿½ï¿½ï¿½ï¿½Úµï¿½
+          System.out.println(result.get("result_message")); // ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½
+          System.out.println(result.get("success_count")); // ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½
+          System.out.println(result.get("error_count")); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ï¿½
         } else {
 
-          // ¸Þ½ÃÁö º¸³»±â ½ÇÆÐ
-          System.out.println("½ÇÆÐ");
-          System.out.println(result.get("code")); // REST API ¿¡·¯ÄÚµå
-          System.out.println(result.get("message")); // ¿¡·¯¸Þ½ÃÁö
+          // ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+          System.out.println("ï¿½ï¿½ï¿½ï¿½");
+          System.out.println(result.get("code")); // REST API ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½
+          System.out.println(result.get("message")); // ï¿½ï¿½ï¿½ï¿½ï¿½Þ½ï¿½ï¿½ï¿½
         }
 
-        //return "member/number"; //¹®ÀÚ ¸Þ½ÃÁö ¹ß¼Û ¼º°øÇßÀ»¶§ numberÆäÀÌÁö·Î ÀÌµ¿ÇÔ
+        //return "member/number"; //ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ß¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ numberï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½
       }*/
     
 }

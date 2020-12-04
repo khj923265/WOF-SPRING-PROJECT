@@ -48,22 +48,22 @@ public class PointServiceImpl implements PointService {
 	@Override
 	public int ChargingService(PointVO point, MemberVO member){
 		
-		log.info("Æ÷ÀÎÆ® ÃæÀü" + point);
+		log.info("ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½" + point);
 		
-		//Æ÷ÀÎÆ® ´©Àû
+		//ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
 		pointMapper.Charging(point);
 		
-		//member¿¡¼­ total_point°¡Á®¿À±â
+		//memberï¿½ï¿½ï¿½ï¿½ total_pointï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		int balance = pointMapper.getTotalpoint(point);
 		
-		//point_type => "0:ÃæÀü", 1:ÀÎÃâ, 2:°áÁ¦, 3:º¸°ü, 4:Àü¼Û, (5:ÀÔ±Ý, 6:È¯ºÒ)
+		//point_type => "0:ï¿½ï¿½ï¿½ï¿½", 1:ï¿½ï¿½ï¿½ï¿½, 2:ï¿½ï¿½ï¿½ï¿½, 3:ï¿½ï¿½ï¿½ï¿½, 4:ï¿½ï¿½ï¿½ï¿½, (5:ï¿½Ô±ï¿½, 6:È¯ï¿½ï¿½)
 		point.setPoint_type(0);
 		
 		//point_balance
 		System.out.println("service point : "+point);
 		point.setPoint_balance(balance);
 		
-		//ÃæÀü ¿©ºÎ È®ÀÎ
+		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
 		int chargingResult = pointMapper.ChargingList(point);
 		
 		return chargingResult;
@@ -72,15 +72,15 @@ public class PointServiceImpl implements PointService {
 	@Override
 	public int WithdrawService(PointVO point, MemberVO member) {
 		
-		log.info("Æ÷ÀÎÆ® ÀÎÃâ" + point);
+		log.info("ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½" + point);
 		
-		//Æ÷ÀÎÆ® ´©Àû
+		//ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
 		pointMapper.Withdraw(point);
 		
-		//member¿¡¼­ total_point°¡Á®¿À±â
+		//memberï¿½ï¿½ï¿½ï¿½ total_pointï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		int balance = pointMapper.getTotalpoint(point);
 		
-		//point_type => 0:ÃæÀü, "1:ÀÎÃâ", 2:°áÁ¦, 3:º¸°ü, 4:Àü¼Û, (5:ÀÔ±Ý, 6:È¯ºÒ)
+		//point_type => 0:ï¿½ï¿½ï¿½ï¿½, "1:ï¿½ï¿½ï¿½ï¿½", 2:ï¿½ï¿½ï¿½ï¿½, 3:ï¿½ï¿½ï¿½ï¿½, 4:ï¿½ï¿½ï¿½ï¿½, (5:ï¿½Ô±ï¿½, 6:È¯ï¿½ï¿½)
 		point.setPoint_type(1);
 		
 		//point_balance
@@ -88,10 +88,10 @@ public class PointServiceImpl implements PointService {
 		point.setPoint_balance(balance);
 		
 		/*if(member.getTotal_point() < point.getPoint_amount()){
-			throw new BalanceInsufficientException("ÀÜ°í ºÎÁ· :"+(point.getPoint_amount()-member.getTotal_point())+"ÀÌ ¸ðÀÚ¶ø´Ï´Ù.");
+			throw new BalanceInsufficientException("ï¿½Ü°ï¿½ ï¿½ï¿½ï¿½ï¿½ :"+(point.getPoint_amount()-member.getTotal_point())+"ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¶ï¿½ï¿½Ï´ï¿½.");
 		}*/
 		
-		//ÀÎÃâ¿©ºÎ È®ÀÎ (ÀÎÃâ ³»¿ª)
+		//ï¿½ï¿½ï¿½â¿©ï¿½ï¿½ È®ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
 		int withdrawResult = pointMapper.WithdrawList(point);
 		
 		return withdrawResult;
@@ -100,49 +100,49 @@ public class PointServiceImpl implements PointService {
 	@Override
 	public int PaymentInService(PointVO point, ContractSourceVO contract) {
 		
-		log.info("Æ÷ÀÎÆ® °áÁ¦" + point);
+		log.info("ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½" + point);
 		
 		//pointMapper.getContract(contract);
 
 		//contract.setBusiness_register_no(contract.getBusiness_register_no());
 		
-		/*point.setPoint_owner(contract.getContract_write_source());	//Client(»ç¾÷ÁÖ)
+		/*point.setPoint_owner(contract.getContract_write_source());	//Client(ï¿½ï¿½ï¿½ï¿½ï¿½)
 		point.setPoint_amount(contract.getProj_estimate());
 		point.setPoint_contents(contract.getProj_title());*/
 
-		point.setPoint_owner(contract.getContract_write_source());	//Client(»ç¾÷ÁÖ)
+		point.setPoint_owner(contract.getContract_write_source());	//Client(ï¿½ï¿½ï¿½ï¿½ï¿½)
 		point.setPoint_amount(point.getPoint_amount());
 		point.setPoint_contents(point.getPoint_contents());
 		
-		log.error("-------------È®ÀÎ------------"+point);
-		//Æ÷ÀÎÆ® ´©Àû
+		log.error("-------------È®ï¿½ï¿½------------"+point);
+		//ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
 		pointMapper.PaymentFrom(point);
 		
-		//member¿¡¼­ total_point°¡Á®¿À±â
+		//memberï¿½ï¿½ï¿½ï¿½ total_pointï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		int balance = pointMapper.getTotalpoint(point);
 		
 		//point_balance
-		System.out.println("member¿¡¼­ total_point°¡Á®¿Â ÈÄ : " + point);
+		System.out.println("memberï¿½ï¿½ï¿½ï¿½ total_pointï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ : " + point);
 		point.setPoint_balance(balance);
 		
-		//°áÁ¦ (ÀÎÃâ )
+		//ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ )
 		pointMapper.PaymentFromList(point);
 		
 		
-		//Æ÷ÀÎÆ® ´©Àû
+		//ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
 		pointMapper.HoldFrom(point);
 		
-		//member¿¡¼­ total_point°¡Á®¿À±â
+		//memberï¿½ï¿½ï¿½ï¿½ total_pointï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		int balance2 = pointMapper.getTotalpoint(point);
 		
 		//point_balance
-		System.out.println("member¿¡¼­ total_point°¡Á®¿Â ÈÄ : " + point);
+		System.out.println("memberï¿½ï¿½ï¿½ï¿½ total_pointï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ : " + point);
 		point.setPoint_balance(balance2);
 		
-		//°áÁ¦ (ÀÎÃâ )
+		//ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ )
 		pointMapper.PaymentFromList(point);
 		
-		//°áÁ¦¿©ºÎ È®ÀÎ (ÀÎÃâ ³»¿ª)
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
 		int result = pointMapper.PaymentFrom(point);
 				
 		return result;
@@ -152,22 +152,22 @@ public class PointServiceImpl implements PointService {
 	@Override
 	public int PaymentOutService(PointVO point, MemberVO member, ContractSourceVO contract) {
 		
-		log.info("Æ÷ÀÎÆ® Àü¼Û" + point);
+		log.info("ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½" + point);
 		
-		//Æ÷ÀÎÆ® ´©Àû
+		//ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
 		pointMapper.PaymentTo(point);
 		
-		//member¿¡¼­ total_point°¡Á®¿À±â
+		//memberï¿½ï¿½ï¿½ï¿½ total_pointï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		int balance = pointMapper.getTotalpoint(point);
 		
-		//point_type => 0:ÃæÀü, 1:ÀÎÃâ, 2:°áÁ¦, 3:º¸°ü, "4:Àü¼Û", (5:ÀÔ±Ý, 6:È¯ºÒ)
+		//point_type => 0:ï¿½ï¿½ï¿½ï¿½, 1:ï¿½ï¿½ï¿½ï¿½, 2:ï¿½ï¿½ï¿½ï¿½, 3:ï¿½ï¿½ï¿½ï¿½, "4:ï¿½ï¿½ï¿½ï¿½", (5:ï¿½Ô±ï¿½, 6:È¯ï¿½ï¿½)
 		point.setPoint_type(4);
 		
 		//point_balance
-		System.out.println("member¿¡¼­ total_point°¡Á®¿Â ÈÄ : " + point);
+		System.out.println("memberï¿½ï¿½ï¿½ï¿½ total_pointï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ : " + point);
 		point.setPoint_balance(balance);
 		
-		//°áÁ¦¿©ºÎ È®ÀÎ (ÀÎÃâ ³»¿ª)
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
 		int paymentOutResult = pointMapper.PaymentToList(point);
 		
 		return paymentOutResult;
@@ -196,11 +196,11 @@ public class PointServiceImpl implements PointService {
 		
 		String data = "0";
 		
-		//Member¿¡ mapper¿¡¼­ °¡Á®¿Â°´Ã¼ °¡Á®¿À±â
+		//Memberï¿½ï¿½ mapperï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Â°ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		String pw = pointMapper.pwCheck(member.getUserid());
 		
 		if(passwordEncoder.matches(member.getUserpw(), pw)){
-			//¼º°ø ½Ã
+			//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 			data = "1";
 		}
 		
@@ -209,16 +209,16 @@ public class PointServiceImpl implements PointService {
 
 	@Override
 	public void certifiedPhoneNumber(String phoneNumber, String cerNum) {
-		String api_key = "NCSBVLIC1XCP0K66"; //À§¿¡¼­ ¹ÞÀº api key¸¦ Ãß°¡
-        String api_secret = "QQHS8GSBLPKRHPYZLHQB9HIDLCSNHEW8";  //À§¿¡¼­ ¹ÞÀº api secret¸¦ Ãß°¡
+		String api_key = "NCSBVLIC1XCP0K66"; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ api keyï¿½ï¿½ ï¿½ß°ï¿½
+        String api_secret = "QQHS8GSBLPKRHPYZLHQB9HIDLCSNHEW8";  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ api secretï¿½ï¿½ ï¿½ß°ï¿½
         Message coolsms = new Message(api_key, api_secret);
         
         // 4 params(to, from, type, text) are mandatory. must be filled
         HashMap<String, String> params = new HashMap<String, String>();
-        params.put("to", phoneNumber);    // ¼ö½ÅÀüÈ­¹øÈ£
-        params.put("from", "01074721644");    // ¹ß½ÅÀüÈ­¹øÈ£. Å×½ºÆ®½Ã¿¡´Â ¹ß½Å,¼ö½Å µÑ´Ù º»ÀÎ ¹øÈ£·Î ÇÏ¸é µÊ
+        params.put("to", phoneNumber);    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È­ï¿½ï¿½È£
+        params.put("from", "01074721644");    // ï¿½ß½ï¿½ï¿½ï¿½È­ï¿½ï¿½È£. ï¿½×½ï¿½Æ®ï¿½Ã¿ï¿½ï¿½ï¿½ ï¿½ß½ï¿½,ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ï¿½ï¿½ ï¿½Ï¸ï¿½ ï¿½ï¿½
         params.put("type", "SMS");
-        params.put("text", "[WOF] ÀÎÁõ¹øÈ£´Â" + "["+cerNum+"]" + "ÀÔ´Ï´Ù.");
+        params.put("text", "[WOF] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£ï¿½ï¿½" + "["+cerNum+"]" + "ï¿½Ô´Ï´ï¿½.");
         params.put("app_version", "test app 2.2"); // application name and version
 
         try {

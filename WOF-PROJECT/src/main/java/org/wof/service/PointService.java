@@ -23,6 +23,8 @@ public interface PointService {
 	
 	public List<PointVO> ListService(MemberVO member, PointVO point, Standard standard);
 	
+	//public int getListTotal(PointVO point, Standard standard);
+	
 	public int getTotalService(Standard standard);
 
 	public String pwCheckService(MemberVO member);

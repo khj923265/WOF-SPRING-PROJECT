@@ -34,9 +34,9 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="map.html">
+              <a class="nav-link" href="/community/partners_community_list">
                 <i class="ni ni-pin-3 text-primary"></i>
-                <span class="nav-link-text">Google</span>
+                <span class="nav-link-text">커뮤니티 게시판</span>
               </a>
             </li>
             <li class="nav-item">

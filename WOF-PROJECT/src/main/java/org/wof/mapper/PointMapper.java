@@ -54,4 +54,6 @@ public interface PointMapper {
 	public List<PointVO> getListPaging(Standard standard);
 	
 	public int getTotalCount(Standard standard);
+	
+	//public int getListTotal(@Param("point") PointVO point, @Param("standard") Standard standard);	
 }
