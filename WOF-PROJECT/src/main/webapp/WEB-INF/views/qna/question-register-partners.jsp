@@ -192,7 +192,7 @@
 									</div>
 									
 									<div>
-										<input type="hidden" name="receiveMail" id="receiveMail" value="moonjisd5@gmail.com">
+										<input type="hidden" name="receiveMail" id="receiveMail" value="woflala@gmail.com">
 									</div>	
 								</div>
 								

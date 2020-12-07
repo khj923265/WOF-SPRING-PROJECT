@@ -61,9 +61,20 @@
 						<input type='hidden' id='proj_id' name='proj_id' value='<c:out value="${project.getProj_id}"/>'>
 						<input type='hidden' name='pageNum' value='<c:out value="${stand.pageNum}"/>'>
 						<input type='hidden' name='amount' value='<c:out value="${stand.amount}"/>'> --%>
-				
-						
-					<h3 class="mt-0">${project.getProj_title()}</h3>
+
+					<div class="row">
+						<div class="col-8">
+							<!— project title —>
+							<h3 class="mt-0">${project.proj_title }</h3>
+						</div>
+						<div class="col">
+							<button type="button" class="btn btn-outline-warning btn-sm">수정</button>
+							<button type="button" class="btn btn-outline-danger btn-sm">삭제</button>
+							<button type="button" class="btn btn-outline-default btn-sm" id="applyBtn" data-toggle="modal" data-target="#modal_apply">지원</button>
+							<button type="button" class="btn btn-outline-default btn-sm" id="listBtn">목록</button>
+						</div>
+					</div>
+					//<h3 class="mt-0">${project.getProj_title()}</h3>
 					<div class="badge badge-secondary mb-3">Ongoing</div>
 					<div class="badge badge-secondary mb-3">마감임박</div>
 
@@ -285,7 +296,31 @@
 	</div>
 	</div>
 
+<!— 모달창 그룹 —>
 
+<!— 지원 버튼 클릭 시 모달창 —>
+<div class="modal fade" id="modal_apply" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="myModalLabel">지원하기</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			</div>
+
+			<div class="modal-body">
+				${project.proj_title }에 지원하시겠습니까?
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" id="modalApplyBtn">지원</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+			</div>
+			<form id="applyActionForm" action="/project/apply" method="get">
+
+			</form>
+		</div><!— /.modal-content —>
+	</div><!— /.modal-dialog —>
+</div><!— /.modal fade —>
 
 
 
@@ -319,7 +354,28 @@
 			</div>
 			<!-- /.modal -->
 
+<script src="/resources/template/assets/vendor/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
 
+	// KTW
+	// 지원 버튼 클릭 시 apply 테이블에 데이터 저장
+	$(document).ready(function() {
+		var applyActionForm = $("#applyActionForm");
+
+		$("#modalApplyBtn").on("click", function(e) {
+
+			e.preventDefault();
+
+			applyActionForm.append("<input type='hidden' name='member_no' value='<c:out value='${member.member_no }' />'>");
+			applyActionForm.append("<input type='hidden' name='proj_id' value='<c:out value='${project.proj_id }' />'>");
+
+			applyActionForm.submit();
+
+		});//END $("$modalApplyBtn").on()
+
+	});//END $(document).ready()
+
+</script>
 
 
 

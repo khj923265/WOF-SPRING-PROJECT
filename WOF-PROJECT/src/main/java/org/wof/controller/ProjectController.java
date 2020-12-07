@@ -23,12 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.wof.domain.ContractTargetVO;
-import org.wof.domain.ContractVO;
-import org.wof.domain.PageDTO;
-import org.wof.domain.ProjectAttachVO;
-import org.wof.domain.ProjectVO;
-import org.wof.domain.Standard;
+import org.wof.domain.*;
 import org.wof.service.ProjectAttachService;
 import org.wof.service.ProjectReplyService;
 import org.wof.service.ProjectService;
@@ -48,7 +43,14 @@ public class ProjectController {
 	
 	private ProjectAttachService service;
 
-	
+
+	@GetMapping("/apply")
+	public String apply(ApplyVO applyvo) {
+		ps1.apply(applyvo);
+
+		return "redirect:/project/list";
+	}
+
 	@GetMapping("/list")
 	public void list(Standard standard, Model model){
 		log.info("/project/list/" + standard);
