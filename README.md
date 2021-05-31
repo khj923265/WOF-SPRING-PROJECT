@@ -27,24 +27,32 @@ Freelancer와 기업의 자유로운 매칭을 위해서 기획한 웹페이지 
       <tr>
         <th>프로젝트 개요</th>
         <th>프리랜서와 SW프로젝트 매칭</th>
-        <th>개발 환경</th>
-        <th>Windows10</th>
+        <th>개발 도구</th>
+        <th>IntelliJ IDEA</th>
     </tr>
     <tr>
-        <th>개발언어</th>
-        <th colspan="3">Spring, Java(JDK 1.8), JSP, Oracle SQL, JQuery </th>
+        <th>개발 프로세스 모델</th>
+        <th colspan="3">애자일 (스크럼) </th>
     </tr>
     <tr>
-        <th>형상관리</th>
-        <th colspan="3">Github, Git Bash, Source Tree</th>
+        <th>아키텍처</th>
+        <th colspan="3">MVC 모델 패턴 (Java/JavaScript)</th>
     </tr>
     <tr>
-        <th>개발도구</th>
-        <th colspan="3">STS, Eclipse JEE, Oracle SQL Developer</th>
+        <th>front-end</th>
+        <th colspan="3">HTML/CSS, JavaScript/jQuery, Bootstrap</th>
     </tr>
     <tr>
-        <th>사용기술</th>
-        <th colspan="3">MyBatis, AWS(RDS), Ajax</th>
+        <th>back-end</th>
+        <th colspan="3">Java, Spring Framework, Spring Security, jUnit</th>
+    </tr>
+    <tr>
+        <th>DB</th>
+        <th colspan="3">Oracle</th>
+    </tr>
+    <tr>
+        <th>infra</th>
+        <th colspan="3">Apache(TomCat),AWS (EC2, RDS)</th>
     </tr>
 </table>
 
