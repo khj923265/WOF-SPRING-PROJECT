@@ -92,20 +92,20 @@ Freelancer와 기업의 자유로운 매칭을 위해서 기획한 웹페이지 
         <th>파트너스</th>
     </tr>
         <th>소스(코딩)</th>
+        <th>회원가입<br>로그인<br>로그아웃<br>회원탈퇴<br>휴먼회원<br>공지사항</th>
         <th>시작<br>완료<br>추천<br>추천<br>관심<br>일정관리</th>
         <th>등록<br>목록<br>수정<br>삭제<br>관리</th>
         <th>등록<br>목록<br>수정<br>삭제<br>지원<br>대쉬보드<br>평가</th>
-        <th>회원가입<br>로그인<br>로그아웃<br>회원탈퇴<br>휴먼회원<br>공지사항</th>
         <th>충전<br>조회<br>관리<br>문의사항<br>안내문자</th>
         <th>산출물<br>현황<br>선택<br>지도<br>대쉬보드</th>
         <th>현황<br>선택<br>추천<br>관심<br>평가</th>
     </tr>
     <tr>
         <th>역할</th>
+        <th>깃부마스터<br>개발<br>소스취합<br>의견제안</th>
         <th>깃마스터<br>개발<br>의견제안</th>
         <th>문서작성<br>개발<br>소스취합<br>의견제안</th>
         <th>팀장<br>개발<br>소스취합<br>DB테이블설계<br>발표</th>
-        <th>깃부마스터<br>개발<br>소스취합<br>의견제안</th>
         <th>개발<br>ppt작성<br>의견제안</th>
         <th>개발<br>문서작성<br>의견제안</th>
         <th>개발<br>문서작성<br>의견제안</th>
