@@ -15,10 +15,10 @@ Freelancer와 기업의 자유로운 매칭을 위해서 기획한 웹페이지 
         <th>파이널 프로젝트</th>
         <th>개발 인원</th>
         <th>7명<br>
-          (<a href="https://github.com/jaeeunis">임재은</a>,
+          (<a href="https://github.com/khj923265">김형준</a>,
+          <a href="https://github.com/jaeeunis">임재은</a>,
           <a href="https://github.com/mhee4321">김문희</a>,
           <a href="https://github.com/mtBig">김태완</a>,
-            <a href="https://github.com/hyunghunkim">김형준</a>,
           <a href="https://github.com/JeongNaeun">정나은</a>,
           <a href="https://github.com/cw02172">정다운</a>,
           <a href="https://github.com/choi-hakgeun">최학근</a>)
@@ -61,10 +61,10 @@ Freelancer와 기업의 자유로운 매칭을 위해서 기획한 웹페이지 
 <table>
     <tr>
         <th>업무/구성원</th>
+        <th><a href="https://github.com/khj923265">김형준</a></th>
         <th><a href="https://github.com/jaeeunis">임재은</a></th>
         <th><a href="https://github.com/mhee4321">김문희</a></th>
         <th><a href="https://github.com/mtBig">김태완</a></th>
-        <th><a href="https://github.com/hyunghunkim">김형준</a></th>
         <th><a href="https://github.com/JeongNaeun">정나은</a></th>
         <th><a href="https://github.com/cw02172">정다운</a></th>
         <th><a href="https://github.com/choi-hakgeun">최학근</a></th>
