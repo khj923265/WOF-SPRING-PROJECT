@@ -32,7 +32,7 @@ import java.util.List;
 @RequestMapping("/member/*")
 @AllArgsConstructor
 @Log4j
-public class memberController {
+public class MemberController {
 
     private MemberService service;
     private CustomUserDetailsService customUserDetailsService;
@@ -124,7 +124,6 @@ public class memberController {
     @ResponseBody
     @RequestMapping(value = "/member/profileupdate",method = RequestMethod.POST, produces = "application/json; charset=utf8")
     public void profileupdate(@RequestBody PartnersVO partnersVO){
-        log.info("profileupdate test : "+partnersVO);
         service.profileupdate(partnersVO);
     }
     //프로젝트/경력 삭제
@@ -145,15 +144,14 @@ public class memberController {
     @GetMapping("success/client")
     public String clientInfoInsert(Principal principal,HttpServletRequest request){
         HttpSession session = request.getSession();
-        log.info(principal.getName());
         ClientVO clientVO = service.clientInfo(principal.getName());
-        log.info(clientVO);
         session.setAttribute("client",clientVO);
 
         return "redirect:/client/dashboard_client?member_no="+clientVO.getMember_no();
     }
     @GetMapping("client/client_info_update")
     public void clientInfoUpdatePage(){}
+
     //클라이언트 회사정보 수정
     @PostMapping("clientinfoupdate")
     public String clientInfoUpdate(Principal principal,MemberVO memberVO,ClientVO clientVO,
@@ -214,7 +212,6 @@ public class memberController {
     @ResponseBody
     public MemberVO findPwForm(@RequestBody MemberVO memberVO){
         memberVO.setUserpw(service.findPwForm(memberVO));
-        log.info(memberVO);
         return memberVO;
     }
 
@@ -239,10 +236,8 @@ public class memberController {
         memberVO.setAuth("ROLE_PARTNERS");
         memberVO.setUserpw("1234");
 
-        log.info(memberVO);
         String idCheck = service.checkId(memberVO.getUserid());
 
-        log.info("idcheck : "+idCheck);
         if (!idCheck.equals("1")){
         service.kakaoSignup(memberVO);
         }

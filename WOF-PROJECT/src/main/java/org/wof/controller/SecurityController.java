@@ -13,7 +13,7 @@ import java.security.Principal;
 
 @Controller
 @AllArgsConstructor
-public class securityController {
+public class SecurityController {
 
     @GetMapping("/main")
     public void main(){}

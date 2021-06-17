@@ -3,15 +3,15 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:security="http://www.springframework.org/schema/security"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd">
-    <bean id="customeAccessDenied" class="org.wof.security.CustomeAccessDeniedHandler"/>
+    <bean id="customAccessDenied" class="org.wof.security.CustomeAccessDeniedHandler"/>
     <bean id="customLoginSuccess" class="org.wof.security.CustomLoginSuccessHandler"/>
     <bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
-    <bean id="CustomUserDetailsService" class="org.wof.security.CustomUserDetailsService"/>
+    <bean id="customUserDetailsService" class="org.wof.security.CustomUserDetailsService"/>
 
 
     <security:authentication-manager>
         <security:authentication-provider
-                user-service-ref="CustomUserDetailsService">
+                user-service-ref="customUserDetailsService">
             <security:password-encoder ref="bcryptPasswordEncoder"/>
         </security:authentication-provider>
     </security:authentication-manager>
@@ -22,12 +22,8 @@
         <security:intercept-url pattern="/main" access="permitAll()"/>
         <security:intercept-url pattern="/member/partners/*" access="hasRole('ROLE_PARTNERS')"/>
         <security:intercept-url pattern="/member/client/*" access="hasRole('ROLE_CLIENT')"/>
-<!--            <security:intercept-url pattern="/member/partners" access="hasRole('ROLE_PARTNERS')"/>-->
-<!--            <security:intercept-url pattern="/member/admin" access="hasRole('ROLE_ADMIN')"/>-->
-<!--            <security:intercept-url pattern="/sample/client" access="hasRole('ROLE_CLIENT')"/>-->
-<!--            <security:intercept-url pattern="/sample/partners" access="hasRole('ROLE_PARTNERS')"/>-->
 
-        <security:access-denied-handler ref="customeAccessDenied"/>
+        <security:access-denied-handler ref="customAccessDenied"/>
         <security:form-login login-page="/member/customlogin" authentication-success-handler-ref="customLoginSuccess"
                              username-parameter="userid" password-parameter="userpw" login-processing-url="/login"/>
         <security:logout logout-url="/customlogout" logout-success-url="/member/customlogin" invalidate-session="true"

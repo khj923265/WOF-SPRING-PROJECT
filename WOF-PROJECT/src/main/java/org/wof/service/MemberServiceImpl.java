@@ -25,8 +25,8 @@ import java.util.regex.Pattern;
 @Log4j
 public class MemberServiceImpl implements MemberService{
 
-    private PasswordEncoder passwordEncoder;
-    private MemberMapper mapper;
+    private final PasswordEncoder passwordEncoder;
+    private final MemberMapper mapper;
 
     //아이디 확인
     @Override
@@ -94,12 +94,11 @@ public class MemberServiceImpl implements MemberService{
             //비밀번호가 입력이 안된경우
         if (memberVO.getUserpw() == null||memberVO.getUserpw().equals("")) {
             mapper.userPhoneUpdate(memberVO);
-            mapper.partnersUpdate2(partnersVO);
         }else {//비밀번호가 입력된 경우
             memberVO.setUserpw(passwordEncoder.encode(memberVO.getUserpw()));
              mapper.partnersUpdate3(memberVO);
-             mapper.partnersUpdate2(partnersVO);
         }
+        mapper.partnersUpdate2(partnersVO);
     }
     //로그인시 회원 상태체크,로그인날짜 최신화
     @Override
@@ -144,9 +143,8 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public List<ProjectProfileVO> projectProfileList(String userid) {
-        List<ProjectProfileVO> profileList = mapper.projectProfileList(userid);
 
-        return profileList;
+        return mapper.projectProfileList(userid);
     }
 
     @Override
@@ -156,9 +154,7 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public ProjectProfileVO projectprofileinfo(String userid) {
-        ProjectProfileVO projectProfileVO = mapper.projectprofileinfo(userid);
-        System.out.println("=========="+projectProfileVO);
-        return projectProfileVO;
+        return mapper.projectprofileinfo(userid);
     }
     //자기소개 수정
     @Override
@@ -352,10 +348,6 @@ public class MemberServiceImpl implements MemberService{
         }
     }
 
-
-
-
-
     //임시비밀번호 난수 생성 함수
     public static String getTempPassword(int length) {
         int index = 0;
@@ -364,13 +356,12 @@ public class MemberServiceImpl implements MemberService{
                 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
                 'w', 'x', 'y', 'z' };
 
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < length; i++) {
             index = (int) (charArr.length * Math.random());
             sb.append(charArr[index]);
         }
-
         return sb.toString();
     }
 }

@@ -96,8 +96,8 @@
 			return false;
 		}
 	}
-	var ischeckId = false;
-	var expId = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+	let ischeckId = false;
+	const expId = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 		$('#userid').blur(function(){
 			var id = $('#userid').val();
 
@@ -122,9 +122,9 @@
 
 			})
 		});
-	var autoHypenPhone = function(str){
+	let autoHypenPhone = function(str){
 		str = str.replace(/[^0-9]/g, '');
-		var tmp = '';
+		let tmp = '';
 		if( str.length < 4){
 			return str;
 		}else if(str.length < 7){
@@ -147,11 +147,9 @@
 			tmp += str.substr(7);
 			return tmp;
 		}
-
-		return str;
 	}
 
-	var phoneNum = document.getElementById('userphone');
+	let phoneNum = document.getElementById('userphone');
 
 	phoneNum.onkeyup = function(){
 		this.value = autoHypenPhone( this.value ) ;
