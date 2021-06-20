@@ -131,7 +131,7 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public void clientUpdate(MemberVO memberVO, ClientVO clientVO) {
         //비밀번호가 입력이 안된경우
-        if (memberVO.getUserpw() == null||memberVO.getUserpw() == "") {
+        if (memberVO.getUserpw() == null|| memberVO.getUserpw().equals("")) {
             mapper.userPhoneUpdate(memberVO);
             mapper.clientUpdate2(clientVO);
         }else {//비밀번호가 입력된 경우
@@ -196,7 +196,6 @@ public class MemberServiceImpl implements MemberService{
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
             //    POST 요청을 위해 기본값이 false인 setDoOutput을 true로
-
             conn.setRequestMethod("POST");
             conn.setDoOutput(true);
 
@@ -206,7 +205,7 @@ public class MemberServiceImpl implements MemberService{
             sb.append("grant_type=authorization_code");
             sb.append("&client_id=99f3b410c68833a20809dc9bf060d24e");  //본인이 발급받은 key
             sb.append("&redirect_uri=http://localhost:8081/member/kakaologin");     // 본인이 설정해 놓은 경로
-            sb.append("&code=" + authorize_code);
+            sb.append("&code=").append(authorize_code);
             bw.write(sb.toString());
             bw.flush();
 
@@ -258,14 +257,14 @@ public class MemberServiceImpl implements MemberService{
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
             String line = "";
-            String result = "";
+            StringBuilder result = new StringBuilder();
 
             while ((line = br.readLine()) != null) {
-                result += line;
+                result.append(line);
             }
 
             JsonParser parser = new JsonParser();
-            JsonElement element = parser.parse(result);
+            JsonElement element = parser.parse(result.toString());
 
             JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
             JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();

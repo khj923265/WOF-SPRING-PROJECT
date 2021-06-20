@@ -3,7 +3,6 @@ package org.wof.controller;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -34,9 +33,9 @@ import java.util.List;
 @Log4j
 public class MemberController {
 
-    private MemberService service;
-    private CustomUserDetailsService customUserDetailsService;
-    private ProjectService2 projectService2;
+    private final MemberService service;
+    private final CustomUserDetailsService customUserDetailsService;
+    private final ProjectService2 projectService2;
 
     //로그인 관련 메서드//------------------------------------------------------
     //회원가입 페이지
@@ -46,7 +45,7 @@ public class MemberController {
     }
     //아이디 중복체크
     @RequestMapping(value = "/member/idCheck", method = RequestMethod.GET)
-    public ResponseEntity idCheck(@RequestParam("userid") String userid) {
+    public ResponseEntity<String> idCheck(@RequestParam("userid") String userid) {
         return ResponseEntity.ok(service.checkId(userid));
     }
 
@@ -58,10 +57,8 @@ public class MemberController {
     //로그인시 회원 status 체크,로그인날짜 최신화
     @RequestMapping(value = "/member/loginIdPwCheck", method = {RequestMethod.GET,RequestMethod.POST})
     @ResponseBody
-    public ResponseEntity loginIdCheck(@RequestBody MemberVO memberVO){
-        log.info("memberVO======="+memberVO);
+    public ResponseEntity<String> loginIdCheck(@RequestBody MemberVO memberVO){
         String status = service.loginIdPwCheck(memberVO);
-        log.info("controller_status : "+status);
         return ResponseEntity.ok(status);
     }
     //------------------------------------------------------------------------
@@ -80,7 +77,6 @@ public class MemberController {
         String userid = principal.getName();
         PartnersVO partnersVO = service.partnersInfo(userid);
 
-        log.info("partnersVO ::::::"+partnersVO);
         session.setAttribute("partners", partnersVO);
         model.addAttribute("profilelist",service.projectProfileList(userid));
         model.addAttribute("meets",projectService2.listMeeting(partnersVO.getMember_no()));
@@ -98,7 +94,7 @@ public class MemberController {
     }
     @RequestMapping(value = "projectprofileinfo",method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity projectprofileinfo(@RequestParam("userid") String userid){
+    public ResponseEntity<ProjectProfileVO> projectprofileinfo(@RequestParam("userid") String userid){
         return ResponseEntity.ok(service.projectprofileinfo(userid));
     }
 
@@ -113,7 +109,6 @@ public class MemberController {
         List<GrantedAuthority> roles = new ArrayList<>(1);
         String roleStr = "ROLE_PARTNERS";
         roles.add(new SimpleGrantedAuthority(roleStr));
-        log.info("*******memberVO : "+memberVO);
         Authentication auth = new UsernamePasswordAuthenticationToken(customUserDetailsService.loadUserByUsername(memberVO.getUserid()), null, roles);
 
         SecurityContextHolder.getContext().setAuthentication(auth);
@@ -171,8 +166,6 @@ public class MemberController {
 
         SecurityContextHolder.getContext().setAuthentication(auth);
 
-
-
         return "redirect:/client/dashboard_client?member_no="+clientVO.getMember_no();
     }
 
@@ -203,7 +196,6 @@ public class MemberController {
     @ResponseBody
     public MemberVO findIdForm(@RequestBody MemberVO memberVO){
         memberVO.setUserid(service.findIdForm(memberVO));
-        log.info(memberVO.getUserid());
         return memberVO;
     }
 
@@ -246,17 +238,10 @@ public class MemberController {
         String roleStr = "ROLE_PARTNERS";
         roles.add(new SimpleGrantedAuthority(roleStr));
 
-        Authentication auth = new UsernamePasswordAuthenticationToken(customUserDetailsService.loadUserByUsername(memberVO.getUserid()), null, roles);
-
+        Authentication auth = new UsernamePasswordAuthenticationToken
+            (customUserDetailsService.loadUserByUsername(memberVO.getUserid()), null, roles);
         SecurityContextHolder.getContext().setAuthentication(auth);
-
 
         return "redirect:/member/partners/profile_info";
     }
-
-
-
-
-
-
 }
