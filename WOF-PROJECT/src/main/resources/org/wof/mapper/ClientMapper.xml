@@ -49,8 +49,7 @@
 	
 	select member_no, birthday, career, skill,
 	prefered_area, hashtag, available_date, profile
-	from
-		(
+	from(
 		select
 		rownum rn, 
 		MEMBER_NO,
@@ -61,7 +60,7 @@
 		HASHTAG,
 		AVAILABLE_DATE,
 		PROFILE
-		
+		)
 		from partners
 		
 		where PREFERED_AREA like '%'||#{address}||'%' or

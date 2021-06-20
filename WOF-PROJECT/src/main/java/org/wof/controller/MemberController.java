@@ -55,7 +55,7 @@ public class MemberController {
         return "/member/customlogin";
     }
     //로그인시 회원 status 체크,로그인날짜 최신화
-    @RequestMapping(value = "/member/loginIdPwCheck", method = {RequestMethod.GET,RequestMethod.POST})
+    @RequestMapping(value = "/member/loginIdPwCheck", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<String> loginIdCheck(@RequestBody MemberVO memberVO){
         String status = service.loginIdPwCheck(memberVO);
@@ -207,8 +207,6 @@ public class MemberController {
         return memberVO;
     }
 
-
-
     //카카오 로그인 메소드
     @RequestMapping("/member/kakaologin")
     public String home(@RequestParam(value = "code", required = false) String code) throws Exception{
@@ -220,7 +218,6 @@ public class MemberController {
 //        log.info("###userInfo#### : " + userInfo.get("email"));
 //        log.info("###nickname#### : " + userInfo.get("nickname"));
 //        log.info("###profile_image#### : " + userInfo.get("profile_image"));
-
         MemberVO memberVO = new MemberVO();
 
         memberVO.setUserid((String)userInfo.get("email"));
@@ -234,7 +231,7 @@ public class MemberController {
         service.kakaoSignup(memberVO);
         }
 
-        List<GrantedAuthority> roles = new ArrayList<>(1);
+        List<GrantedAuthority> roles = new ArrayList<>();
         String roleStr = "ROLE_PARTNERS";
         roles.add(new SimpleGrantedAuthority(roleStr));
 

@@ -3,6 +3,7 @@ package org.wof.service;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -63,20 +64,16 @@ public class MemberServiceImpl implements MemberService{
     //클라이언트 정보
     @Override
     public ClientVO clientInfo(String userid) {
-        System.out.println("userid"+userid);
         String member_no = mapper.memberNo(userid);
-        System.out.println("member_no"+member_no);
-        ClientVO clientVO = mapper.clientInfo(member_no);
-        System.out.println(clientVO);
-        return clientVO;
+        return mapper.clientInfo(member_no);
     }
     //비밀번호 확인
     @Override
     public String checkPw(MemberVO memberVO) {
         String data = "0";
-        String userpwEc = mapper.checkPw(memberVO.getMember_no());
+        String userPwCh = mapper.checkPw(memberVO.getMember_no());
 
-        if(passwordEncoder.matches(memberVO.getUserpw(),userpwEc)){
+        if(passwordEncoder.matches(memberVO.getUserpw(),userPwCh)){
             data = "1";
         }
         return data;
@@ -143,12 +140,13 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public List<ProjectProfileVO> projectProfileList(String userid) {
-
         return mapper.projectProfileList(userid);
     }
 
     @Override
     public void projectprofileinsert(ProjectProfileVO projectProfileVO) {
+        projectProfileVO.setStartDateFormat(LocalDate.parse(projectProfileVO.getStartdate()));
+        projectProfileVO.setEndDateFormat(LocalDate.parse(projectProfileVO.getEnddate()));
         mapper.projectprofileinsert(projectProfileVO);
     }
 
@@ -169,6 +167,8 @@ public class MemberServiceImpl implements MemberService{
     //프로젝트 프로파일 수정
     @Override
     public void projectProfileUpdate(ProjectProfileVO projectProfileVO) {
+        projectProfileVO.setStartDateFormat(LocalDate.parse(projectProfileVO.getStartdate()));
+        projectProfileVO.setEndDateFormat(LocalDate.parse(projectProfileVO.getEnddate()));
         mapper.projectProfileUpdate(projectProfileVO);
     }
     //미팅 수정
