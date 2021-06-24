@@ -204,7 +204,7 @@ public class MemberServiceImpl implements MemberService{
             StringBuilder sb = new StringBuilder();
             sb.append("grant_type=authorization_code");
             sb.append("&client_id=99f3b410c68833a20809dc9bf060d24e");  //본인이 발급받은 key
-            sb.append("&redirect_uri=http://localhost:8081/member/kakaologin");     // 본인이 설정해 놓은 경로
+            sb.append("&redirect_uri=http://54.180.205.119:8080/member/kakaologin");     // 본인이 설정해 놓은 경로
             sb.append("&code=").append(authorize_code);
             bw.write(sb.toString());
             bw.flush();
@@ -215,15 +215,15 @@ public class MemberServiceImpl implements MemberService{
             //    요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             String line = "";
-            String result = "";
+            StringBuilder result = new StringBuilder();
 
             while ((line = br.readLine()) != null) {
-                result += line;
+                result.append(line);
             }
 
             //    Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
             JsonParser parser = new JsonParser();
-            JsonElement element = parser.parse(result);
+            JsonElement element = parser.parse(result.toString());
 
             access_Token = element.getAsJsonObject().get("access_token").getAsString();
             refresh_Token = element.getAsJsonObject().get("refresh_token").getAsString();

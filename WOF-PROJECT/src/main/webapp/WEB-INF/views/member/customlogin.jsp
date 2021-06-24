@@ -55,7 +55,7 @@
                 </div>
               </form>
                 <div class="text-center">
-                  <a class="center" href="https://kauth.kakao.com/oauth/authorize?client_id=99f3b410c68833a20809dc9bf060d24e&redirect_uri=http://localhost:8081/member/kakaologin&response_type=code"><img src="/resources/img/kakao_login_button.png"></a>
+                  <a class="center" href="https://kauth.kakao.com/oauth/authorize?client_id=99f3b410c68833a20809dc9bf060d24e&redirect_uri=http://54.180.205.119:8080/member/kakaologin&response_type=code"><img src="/resources/img/kakao_login_button.png"></a>
                 </div>
             </div>
           </div>

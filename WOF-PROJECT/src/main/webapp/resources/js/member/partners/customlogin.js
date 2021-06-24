@@ -1,7 +1,7 @@
-let loginservice = {
+const loginservice = {
 
     check: function () {
-        var memberVO = {
+        const memberVO = {
             "userid": $('#userid').val(),
             "userpw": $('#userpw').val()
         }
@@ -53,7 +53,7 @@ let loginservice = {
 
 
     findIdForm: function () {
-        var memberVO = {
+        const memberVO = {
             "real_name": $('#real_name').val(),
             "userphone": $('#userphone').val()
         };
@@ -65,7 +65,7 @@ let loginservice = {
             contentType: 'application/json',
             success: function (data) {
                 console.log(data)
-                if (data.userid == "anonymousUser") {
+                if (data.userid === "anonymousUser") {
                     alert("이름 or 번호를 확인하세요.");
                 } else {
                     alert(data.userid + " 입니다.");
@@ -79,7 +79,7 @@ let loginservice = {
     },
 
     findPwForm: function () {
-        var memberVO = {
+        const memberVO = {
             "userid": $('#useridPW').val(),
             "real_name": $('#real_namePW').val(),
             "userphone": $('#userphonePW').val()
@@ -111,7 +111,7 @@ let loginservice = {
 
 
 //핸드폰 - 자동 생성
-let autoHypenPhone = function (str) {
+    const autoHypenPhone = function (str) {
     str = str.replace(/[^0-9]/g, '');
     let tmp = '';
     if (str.length < 4) {
