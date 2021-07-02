@@ -18,7 +18,7 @@ public interface MemberMapper {
     String checkPw2(String userid);
     int Withdrawal(MemberVO memberVO);
     String loginIdCheck(String userid);
-    void loginsysdate(String userid);
+    void loginSysdate(String userid);
     void userPhoneUpdate(MemberVO memberVO);
 
     //클라이언트
@@ -28,15 +28,15 @@ public interface MemberMapper {
 
     //파트너스
     List<ProjectProfileVO> projectProfileList(String userid);
-    void projectprofileinsert(ProjectProfileVO projectProfileVO);
-    ProjectProfileVO projectprofileinfo(String userid);
+    void projectProfileInsert(ProjectProfileVO projectProfileVO);
+    ProjectProfileVO projectProfileInfo(String userid);
     void profileupdate(PartnersVO partnersVO);
-    void projectprofiledelete(String no);
+    void projectProfileDelete(String no);
     void partnersUpdate2(PartnersVO partnersVO);
     void partnersUpdate3(MemberVO memberVO);
     PartnersVO partnersInfo(String member_no);
     void projectProfileUpdate(ProjectProfileVO projectProfileVO);
-    void meetingupdate(MeetVO meetVO);
+    void meetingUpdate(MeetVO meetVO);
     MeetVO meetInfo(String meet_id);
 
     //카카오 로그인 관련

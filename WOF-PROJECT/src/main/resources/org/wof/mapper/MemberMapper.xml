@@ -82,7 +82,7 @@
     <select id="loginIdCheck" parameterType="String" resultType="String">
         select status from member where userid = #{userid}
     </select>
-    <update id="loginsysdate" parameterType="String">
+    <update id="loginSysdate" parameterType="String">
         update member set login_date=sysdate where userid=#{userid}
     </update>
     <update id="clientUpdate2" parameterType="org.wof.domain.ClientVO">
@@ -98,11 +98,11 @@
         to_char(enddate,'YYYY-MM-DD')"enddate"
          from PROJECT_PROFILE where userid = #{userid}
     </select>
-    <insert id="projectprofileinsert" parameterType="org.wof.domain.ProjectProfileVO">
+    <insert id="projectProfileInsert" parameterType="org.wof.domain.ProjectProfileVO">
         insert into project_profile (no,userid, name, skill, field, responsibilities, startdate, enddate)
          values (project_profile_seq.nextval,#{userid},#{name},#{skill},#{field},#{responsibilities},#{startDateFormat},#{endDateFormat})
     </insert>
-    <select id="projectprofileinfo" parameterType="String" resultType="org.wof.domain.ProjectProfileVO">
+    <select id="projectProfileInfo" parameterType="String" resultType="org.wof.domain.ProjectProfileVO">
         select no,userid, name, skill, field, responsibilities, to_char(startdate,'YYYY-MM-DD')"startdate",
         to_char(enddate,'YYYY-MM-DD')"enddate"
          from project_profile where no = #{no}
@@ -110,7 +110,7 @@
     <update id="profileupdate" parameterType="org.wof.domain.PartnersVO">
         update partners set profile = #{profile} where member_no = #{member_no}
     </update>
-    <delete id="projectprofiledelete" parameterType="String">
+    <delete id="projectProfileDelete" parameterType="String">
         delete from project_profile where no = #{no}
     </delete>
     <insert id="kakaoSignup" parameterType="org.wof.domain.MemberVO">
@@ -139,7 +139,7 @@
         update project_profile set name = #{name}, skill = #{skill}, responsibilities = #{responsibilities},
             field = #{field}, startdate = #{startDateFormat}, enddate = #{endDateFormat} where no = #{no}
     </update>
-    <update id="meetingupdate" parameterType="org.wof.domain.MeetVO">
+    <update id="meetingUpdate" parameterType="org.wof.domain.MeetVO">
         update meet set meet_contents = #{meet_contents},
         meet_datetime = #{meet_datetime} where meet_req_mem = #{meet_req_mem}
     </update>

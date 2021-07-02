@@ -113,7 +113,7 @@ public class MemberServiceImpl implements MemberService{
                 if (!passwordEncoder.matches(memberVO.getUserpw(),mapper.checkPw2(memberVO.getUserid()))){
                     status = "6";//비밀번호 false
                 }else{
-                mapper.loginsysdate(memberVO.getUserid());
+                mapper.loginSysdate(memberVO.getUserid());
                 status = "5";
                 }
             }
@@ -144,15 +144,15 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public void projectprofileinsert(ProjectProfileVO projectProfileVO) {
+    public void projectProfileInsert(ProjectProfileVO projectProfileVO) {
         projectProfileVO.setStartDateFormat(LocalDate.parse(projectProfileVO.getStartdate()));
         projectProfileVO.setEndDateFormat(LocalDate.parse(projectProfileVO.getEnddate()));
-        mapper.projectprofileinsert(projectProfileVO);
+        mapper.projectProfileInsert(projectProfileVO);
     }
 
     @Override
-    public ProjectProfileVO projectprofileinfo(String userid) {
-        return mapper.projectprofileinfo(userid);
+    public ProjectProfileVO projectProfileInfo(String userid) {
+        return mapper.projectProfileInfo(userid);
     }
     //자기소개 수정
     @Override
@@ -161,8 +161,8 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public void projectprofiledelete(String no) {
-        mapper.projectprofiledelete(no);
+    public void projectProfileDelete(String no) {
+        mapper.projectProfileDelete(no);
     }
     //프로젝트 프로파일 수정
     @Override
@@ -173,8 +173,8 @@ public class MemberServiceImpl implements MemberService{
     }
     //미팅 수정
     @Override
-    public void meetingupdate(MeetVO meetVO) {
-        mapper.meetingupdate(meetVO);
+    public void meetingUpdate(MeetVO meetVO) {
+        mapper.meetingUpdate(meetVO);
     }
 
     @Override

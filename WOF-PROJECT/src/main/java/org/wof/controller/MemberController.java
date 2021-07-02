@@ -88,14 +88,14 @@ public class MemberController {
         return "profile_info_insert";
     }
     @PostMapping("projectprofileinsert")
-    public String partnersprofileinsert(ProjectProfileVO projectProfileVO){
-        service.projectprofileinsert(projectProfileVO);
+    public String partnersProfileInsert(ProjectProfileVO projectProfileVO){
+        service.projectProfileInsert(projectProfileVO);
         return "redirect:/member/partners/profile_info";
     }
     @RequestMapping(value = "projectprofileinfo",method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<ProjectProfileVO> projectprofileinfo(@RequestParam("userid") String userid){
-        return ResponseEntity.ok(service.projectprofileinfo(userid));
+        return ResponseEntity.ok(service.projectProfileInfo(userid));
     }
 
     //파트너스 개인정보 수정
@@ -124,7 +124,7 @@ public class MemberController {
     //프로젝트/경력 삭제
     @RequestMapping(value = "/member/projectprofiledelete",method = RequestMethod.GET)
     public String projectprofiledelete(@RequestParam("no") String no){
-        service.projectprofiledelete(no);
+        service.projectProfileDelete(no);
         return "redirect:/member/partners/profile_info";
     }
     //프로젝트/경력 수정

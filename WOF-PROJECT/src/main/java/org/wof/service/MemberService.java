@@ -23,12 +23,12 @@ public interface MemberService {
     void partnersUpdate(MemberVO memberVO,PartnersVO partnersVO);
     PartnersVO partnersInfo(String userid);
     List<ProjectProfileVO> projectProfileList(String userid);
-    void projectprofileinsert(ProjectProfileVO projectProfileVO);
-    ProjectProfileVO projectprofileinfo(String userid);
+    void projectProfileInsert(ProjectProfileVO projectProfileVO);
+    ProjectProfileVO projectProfileInfo(String userid);
     void profileupdate(PartnersVO partnersVO);
-    void projectprofiledelete(String no);
+    void projectProfileDelete(String no);
     void projectProfileUpdate(ProjectProfileVO projectProfileVO);
-    void meetingupdate(MeetVO meetVO);
+    void meetingUpdate(MeetVO meetVO);
     MeetVO meetInfo(String meet_id);
 
 
