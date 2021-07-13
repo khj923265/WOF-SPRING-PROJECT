@@ -1,4 +1,4 @@
-var profileManagement = {
+const profileManagement = {
     openForm: function (userId) {
         $.ajax({
             url: '/member/projectprofileinfo?userid=' + userId,

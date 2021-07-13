@@ -118,18 +118,18 @@ public class MemberController {
     //자기소개 수정
     @ResponseBody
     @RequestMapping(value = "/member/profileupdate",method = RequestMethod.POST, produces = "application/json; charset=utf8")
-    public void profileupdate(@RequestBody PartnersVO partnersVO){
+    public void profileUpdate(@RequestBody PartnersVO partnersVO){
         service.profileupdate(partnersVO);
     }
     //프로젝트/경력 삭제
     @RequestMapping(value = "/member/projectprofiledelete",method = RequestMethod.GET)
-    public String projectprofiledelete(@RequestParam("no") String no){
+    public String projectProfileDelete(@RequestParam("no") String no){
         service.projectProfileDelete(no);
         return "redirect:/member/partners/profile_info";
     }
     //프로젝트/경력 수정
     @PostMapping("projectprofileupdate")
-    public String projectprofileupdate(ProjectProfileVO projectProfileVO){
+    public String projectProfileUpdate(ProjectProfileVO projectProfileVO){
         service.projectProfileUpdate(projectProfileVO);
         return "redirect:/member/partners/profile_info";
     }
