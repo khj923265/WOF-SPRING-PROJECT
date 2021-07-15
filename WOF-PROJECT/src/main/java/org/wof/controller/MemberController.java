@@ -37,7 +37,7 @@ public class MemberController {
     private final CustomUserDetailsService customUserDetailsService;
     private final ProjectService2 projectService2;
 
-    //로그인 관련 메서드//------------------------------------------------------
+    /* 로그인 관련 메서드 */
     //회원가입 페이지
     @GetMapping("signup")
     public String signUp() {
@@ -54,15 +54,15 @@ public class MemberController {
         service.sginUp(memberVO);
         return "/member/customlogin";
     }
-    //로그인시 회원 status 체크,로그인날짜 최신화
+    /* 로그인시 회원 status 체크,로그인날짜 최신화 */
     @RequestMapping(value = "/member/loginIdPwCheck", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<String> loginIdCheck(@RequestBody MemberVO memberVO){
         String status = service.loginIdPwCheck(memberVO);
         return ResponseEntity.ok(status);
     }
-    //------------------------------------------------------------------------
-    //파트너스 관련 메서드//------------------------------------------------------
+
+    /* 파트너스 관련 메서드 */
     @GetMapping("partners")
     public String partners() {
         return "member/partners";
@@ -94,13 +94,13 @@ public class MemberController {
     }
     @RequestMapping(value = "projectprofileinfo",method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<ProjectProfileVO> projectprofileinfo(@RequestParam("userid") String userid){
+    public ResponseEntity<ProjectProfileVO> projectProfileInfo(@RequestParam("userid") String userid){
         return ResponseEntity.ok(service.projectProfileInfo(userid));
     }
 
-    //파트너스 개인정보 수정
+    /* 파트너스 개인정보 수정 */
     @PostMapping("partnersinfoupdate")
-    public String infoUpdate(Principal principal,MemberVO memberVO, PartnersVO partnersVO, HttpServletResponse response, HttpServletRequest request){
+    public String infoUpdate(Principal principal,MemberVO memberVO, PartnersVO partnersVO, HttpServletRequest request){
         HttpSession session = request.getSession();
         memberVO.setUserid(principal.getName());
         service.partnersUpdate(memberVO,partnersVO);
@@ -115,27 +115,27 @@ public class MemberController {
 
         return "redirect:/member/partners/profile_info";
     }
-    //자기소개 수정
+    /* 자기소개 수정 */
     @ResponseBody
     @RequestMapping(value = "/member/profileupdate",method = RequestMethod.POST, produces = "application/json; charset=utf8")
     public void profileUpdate(@RequestBody PartnersVO partnersVO){
         service.profileupdate(partnersVO);
     }
-    //프로젝트/경력 삭제
+    /* 프로젝트 경력 삭제 */
     @RequestMapping(value = "/member/projectprofiledelete",method = RequestMethod.GET)
     public String projectProfileDelete(@RequestParam("no") String no){
         service.projectProfileDelete(no);
         return "redirect:/member/partners/profile_info";
     }
-    //프로젝트/경력 수정
+    /* 프로젝트 경력 수정 */
     @PostMapping("projectprofileupdate")
     public String projectProfileUpdate(ProjectProfileVO projectProfileVO){
         service.projectProfileUpdate(projectProfileVO);
         return "redirect:/member/partners/profile_info";
     }
-    //------------------------------------------------------------------------
-    //클라이언트 관련 메서드-------------------------------------------------------
-    //클라이언트 로그인시 클라이언트정보 세션저장컨트롤러(시큐리티 success 핸들러에서만 접근)
+
+    /* 클라이언트 관련 메서드 */
+    /* 클라이언트 로그인시 클라이언트정보 세션저장컨트롤러(시큐리티 success 핸들러에서만 접근) */
     @GetMapping("success/client")
     public String clientInfoInsert(Principal principal,HttpServletRequest request){
         HttpSession session = request.getSession();
@@ -147,7 +147,7 @@ public class MemberController {
     @GetMapping("client/client_info_update")
     public void clientInfoUpdatePage(){}
 
-    //클라이언트 회사정보 수정
+    /* 클라이언트 회사정보 수정 */
     @PostMapping("clientinfoupdate")
     public String clientInfoUpdate(Principal principal,MemberVO memberVO,ClientVO clientVO,
                                    HttpServletRequest request){
@@ -169,14 +169,13 @@ public class MemberController {
         return "redirect:/client/dashboard_client?member_no="+clientVO.getMember_no();
     }
 
-    //------------------------------------------------------------------------
-    //공통메서드or기타
+    /* 공통 메서드 or 기타 */
     @GetMapping("admin")
     public String admin() {
         return "member/admin";
     }
 
-    //회원탈퇴
+    /* 회원탈퇴 */
     @RequestMapping(value = "/member/withdrawal",method = {RequestMethod.POST, RequestMethod.GET})
     public String Withdrawal(@RequestParam("userid") String userid,MemberVO memberVO){
         memberVO.setStatus("탈퇴");
@@ -184,14 +183,14 @@ public class MemberController {
         service.Withdrawal(memberVO);
         return "redirect:/customlogout";
     }
-    //회원정보수정 비밀번호 확인
+    /* 회원정보수정 비밀번호 확인 */
     @RequestMapping(value = "/member/pwcheck", method = RequestMethod.POST, produces = "application/json; charset=utf8")
     @ResponseBody
     public String method(@RequestBody MemberVO memberVO){
         return service.checkPw(memberVO);
     }
 
-    //아이디 찾기
+    /* 아이디 찾기 */
     @RequestMapping(value = "/member/findIdForm", method = RequestMethod.POST, produces = "application/json; charset=utf8")
     @ResponseBody
     public MemberVO findIdForm(@RequestBody MemberVO memberVO){
@@ -199,7 +198,7 @@ public class MemberController {
         return memberVO;
     }
 
-    //비밀번호 찾기
+    /* 비밀번호 찾기 */
     @RequestMapping(value = "/member/findPwForm", method = RequestMethod.POST, produces = "application/json; charset=utf8")
     @ResponseBody
     public MemberVO findPwForm(@RequestBody MemberVO memberVO){
@@ -207,9 +206,9 @@ public class MemberController {
         return memberVO;
     }
 
-    //카카오 로그인 메소드
+    /* 카카오 로그인 메소드 */
     @RequestMapping("/member/kakaologin")
-    public String home(@RequestParam(value = "code", required = false) String code) throws Exception{
+    public String kakaoLogin(@RequestParam(value = "code", required = false) String code) throws Exception{
 //        log.info("#########" + code);
         String access_Token = service.kakaoAccessToken(code);
         HashMap<String,Object> userInfo = service.getUserInfo(access_Token);
