@@ -1,5 +1,5 @@
 # WOF(working free) PROJECT 💻
-Freelancer와 기업의 자유로운 매칭을 위해서 기획한 웹페이지 프로젝트입니다.
+기업과 프리랜서의 자유로운 매칭을 위해서 기획한 웹페이지 프로젝트입니다.
 
 ### 🔑 Introduction
 
